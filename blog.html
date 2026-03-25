@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ব্লগ – Global Islamic Care | ইসলামিক জ্ঞান ও কোরআন টিপস</title>
+<meta name="description" content="Global Islamic Care-এর ব্লগে কোরআন শেখার টিপস, তাজউইদ গাইড, হেফজ কৌশল এবং ইসলামিক জ্ঞান পড়ুন।">
+<meta name="keywords" content="কোরআন শেখার টিপস, তাজউইদ গাইড, হেফজ কৌশল, ইসলামিক ব্লগ বাংলা">
+<link rel="canonical" href="https://globalislamiccare.com/blog.html">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .blog-section { background: white; padding: 90px 5%; }
+  .blog-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* Featured Post */
+  .blog-featured {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 0;
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+    margin-bottom: 60px; cursor: pointer; transition: all 0.3s;
+  }
+  .blog-featured:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .featured-img {
+    height: 100%; min-height: 300px;
+    background: linear-gradient(135deg, var(--blue-deep), var(--blue-bright));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; position: relative;
+  }
+  .featured-img::after { content: ''; position: absolute; inset: 0; background: rgba(10,22,40,0.2); }
+  .featured-body { padding: 36px; display: flex; flex-direction: column; justify-content: center; }
+  .featured-badge { display: inline-block; background: var(--gray-200); color: var(--blue-mid); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 50px; margin-bottom: 16px; }
+  .featured-title { font-size: 22px; font-weight: 800; color: var(--navy); line-height: 1.4; margin-bottom: 14px; }
+  .featured-excerpt { font-size: 14px; color: var(--text-light); line-height: 1.7; margin-bottom: 20px; }
+  .featured-meta { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--text-light); }
+
+  /* Blog Grid */
+  .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+  .blog-card {
+    border-radius: 16px; overflow: hidden; border: 1px solid var(--border);
+    transition: all 0.3s; cursor: pointer;
+  }
+  .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .blog-img { height: 160px; background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid)); display: flex; align-items: center; justify-content: center; font-size: 48px; }
+  .blog-content { padding: 20px; }
+  .blog-cat { font-size: 11px; font-weight: 700; color: var(--blue-bright); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .blog-title { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.5; margin-bottom: 8px; }
+  .blog-excerpt { font-size: 13px; color: var(--text-light); line-height: 1.6; margin-bottom: 12px; }
+  .blog-date { font-size: 12px; color: var(--text-light); }
+  .blog-read-more { font-size: 13px; font-weight: 600; color: var(--blue-bright); text-decoration: none; }
+  .blog-read-more:hover { text-decoration: underline; }
+
+  /* Newsletter */
+  .newsletter { background: linear-gradient(135deg, var(--navy), var(--blue-deep)); padding: 90px 5%; text-align: center; }
+  .newsletter h2 { font-size: 30px; font-weight: 800; color: white; margin-bottom: 14px; }
+  .newsletter p { font-size: 16px; color: rgba(255,255,255,0.65); max-width: 500px; margin: 0 auto 32px; }
+  .newsletter-form { display: flex; gap: 12px; max-width: 460px; margin: 0 auto; }
+  .newsletter-form input { flex: 1; padding: 14px 18px; border-radius: 8px; border: none; font-size: 14px; font-family: 'Poppins', sans-serif; outline: none; }
+
+  @media (max-width: 900px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 768px) {
+    .blog-featured { grid-template-columns: 1fr; }
+    .featured-img { min-height: 200px; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .newsletter-form { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">ق</div>
+    <div class="logo-text">
+      <span>Global Islamic Care</span>
+      <span>Quran Learning Online</span>
+    </div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="courses.html">কোর্স</a>
+    <a href="teachers.html">শিক্ষক</a>
+    <a href="about.html">আমাদের সম্পর্কে</a>
+    <a href="blog.html" class="active">ব্লগ</a>
+    <a href="contact.html" class="nav-cta">যোগাযোগ করুন</a>
+  </div>
+  <div class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">হোম</a><span>›</span><span>ব্লগ</span></div>
+  <h1>ইসলামিক <span>জ্ঞান ও টিপস</span></h1>
+  <p>কোরআন শেখার কার্যকর কৌশল, তাজউইদ গাইড এবং ইসলামিক শিক্ষামূলক প্রবন্ধ।</p>
+</div>
+
+<section class="blog-section">
+  <div class="blog-inner">
+
+    <!-- Featured Post -->
+    <div class="blog-featured reveal">
+      <div class="featured-img">📖</div>
+      <div class="featured-body">
+        <span class="featured-badge">বিশেষ নিবন্ধ</span>
+        <div class="featured-title">কোরআন সহি তেলাওয়াতের ৫টি গুরুত্বপূর্ণ নিয়ম — বিশেষজ্ঞের পরামর্শ</div>
+        <p class="featured-excerpt">তাজউইদের মূল নিয়মগুলো সঠিকভাবে না জানলে কোরআন তেলাওয়াতে ভুল হওয়ার আশঙ্কা থাকে। এই প্রবন্ধে হাফেজ শিক্ষকরা সহজ ভাষায় ব্যাখ্যা করেছেন।</p>
+        <div class="featured-meta">
+          <span>📅 ১৫ মার্চ, ২০২৫</span>
+          <span>🕐 ৫ মিনিট পড়া</span>
+          <a href="#" style="color:var(--blue-bright); font-weight:600; text-decoration:none;">পড়ুন →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="section-header reveal" style="margin-bottom: 40px;">
+      <div class="section-tag">সাম্প্রতিক প্রবন্ধ</div>
+      <h2 class="section-title">আরও <span>পড়ুন</span></h2>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal">
+        <div class="blog-img">🌙</div>
+        <div class="blog-content">
+          <div class="blog-cat">হেফজ টিপস</div>
+          <div class="blog-title">কোরআন মুখস্থ করার কার্যকর কৌশল — বিশেষজ্ঞ পরামর্শ</div>
+          <p class="blog-excerpt">প্রতিদিনের রুটিন ও সঠিক পদ্ধতিতে হেফজ করলে দ্রুত ও স্থায়ীভাবে কোরআন মুখস্থ হয়।</p>
+          <div class="blog-date">📅 ১০ মার্চ, ২০২৫</div>
+        </div>
+      </div>
+      <div class="blog-card reveal" style="transition-delay:0.1s">
+        <div class="blog-img">✨</div>
+        <div class="blog-content">
+          <div class="blog-cat">পেরেন্টিং</div>
+          <div class="blog-title">শিশুকে কোরআনের সাথে পরিচয় করিয়ে দেওয়ার সেরা উপায়</div>
+          <p class="blog-excerpt">ছোটবেলা থেকেই কোরআনের প্রতি ভালোবাসা তৈরি করলে সারাজীবন উপকৃত হবে সন্তান।</p>
+          <div class="blog-date">📅 ৫ মার্চ, ২০২৫</div>
+        </div>
+      </div>
+      <div class="blog-card reveal" style="transition-delay:0.2s">
+        <div class="blog-img">🎯</div>
+        <div class="blog-content">
+          <div class="blog-cat">তাজউইদ</div>
+          <div class="blog-title">মাখরাজ কী এবং কেন সহি তেলাওয়াতে এটি জরুরি?</div>
+          <p class="blog-excerpt">আরবি হরফের সঠিক উচ্চারণস্থান জানা ছাড়া সহি তেলাওয়াত সম্ভব নয়।</p>
+          <div class="blog-date">📅 ১ মার্চ, ২০২৫</div>
+        </div>
+      </div>
+      <div class="blog-card reveal" style="transition-delay:0.1s">
+        <div class="blog-img">🌍</div>
+        <div class="blog-content">
+          <div class="blog-cat">অনলাইন শিক্ষা</div>
+          <div class="blog-title">অনলাইনে কোরআন শেখার সুবিধা ও কীভাবে শুরু করবেন</div>
+          <p class="blog-excerpt">ঘরে বসেই বিশ্বমানের শিক্ষক থেকে কোরআন শেখার এই সুযোগ কাজে লাগান।</p>
+          <div class="blog-date">📅 ২৫ ফেব্রুয়ারি, ২০২৫</div>
+        </div>
+      </div>
+      <div class="blog-card reveal" style="transition-delay:0.2s">
+        <div class="blog-img">📿</div>
+        <div class="blog-content">
+          <div class="blog-cat">ইসলামিক জ্ঞান</div>
+          <div class="blog-title">কোরআন তেলাওয়াতের ফজিলত — হাদিসের আলোকে</div>
+          <p class="blog-excerpt">প্রতিটি হরফ পাঠে দশটি সওয়াব — এই অসাধারণ পুরস্কার সম্পর্কে জানুন।</p>
+          <div class="blog-date">📅 ২০ ফেব্রুয়ারি, ২০২৫</div>
+        </div>
+      </div>
+      <div class="blog-card reveal" style="transition-delay:0.3s">
+        <div class="blog-img">👨‍👩‍👧</div>
+        <div class="blog-content">
+          <div class="blog-cat">পরিবার</div>
+          <div class="blog-title">পুরো পরিবার একসাথে কোরআন পড়ার গুরুত্ব</div>
+          <p class="blog-excerpt">পারিবারিক পরিবেশে কোরআন চর্চা করলে সন্তানের মনে স্থায়ী প্রভাব পড়ে।</p>
+          <div class="blog-date">📅 ১৫ ফেব্রুয়ারি, ২০২৫</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <h2>📧 নতুন প্রবন্ধ পেতে সাবস্ক্রাইব করুন</h2>
+  <p>ইসলামিক জ্ঞান ও কোরআন শেখার টিপস সরাসরি আপনার ইনবক্সে পাঠাব।</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="আপনার ইমেইল ঠিকানা লিখুন">
+    <a href="https://wa.me/8801733017521" target="_blank" class="btn-primary" style="white-space:nowrap;">সাবস্ক্রাইব করুন</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo-icon" style="width:50px;height:50px;font-size:26px;">ق</div>
+      <p>Global Islamic Care — বিশ্বমানের অনলাইন কোরআন শিক্ষার প্রতিষ্ঠান।</p>
+      <div class="social-links">
+        <a class="social-link" href="https://web.facebook.com/globalislamiccare1" target="_blank">f</a>
+        <a class="social-link" href="https://www.youtube.com/@Globalislamiccare" target="_blank">▶</a>
+        <a class="social-link" href="https://www.linkedin.com/company/global-islamic-care" target="_blank">in</a>
+        <a class="social-link wa" href="https://wa.me/8801733017521" target="_blank">✆</a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>কোর্সসমূহ</h4><ul><li><a href="courses.html">হেফজ ব্যাচ</a></li><li><a href="courses.html">ওয়ান-টু-ওয়ান</a></li><li><a href="contact.html">ফ্রি ট্রায়াল</a></li></ul></div>
+    <div class="footer-col"><h4>তথ্য</h4><ul><li><a href="about.html">আমাদের সম্পর্কে</a></li><li><a href="blog.html">ব্লগ</a></li><li><a href="contact.html">যোগাযোগ</a></li></ul></div>
+    <div class="footer-col"><h4>নীতিমালা</h4><ul><li><a href="policy.html">পেমেন্ট পলিসি</a></li><li><a href="policy.html">রিফান্ড পলিসি</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© ২০২৫ Global Islamic Care. সর্বস্বত্ব সংরক্ষিত।</span>
+    <span><a href="https://web.facebook.com/globalislamiccare1" target="_blank">Facebook</a> · <a href="https://www.youtube.com/@Globalislamiccare" target="_blank">YouTube</a></span>
+  </div>
+</footer>
+<script>
+  const observer = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+</script>
+</body>
+</html>
