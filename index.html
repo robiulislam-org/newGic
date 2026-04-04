@@ -221,6 +221,66 @@
   /* ══════════════════════════════
      RESPONSIVE
   ══════════════════════════════ */
+  /* ══════════════════════════════
+     OFFER BANNER
+  ══════════════════════════════ */
+  .offer-topbar {
+    background: linear-gradient(90deg, #0a3a1a, #0d5c2a, #0a3a1a);
+    border-bottom: 1px solid rgba(37,211,102,0.3);
+    padding: 10px 5%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #a7f3c0;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .offer-topbar .offer-highlight {
+    background: rgba(37,211,102,0.15);
+    border: 1px solid rgba(37,211,102,0.4);
+    color: #4ade80;
+    padding: 2px 12px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .offer-topbar .offer-deadline {
+    color: #fcd34d;
+    font-weight: 700;
+  }
+  nav { top: 40px; }
+
+  .offer-card-badge {
+    background: linear-gradient(135deg, #065f2e, #0a8a40);
+    border: 1px solid rgba(74,222,128,0.4);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .offer-card-badge .offer-icon { font-size: 22px; flex-shrink: 0; }
+  .offer-card-badge .offer-text { flex: 1; }
+  .offer-card-badge .offer-title {
+    font-size: 13px; font-weight: 700; color: #4ade80;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+  .offer-card-badge .offer-detail {
+    font-size: 14px; color: #a7f3c0; line-height: 1.5;
+  }
+  .offer-card-badge .offer-expire {
+    font-size: 12px; color: #fcd34d; margin-top: 4px; font-weight: 600;
+  }
+
   @media (max-width: 768px) {
     .hero-content { grid-template-columns: 1fr; gap: 40px; }
     .hero-right { display: none; }
@@ -229,6 +289,8 @@
     .testi-grid { grid-template-columns: 1fr; }
     .trial-banner { flex-direction: column; text-align: center; }
     .trial-action { align-items: center; }
+    .offer-topbar { font-size: 12px; padding: 8px 4%; }
+    nav { top: 50px; }
   }
   @media (max-width: 480px) {
     .why-strip-inner { grid-template-columns: 1fr; }
@@ -236,6 +298,15 @@
 </style>
 </head>
 <body>
+
+<!-- OFFER TOPBAR -->
+<div class="offer-topbar">
+  <span>🎉 বিশেষ অফার:</span>
+  <span class="offer-highlight">ভর্তি সম্পূর্ণ ফ্রি</span>
+  <span>|</span>
+  <span>ওয়ান-টু-ওয়ান মাসিক ফি মাত্র <strong style="color:#4ade80">১,৫০০৳</strong></span>
+  <span class="offer-deadline">⏳ শেষ তারিখ: ৬ এপ্রিল (সোমবার)</span>
+</div>
 
 <!-- ═══════════════════════════════════════
      NAVBAR
@@ -392,11 +463,19 @@
         <div class="card-name-ar">تعليم خاص فردي</div>
       </div>
       <div class="card-body">
+        <div class="offer-card-badge">
+          <div class="offer-icon">🎁</div>
+          <div class="offer-text">
+            <div class="offer-title">বিশেষ অফার</div>
+            <div class="offer-detail">ভর্তি ফ্রি + মাসিক ফি মাত্র <strong>১,৫০০৳</strong></div>
+            <div class="offer-expire">⏳ ৬ এপ্রিল (সোমবার) পর্যন্ত</div>
+          </div>
+        </div>
         <div class="price-block">
-          <span class="price-old">১২,০০০৳</span>
-          <span class="price-new">৭,০০০৳</span>
+          <span class="price-old">৭,০০০৳</span>
+          <span class="price-new">১,৫০০৳</span>
           <span class="price-period">/মাস</span>
-          <span class="price-save">৪২% ছাড়</span>
+          <span class="price-save">৭৯% ছাড়</span>
         </div>
         <ul class="features">
           <li><span class="feat-icon">⏰</span> ডেইলি ১ ঘন্টা ব্যক্তিগত ক্লাস</li>
@@ -577,7 +656,8 @@
         <li>WhatsApp-এ ২৪/৭ সাপোর্ট</li>
         <li>রেকর্ডেড ক্লাস পুনরায় দেখার সুবিধা</li>
         <li>দ্রুত অগ্রগতির জন্য ব্যক্তিগত ফিডব্যাক</li>
-        <li>মাসিক ফি: ১২,০০০৳ → এখন মাত্র ৭,০০০৳</li>
+        <li>ভর্তি ফি: সম্পূর্ণ ফ্রি (৬ এপ্রিল পর্যন্ত)</li>
+        <li>মাসিক ফি: ৭,০০০৳ → এখন মাত্র ১,৫০০৳ (অফার শেষ ৬ এপ্রিল)</li>
       </ul>
     </div>
     <div class="modal-btns">
