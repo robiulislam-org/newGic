@@ -5,75 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>নীতিমালা – Global Islamic Care | পেমেন্ট ও রিফান্ড পলিসি</title>
 <meta name="description" content="Global Islamic Care-এর পেমেন্ট পলিসি, রিফান্ড পলিসি, গোপনীয়তা নীতি এবং শর্তাবলী।">
-<meta name="keywords" content="Global Islamic Care নীতিমালা, পেমেন্ট পলিসি, রিফান্ড নীতি">
 <link rel="canonical" href="https://globalislamiccare.com/policy.html">
 <link rel="stylesheet" href="shared.css">
 <style>
-  .policy-section { background: white; padding: 90px 5%; }
-  .policy-inner { max-width: 900px; margin: 0 auto; }
-  .policy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 40px; }
+.policy-section { background: white; padding: 80px 5%; }
+.policy-inner { max-width: 860px; margin: 0 auto; }
+.policy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+.policy-card { background: var(--gray-100); border-radius: 16px; padding: 26px; border: 1px solid var(--border); }
+.policy-card h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.policy-card ul li { font-size: 14px; color: var(--text-mid); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; line-height: 1.6; }
+.policy-card ul li:last-child { border-bottom: none; }
+.policy-card ul li::before { content: '•'; color: var(--blue-bright); font-weight: 900; flex-shrink: 0; margin-top: 2px; }
+.payment-methods { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.pay-badge { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 600; color: var(--navy); }
 
-  .policy-card { background: var(--gray-100); border-radius: 16px; padding: 28px; border: 1px solid var(--border); }
-  .policy-card h3 { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-  .policy-card ul { list-style: none; }
-  .policy-card ul li { font-size: 14px; color: var(--text-mid); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; line-height: 1.6; }
-  .policy-card ul li:last-child { border-bottom: none; }
-  .policy-card ul li::before { content: '•'; color: var(--blue-bright); font-weight: 900; flex-shrink: 0; margin-top: 2px; }
+.policy-full { background: var(--gray-100); border-radius: 16px; padding: 26px; border: 1px solid var(--border); margin-bottom: 24px; }
+.policy-full h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.policy-full p { font-size: 14px; color: var(--text-mid); line-height: 1.8; margin-bottom: 10px; }
+.policy-full ul li { font-size: 14px; color: var(--text-mid); padding: 6px 0; display: flex; gap: 8px; line-height: 1.6; }
+.policy-full ul li::before { content: '→'; color: var(--blue-bright); font-weight: 700; flex-shrink: 0; }
 
-  /* Full width policy cards */
-  .policy-full { background: var(--gray-100); border-radius: 16px; padding: 28px; border: 1px solid var(--border); margin-bottom: 28px; }
-  .policy-full h3 { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-  .policy-full p { font-size: 14px; color: var(--text-mid); line-height: 1.8; margin-bottom: 12px; }
-  .policy-full ul { list-style: none; }
-  .policy-full ul li { font-size: 14px; color: var(--text-mid); padding: 6px 0; display: flex; gap: 8px; line-height: 1.6; }
-  .policy-full ul li::before { content: '→'; color: var(--blue-bright); font-weight: 900; flex-shrink: 0; }
+/* Important highlight */
+.policy-highlight {
+  background: linear-gradient(135deg, rgba(212,169,67,0.08), rgba(212,169,67,0.12));
+  border: 1px solid rgba(212,169,67,0.3); border-radius: 12px;
+  padding: 16px 20px; margin-bottom: 20px;
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 14px; color: var(--text-mid); line-height: 1.7;
+}
+.policy-highlight strong { color: var(--navy); }
 
-  /* Payment methods */
-  .payment-methods { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-  .pay-badge { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 6px; }
-
-  @media (max-width: 768px) { .policy-grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .policy-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="nav-logo">
     <div class="logo-icon">ق</div>
-    <div class="logo-text">
-      <span>Global Islamic Care</span>
-      <span>Quran Learning Online</span>
-    </div>
+    <div class="logo-text"><span>Global Islamic Care</span><span>Quran Learning Online</span></div>
   </a>
   <div class="nav-links" id="navLinks">
     <a href="courses.html">কোর্স</a>
     <a href="teachers.html">শিক্ষক</a>
     <a href="about.html">আমাদের সম্পর্কে</a>
     <a href="blog.html">ব্লগ</a>
-    <a href="contact.html" class="nav-cta">যোগাযোগ করুন</a>
+    <a href="contact.html" class="nav-cta">💬 যোগাযোগ</a>
   </div>
-  <div class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  <button class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="page-hero">
   <div class="breadcrumb"><a href="index.html">হোম</a><span>›</span><span>নীতিমালা</span></div>
   <h1>পেমেন্ট ও <span>রিফান্ড পলিসি</span></h1>
-  <p>আমাদের সকল নীতিমালা স্বচ্ছ ও শিক্ষার্থীবান্ধব। কোনো প্রশ্ন থাকলে আমাদের সাথে যোগাযোগ করুন।</p>
+  <p>স্বচ্ছ ও শিক্ষার্থীবান্ধব নীতিমালা। কোনো প্রশ্নে সরাসরি আমাদের সাথে যোগাযোগ করুন।</p>
 </div>
 
 <section class="policy-section">
   <div class="policy-inner">
 
-    <!-- Payment & Refund -->
+    <div class="policy-highlight reveal">
+      <span style="font-size:20px;">⚠️</span>
+      <div>
+        <strong>পেমেন্টের সময়:</strong> প্রতি মাসের <strong>১ থেকে ৩ তারিখের মধ্যে</strong> অগ্রিম পেমেন্ট করতে হবে।
+        নতুন শিক্ষার্থীদের ক্ষেত্রে ক্লাস শুরুর আগেই প্রথম মাসের পেমেন্ট নিশ্চিত করতে হবে।
+      </div>
+    </div>
+
     <div class="policy-grid">
       <div class="policy-card reveal">
         <h3>💳 পেমেন্ট পলিসি</h3>
         <ul>
-          <li>মাসিক ফি অগ্রিম পরিশোধ করতে হবে</li>
-          <li>bKash, Nagad, ব্যাংক ট্রান্সফার গ্রহণযোগ্য</li>
-          <li>আন্তর্জাতিক শিক্ষার্থীদের জন্য PayPal গ্রহণযোগ্য</li>
-          <li>মাস শুরুর ৩ দিনের মধ্যে পেমেন্ট নিশ্চিত করতে হবে</li>
-          <li>রিসিপ্ট ইমেইলে পাঠানো হবে</li>
+          <li>প্রতি মাসের <strong>১–৩ তারিখ</strong> পেমেন্টের শেষ সময়</li>
+          <li>bKash, Nagad গ্রহণযোগ্য</li>
+          <li>ব্যাংক ট্রান্সফার গ্রহণযোগ্য</li>
+          <li>আন্তর্জাতিক শিক্ষার্থীদের জন্য PayPal</li>
+          <li>মাসের মাঝে ভর্তি হলেও প্রথম মাসের পুরো ফি একবারে দিতে হবে</li>
+          <li>পেমেন্টের রিসিপ্ট সংরক্ষণ করুন</li>
+          <li>সময়মতো পেমেন্ট না হলে ক্লাস বিরতি হতে পারে</li>
         </ul>
         <div class="payment-methods">
           <div class="pay-badge">💰 bKash</div>
@@ -85,44 +93,42 @@
       <div class="policy-card reveal" style="transition-delay:0.1s">
         <h3>🔄 রিফান্ড পলিসি</h3>
         <ul>
-          <li>ক্লাস শুরুর ৭ দিনের মধ্যে ১০০% রিফান্ড পাওয়া যাবে</li>
-          <li>১৫ দিনের মধ্যে আবেদন করলে ৫০% রিফান্ড</li>
-          <li>১৫ দিনের পরে কোনো রিফান্ড প্রযোজ্য নয়</li>
-          <li>শিক্ষকের সমস্যায় ক্লাস মিস হলে পূর্ণ ক্ষতিপূরণ</li>
-          <li>রিফান্ডের জন্য ৫–৭ কার্যদিবস প্রয়োজন</li>
+          <li>ক্লাস শুরুর <strong>৭ দিনের মধ্যে → ১০০% রিফান্ড</strong></li>
+          <li><strong>১৫ দিনের মধ্যে → ৫০% রিফান্ড</strong></li>
+          <li>১৫ দিনের পরে → কোনো রিফান্ড নেই</li>
+          <li>শিক্ষকের কারণে ক্লাস মিস → ক্লাস পুনরায় করানো হবে অথবা সেই দিনের ফি রিফান্ড</li>
+          <li>রিফান্ড প্রক্রিয়া ৫–৭ কার্যদিবস</li>
         </ul>
       </div>
     </div>
 
-    <!-- Privacy Policy -->
+    <div class="policy-full reveal">
+      <h3>📋 শিক্ষার্থীর নিয়মকানুন</h3>
+      <p>Global Islamic Care-এ ভর্তি হওয়ার মাধ্যমে আপনি নিচের নিয়মগুলো মেনে নিচ্ছেন:</p>
+      <ul>
+        <li>নির্ধারিত সময়ে ক্লাসে উপস্থিত থাকা আবশ্যক।</li>
+        <li>ক্লাসে অনুপস্থিত থাকলে আগেই শিক্ষককে জানাতে হবে।</li>
+        <li>ক্লাস রেকর্ডিং অন্যত্র শেয়ার করা সম্পূর্ণ নিষিদ্ধ।</li>
+        <li>শিক্ষকের প্রতি সম্মানজনক আচরণ করা আবশ্যক।</li>
+        <li>সময়মতো পেমেন্ট না করলে ক্লাস স্থগিত হতে পারে।</li>
+        <li>যেকোনো অভিযোগ সরাসরি ব্যবস্থাপনার সাথে যোগাযোগ করে জানাতে হবে।</li>
+      </ul>
+    </div>
+
     <div class="policy-full reveal">
       <h3>🔒 গোপনীয়তা নীতি</h3>
-      <p>Global Islamic Care আপনার ব্যক্তিগত তথ্যের সুরক্ষাকে সর্বোচ্চ গুরুত্ব দেয়।</p>
+      <p>আপনার ব্যক্তিগত তথ্যের সুরক্ষায় আমরা প্রতিশ্রুতিবদ্ধ।</p>
       <ul>
-        <li>আপনার ব্যক্তিগত তথ্য (নাম, ফোন, ইমেইল) শুধুমাত্র যোগাযোগের উদ্দেশ্যে ব্যবহৃত হবে।</li>
-        <li>আপনার তথ্য তৃতীয় পক্ষের সাথে শেয়ার করা হবে না।</li>
-        <li>ক্লাসের ভিডিও রেকর্ডিং শুধুমাত্র সংশ্লিষ্ট শিক্ষার্থীর জন্য সংরক্ষিত থাকবে।</li>
-        <li>যেকোনো সময় আপনার তথ্য মুছে ফেলার অনুরোধ করতে পারবেন।</li>
+        <li>আপনার নাম, ফোন ও ইমেইল শুধুমাত্র যোগাযোগের জন্য ব্যবহৃত হবে।</li>
+        <li>তৃতীয় পক্ষের সাথে কোনো তথ্য শেয়ার করা হবে না।</li>
+        <li>ক্লাস রেকর্ডিং শুধুমাত্র সংশ্লিষ্ট শিক্ষার্থীর জন্য সংরক্ষিত।</li>
+        <li>যেকোনো সময় তথ্য মুছে ফেলার অনুরোধ করতে পারবেন।</li>
       </ul>
     </div>
 
-    <!-- Terms -->
-    <div class="policy-full reveal">
-      <h3>📋 শর্তাবলী</h3>
-      <p>Global Islamic Care-এ ভর্তি হওয়ার মাধ্যমে আপনি নিচের শর্তগুলো মেনে নিচ্ছেন:</p>
-      <ul>
-        <li>ক্লাসের নির্ধারিত সময় মেনে চলা আবশ্যক।</li>
-        <li>অনুপস্থিতির ক্ষেত্রে আগেই শিক্ষককে জানাতে হবে।</li>
-        <li>ক্লাস রেকর্ডিং অন্যত্র শেয়ার করা সম্পূর্ণ নিষিদ্ধ।</li>
-        <li>যেকোনো অভিযোগ সরাসরি আমাদের সাথে যোগাযোগের মাধ্যমে জানাতে হবে।</li>
-        <li>আমরা যেকোনো সময় কোর্সের ফি পর্যালোচনা করার অধিকার রাখি।</li>
-      </ul>
-    </div>
-
-    <!-- Contact for Policy -->
-    <div style="text-align:center; padding: 40px; background: linear-gradient(135deg, var(--navy), var(--blue-deep)); border-radius: 20px;" class="reveal">
-      <p style="color:var(--sky); font-size:16px; margin-bottom:16px;">নীতিমালা সম্পর্কে কোনো প্রশ্ন আছে?</p>
-      <a href="https://wa.me/8801733017521" target="_blank" class="btn-whatsapp">💬 আমাদের সাথে কথা বলুন</a>
+    <div style="text-align:center; padding: 36px; background: linear-gradient(135deg, var(--navy), var(--navy-mid)); border-radius: 18px;" class="reveal">
+      <p style="color:var(--sky); font-size:15px; margin-bottom:16px;">নীতিমালা সম্পর্কে কোনো প্রশ্ন?</p>
+      <a href="https://wa.me/8801733017521" target="_blank" class="btn-whatsapp">💬 সরাসরি কথা বলুন</a>
     </div>
   </div>
 </section>
@@ -130,8 +136,8 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="logo-icon" style="width:50px;height:50px;font-size:26px;">ق</div>
-      <p>Global Islamic Care — বিশ্বমানের অনলাইন কোরআন শিক্ষার প্রতিষ্ঠান।</p>
+      <div class="logo-icon" style="width:48px;height:48px;font-size:24px;">ق</div>
+      <p>Global Islamic Care — শুদ্ধ বাংলায় অনলাইন কোরআন শিক্ষার বিশ্বস্ত প্রতিষ্ঠান।</p>
       <div class="social-links">
         <a class="social-link" href="https://web.facebook.com/globalislamiccare1" target="_blank">f</a>
         <a class="social-link" href="https://www.youtube.com/@Globalislamiccare" target="_blank">▶</a>
@@ -139,9 +145,9 @@
         <a class="social-link wa" href="https://wa.me/8801733017521" target="_blank">✆</a>
       </div>
     </div>
-    <div class="footer-col"><h4>কোর্সসমূহ</h4><ul><li><a href="courses.html">হেফজ ব্যাচ</a></li><li><a href="courses.html">ওয়ান-টু-ওয়ান</a></li><li><a href="contact.html">Free counseling sessions</a></li></ul></div>
+    <div class="footer-col"><h4>কোর্স</h4><ul><li><a href="courses.html">তেলাওয়াত কোর্স</a></li><li><a href="courses.html">হেফজ প্রোগ্রাম</a></li></ul></div>
     <div class="footer-col"><h4>তথ্য</h4><ul><li><a href="about.html">আমাদের সম্পর্কে</a></li><li><a href="blog.html">ব্লগ</a></li><li><a href="contact.html">যোগাযোগ</a></li></ul></div>
-    <div class="footer-col"><h4>নীতিমালা</h4><ul><li><a href="policy.html">পেমেন্ট পলিসি</a></li><li><a href="policy.html">রিফান্ড পলিসি</a></li><li><a href="policy.html">গোপনীয়তা নীতি</a></li><li><a href="policy.html">শর্তাবলী</a></li></ul></div>
+    <div class="footer-col"><h4>নীতিমালা</h4><ul><li><a href="policy.html">পেমেন্ট পলিসি</a></li><li><a href="policy.html">রিফান্ড পলিসি</a></li><li><a href="policy.html">গোপনীয়তা নীতি</a></li></ul></div>
   </div>
   <div class="footer-bottom">
     <span>© ২০২৫ Global Islamic Care. সর্বস্বত্ব সংরক্ষিত।</span>
@@ -149,8 +155,8 @@
   </div>
 </footer>
 <script>
-  const observer = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 </script>
 </body>
