@@ -3,751 +3,493 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Islamic Care – অনলাইন কোরআন শিক্ষা | ওয়ান-টু-ওয়ান লাইভ ক্লাস বাংলায়</title>
-<meta name="description" content="Global Islamic Care — সার্টিফাইড হাফেজ শিক্ষকের সাথে ১-এ-১ লাইভ কোরআন শিক্ষা। শিশু থেকে বয়স্ক সবার জন্য। প্রতি ক্লাস ৫০ মিনিট, শনি–বুধ।">
+<title>Global Islamic Care – অনলাইন কোরআন শিক্ষা | হাফেজ শিক্ষকের সাথে লাইভ ক্লাস</title>
+<meta name="description" content="Global Islamic Care — সার্টিফাইড হাফেজ-আলেম শিক্ষকের সাথে ১-এ-১ লাইভ কোরআন শিক্ষা। বাংলাদেশ, ইউকে, মালয়েশিয়া — যেখানেই থাকুন। Free counseling sessions বুক করুন।">
+<meta name="keywords" content="অনলাইন কোরআন শিক্ষা, কোরআন ক্লাস বাংলা, হাফেজ শিক্ষক, তাজউইদ অনলাইন, হেফজ কোর্স">
 <link rel="canonical" href="https://globalislamiccare.com/">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"EducationalOrganization","name":"Global Islamic Care","url":"https://globalislamiccare.com","contactPoint":{"@type":"ContactPoint","telephone":"+8801733017521","contactType":"customer service"}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Bengali:wght@400;500;600;700;900&family=Cinzel:wght@400;600;700;900&display=swap">
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Bengali:wght@400;500;600;700;900&family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="shared.css">
 <style>
-/* ═══════════════════════════════════════════
-   GLOBAL ISLAMIC CARE — PREMIUM REDESIGN
-   Aesthetic: Luxury Islamic Manuscript
-   Dark navy + burnished gold + starfield depth
-═══════════════════════════════════════════ */
-
-:root {
-  --ink:        #05091a;
-  --void:       #000814;
-  --navy:       #071a3e;
-  --navy-mid:   #0d2450;
-  --cobalt:     #1a3a7a;
-  --gold:       #c9a227;
-  --gold-light: #e8c547;
-  --gold-pale:  #f5e09a;
-  --gold-dim:   rgba(201,162,39,0.15);
-  --amber:      #b07d12;
-  --sky:        #7eb8d8;
-  --cream:      #f8f2e4;
-  --white:      #ffffff;
-  --green:      #22c55e;
-  --green-dark: #15803d;
-  --wa:         #25d366;
-  --wa-dark:    #128c7e;
-  --text-dark:  #0f172a;
-  --text-mid:   #334155;
-  --text-light: #64748b;
-  --border:     rgba(201,162,39,0.2);
-  --shadow-gold: 0 8px 40px rgba(201,162,39,0.2);
-  --shadow-navy: 0 20px 60px rgba(0,8,20,0.5);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Noto Serif Bengali', serif;
-  background: var(--void);
-  color: var(--cream);
-  overflow-x: hidden;
-}
-a { text-decoration: none; color: inherit; }
-ul { list-style: none; }
-
-/* ═══ CANVAS STARFIELD ═══ */
-#starfield {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-}
-
-/* ═══ GEOMETRIC PATTERN OVERLAY ═══ */
-.geo-pattern {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    repeating-linear-gradient(
-      60deg,
-      transparent,
-      transparent 40px,
-      rgba(201,162,39,0.015) 40px,
-      rgba(201,162,39,0.015) 41px
-    ),
-    repeating-linear-gradient(
-      -60deg,
-      transparent,
-      transparent 40px,
-      rgba(201,162,39,0.015) 40px,
-      rgba(201,162,39,0.015) 41px
-    );
-}
-
-/* ═══ NAVIGATION ═══ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: rgba(5,9,26,0.85);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(201,162,39,0.25);
-  padding: 0 5%;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 70px;
-  transition: all 0.3s;
-}
-nav.scrolled {
-  background: rgba(5,9,26,0.98);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
-}
-
-.nav-logo { display: flex; align-items: center; gap: 13px; }
-.logo-icon {
-  width: 46px; height: 46px;
-  background: linear-gradient(135deg, var(--gold), var(--amber));
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Amiri', serif; font-size: 24px;
-  color: var(--void); font-weight: 700;
-  box-shadow: 0 0 20px rgba(201,162,39,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-  position: relative;
-}
-.logo-icon::after {
-  content: '';
-  position: absolute; inset: -2px;
-  border-radius: 14px;
-  border: 1px solid rgba(201,162,39,0.4);
-}
-.logo-text { display: flex; flex-direction: column; line-height: 1.2; }
-.logo-text .lt-main {
-  font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700;
-  color: var(--white); letter-spacing: 0.5px;
-}
-.logo-text .lt-sub {
-  font-size: 9px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase;
-}
-
-.nav-links { display: flex; align-items: center; gap: 2px; }
-.nav-links a {
-  color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600;
-  padding: 8px 14px; border-radius: 6px; transition: all 0.2s;
-  position: relative;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute; bottom: 4px; left: 50%; right: 50%;
-  height: 1px; background: var(--gold);
-  transition: all 0.3s;
-}
-.nav-links a:hover { color: var(--gold-light); }
-.nav-links a:hover::after, .nav-links a.active::after { left: 14px; right: 14px; }
-.nav-links a.active { color: var(--gold); }
-
-.nav-cta-btn {
-  background: linear-gradient(135deg, var(--wa), var(--wa-dark)) !important;
-  color: white !important; font-weight: 700 !important;
-  border-radius: 50px !important; padding: 9px 20px !important;
-  box-shadow: 0 4px 16px rgba(37,211,102,0.35) !important;
-}
-.nav-cta-btn::after { display: none !important; }
-.nav-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(37,211,102,0.45) !important; }
-
-.nav-toggle {
-  display: none; flex-direction: column; gap: 5px;
-  cursor: pointer; background: none; border: none; padding: 4px;
-}
-.nav-toggle span { width: 24px; height: 2px; background: var(--gold); border-radius: 2px; display: block; transition: all 0.3s; }
-
-/* ═══ HERO SECTION ═══ */
+/* ═══ HERO ═══ */
 .hero {
   min-height: 100vh;
   display: flex; align-items: center;
   padding: 100px 5% 60px;
   position: relative; overflow: hidden;
-  background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(13,36,80,0.8) 0%, transparent 70%),
-              radial-gradient(ellipse 60% 40% at 80% 100%, rgba(201,162,39,0.06) 0%, transparent 60%),
-              var(--void);
+  background: var(--abyss);
 }
-
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 100% 70% at 30% 50%, rgba(26,79,196,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(212,168,67,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 80% at 10% 80%, rgba(15,51,112,0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-geo {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(60deg, transparent, transparent 60px, rgba(212,168,67,0.018) 60px, rgba(212,168,67,0.018) 61px),
+    repeating-linear-gradient(-60deg, transparent, transparent 60px, rgba(212,168,67,0.018) 60px, rgba(212,168,67,0.018) 61px);
+}
 .hero-mandala {
-  position: absolute;
-  right: -5%; top: 50%; transform: translateY(-50%);
-  width: min(600px, 55vw); height: min(600px, 55vw);
-  opacity: 0.06;
-  animation: slowspin 80s linear infinite;
+  position: absolute; right: -60px; top: 50%;
+  transform: translateY(-50%);
+  width: min(700px, 60vw); height: min(700px, 60vw);
+  opacity: 0.035;
+  animation: slowspin 100s linear infinite;
 }
 @keyframes slowspin { to { transform: translateY(-50%) rotate(360deg); } }
 
-.hero-glow {
-  position: absolute; left: -200px; top: 30%;
-  width: 600px; height: 600px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,162,39,0.07) 0%, transparent 70%);
-  pointer-events: none;
-}
+canvas#stars { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 
 .hero-inner {
-  max-width: 1150px; margin: 0 auto; width: 100%;
+  max-width: 1180px; margin: 0 auto; width: 100%;
   position: relative; z-index: 2;
-  display: grid; grid-template-columns: 1fr 420px; gap: 70px; align-items: center;
+  display: grid; grid-template-columns: 1fr 440px; gap: 80px; align-items: center;
 }
 
-/* Live badge */
-.live-badge {
+.hero-eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
-  background: rgba(201,162,39,0.1);
-  border: 1px solid rgba(201,162,39,0.35);
-  padding: 8px 18px; border-radius: 50px;
-  font-size: 12px; font-weight: 700; color: var(--gold-light);
-  letter-spacing: 1.5px; margin-bottom: 24px;
+  background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.3);
+  padding: 8px 20px; border-radius: 50px;
+  font-size: 11px; font-weight: 800; color: var(--gold-pale);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   backdrop-filter: blur(8px);
 }
-.live-dot {
+.live-pulse {
   width: 8px; height: 8px; border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 0 0 rgba(34,197,94,0.7);
-  animation: livepulse 2s infinite;
+  background: var(--green-light);
+  box-shadow: 0 0 0 0 rgba(34,197,94,0.6);
+  animation: pulse 2s infinite;
 }
-@keyframes livepulse {
-  0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
   70% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
   100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
 }
 
-/* Arabic line above title */
-.hero-arabic-line {
-  font-family: 'Amiri', serif;
-  font-size: 26px; color: var(--gold);
-  direction: rtl; margin-bottom: 12px;
-  opacity: 0.85; letter-spacing: 2px;
-}
-
 .hero-title {
   font-family: 'Amiri', serif;
-  font-size: clamp(36px, 5.5vw, 64px);
-  line-height: 1.2; margin-bottom: 20px;
-  color: white;
+  font-size: clamp(34px, 5.5vw, 68px);
+  color: white; line-height: 1.2; margin-bottom: 10px;
 }
-.hero-title .gold { color: var(--gold); }
-.hero-title .sky  { color: var(--sky); }
+.hero-title .t-gold {
+  color: var(--gold-light);
+  display: block;
+}
+.hero-title .t-blue {
+  background: linear-gradient(135deg, var(--sky-light), var(--blue-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-arabic {
+  font-family: 'Amiri', serif; font-size: 26px;
+  color: rgba(212,168,67,0.7); direction: rtl;
+  margin-bottom: 20px; line-height: 1.7;
+  display: block;
+}
 
 .hero-desc {
-  font-size: 16px; color: rgba(255,255,255,0.6);
-  line-height: 2; margin-bottom: 36px;
-  max-width: 520px; border-left: 2px solid var(--gold); padding-left: 20px;
+  font-size: 16px; color: rgba(255,255,255,0.55);
+  line-height: 1.9; margin-bottom: 36px; max-width: 520px;
+  font-family: 'Noto Serif Bengali', serif;
 }
 
-/* Stats */
-.hero-stats { display: flex; gap: 0; margin-bottom: 36px; }
-.hstat {
-  text-align: center; padding: 16px 24px;
-  border: 1px solid rgba(201,162,39,0.15);
-  background: rgba(201,162,39,0.05);
-  position: relative;
+.hero-stats {
+  display: flex; gap: 28px; margin-bottom: 40px; flex-wrap: wrap;
 }
-.hstat:first-child { border-radius: 12px 0 0 12px; }
-.hstat:last-child  { border-radius: 0 12px 12px 0; }
-.hstat-num {
-  font-family: 'Cinzel', serif;
-  font-size: 26px; font-weight: 700; color: var(--gold);
-  line-height: 1;
+.h-stat {
+  display: flex; flex-direction: column;
 }
-.hstat-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; letter-spacing: 0.5px; }
+.h-stat-num {
+  font-family: 'Cinzel', serif; font-size: 26px; font-weight: 700;
+  color: var(--gold-light); line-height: 1;
+}
+.h-stat-label {
+  font-size: 11px; color: rgba(255,255,255,0.4);
+  margin-top: 5px; font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 0.5px;
+}
 
-.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 
-/* ═══ HERO GLASS CARD ═══ */
+.hero-trust {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 32px;
+  font-size: 12px; color: rgba(255,255,255,0.3);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.trust-avatars { display: flex; }
+.trust-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cobalt), var(--royal));
+  border: 2px solid rgba(212,168,67,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: white; font-weight: 700;
+  margin-left: -8px;
+}
+.trust-avatar:first-child { margin-left: 0; }
+
+/* Hero Card */
 .hero-card {
   background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(201,162,39,0.25);
-  border-radius: 24px; padding: 30px;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  border: 1px solid rgba(212,168,67,0.2);
+  border-radius: 24px;
+  padding: 36px 32px;
+  backdrop-filter: blur(20px);
   position: relative; overflow: hidden;
 }
 .hero-card::before {
   content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,162,39,0.5), transparent);
+  position: absolute; top: -60px; right: -60px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,79,196,0.15) 0%, transparent 70%);
 }
 
-.hc-header { text-align: center; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid rgba(201,162,39,0.15); }
-.hc-title { font-family: 'Amiri', serif; font-size: 20px; color: var(--gold); margin-bottom: 4px; }
-.hc-sub { font-size: 12px; color: rgba(255,255,255,0.4); }
-
-.hc-feature {
-  display: flex; align-items: center; gap: 12px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px; padding: 13px 14px;
-  margin-bottom: 8px; transition: all 0.2s;
-}
-.hc-feature:hover { border-color: rgba(201,162,39,0.3); background: rgba(201,162,39,0.05); }
-.hc-feat-icon { font-size: 20px; flex-shrink: 0; }
-.hc-feat-name { font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 600; }
-.hc-feat-desc { font-size: 11px; color: rgba(255,255,255,0.35); }
-
-.price-box {
-  margin-top: 18px;
-  background: linear-gradient(135deg, rgba(201,162,39,0.15), rgba(201,162,39,0.08));
-  border: 1px solid rgba(201,162,39,0.3);
-  border-radius: 16px; padding: 20px; text-align: center;
-  position: relative; overflow: hidden;
-}
-.price-box::after {
-  content: 'ق';
-  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-  font-family: 'Amiri', serif; font-size: 60px; color: var(--gold); opacity: 0.05;
-}
-.price-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
-.price-val { font-family: 'Cinzel', serif; font-size: 42px; color: var(--gold); font-weight: 700; line-height: 1; }
-.price-per { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 4px; }
-.price-note { font-size: 12px; color: var(--green); margin-top: 6px; font-weight: 700; }
-
-/* ═══ BUTTONS ═══ */
-.btn-wa {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, var(--wa), var(--wa-dark));
-  color: white; padding: 14px 26px; border-radius: 12px;
-  font-size: 15px; font-weight: 700; border: none; cursor: pointer;
-  font-family: 'Noto Serif Bengali', serif;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.35);
-  transition: all 0.25s;
-}
-.btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.45); }
-
-.btn-gold {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, var(--gold), var(--amber));
-  color: var(--void); padding: 14px 26px; border-radius: 12px;
-  font-size: 15px; font-weight: 700; border: none; cursor: pointer;
-  font-family: 'Noto Serif Bengali', serif;
-  box-shadow: var(--shadow-gold);
-  transition: all 0.25s;
-}
-.btn-gold:hover { transform: translateY(-2px); }
-
-.btn-outline {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: transparent;
-  border: 1.5px solid rgba(201,162,39,0.4);
-  color: var(--gold-light); padding: 13px 24px; border-radius: 12px;
-  font-size: 14px; font-weight: 600;
-  font-family: 'Noto Serif Bengali', serif;
-  transition: all 0.25s;
-}
-.btn-outline:hover { background: var(--gold-dim); border-color: var(--gold); }
-
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white; padding: 14px 26px; border-radius: 12px;
-  font-size: 15px; font-weight: 700; border: none; cursor: pointer;
-  font-family: 'Noto Serif Bengali', serif;
-  box-shadow: 0 4px 20px rgba(37,99,235,0.35);
-  transition: all 0.25s;
-}
-.btn-primary:hover { transform: translateY(-2px); }
-
-/* ═══ DIVIDER ═══ */
-.ornament-divider {
-  text-align: center; padding: 40px 0; position: relative;
-  display: flex; align-items: center; justify-content: center; gap: 20px;
-}
-.ornament-divider::before, .ornament-divider::after {
-  content: '';
-  flex: 1; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent);
-}
-.ornament-divider span {
-  font-family: 'Amiri', serif; font-size: 28px; color: var(--gold); opacity: 0.6;
+.card-title {
+  font-family: 'Amiri', serif; font-size: 20px; color: var(--gold-light);
+  margin-bottom: 24px; text-align: center;
+  display: flex; align-items: center; gap: 10px; justify-content: center;
 }
 
-/* ═══ SECTION COMMON ═══ */
-.section-tag {
-  display: inline-block;
-  background: rgba(201,162,39,0.1);
-  border: 1px solid rgba(201,162,39,0.25);
-  color: var(--gold); font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  padding: 5px 16px; border-radius: 50px; margin-bottom: 14px;
-}
-.section-title {
-  font-family: 'Amiri', serif;
-  font-size: clamp(26px, 4vw, 44px); font-weight: 700; line-height: 1.3;
-}
-.section-sub { font-size: 15px; line-height: 1.9; opacity: 0.6; max-width: 560px; }
-
-/* ═══ PACKAGE SECTION ═══ */
-.package-section {
-  padding: 100px 5%;
-  background: linear-gradient(180deg, #050912 0%, #071a3e 50%, #050912 100%);
-  position: relative; z-index: 1;
-}
-.package-inner { max-width: 1100px; margin: 0 auto; }
-.pkg-header-text { text-align: center; margin-bottom: 60px; }
-.pkg-header-text .section-title { color: white; }
-.pkg-header-text .section-title span { color: var(--gold); }
-
-/* Pricing card */
-.pricing-card {
-  max-width: 860px; margin: 0 auto;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(201,162,39,0.25);
-  border-radius: 28px; overflow: hidden;
-  box-shadow: var(--shadow-navy);
-  position: relative;
-}
-.pricing-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.pc-top {
-  background: linear-gradient(135deg, rgba(13,36,80,0.9), rgba(26,58,122,0.7));
-  padding: 36px 40px;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
-  border-bottom: 1px solid rgba(201,162,39,0.15);
-}
-.pc-badge {
-  display: inline-block;
-  background: rgba(201,162,39,0.2); color: var(--gold-light);
-  font-size: 10px; font-weight: 700; letter-spacing: 2px;
-  padding: 4px 12px; border-radius: 50px; margin-bottom: 10px;
-}
-.pc-title { font-family: 'Amiri', serif; font-size: 26px; color: white; margin-bottom: 4px; }
-.pc-sub { font-size: 13px; color: rgba(255,255,255,0.45); }
-.pc-price { text-align: right; }
-.pc-price-val { font-family: 'Cinzel', serif; font-size: 50px; color: var(--gold); font-weight: 700; line-height: 1; }
-.pc-price-per { font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 4px; }
-.pc-price-note { font-size: 12px; color: var(--green); margin-top: 6px; font-weight: 700; }
-
-.pc-body { padding: 36px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
-
-.pc-feat-title {
-  font-size: 11px; font-weight: 700; color: var(--gold);
-  text-transform: uppercase; letter-spacing: 2px; margin-bottom: 18px;
-}
-.pc-feat {
-  display: flex; align-items: flex-start; gap: 10px;
-  font-size: 14px; color: rgba(255,255,255,0.7);
-  line-height: 1.6; padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.pc-feat:last-child { border-bottom: none; }
-.pc-feat-check {
-  width: 20px; height: 20px; border-radius: 50%;
-  background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 2px;
-  font-size: 11px; color: var(--green);
-}
-
-.pc-info-item {
-  display: flex; align-items: center; gap: 14px;
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(201,162,39,0.1);
-  border-radius: 14px; padding: 14px 16px; margin-bottom: 10px;
-  transition: all 0.2s;
-}
-.pc-info-item:hover { border-color: rgba(201,162,39,0.3); background: rgba(201,162,39,0.05); }
-.pc-info-icon { font-size: 22px; flex-shrink: 0; }
-.pc-info-label { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; }
-.pc-info-val { font-size: 14px; color: white; font-weight: 700; }
-
-.pc-footer {
-  padding: 0 40px 36px;
-  display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
-}
-.no-fee-badge {
-  display: flex; align-items: center; gap: 8px;
-  background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25);
-  border-radius: 8px; padding: 10px 16px;
-  font-size: 13px; color: var(--green); font-weight: 700;
-}
-
-/* ═══ ENROLLMENT FORM ═══ */
-.form-section {
-  padding: 100px 5%;
-  background: var(--void);
-  position: relative;
-}
-.form-section::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,162,39,0.04), transparent);
-}
-.form-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
-.form-header { text-align: center; margin-bottom: 50px; }
-.form-header .section-title { color: white; }
-.form-header .section-title span { color: var(--gold); }
-
-.form-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(201,162,39,0.2);
-  border-radius: 24px; padding: 44px;
-  backdrop-filter: blur(8px);
-  box-shadow: var(--shadow-navy);
-  position: relative;
-}
-.form-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,162,39,0.5), transparent);
-}
-
-.form-group { margin-bottom: 20px; }
-.form-group label {
-  font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.5);
-  display: block; margin-bottom: 8px;
-  text-transform: uppercase; letter-spacing: 1px;
-}
-.form-group input, .form-group select, .form-group textarea {
+.trial-form { display: flex; flex-direction: column; gap: 14px; }
+.trial-input {
   width: 100%; padding: 14px 18px;
-  border-radius: 12px;
-  border: 1.5px solid rgba(201,162,39,0.2);
-  background: rgba(255,255,255,0.04);
-  color: white; font-size: 14px;
-  font-family: 'Noto Serif Bengali', serif;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px; color: white;
+  font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
   outline: none; transition: all 0.25s;
 }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  border-color: rgba(201,162,39,0.5);
-  background: rgba(201,162,39,0.06);
-  box-shadow: 0 0 0 3px rgba(201,162,39,0.08);
-}
-.form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
-.form-group select { appearance: none; cursor: pointer; }
-.form-group select option { background: #071a3e; color: white; }
-.form-group textarea { min-height: 100px; resize: vertical; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.trial-input::placeholder { color: rgba(255,255,255,0.3); }
+.trial-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
 
-.form-submit-btn {
-  width: 100%; padding: 18px;
-  border-radius: 14px;
+.trial-select {
+  width: 100%; padding: 14px 18px;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px; color: white;
+  font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none; transition: all 0.25s; cursor: pointer;
+}
+.trial-select option { background: #0a2147; color: white; }
+.trial-select:focus { border-color: var(--gold); }
+
+.trial-btn {
+  width: 100%; padding: 16px;
   background: linear-gradient(135deg, var(--wa), var(--wa-dark));
-  color: white; font-size: 16px; font-weight: 700;
-  border: none; cursor: pointer;
-  font-family: 'Noto Serif Bengali', serif;
-  box-shadow: 0 4px 24px rgba(37,211,102,0.35);
-  transition: all 0.25s; margin-top: 8px;
-  letter-spacing: 0.5px;
+  color: white; border: none; border-radius: 10px;
+  font-size: 15px; font-weight: 800; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.3s; letter-spacing: 0.3px;
+  box-shadow: 0 8px 30px rgba(37,211,102,0.3);
 }
-.form-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37,211,102,0.5); }
+.trial-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,211,102,0.5); }
 
-/* ═══ REVIEWS ═══ */
-.reviews-section {
+.card-note {
+  text-align: center; font-size: 12px; color: rgba(255,255,255,0.3);
+  margin-top: 12px; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Features Ticker */
+.ticker-wrap {
+  background: rgba(26,79,196,0.12);
+  border-top: 1px solid rgba(212,168,67,0.12);
+  border-bottom: 1px solid rgba(212,168,67,0.12);
+  padding: 14px 0; overflow: hidden;
+  position: relative; z-index: 2;
+}
+.ticker-track {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 0 40px; font-size: 13px; color: rgba(255,255,255,0.55);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;
+}
+.ticker-item .ti-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0;
+}
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ═══ WHY SECTION ═══ */
+.why-section {
   padding: 100px 5%;
-  background: linear-gradient(180deg, #050912 0%, #071a3e 100%);
-  overflow: hidden;
-}
-.reviews-header { text-align: center; margin-bottom: 56px; }
-.reviews-header .section-title { color: white; }
-.reviews-header .section-title span { color: var(--gold); }
-
-.reviews-track-wrap { overflow: hidden; margin: 0 -5%; padding: 16px 0; }
-.reviews-track {
-  display: flex; gap: 22px;
-  animation: scrollReviews 28s linear infinite;
-  width: max-content;
-}
-.reviews-track:hover { animation-play-state: paused; }
-@keyframes scrollReviews { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-
-.review-card {
-  width: 300px; flex-shrink: 0;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(201,162,39,0.2);
-  border-radius: 18px; padding: 26px;
-  transition: all 0.2s;
+  background: white;
   position: relative;
 }
-.review-card::before {
-  content: '"';
-  position: absolute; top: 16px; right: 20px;
-  font-family: 'Amiri', serif; font-size: 60px; color: var(--gold); opacity: 0.1;
-  line-height: 1;
+.why-section::before {
+  content: '';
+  position: absolute; top: 0; left: 5%; right: 5%;
+  height: 1px; background: linear-gradient(90deg, transparent, rgba(37,99,235,0.15), transparent);
 }
-.review-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
-.review-text { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 18px; font-style: italic; }
-.review-author { display: flex; align-items: center; gap: 12px; }
-.review-avatar {
-  width: 42px; height: 42px; border-radius: 50%;
+.why-inner { max-width: 1180px; margin: 0 auto; }
+
+.why-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  margin-top: 0;
+}
+.why-card {
+  padding: 36px 28px; border-radius: 20px;
+  border: 1px solid rgba(37,99,235,0.1);
+  background: var(--gray-50);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative; overflow: hidden;
+}
+.why-card::before {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--royal), var(--blue-light));
+  transform: scaleX(0); transition: transform 0.4s;
+}
+.why-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(26,79,196,0.12); border-color: rgba(37,99,235,0.2); }
+.why-card:hover::before { transform: scaleX(1); }
+
+.why-icon {
+  width: 60px; height: 60px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.1);
+  transition: all 0.4s;
+}
+.why-card:hover .why-icon {
+  background: linear-gradient(135deg, var(--royal), var(--blue-light));
+  box-shadow: 0 8px 30px rgba(26,79,196,0.3);
+}
+.why-title { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
+.why-desc { font-size: 14px; color: var(--text-body); line-height: 1.75; font-family: 'Noto Serif Bengali', serif; }
+
+/* ═══ COURSES PREVIEW ═══ */
+.courses-preview {
+  padding: 100px 5%;
+  background: linear-gradient(180deg, var(--gray-50) 0%, white 100%);
+}
+.courses-preview-inner { max-width: 1180px; margin: 0 auto; }
+
+.course-cards-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.cp-card {
+  border-radius: 22px; overflow: hidden;
+  border: 1px solid rgba(37,99,235,0.12);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.4s;
+  background: white;
+}
+.cp-card:hover { transform: translateY(-8px); box-shadow: 0 24px 70px rgba(26,79,196,0.15); }
+
+.cp-top {
+  padding: 36px 28px 28px;
+  position: relative; overflow: hidden;
+}
+.cp-card:nth-child(1) .cp-top { background: linear-gradient(135deg, #061530, #0f3370); }
+.cp-card:nth-child(2) .cp-top { background: linear-gradient(135deg, #071838, #0a2147); }
+.cp-card:nth-child(3) .cp-top {
+  background: linear-gradient(135deg, #0a1a0a, #153515);
+}
+.cp-top::after {
+  content: '';
+  position: absolute; top: -30px; right: -30px;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+}
+.cp-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+.cp-badge {
+  display: inline-block; background: var(--gold-dim);
+  border: 1px solid var(--border-gold); color: var(--gold-pale);
+  font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; padding: 4px 12px; border-radius: 50px;
+  margin-bottom: 12px; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.cp-name { font-family: 'Amiri', serif; font-size: 22px; color: white; margin-bottom: 6px; }
+.cp-sub { font-size: 13px; color: rgba(255,255,255,0.45); }
+
+.cp-bottom { padding: 24px 28px; }
+.cp-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.cp-feature {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--text-body);
+  font-family: 'Noto Serif Bengali', serif;
+}
+.cp-feature::before {
+  content: '✓'; color: var(--royal); font-weight: 800;
+  font-size: 12px; flex-shrink: 0;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(37,99,235,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.cp-price { font-family: 'Cinzel', serif; font-size: 32px; font-weight: 700; color: var(--navy); }
+.cp-price span { font-size: 14px; color: var(--text-muted); font-family: 'Noto Serif Bengali', serif; font-weight: 400; }
+
+/* ═══ PROCESS SECTION ═══ */
+.process-section {
+  padding: 100px 5%;
+  background: var(--abyss);
+  position: relative; overflow: hidden;
+}
+.process-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(26,79,196,0.08) 0%, transparent 70%);
+}
+.process-geo {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 50px, rgba(212,168,67,0.015) 50px, rgba(212,168,67,0.015) 51px);
+}
+.process-inner { max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; }
+
+.process-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  position: relative; margin-top: 0;
+}
+.process-steps::before {
+  content: '';
+  position: absolute; top: 36px; left: 12.5%; right: 12.5%;
+  height: 1px; background: linear-gradient(90deg, var(--royal), var(--blue-light), var(--royal));
+  opacity: 0.3;
+}
+.p-step { text-align: center; padding: 0 20px; }
+.p-step-num {
+  width: 72px; height: 72px; border-radius: 50%;
   background: linear-gradient(135deg, var(--navy-mid), var(--cobalt));
-  border: 2px solid rgba(201,162,39,0.3);
+  border: 2px solid rgba(212,168,67,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 22px; color: var(--gold);
+  font-weight: 700; margin: 0 auto 24px;
+  box-shadow: 0 8px 30px rgba(26,79,196,0.3);
+  position: relative; z-index: 1;
+  transition: all 0.3s;
+}
+.p-step:hover .p-step-num {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(212,168,67,0.3);
+  border-color: var(--gold);
+}
+.p-step-title { font-size: 15px; font-weight: 800; color: white; margin-bottom: 10px; }
+.p-step-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; font-family: 'Noto Serif Bengali', serif; }
+
+/* ═══ TESTIMONIALS ═══ */
+.testimonials-section { padding: 100px 5%; background: white; }
+.testimonials-inner { max-width: 1180px; margin: 0 auto; }
+
+.t-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.t-card {
+  padding: 32px 28px; border-radius: 20px;
+  border: 1px solid rgba(37,99,235,0.1); background: var(--gray-50);
+  transition: all 0.3s; position: relative;
+}
+.t-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(37,99,235,0.2); }
+.t-quote {
+  font-family: 'Amiri', serif; font-size: 56px; color: var(--gold-dim);
+  line-height: 0.5; margin-bottom: 16px; display: block;
+}
+.t-text {
+  font-size: 14px; color: var(--text-body); line-height: 1.85;
+  margin-bottom: 24px; font-family: 'Noto Serif Bengali', serif; font-style: italic;
+}
+.t-author {
+  display: flex; align-items: center; gap: 12px;
+}
+.t-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--royal), var(--sky));
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; flex-shrink: 0;
 }
-.review-name { font-size: 13px; font-weight: 700; color: white; }
-.review-loc { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+.t-name { font-size: 14px; font-weight: 800; color: var(--navy); }
+.t-loc { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.t-stars { color: var(--gold); font-size: 12px; letter-spacing: 2px; margin-bottom: 4px; }
 
-/* ═══ FAQ ═══ */
-.faq-section {
+/* ═══ CTA SECTION ═══ */
+.cta-section {
   padding: 100px 5%;
-  background: var(--void);
-  position: relative;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--cobalt) 50%, var(--navy-mid) 100%);
+  position: relative; overflow: hidden; text-align: center;
 }
-.faq-section::before {
+.cta-section::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(13,36,80,0.6), transparent);
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(212,168,67,0.07) 0%, transparent 60%);
 }
-.faq-inner { max-width: 780px; margin: 0 auto; position: relative; z-index: 1; }
-.faq-header { text-align: center; margin-bottom: 56px; }
-.faq-header .section-title { color: white; }
-.faq-header .section-title span { color: var(--gold); }
+.cta-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+.cta-arabic {
+  font-family: 'Amiri', serif; font-size: 40px; color: var(--gold);
+  direction: rtl; line-height: 1.7; margin-bottom: 8px; display: block;
+}
+.cta-translation { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 36px; display: block; font-style: italic; }
+.cta-title { font-family: 'Amiri', serif; font-size: clamp(28px, 4vw, 48px); color: white; margin-bottom: 16px; line-height: 1.3; }
+.cta-title span { color: var(--gold-light); }
+.cta-desc { font-size: 16px; color: rgba(255,255,255,0.55); margin-bottom: 44px; line-height: 1.85; font-family: 'Noto Serif Bengali', serif; }
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
-.faq-item {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(201,162,39,0.15);
-  border-radius: 14px; margin-bottom: 12px;
-  overflow: hidden; transition: all 0.3s;
+/* ═══ SCHEDULE STRIP ═══ */
+.schedule-strip {
+  background: var(--gray-50); padding: 60px 5%;
+  border-top: 1px solid rgba(37,99,235,0.1);
+  border-bottom: 1px solid rgba(37,99,235,0.1);
 }
-.faq-item.open {
-  border-color: rgba(201,162,39,0.35);
-  background: rgba(201,162,39,0.04);
+.schedule-inner { max-width: 900px; margin: 0 auto; }
+.sched-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.sched-day {
+  text-align: center; padding: 20px 12px; border-radius: 14px;
+  border: 1px solid rgba(37,99,235,0.12);
+  background: white; transition: all 0.3s;
 }
-.faq-q {
-  padding: 20px 24px; font-size: 15px; font-weight: 700;
-  color: rgba(255,255,255,0.85);
-  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-  user-select: none;
+.sched-day.active {
+  background: linear-gradient(135deg, var(--navy), var(--cobalt));
+  border-color: transparent;
+  box-shadow: 0 8px 30px rgba(26,79,196,0.25);
 }
-.faq-icon {
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 1.5px solid rgba(201,162,39,0.3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; color: var(--gold); flex-shrink: 0;
-  transition: all 0.3s; font-weight: 300;
+.sched-day:hover { transform: translateY(-3px); }
+.sd-name { font-size: 13px; font-weight: 800; color: var(--navy); margin-bottom: 6px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.sched-day.active .sd-name { color: white; }
+.sd-time { font-size: 11px; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; }
+.sched-day.active .sd-time { color: rgba(255,255,255,0.6); }
+.sd-status {
+  display: inline-block; margin-top: 8px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 3px 10px; border-radius: 50px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
-.faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(201,162,39,0.15); }
-.faq-a {
-  padding: 0 24px; font-size: 14px; color: rgba(255,255,255,0.5);
-  line-height: 1.9; max-height: 0; overflow: hidden; transition: all 0.35s;
-}
-.faq-item.open .faq-a { max-height: 300px; padding: 0 24px 20px; }
+.sd-open { background: rgba(22,163,74,0.1); color: var(--green); }
+.sd-closed { background: rgba(100,116,139,0.1); color: var(--text-muted); }
 
-/* ═══ SOCIAL ═══ */
-.social-section {
-  padding: 80px 5%;
-  background: linear-gradient(135deg, #071a3e, #0d2450);
-  text-align: center;
-  border-top: 1px solid rgba(201,162,39,0.15);
-  border-bottom: 1px solid rgba(201,162,39,0.15);
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 50px; }
+  .hero-card { max-width: 500px; }
+  .hero-mandala { display: none; }
 }
-.social-grid { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
-.social-btn {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 24px; border-radius: 12px;
-  font-size: 14px; font-weight: 700; transition: all 0.25s; color: white;
-  border: 1px solid rgba(255,255,255,0.1);
+@media (max-width: 900px) {
+  .why-grid, .course-cards-row, .t-grid { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .process-steps::before { display: none; }
+  .sched-grid { grid-template-columns: repeat(3, 1fr); }
 }
-.social-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-.social-btn.fb { background: #1877f2; }
-.social-btn.yt { background: #ff0000; }
-.social-btn.wa { background: #25d366; }
-.social-btn.li { background: #0a66c2; }
-
-/* ═══ FOOTER ═══ */
-footer {
-  background: var(--ink);
-  border-top: 1px solid rgba(201,162,39,0.15);
-  padding: 70px 5% 0;
-}
-.footer-top {
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 40px; max-width: 1100px; margin: 0 auto;
-  padding-bottom: 50px; border-bottom: 1px solid rgba(201,162,39,0.1);
-}
-.footer-brand-desc { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.9; margin: 16px 0 20px; }
-.footer-social { display: flex; gap: 10px; flex-wrap: wrap; }
-.f-social-link {
-  width: 38px; height: 38px; border-radius: 10px;
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5);
-  transition: all 0.2s;
-}
-.f-social-link:hover { background: var(--gold); border-color: var(--gold); color: var(--void); }
-.f-social-link.wa:hover { background: var(--wa); border-color: var(--wa); color: white; }
-.footer-col h4 {
-  font-size: 10px; font-weight: 700; color: var(--gold);
-  margin-bottom: 18px; letter-spacing: 2px; text-transform: uppercase;
-}
-.footer-col ul li { margin-bottom: 10px; }
-.footer-col ul li a {
-  font-size: 13px; color: rgba(255,255,255,0.4);
-  transition: color 0.2s; display: flex; align-items: center; gap: 6px;
-}
-.footer-col ul li a:hover { color: var(--sky); }
-.footer-bottom {
-  max-width: 1100px; margin: 0 auto; padding: 22px 0;
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 12px; color: rgba(255,255,255,0.25);
-  flex-wrap: wrap; gap: 8px;
-}
-.footer-bottom a { color: var(--sky); }
-
-/* ═══ TOAST ═══ */
-.toast {
-  position: fixed; bottom: 28px; right: 28px; z-index: 99999;
-  background: linear-gradient(135deg, #071a3e, #0d2450);
-  border: 1px solid rgba(201,162,39,0.4);
-  color: white; padding: 14px 22px;
-  border-radius: 12px; font-size: 14px; font-weight: 600;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-  transform: translateY(80px); opacity: 0;
-  transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
-  pointer-events: none;
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-
-/* ═══ REVEAL ANIMATIONS ═══ */
-.reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.22,1,0.36,1); }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-left { opacity: 0; transform: translateX(-30px); transition: all 0.7s cubic-bezier(0.22,1,0.36,1); }
-.reveal-left.visible { opacity: 1; transform: translateX(0); }
-.reveal-right { opacity: 0; transform: translateX(30px); transition: all 0.7s cubic-bezier(0.22,1,0.36,1); }
-.reveal-right.visible { opacity: 1; transform: translateX(0); }
-
-/* ═══ RESPONSIVE ═══ */
-@media (max-width: 1000px) {
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-card { display: none; }
-}
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; flex-direction: column;
-    position: absolute; top: 70px; left: 0; right: 0;
-    background: rgba(5,9,26,0.98);
-    padding: 16px 5%; gap: 4px;
-    border-bottom: 1px solid rgba(201,162,39,0.15);
-  }
-  .nav-links.open { display: flex; }
-  .nav-links a { padding: 12px 16px; width: 100%; border-radius: 8px; }
-  .nav-toggle { display: flex; }
-  .pc-body { grid-template-columns: 1fr; }
-  .pc-top { flex-direction: column; }
-  .pc-price { text-align: left; }
-  .hero-stats { flex-wrap: wrap; }
-  .hstat { border-radius: 10px !important; margin: 4px; }
-  .footer-top { grid-template-columns: 1fr 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .hero-desc { border-left: none; padding-left: 0; }
-  .pc-top, .pc-body, .pc-footer { padding-left: 22px; padding-right: 22px; }
-  .form-card { padding: 28px 22px; }
-}
-@media (max-width: 480px) {
-  .footer-top { grid-template-columns: 1fr; }
-  .hero-btns { flex-direction: column; }
-  .hero-btns a { text-align: center; justify-content: center; }
+@media (max-width: 640px) {
+  .why-grid, .course-cards-row, .t-grid { grid-template-columns: 1fr; }
+  .sched-grid { grid-template-columns: 1fr 1fr; }
+  .hero-stats { gap: 20px; }
 }
 </style>
 </head>
 <body>
 
-<!-- Starfield Canvas -->
-<canvas id="starfield"></canvas>
-
-<!-- ═══ NAVIGATION ═══ -->
-<nav id="navbar">
+<nav id="mainNav">
   <a href="index.html" class="nav-logo">
-    <div class="logo-icon">ق</div>
+    <div class="logo-mark">
+      <div class="logo-mark-inner">ق</div>
+    </div>
     <div class="logo-text">
       <span class="lt-main">Global Islamic Care</span>
       <span class="lt-sub">Quran Learning Online</span>
@@ -757,358 +499,427 @@ footer {
     <a href="courses.html">কোর্স</a>
     <a href="teachers.html">শিক্ষক</a>
     <a href="about.html">আমাদের সম্পর্কে</a>
-    <a href="blog.html">ব্লগ</a>
-    <a href="contact.html" class="nav-cta-btn">💬 যোগাযোগ</a>
+    <a href="join-as-teacher.html">শিক্ষক হিসেবে যোগ দিন</a>
+    <a href="contact.html" class="nav-cta-btn">💬 Free পরামর্শ</a>
   </div>
-  <button class="nav-toggle" onclick="toggleNav()">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section class="hero">
-  <div class="geo-pattern"></div>
-
-  <!-- Mandala SVG -->
-  <svg class="hero-mandala" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="250" cy="250" r="240" stroke="#c9a227" stroke-width="0.5"/>
-    <circle cx="250" cy="250" r="200" stroke="#c9a227" stroke-width="0.5"/>
-    <circle cx="250" cy="250" r="160" stroke="#c9a227" stroke-width="0.5"/>
-    <circle cx="250" cy="250" r="120" stroke="#c9a227" stroke-width="0.5"/>
-    <circle cx="250" cy="250" r="80" stroke="#c9a227" stroke-width="0.5"/>
-    <circle cx="250" cy="250" r="40" stroke="#c9a227" stroke-width="0.5"/>
-    <!-- 8-point star -->
-    <g transform="translate(250,250)">
-      <line x1="0" y1="-240" x2="0" y2="240" stroke="#c9a227" stroke-width="0.3"/>
-      <line x1="-240" y1="0" x2="240" y2="0" stroke="#c9a227" stroke-width="0.3"/>
-      <line x1="-170" y1="-170" x2="170" y2="170" stroke="#c9a227" stroke-width="0.3"/>
-      <line x1="170" y1="-170" x2="-170" y2="170" stroke="#c9a227" stroke-width="0.3"/>
-      <polygon points="0,-200 47,-47 200,0 47,47 0,200 -47,47 -200,0 -47,-47" fill="none" stroke="#c9a227" stroke-width="0.4"/>
-      <polygon points="0,-160 38,-38 160,0 38,38 0,160 -38,38 -160,0 -38,-38" fill="none" stroke="#c9a227" stroke-width="0.3"/>
-    </g>
-    <text x="250" y="270" text-anchor="middle" font-family="Amiri" font-size="48" fill="#c9a227">ق</text>
+  <canvas id="stars"></canvas>
+  <div class="hero-bg"></div>
+  <div class="hero-geo"></div>
+  <svg class="hero-mandala" viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="95" stroke="#d4a843" stroke-width="0.5"/>
+    <circle cx="100" cy="100" r="75" stroke="#d4a843" stroke-width="0.5"/>
+    <circle cx="100" cy="100" r="55" stroke="#d4a843" stroke-width="0.5"/>
+    <circle cx="100" cy="100" r="35" stroke="#d4a843" stroke-width="0.5"/>
+    <polygon points="100,10 190,55 190,145 100,190 10,145 10,55" fill="none" stroke="#d4a843" stroke-width="0.5"/>
+    <polygon points="100,30 170,65 170,135 100,170 30,135 30,65" fill="none" stroke="#d4a843" stroke-width="0.5"/>
+    <line x1="100" y1="5" x2="100" y2="195" stroke="#d4a843" stroke-width="0.3"/>
+    <line x1="5" y1="100" x2="195" y2="100" stroke="#d4a843" stroke-width="0.3"/>
+    <line x1="30" y1="30" x2="170" y2="170" stroke="#d4a843" stroke-width="0.3"/>
+    <line x1="170" y1="30" x2="30" y2="170" stroke="#d4a843" stroke-width="0.3"/>
   </svg>
-
-  <div class="hero-glow"></div>
 
   <div class="hero-inner">
     <div class="hero-left">
-      <div class="live-badge reveal">
-        <span class="live-dot"></span>
-        লাইভ ক্লাস এখন চলছে
+      <div class="hero-eyebrow reveal" style="transition-delay:0s">
+        <div class="live-pulse"></div>
+        <span>এখনই ভর্তি চলছে</span>
       </div>
 
-      <div class="hero-arabic-line reveal">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-
-      <h1 class="hero-title reveal">
-        <span class="gold">সহিসুদ্ধ কোরআন</span><br>
-        <span class="sky">তেলাওয়াত ও হেফজ</span><br>
-        শিখুন বাড়িতে বসে
+      <h1 class="hero-title reveal" style="transition-delay:0.1s">
+        <span class="t-gold">কোরআনের আলোয়</span>
+        জীবন <span class="t-blue">গড়ুন</span>
       </h1>
-      <p class="hero-desc reveal">
-        সার্টিফাইড হাফেজ-মাওলানা ও হাফেজা-আলেমা শিক্ষকদের সাথে ১-এ-১ লাইভ ক্লাস —
-        শিশু থেকে বয়স্ক, ছেলে ও মেয়ে সবার জন্য। ঘরে বসেই আন্তর্জাতিক মানের কোরআন শিক্ষা।
-        প্রতি ক্লাস ৫০ মিনিট।
+
+      <span class="hero-arabic reveal" style="transition-delay:0.2s">وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا</span>
+
+      <p class="hero-desc reveal" style="transition-delay:0.25s">
+        হাফেজ-আলেম শিক্ষকের সাথে ১-এ-১ লাইভ কোরআন ক্লাস।
+        শিশু থেকে বয়স্ক — পরিবারের সকলের জন্য। বিশ্বের যেকোনো প্রান্ত থেকে শিখুন।
       </p>
 
-      <div class="hero-stats reveal">
-        <div class="hstat">
-          <div class="hstat-num">৬+</div>
-          <div class="hstat-label">অভিজ্ঞ শিক্ষক</div>
+      <div class="hero-stats reveal" style="transition-delay:0.3s">
+        <div class="h-stat">
+          <span class="h-stat-num">৭০+</span>
+          <span class="h-stat-label">সক্রিয় শিক্ষার্থী</span>
         </div>
-        <div class="hstat">
-          <div class="hstat-num">৬০+</div>
-          <div class="hstat-label">রানিং স্টুডেন্ট</div>
+        <div class="h-stat">
+          <span class="h-stat-num">৬ জন</span>
+          <span class="h-stat-label">হাফেজ-আলেম শিক্ষক</span>
         </div>
-        <div class="hstat">
-          <div class="hstat-num">১-এ-১</div>
-          <div class="hstat-label">লাইভ ক্লাস</div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-num">৫০ মি.</div>
-          <div class="hstat-label">প্রতি ক্লাস</div>
+        <div class="h-stat">
+          <span class="h-stat-num">৩+</span>
+          <span class="h-stat-label">দেশে ক্লাস</span>
         </div>
       </div>
 
-      <div class="hero-btns reveal">
-        <a href="#enroll" class="btn-wa">📋 ভর্তি ফর্ম পূরণ করুন</a>
-        <a href="courses.html" class="btn-gold">📚 কোর্স দেখুন</a>
-        <a href="https://wa.me/8801733017521" target="_blank" class="btn-outline">💬 WhatsApp</a>
+      <div class="hero-cta-row reveal" style="transition-delay:0.35s">
+        <a href="contact.html" class="btn btn-whatsapp btn-lg">💬 Free পরামর্শ বুক করুন</a>
+        <a href="courses.html" class="btn btn-ghost btn-lg">কোর্স দেখুন →</a>
+      </div>
+
+      <div class="hero-trust reveal" style="transition-delay:0.4s">
+        <div class="trust-avatars">
+          <div class="trust-avatar">র</div>
+          <div class="trust-avatar">ফ</div>
+          <div class="trust-avatar">আ</div>
+          <div class="trust-avatar">স</div>
+        </div>
+        <span>৭০+ শিক্ষার্থী আমাদের বিশ্বাস করেছেন</span>
       </div>
     </div>
 
-    <!-- Glass Card -->
-    <div class="hero-card reveal-right">
-      <div class="hc-header">
-        <div class="hc-title">একনজরে আমাদের ক্লাস</div>
-        <div class="hc-sub">শিশু থেকে বয়স্ক — সবার জন্য উপযুক্ত</div>
+    <!-- Quick Form Card -->
+    <div class="hero-card reveal" style="transition-delay:0.45s">
+      <div class="card-title">
+        <span>🌙</span> Free পরামর্শ বুক করুন
       </div>
-
-      <div class="hc-feature">
-        <div class="hc-feat-icon">📖</div>
-        <div>
-          <div class="hc-feat-name">কোরআন তেলাওয়াত (বেসিক)</div>
-          <div class="hc-feat-desc">নূরানী থেকে সহি তেলাওয়াত পর্যন্ত</div>
-        </div>
-      </div>
-      <div class="hc-feature">
-        <div class="hc-feat-icon">🌙</div>
-        <div>
-          <div class="hc-feat-name">হেফজ প্রোগ্রাম</div>
-          <div class="hc-feat-desc">ধাপে ধাপে কোরআন মুখস্থ করা</div>
-        </div>
-      </div>
-      <div class="hc-feature">
-        <div class="hc-feat-icon">🎯</div>
-        <div>
-          <div class="hc-feat-name">তাজউইদ শিক্ষা</div>
-          <div class="hc-feat-desc">সহি মাখরাজ ও তাজউইদ নিয়ম</div>
-        </div>
-      </div>
-      <div class="hc-feature">
-        <div class="hc-feat-icon">👨‍👩‍👧</div>
-        <div>
-          <div class="hc-feat-name">পারিবারিক প্যাকেজ</div>
-          <div class="hc-feat-desc">পরিবারের সকলের জন্য একসাথে</div>
-        </div>
-      </div>
-
-      <div class="price-box">
-        <div class="price-label">মাসিক ফি</div>
-        <div class="price-val">৳৩,০০০</div>
-        <div class="price-per">প্রতি মাস</div>
-        <div class="price-note">✅ কোনো ভর্তি ফি নেই</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PACKAGE SECTION ═══ -->
-<section class="package-section" id="package">
-  <div class="package-inner">
-    <div class="pkg-header-text reveal">
-      <div class="section-tag">কোর্স প্যাকেজ</div>
-      <h2 class="section-title">আমাদের <span>কোর্স প্যাকেজ</span></h2>
-      <p class="section-sub" style="margin: 12px auto 0; text-align:center;">একটাই প্যাকেজ — সহজ, স্বচ্ছ, কোনো লুকানো চার্জ নেই।</p>
-    </div>
-
-    <div class="pricing-card reveal">
-      <div class="pc-top">
-        <div>
-          <div class="pc-badge">১-এ-১ লাইভ ক্লাস</div>
-          <div class="pc-title">কোরআন শিক্ষা — সম্পূর্ণ বাংলায়</div>
-          <div class="pc-sub">তেলাওয়াত ও হেফজ — একটি প্যাকেজে সব সুবিধা</div>
-        </div>
-        <div class="pc-price">
-          <div class="pc-price-val">৳৩,০০০</div>
-          <div class="pc-price-per">প্রতি মাস</div>
-          <div class="pc-price-note">✅ কোনো ভর্তি ফি নেই</div>
-        </div>
-      </div>
-
-      <div class="pc-body">
-        <div>
-          <div class="pc-feat-title">এই প্যাকেজে কী পাবেন</div>
-          <div class="pc-feat"><span class="pc-feat-check">✓</span><span><strong style="color:white">সপ্তাহে ৫ দিন</strong> লাইভ ক্লাস (শনি–বুধ)</span></div>
-          <div class="pc-feat"><span class="pc-feat-check">✓</span><span>প্রতি ক্লাস <strong style="color:white">৫০ মিনিট</strong></span></div>
-          <div class="pc-feat"><span class="pc-feat-check">✓</span><span><strong style="color:white">১-এ-১</strong> — শিক্ষার্থী ও শিক্ষক একসাথে</span></div>
-          <div class="pc-feat"><span class="pc-feat-check">✓</span><span>অভিজ্ঞ <strong style="color:white">হাফেজ-মাওলানা / হাফেজা-আলেমা</strong> শিক্ষক</span></div>
-          <div class="pc-feat"><span class="pc-feat-check">✓</span><span>শুদ্ধ <strong style="color:white">বাংলা ভাষায়</strong> সম্পূর্ণ ক্লাস</span></div>
-          <div class="pc-feat"><span class="pc-feat-check">✓</span><span>তেলাওয়াত <strong style="color:white">ও হেফজ</strong> উভয় সুবিধা</span></div>
-          <div class="pc-feat"><span class="pc-feat-check">✓</span><span>মাসিক <strong style="color:white">অগ্রগতি রিপোর্ট</strong></span></div>
-          <div class="pc-feat"><span class="pc-feat-check">✓</span><span><strong style="color:white">কোনো ভর্তি ফি নেই</strong></span></div>
-        </div>
-        <div>
-          <div class="pc-feat-title">ক্লাস বিবরণ</div>
-          <div class="pc-info-item">
-            <div class="pc-info-icon">📅</div>
-            <div>
-              <div class="pc-info-label">ক্লাস দিন</div>
-              <div class="pc-info-val">শনি – বুধবার</div>
-            </div>
-          </div>
-          <div class="pc-info-item">
-            <div class="pc-info-icon">⏱️</div>
-            <div>
-              <div class="pc-info-label">প্রতি ক্লাসের সময়</div>
-              <div class="pc-info-val">৫০ মিনিট</div>
-            </div>
-          </div>
-          <div class="pc-info-item">
-            <div class="pc-info-icon">👥</div>
-            <div>
-              <div class="pc-info-label">ক্লাসের ধরন</div>
-              <div class="pc-info-val">ওয়ান-টু-ওয়ান লাইভ</div>
-            </div>
-          </div>
-          <div class="pc-info-item">
-            <div class="pc-info-icon">🌐</div>
-            <div>
-              <div class="pc-info-label">মাধ্যম</div>
-              <div class="pc-info-val">Zoom / Google Meet</div>
-            </div>
-          </div>
-          <div class="pc-info-item">
-            <div class="pc-info-icon">💰</div>
-            <div>
-              <div class="pc-info-label">পেমেন্টের সময়</div>
-              <div class="pc-info-val">মাসের ১–৩ তারিখ</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pc-footer">
-        <a href="#enroll" class="btn-wa">📋 এখনই ভর্তি হোন</a>
-        <a href="https://wa.me/8801733017521" target="_blank" class="btn-primary">💬 WhatsApp-এ জিজ্ঞেস করুন</a>
-        <div class="no-fee-badge">✅ কোনো ভর্তি ফি নেই</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ENROLLMENT FORM ═══ -->
-<section class="form-section" id="enroll">
-  <div class="form-inner">
-    <div class="form-header reveal">
-      <div class="section-tag">ভর্তি হোন</div>
-      <h2 class="section-title">ফর্ম পূরণ করুন, <span>আমরা যোগাযোগ করব</span></h2>
-      <p class="section-sub" style="margin: 12px auto 0; text-align:center;">তথ্য দিন — আমরা WhatsApp-এ যোগাযোগ করে ক্লাস শুরুর ব্যবস্থা করব।</p>
-    </div>
-    <div class="form-card reveal">
-      <div class="form-row">
-        <div class="form-group">
-          <label>আপনার নাম *</label>
-          <input type="text" id="f-name" placeholder="পূর্ণ নাম লিখুন">
-        </div>
-        <div class="form-group">
-          <label>WhatsApp নম্বর *</label>
-          <input type="tel" id="f-phone" placeholder="+880 1XXXXXXXXX">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>শিক্ষার্থী কী শিখতে চায়?</label>
-        <select id="f-course">
-          <option value="বেসিক থেকে কোরআন তেলাওয়াত">বেসিক থেকে কোরআন তেলাওয়াত শিখতে চাই</option>
-          <option value="হেফজ করতে চাই">কোরআন হেফজ করতে চাই</option>
-          <option value="তাজউইদ শিখতে চাই">তাজউইদ ও সহি মাখরাজ শিখতে চাই</option>
-          <option value="পারিবারিক প্যাকেজ">পুরো পরিবারের জন্য প্যাকেজ</option>
-          <option value="পরামর্শ দরকার">আগে পরামর্শ নিতে চাই</option>
+      <div class="trial-form">
+        <input class="trial-input" type="text" id="hName" placeholder="আপনার নাম">
+        <input class="trial-input" type="tel" id="hPhone" placeholder="WhatsApp নম্বর">
+        <select class="trial-select" id="hCourse">
+          <option value="">কোর্স বেছে নিন</option>
+          <option>কোরআন তেলাওয়াত (বেসিক)</option>
+          <option>তাজউইদ ও সহি কেরাত</option>
+          <option>হেফজ প্রোগ্রাম</option>
+          <option>বড়দের জন্য কোরআন</option>
+          <option>পরামর্শ দরকার</option>
         </select>
+        <button class="trial-btn" onclick="bookTrial()">
+          💬 WhatsApp-এ পরামর্শ নিন
+        </button>
       </div>
-      <div class="form-group">
-        <label>শিক্ষার্থীর বয়স ও আগের অভিজ্ঞতা (ঐচ্ছিক)</label>
-        <textarea id="f-msg" placeholder="যেমন: ৮ বছর বয়স, আলিফ-বা জানে না। অথবা: প্রাপ্তবয়স্ক, একটু পড়তে পারে।"></textarea>
+      <p class="card-note">✓ সম্পূর্ণ বিনামূল্যে · ✓ কোনো বাধ্যবাধকতা নেই</p>
+    </div>
+  </div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker-wrap" style="background:var(--navy);">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item"><span class="ti-dot"></span>হাফেজ-আলেম শিক্ষক</span>
+    <span class="ticker-item"><span class="ti-dot"></span>সম্পূর্ণ বাংলায় পাঠদান</span>
+    <span class="ticker-item"><span class="ti-dot"></span>মাসিক মাত্র ৳৩,০০০</span>
+    <span class="ticker-item"><span class="ti-dot"></span>কোনো ভর্তি ফি নেই</span>
+    <span class="ticker-item"><span class="ti-dot"></span>বিশ্বের যেকোনো প্রান্ত থেকে</span>
+    <span class="ticker-item"><span class="ti-dot"></span>শিশু থেকে বয়স্ক সবার জন্য</span>
+    <span class="ticker-item"><span class="ti-dot"></span>ইন্টারেক্টিভ লাইভ সেশন</span>
+    <span class="ticker-item"><span class="ti-dot"></span>হাফেজ-আলেম শিক্ষক</span>
+    <span class="ticker-item"><span class="ti-dot"></span>সম্পূর্ণ বাংলায় পাঠদান</span>
+    <span class="ticker-item"><span class="ti-dot"></span>মাসিক মাত্র ৳৩,০০০</span>
+    <span class="ticker-item"><span class="ti-dot"></span>কোনো ভর্তি ফি নেই</span>
+    <span class="ticker-item"><span class="ti-dot"></span>বিশ্বের যেকোনো প্রান্ত থেকে</span>
+    <span class="ticker-item"><span class="ti-dot"></span>শিশু থেকে বয়স্ক সবার জন্য</span>
+    <span class="ticker-item"><span class="ti-dot"></span>ইন্টারেক্টিভ লাইভ সেশন</span>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">কেন আমরা?</div>
+      <h2 class="section-title">Global Islamic Care-এ কেন <span>শিখবেন?</span></h2>
+      <p class="section-sub">বিশ্বমানের শিক্ষা পদ্ধতি, সার্টিফাইড শিক্ষক এবং আধুনিক প্রযুক্তির সমন্বয়ে একটি অনন্য শিক্ষার অভিজ্ঞতা।</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">🎓</div>
+        <div class="why-title">হাফেজ-আলেম শিক্ষক</div>
+        <p class="why-desc">সকল শিক্ষক হাফেজ ও আলেম — তাজউইদে সনদপ্রাপ্ত এবং আন্তর্জাতিক মানের পাঠদানে দক্ষ।</p>
       </div>
-      <button class="form-submit-btn" onclick="submitForm()">
-        💬 WhatsApp-এ তথ্য পাঠান ও ভর্তি নিশ্চিত করুন
-      </button>
-      <p style="text-align:center; margin-top:14px; font-size:13px; color:rgba(255,255,255,0.35);">
-        অথবা সরাসরি কল করুন: <a href="tel:+8801733017521" style="color:var(--sky); font-weight:700;">+880 1733-017521</a>
-      </p>
+      <div class="why-card reveal" style="transition-delay:0.1s">
+        <div class="why-icon">🌍</div>
+        <div class="why-title">যেকোনো দেশ থেকে</div>
+        <p class="why-desc">বাংলাদেশ, ইউকে, মালয়েশিয়া বা বিশ্বের যেকোনো প্রান্ত থেকে ক্লাস করুন।</p>
+      </div>
+      <div class="why-card reveal" style="transition-delay:0.2s">
+        <div class="why-icon">🗣️</div>
+        <div class="why-title">সম্পূর্ণ বাংলায়</div>
+        <p class="why-desc">সম্পূর্ণ ক্লাস শুদ্ধ বাংলায় পরিচালিত। প্রতিটি প্রশ্নের উত্তর মাতৃভাষায়।</p>
+      </div>
+      <div class="why-card reveal" style="transition-delay:0.1s">
+        <div class="why-icon">👨‍👩‍👧‍👦</div>
+        <div class="why-title">পরিবারের সকলের জন্য</div>
+        <p class="why-desc">শিশু থেকে বয়স্ক — পরিবারের সকলের জন্য আলাদা কোর্স এবং বিশেষ পদ্ধতি।</p>
+      </div>
+      <div class="why-card reveal" style="transition-delay:0.2s">
+        <div class="why-icon">💰</div>
+        <div class="why-title">সাশ্রয়ী মূল্য</div>
+        <p class="why-desc">মাসিক মাত্র ৳৩,০০০। কোনো ভর্তি ফি নেই। ক্লাস শুরুর আগেই নিশ্চিত হোন।</p>
+      </div>
+      <div class="why-card reveal" style="transition-delay:0.3s">
+        <div class="why-icon">📱</div>
+        <div class="why-title">আধুনিক পদ্ধতি</div>
+        <p class="why-desc">ইন্টারেক্টিভ লাইভ সেশন, ডিজিটাল উপকরণ ও রেকর্ডিং সুবিধা।</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ REVIEWS ═══ -->
-<section class="reviews-section">
-  <div class="reviews-header reveal">
-    <div class="section-tag">অভিভাবকদের মতামত</div>
-    <h2 class="section-title">তারা <span>কী বলছেন</span></h2>
-  </div>
-  <div class="reviews-track-wrap">
-    <div class="reviews-track" id="reviewsTrack"></div>
-  </div>
-</section>
-
-<!-- ═══ FAQ ═══ -->
-<section class="faq-section">
-  <div class="faq-inner">
-    <div class="faq-header reveal">
-      <div class="section-tag">প্রশ্ন ও উত্তর</div>
-      <h2 class="section-title">সাধারণ <span>জিজ্ঞাসা</span></h2>
+<!-- SCHEDULE STRIP -->
+<section class="schedule-strip">
+  <div class="schedule-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">ক্লাস শিডিউল</div>
+      <h2 class="section-title">সাপ্তাহিক <span>ক্লাসের সময়সূচি</span></h2>
     </div>
-
-    <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">ক্লাস কোন প্ল্যাটফর্মে হয়?<span class="faq-icon">+</span></div>
-      <div class="faq-a">Zoom বা Google Meet-এ লাইভ ক্লাস পরিচালিত হয়। স্মার্টফোন বা কম্পিউটার যেকোনো ডিভাইস থেকে যোগ দেওয়া যায়।</div>
+    <div class="sched-grid reveal">
+      <div class="sched-day active">
+        <div class="sd-name">শনিবার</div>
+        <div class="sd-time">সকাল ৯টা – রাত ১০টা</div>
+        <span class="sd-status sd-open">● চালু</span>
+      </div>
+      <div class="sched-day active">
+        <div class="sd-name">রবিবার</div>
+        <div class="sd-time">সকাল ৯টা – রাত ১০টা</div>
+        <span class="sd-status sd-open">● চালু</span>
+      </div>
+      <div class="sched-day active">
+        <div class="sd-name">সোমবার</div>
+        <div class="sd-time">সকাল ৯টা – রাত ১০টা</div>
+        <span class="sd-status sd-open">● চালু</span>
+      </div>
+      <div class="sched-day active">
+        <div class="sd-name">মঙ্গলবার</div>
+        <div class="sd-time">সকাল ৯টা – রাত ১০টা</div>
+        <span class="sd-status sd-open">● চালু</span>
+      </div>
+      <div class="sched-day active">
+        <div class="sd-name">বুধবার</div>
+        <div class="sd-time">সকাল ৯টা – রাত ১০টা</div>
+        <span class="sd-status sd-open">● চালু</span>
+      </div>
     </div>
-    <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">শিশুদের জন্য কি আলাদা শিক্ষক আছে?<span class="faq-icon">+</span></div>
-      <div class="faq-a">হ্যাঁ। শিশু ও প্রাপ্তবয়স্কদের জন্য আলাদা পাঠদান পদ্ধতি ব্যবহার করা হয়। শিশুদের ক্লাসে বিশেষ ধৈর্য ও আকর্ষণীয় পদ্ধতিতে শেখানো হয়।</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">কোনো ভর্তি ফি আছে কি?<span class="faq-icon">+</span></div>
-      <div class="faq-a">না, কোনো ভর্তি ফি নেই। শুধুমাত্র মাসিক কোর্স ফি ৳৩,০০০ প্রদান করতে হয়। আমরা মাসের শেষ ৩ দিন ও শুরুর ৩ দিন — এই ৬ দিন ভর্তি নিই। বাকি দিনগুলোতে ভর্তি বন্ধ থাকে।</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">পেমেন্ট কীভাবে করতে হয়?<span class="faq-icon">+</span></div>
-      <div class="faq-a">প্রতি মাসের ১ থেকে ৩ তারিখের মধ্যে bKash, Nagad বা ব্যাংক ট্রান্সফারের মাধ্যমে অগ্রিম পেমেন্ট করতে হয়। আন্তর্জাতিক শিক্ষার্থীদের জন্য PayPal গ্রহণযোগ্য। নতুন শিক্ষার্থীদের ক্লাস শুরুর আগেই প্রথম মাসের পেমেন্ট নিশ্চিত করতে হবে।</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">ক্লাস মিস হলে কী করব?<span class="faq-icon">+</span></div>
-      <div class="faq-a">ক্লাসে অনুপস্থিত থাকলে আগেই শিক্ষককে জানাতে হবে। যদি শিক্ষকের কারণে ক্লাস মিস হয়, তাহলে সম্ভব হলে অন্য সময়ে ক্লাসটি করিয়ে দেওয়া হবে — অথবা সেই দিনের ফি রিফান্ড করা হবে।</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">মেয়েদের জন্য কি মহিলা শিক্ষক পাওয়া যাবে?<span class="faq-icon">+</span></div>
-      <div class="faq-a">হ্যাঁ, মহিলা শিক্ষার্থী ও শিশুদের জন্য হাফেজা-আলেমা মহিলা শিক্ষিকার ব্যবস্থা আছে। ভর্তির সময় উল্লেখ করলে সেভাবে ব্যবস্থা করা হবে।</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">রিফান্ড পলিসি কী?<span class="faq-icon">+</span></div>
-      <div class="faq-a">ক্লাস শুরুর ৭ দিনের মধ্যে ১০০% রিফান্ড পাওয়া যায়। ১৫ দিনের মধ্যে আবেদন করলে ৫০% রিফান্ড দেওয়া হয়। শিক্ষকের অপারগতার কারণে কোনো ক্লাস মিস হলে সেই দিনের ফি ফেরত দেওয়া হবে।</div>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">মাসের মাঝখানে ভর্তি হওয়া যাবে কি?<span class="faq-icon">+</span></div>
-      <div class="faq-a">আমরা মাসের শেষ ৩ দিন (২৮–৩০/৩১ তারিখ) এবং মাসের শুরুর ৩ দিন (১–৩ তারিখ) — মোট ৬ দিন নতুন ভর্তি নিই। বাকি দিনগুলোতে ভর্তি বন্ধ থাকে, কারণ সেসময় আমাদের শিক্ষকরা পাঠদানে ব্যস্ত থাকেন। ভর্তির জন্য এই নির্দিষ্ট সময়ে WhatsApp করুন।</div>
-    </div>
+    <p style="text-align:center; margin-top:24px; font-size:13px; color:var(--text-muted); font-family:'Plus Jakarta Sans',sans-serif;">প্রতি ক্লাস ৫০ মিনিট · বৃহস্পতিবার ও শুক্রবার বন্ধ</p>
   </div>
 </section>
 
-<!-- ═══ SOCIAL ═══ -->
-<section class="social-section">
-  <div class="section-tag">সোশ্যাল মিডিয়া</div>
-  <h2 class="section-title" style="color:white; margin-top:8px;">আমাদের <span style="color:var(--gold)">ফলো করুন</span></h2>
-  <p class="section-sub" style="margin: 12px auto 0; text-align:center;">আমাদের সোশ্যাল মিডিয়ায় সর্বশেষ আপডেট পান।</p>
-  <div class="social-grid">
-    <a class="social-btn fb" href="https://web.facebook.com/globalislamiccare1" target="_blank">f Facebook</a>
-    <a class="social-btn yt" href="https://www.youtube.com/@Globalislamiccare" target="_blank">▶ YouTube</a>
-    <a class="social-btn wa" href="https://wa.me/8801733017521" target="_blank">✆ WhatsApp</a>
-    <a class="social-btn li" href="https://www.linkedin.com/company/global-islamic-care" target="_blank">in LinkedIn</a>
+<!-- COURSES PREVIEW -->
+<section class="courses-preview">
+  <div class="courses-preview-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">কোর্সসমূহ</div>
+      <h2 class="section-title">আপনার জন্য <span>সেরা কোর্স</span></h2>
+      <p class="section-sub">প্রতিটি কোর্স বিশেষজ্ঞ হাফেজ শিক্ষক দ্বারা পরিচালিত। মাসিক মাত্র ৳৩,০০০।</p>
+    </div>
+
+    <div class="course-cards-row">
+      <div class="cp-card reveal">
+        <div class="cp-top">
+          <span class="cp-icon">📖</span>
+          <span class="cp-badge">সবচেয়ে জনপ্রিয়</span>
+          <div class="cp-name">কোরআন তেলাওয়াত</div>
+          <div class="cp-sub">বেসিক থেকে সহি কেরাত পর্যন্ত</div>
+        </div>
+        <div class="cp-bottom">
+          <div class="cp-features">
+            <span class="cp-feature">শূন্য থেকে শেখা শুরু</span>
+            <span class="cp-feature">হরফ ও হারাকাত শিক্ষা</span>
+            <span class="cp-feature">সহি উচ্চারণ নিশ্চিত</span>
+            <span class="cp-feature">সাপ্তাহিক মূল্যায়ন</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+            <div class="cp-price">৳৩,০০০ <span>/ মাস</span></div>
+            <a href="contact.html" class="btn btn-primary" style="padding:10px 20px; font-size:13px;">ভর্তি হোন</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cp-card reveal" style="transition-delay:0.1s">
+        <div class="cp-top">
+          <span class="cp-icon">🎯</span>
+          <span class="cp-badge">তাজউইদ বিশেষজ্ঞ</span>
+          <div class="cp-name">তাজউইদ ও মাখরাজ</div>
+          <div class="cp-sub">সহি উচ্চারণ ও তেলাওয়াতের বিশেষ কোর্স</div>
+        </div>
+        <div class="cp-bottom">
+          <div class="cp-features">
+            <span class="cp-feature">মাখরাজ ও সিফাত শিক্ষা</span>
+            <span class="cp-feature">মাদ্দ ও গুন্নাহ</span>
+            <span class="cp-feature">ইদগাম ও ইখফা</span>
+            <span class="cp-feature">ব্যক্তিগত মনিটরিং</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+            <div class="cp-price">৳৩,০০০ <span>/ মাস</span></div>
+            <a href="contact.html" class="btn btn-primary" style="padding:10px 20px; font-size:13px;">ভর্তি হোন</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cp-card reveal" style="transition-delay:0.2s">
+        <div class="cp-top">
+          <span class="cp-icon">🌙</span>
+          <span class="cp-badge">হেফজ প্রোগ্রাম</span>
+          <div class="cp-name">কোরআন হেফজ</div>
+          <div class="cp-sub">বিশেষ পদ্ধতিতে কোরআন মুখস্থ</div>
+        </div>
+        <div class="cp-bottom">
+          <div class="cp-features">
+            <span class="cp-feature">বিজ্ঞানসম্মত মুখস্থ পদ্ধতি</span>
+            <span class="cp-feature">প্রতিদিনের মুরাজাআ</span>
+            <span class="cp-feature">দ্রুত ও স্থায়ী হেফজ</span>
+            <span class="cp-feature">হাফেজ শিক্ষকের তত্ত্বাবধান</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+            <div class="cp-price">৳৩,০০০ <span>/ মাস</span></div>
+            <a href="contact.html" class="btn btn-primary" style="padding:10px 20px; font-size:13px;">ভর্তি হোন</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:40px;" class="reveal">
+      <a href="courses.html" class="btn btn-gold btn-lg">সকল কোর্স দেখুন →</a>
+    </div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-bg"></div>
+  <div class="process-geo"></div>
+  <div class="process-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">কিভাবে শুরু করবেন</div>
+      <h2 class="section-title section-title-light">মাত্র ৪টি <span>সহজ ধাপে শুরু করুন</span></h2>
+    </div>
+
+    <div class="process-steps">
+      <div class="p-step reveal">
+        <div class="p-step-num">১</div>
+        <div class="p-step-title">যোগাযোগ করুন</div>
+        <p class="p-step-desc">WhatsApp বা ফোনে আমাদের সাথে কথা বলুন। Free পরামর্শ নিন।</p>
+      </div>
+      <div class="p-step reveal" style="transition-delay:0.1s">
+        <div class="p-step-num">২</div>
+        <div class="p-step-title">শিক্ষক নির্বাচন</div>
+        <p class="p-step-desc">আপনার প্রয়োজন অনুযায়ী উপযুক্ত শিক্ষক বেছে নিন।</p>
+      </div>
+      <div class="p-step reveal" style="transition-delay:0.2s">
+        <div class="p-step-num">৩</div>
+        <div class="p-step-title">পেমেন্ট করুন</div>
+        <p class="p-step-desc">bKash, Nagad বা ব্যাংকে সহজে পেমেন্ট করুন। আন্তর্জাতিকদের জন্য PayPal।</p>
+      </div>
+      <div class="p-step reveal" style="transition-delay:0.3s">
+        <div class="p-step-num">৪</div>
+        <div class="p-step-title">ক্লাস শুরু</div>
+        <p class="p-step-desc">নির্ধারিত সময়ে লাইভ ক্লাসে যোগ দিন এবং কোরআনের যাত্রা শুরু করুন।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="testimonials-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">শিক্ষার্থীদের কথা</div>
+      <h2 class="section-title">তারা <span>কী বলছেন?</span></h2>
+    </div>
+    <div class="t-grid">
+      <div class="t-card reveal">
+        <div class="t-stars">★★★★★</div>
+        <span class="t-quote">"</span>
+        <p class="t-text">আমার মেয়ে মাত্র ৩ মাসে পুরো সূরা বাকারা পড়তে শিখেছে। শিক্ষিকা অনেক ধৈর্যশীল এবং বাচ্চাদের বোঝানোর ক্ষমতা অসাধারণ।</p>
+        <div class="t-author">
+          <div class="t-avatar">👩</div>
+          <div>
+            <div class="t-name">রুকাইয়া বেগম</div>
+            <div class="t-loc">ঢাকা, বাংলাদেশ</div>
+          </div>
+        </div>
+      </div>
+      <div class="t-card reveal" style="transition-delay:0.1s">
+        <div class="t-stars">★★★★★</div>
+        <span class="t-quote">"</span>
+        <p class="t-text">UK থেকে বাংলায় কোরআন শেখা এক স্বপ্নের মতো। হাফেজ সাহেব তাজউইদ এত সুন্দরভাবে শেখান যে প্রতিটি ক্লাস উপভোগ করি।</p>
+        <div class="t-author">
+          <div class="t-avatar">👨</div>
+          <div>
+            <div class="t-name">ফারহান আহমেদ</div>
+            <div class="t-loc">লন্ডন, UK</div>
+          </div>
+        </div>
+      </div>
+      <div class="t-card reveal" style="transition-delay:0.2s">
+        <div class="t-stars">★★★★★</div>
+        <span class="t-quote">"</span>
+        <p class="t-text">বয়স ৪৫ হলেও আলহামদুলিল্লাহ এখন সহি কোরআন পড়তে পারছি। শিক্ষকের অসাধারণ পদ্ধতি আমার জীবন বদলে দিয়েছে।</p>
+        <div class="t-author">
+          <div class="t-avatar">👩</div>
+          <div>
+            <div class="t-name">সালমা খানম</div>
+            <div class="t-loc">কুয়ালালামপুর, মালয়েশিয়া</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <span class="cta-arabic">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</span>
+    <span class="cta-translation">"পড়ো তোমার প্রভুর নামে যিনি সৃষ্টি করেছেন" — সূরা আলাক: ১</span>
+    <h2 class="cta-title">আজই <span>কোরআন শেখার যাত্রা শুরু করুন</span></h2>
+    <p class="cta-desc">৩০ মিনিটের Free পরামর্শে জানুন কোন কোর্স আপনার জন্য সবচেয়ে উপযুক্ত। কোনো বাধ্যবাধকতা নেই।</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/8801733017521?text=আসসালামু%20আলাইকুম%2C%20আমি%20কোরআন%20শিখতে%20আগ্রহী।" target="_blank" class="btn btn-whatsapp btn-lg">💬 WhatsApp করুন</a>
+      <a href="courses.html" class="btn btn-ghost btn-lg">কোর্স দেখুন</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <div class="footer-top">
-    <div>
-      <div class="logo-icon" style="width:52px;height:52px;font-size:26px;">ق</div>
-      <p class="footer-brand-desc">Global Islamic Care — বিশ্বের সকল প্রান্তে কোরআনের আলো পৌঁছে দেওয়াই আমাদের লক্ষ্য।</p>
-      <div class="footer-social">
-        <a class="f-social-link" href="https://web.facebook.com/globalislamiccare1" target="_blank">f</a>
-        <a class="f-social-link" href="https://www.youtube.com/@Globalislamiccare" target="_blank">▶</a>
-        <a class="f-social-link" href="https://www.linkedin.com/company/global-islamic-care" target="_blank">in</a>
-        <a class="f-social-link wa" href="https://wa.me/8801733017521" target="_blank">✆</a>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="ft-logo">
+        <div class="logo-mark" style="width:48px;height:48px;">
+          <div class="logo-mark-inner" style="font-size:24px;">ق</div>
+        </div>
+        <div class="logo-text">
+          <span class="lt-main" style="font-size:14px;">Global Islamic Care</span>
+          <span class="lt-sub">Quran Learning Online</span>
+        </div>
+      </div>
+      <span class="arabic-tagline">وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا</span>
+      <span class="arabic-translation">"কোরআন সুস্পষ্টভাবে তেলাওয়াত করো" — সূরা মুজ্জাম্মিল: ৪</span>
+      <p>বিশ্বের যেকোনো প্রান্তে কোরআনের আলো পৌঁছে দেওয়াই আমাদের লক্ষ্য।</p>
+      <div class="social-row">
+        <a class="social-icon" href="https://web.facebook.com/globalislamiccare1" target="_blank">f</a>
+        <a class="social-icon" href="https://www.youtube.com/@Globalislamiccare" target="_blank">▶</a>
+        <a class="social-icon" href="https://www.linkedin.com/company/global-islamic-care" target="_blank">in</a>
+        <a class="social-icon wa" href="https://wa.me/8801733017521" target="_blank">✆</a>
       </div>
     </div>
     <div class="footer-col">
-      <h4>কোর্স</h4>
+      <h5>কোর্সসমূহ</h5>
       <ul>
-        <li><a href="courses.html">কোরআন তেলাওয়াত</a></li>
+        <li><a href="courses.html">তেলাওয়াত কোর্স</a></li>
+        <li><a href="courses.html">তাজউইদ কোর্স</a></li>
         <li><a href="courses.html">হেফজ প্রোগ্রাম</a></li>
-        <li><a href="contact.html">ফ্রি পরামর্শ</a></li>
+        <li><a href="contact.html">Free পরামর্শ</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>তথ্য</h4>
+      <h5>তথ্য</h5>
       <ul>
         <li><a href="about.html">আমাদের সম্পর্কে</a></li>
         <li><a href="teachers.html">শিক্ষকবৃন্দ</a></li>
-        <li><a href="blog.html">ব্লগ</a></li>
+        <li><a href="join-as-teacher.html">শিক্ষক হিসেবে যোগ দিন</a></li>
         <li><a href="contact.html">যোগাযোগ</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>নীতিমালা</h4>
+      <h5>নীতিমালা</h5>
       <ul>
         <li><a href="policy.html">পেমেন্ট পলিসি</a></li>
         <li><a href="policy.html">রিফান্ড পলিসি</a></li>
@@ -1118,117 +929,69 @@ footer {
   </div>
   <div class="footer-bottom">
     <span>© ২০২৫ Global Islamic Care. সর্বস্বত্ব সংরক্ষিত।</span>
-    <span><a href="https://web.facebook.com/globalislamiccare1" target="_blank">Facebook</a> · <a href="https://www.youtube.com/@Globalislamiccare" target="_blank">YouTube</a></span>
+    <span>
+      <a href="https://web.facebook.com/globalislamiccare1" target="_blank">Facebook</a> ·
+      <a href="https://www.youtube.com/@Globalislamiccare" target="_blank">YouTube</a>
+    </span>
   </div>
 </footer>
 
-<div class="toast" id="toast">✅ WhatsApp-এ যোগাযোগ হচ্ছে...</div>
+<div class="toast" id="toast">✅ WhatsApp-এ সংযুক্ত হচ্ছেন...</div>
 
 <script>
-/* ═══ STARFIELD ═══ */
+// Nav scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+
+// Toggle nav
+function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+
+// Reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Stars
 (function() {
-  const canvas = document.getElementById('starfield');
-  const ctx = canvas.getContext('2d');
+  const c = document.getElementById('stars');
+  if(!c) return;
+  const ctx = c.getContext('2d');
   let stars = [];
-
   function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    c.width = window.innerWidth;
+    c.height = document.querySelector('.hero').offsetHeight;
+    stars = Array.from({length: 160}, () => ({
+      x: Math.random() * c.width, y: Math.random() * c.height,
+      r: Math.random() * 1.2, a: Math.random()
+    }));
   }
-  resize();
-  window.addEventListener('resize', resize);
-
-  for (let i = 0; i < 200; i++) {
-    stars.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      r: Math.random() * 1.2 + 0.2,
-      alpha: Math.random() * 0.6 + 0.1,
-      speed: Math.random() * 0.003 + 0.001,
-      phase: Math.random() * Math.PI * 2
-    });
-  }
-
-  function drawStars(t) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  function draw() {
+    ctx.clearRect(0,0,c.width,c.height);
     stars.forEach(s => {
-      const a = s.alpha * (0.6 + 0.4 * Math.sin(t * s.speed * 1000 + s.phase));
       ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${a})`;
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${s.a * 0.6})`;
       ctx.fill();
     });
-    requestAnimationFrame(drawStars);
   }
-  requestAnimationFrame(drawStars);
+  resize(); draw();
+  window.addEventListener('resize', () => { resize(); draw(); });
 })();
 
-/* ═══ NAV SCROLL ═══ */
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-});
-
-/* ═══ NAV TOGGLE ═══ */
-function toggleNav() {
-  document.getElementById('navLinks').classList.toggle('open');
-}
-
-/* ═══ REVEAL OBSERVER ═══ */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
-
-/* ═══ FAQ ═══ */
-function toggleFaq(el) {
-  const item = el.parentElement;
-  document.querySelectorAll('.faq-item').forEach(i => { if (i !== item) i.classList.remove('open'); });
-  item.classList.toggle('open');
-}
-
-/* ═══ REVIEWS ═══ */
-const reviews = [
-  { text: 'আমার মেয়ে মাত্র তিন মাসে সূরা ফাতিহা থেকে শুরু করে এখন একাই তেলাওয়াত করতে পারছে। শিক্ষকের ধৈর্য অসাধারণ।', name: 'রাবেয়া বেগম', loc: 'ঢাকা, বাংলাদেশ', icon: '👩' },
-  { text: 'ছেলের হেফজ শুরু হয়েছে। প্রতিদিনের অগ্রগতি দেখা যাচ্ছে। শিক্ষক নিয়মিত আপডেট দেন।', name: 'আবু সাইদ', loc: 'চট্টগ্রাম, বাংলাদেশ', icon: '👨' },
-  { text: 'বিদেশে থেকেও বাংলায় শুদ্ধভাবে কোরআন শেখার সুযোগ পাচ্ছি। খুবই সুবিধাজনক।', name: 'নাসরিন আক্তার', loc: 'লন্ডন, ইউকে', icon: '👩' },
-  { text: 'আমার দুই সন্তান একসাথে পড়ছে। আলহামদুলিল্লাহ, দুজনেই অনেক মনোযোগী হয়েছে।', name: 'মোহাম্মদ রফিক', loc: 'সিলেট, বাংলাদেশ', icon: '👨' },
-  { text: 'প্রাপ্তবয়স্ক হিসেবে কোরআন শিখতে লজ্জা লাগত। এখানে শিক্ষক এত সহজভাবে বোঝান যে আর সমস্যা নেই।', name: 'সুমাইয়া ইসলাম', loc: 'কুয়ালালামপুর, মালয়েশিয়া', icon: '👩' },
-  { text: 'মাসিক ফি একেবারে সাশ্রয়ী এবং কোনো ভর্তি ফি নেই। এই মানের শিক্ষার জন্য এত কম টাকায় আর কোথাও পাইনি।', name: 'করিম উদ্দিন', loc: 'রাজশাহী, বাংলাদেশ', icon: '👨' },
-];
-
-const track = document.getElementById('reviewsTrack');
-[...reviews, ...reviews].forEach(r => {
-  track.innerHTML += `
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">"${r.text}"</p>
-      <div class="review-author">
-        <div class="review-avatar">${r.icon}</div>
-        <div>
-          <div class="review-name">${r.name}</div>
-          <div class="review-loc">${r.loc}</div>
-        </div>
-      </div>
-    </div>`;
-});
-
-/* ═══ FORM SUBMIT ═══ */
-function submitForm() {
-  const name = document.getElementById('f-name').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
-  const course = document.getElementById('f-course').value;
-  const msg = document.getElementById('f-msg').value.trim();
-  if (!name || !phone) { alert('অনুগ্রহ করে নাম ও ফোন নম্বর দিন।'); return; }
-  let text = 'আসসালামু আলাইকুম,\n\n'
-    + 'আমি Global Islamic Care-এ ভর্তি হতে চাই।\n\n'
-    + '📌 নাম: ' + name + '\n'
-    + '📞 ফোন: ' + phone + '\n'
-    + '📚 শিখতে চাই: ' + course;
-  if (msg) text += '\n\nℹ️ বিবরণ: ' + msg;
+// Book trial
+function bookTrial() {
+  const name = document.getElementById('hName').value.trim();
+  const phone = document.getElementById('hPhone').value.trim();
+  const course = document.getElementById('hCourse').value;
+  let text = 'আসসালামু আলাইকুম, আমি Free পরামর্শ নিতে চাই।\n\n';
+  if(name) text += 'নাম: ' + name + '\n';
+  if(phone) text += 'ফোন: ' + phone + '\n';
+  if(course) text += 'আগ্রহী কোর্স: ' + course;
   window.open('https://wa.me/8801733017521?text=' + encodeURIComponent(text), '_blank');
-  const t = document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
 }
 </script>
 </body>

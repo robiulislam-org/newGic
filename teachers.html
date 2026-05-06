@@ -3,59 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>আমাদের শিক্ষকবৃন্দ – Global Islamic Care | অভিজ্ঞ হাফেজ শিক্ষক</title>
-<meta name="description" content="Global Islamic Care-এ ৬ জন অভিজ্ঞ হাফেজ শিক্ষক। সার্টিফাইড, অভিজ্ঞ, আন্তর্জাতিক মানের পাঠদান।">
+<title>আমাদের শিক্ষকবৃন্দ – Global Islamic Care | অভিজ্ঞ হাফেজ-আলেম শিক্ষক</title>
+<meta name="description" content="Global Islamic Care-এ ৬ জন অভিজ্ঞ হাফেজ-আলেম শিক্ষক। সকলেই সনদপ্রাপ্ত ও শুদ্ধ বাংলায় পাঠদানে দক্ষ।">
 <link rel="canonical" href="https://globalislamiccare.com/teachers.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Bengali:wght@400;500;600;700;900&family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="shared.css">
 <style>
-.teachers-section { background: white; padding: 80px 5%; }
-.teachers-inner { max-width: 1000px; margin: 0 auto; }
+.teachers-section { padding: 90px 5%; background: white; }
+.teachers-inner { max-width: 1080px; margin: 0 auto; }
 .teachers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
 .teacher-card {
-  background: var(--gray-100); border-radius: 18px; padding: 28px 22px;
-  text-align: center; border: 1px solid var(--border); transition: all 0.3s;
+  border-radius: 22px; overflow: hidden;
+  border: 1px solid rgba(37,99,235,0.1);
+  background: var(--gray-50);
+  transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
 }
-.teacher-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.teacher-card:hover { transform: translateY(-8px); box-shadow: 0 24px 70px rgba(26,79,196,0.15); border-color: rgba(37,99,235,0.25); }
+
+.teacher-top {
+  padding: 36px 24px 28px; text-align: center;
+  background: linear-gradient(145deg, var(--navy) 0%, var(--cobalt) 100%);
+  position: relative; overflow: hidden;
+}
+.teacher-top::before {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,168,67,0.4), transparent);
+}
+.teacher-top::after {
+  content: '';
+  position: absolute; top: -30px; right: -30px;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(212,168,67,0.05);
+}
+
 .teacher-avatar {
-  width: 76px; height: 76px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--navy-mid), var(--blue-bright));
-  margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
-  font-size: 30px; color: white; box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212,168,67,0.2), rgba(212,168,67,0.1));
+  border: 2px solid rgba(212,168,67,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 34px; margin: 0 auto 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  position: relative; z-index: 1;
 }
-.teacher-name { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-.teacher-title { font-size: 11px; color: var(--blue-bright); font-weight: 700; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
-.teacher-desc { font-size: 13px; color: var(--text-light); line-height: 1.65; }
-.teacher-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
-.ttag { background: white; border: 1px solid var(--border); color: var(--text-mid); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 50px; }
+.teacher-name { font-size: 16px; font-weight: 800; color: white; margin-bottom: 4px; }
+.teacher-role {
+  display: inline-block; font-size: 10px; font-weight: 800;
+  color: var(--gold-pale); background: var(--gold-dim);
+  border: 1px solid var(--border-gold);
+  padding: 3px 12px; border-radius: 50px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  position: relative; z-index: 1;
+}
 
-.qual-section { background: var(--gray-100); padding: 80px 5%; }
-.qual-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; max-width: 900px; margin: 0 auto; }
-.qual-card { background: white; border-radius: 16px; padding: 28px; border: 1px solid var(--border); text-align: center; }
-.qual-icon { font-size: 34px; margin-bottom: 12px; }
-.qual-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-.qual-desc { font-size: 13px; color: var(--text-light); line-height: 1.65; }
+.teacher-bottom { padding: 24px; }
+.teacher-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.ttag {
+  background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.15);
+  color: var(--royal); font-size: 11px; font-weight: 700;
+  padding: 4px 12px; border-radius: 50px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.teacher-desc { font-size: 13px; color: var(--text-body); line-height: 1.75; font-family: 'Noto Serif Bengali', serif; }
 
-@media (max-width: 768px) {
-  .teachers-grid { grid-template-columns: 1fr 1fr; }
-  .qual-grid { grid-template-columns: 1fr; }
+/* Why Best */
+.qual-section { padding: 90px 5%; background: var(--abyss); }
+.qual-inner { max-width: 1080px; margin: 0 auto; }
+.qual-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.qual-card {
+  padding: 36px 28px; border-radius: 20px; text-align: center;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(212,168,67,0.15);
+  transition: all 0.3s;
 }
-@media (max-width: 480px) {
-  .teachers-grid { grid-template-columns: 1fr; }
+.qual-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(212,168,67,0.3); transform: translateY(-4px); }
+.qual-icon { font-size: 42px; margin-bottom: 20px; display: block; }
+.qual-title { font-size: 17px; font-weight: 800; color: white; margin-bottom: 12px; }
+.qual-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.8; font-family: 'Noto Serif Bengali', serif; }
+
+.teacher-cta {
+  background: linear-gradient(135deg, var(--navy), var(--cobalt));
+  padding: 80px 5%; text-align: center;
 }
+.teacher-cta-inner { max-width: 600px; margin: 0 auto; }
+
+@media (max-width: 900px) { .teachers-grid, .qual-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .teachers-grid, .qual-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<nav>
+<nav id="mainNav">
   <a href="index.html" class="nav-logo">
-    <div class="logo-icon">ق</div>
-    <div class="logo-text"><span>Global Islamic Care</span><span>Quran Learning Online</span></div>
+    <div class="logo-mark"><div class="logo-mark-inner">ق</div></div>
+    <div class="logo-text"><span class="lt-main">Global Islamic Care</span><span class="lt-sub">Quran Learning Online</span></div>
   </a>
   <div class="nav-links" id="navLinks">
     <a href="courses.html">কোর্স</a>
     <a href="teachers.html" class="active">শিক্ষক</a>
     <a href="about.html">আমাদের সম্পর্কে</a>
-    <a href="blog.html">ব্লগ</a>
-    <a href="contact.html" class="nav-cta">💬 যোগাযোগ</a>
+    <a href="join-as-teacher.html">শিক্ষক হিসেবে যোগ দিন</a>
+    <a href="contact.html" class="nav-cta-btn">💬 Free পরামর্শ</a>
   </div>
   <button class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></button>
 </nav>
@@ -63,102 +112,157 @@
 <div class="page-hero">
   <div class="breadcrumb"><a href="index.html">হোম</a><span>›</span><span>শিক্ষকবৃন্দ</span></div>
   <h1>আমাদের <span>হাফেজ শিক্ষকবৃন্দ</span></h1>
-  <p>৬ জন সার্টিফাইড শিক্ষক — পুরুষ শিক্ষকরা হাফেজ ও মাওলানা, মহিলা শিক্ষিকারা হাফেজা ও আলেমা। প্রতিটি শিক্ষক আন্তর্জাতিক মানের পাঠদানে দক্ষ।</p>
+  <p>৬ জন সার্টিফাইড হাফেজ-আলেম শিক্ষক — শুদ্ধ বাংলায় বিশ্বমানের পাঠদান।</p>
 </div>
 
 <section class="teachers-section">
   <div class="teachers-inner">
     <div class="section-header reveal">
       <div class="section-tag">আমাদের শিক্ষকবৃন্দ</div>
-      <h2 class="section-title">অভিজ্ঞ <span>৬ জন হাফেজ শিক্ষক</span></h2>
-      <p class="section-sub">পুরুষ শিক্ষকরা হাফেজ ও মাওলানা ডিগ্রিধারী, মহিলা শিক্ষিকারা হাফেজা ও আলেমা ডিগ্রিধারী — সকলেই আন্তর্জাতিক মানের পাঠদানে দক্ষ।</p>
+      <h2 class="section-title">অভিজ্ঞ <span>৬ জন হাফেজ-আলেম শিক্ষক</span></h2>
+      <p class="section-sub">প্রতিটি শিক্ষক হাফেজ ও আলেম ডিগ্রিধারী — সনদপ্রাপ্ত ও আন্তর্জাতিক মানের পাঠদানে দক্ষ। শুদ্ধ বাংলায় পাঠদান।</p>
     </div>
+
     <div class="teachers-grid">
       <div class="teacher-card reveal">
-        <div class="teacher-avatar">👨‍🏫</div>
-        <div class="teacher-name">হাফেজ মাওলানা আব্দুল্লাহ</div>
-        <div class="teacher-title">সিনিয়র শিক্ষক</div>
-        <div class="teacher-tags"><span class="ttag">হাফেজ</span><span class="ttag">মাওলানা</span><span class="ttag">তাজউইদ বিশেষজ্ঞ</span></div>
-        <p class="teacher-desc">১০ বছরের অভিজ্ঞতা। পূর্ণ কোরআনের হাফেজ ও মাওলানা ডিগ্রিধারী। তাজউইদ ও হেফজে উচ্চতর প্রশিক্ষণপ্রাপ্ত।</p>
+        <div class="teacher-top">
+          <div class="teacher-avatar">👨‍🏫</div>
+          <div class="teacher-name">হাফেজ মাওলানা আব্দুল্লাহ</div>
+          <span class="teacher-role">সিনিয়র শিক্ষক</span>
+        </div>
+        <div class="teacher-bottom">
+          <div class="teacher-tags">
+            <span class="ttag">হাফেজ</span><span class="ttag">আলেম</span><span class="ttag">তাজউইদ</span>
+          </div>
+          <p class="teacher-desc">১০ বছরের অভিজ্ঞতা। পূর্ণ কোরআনের হাফেজ ও আলেম ডিগ্রিধারী। তাজউইদ ও হেফজে উচ্চতর প্রশিক্ষণপ্রাপ্ত।</p>
+        </div>
       </div>
+
       <div class="teacher-card reveal" style="transition-delay:0.05s">
-        <div class="teacher-avatar">👩‍🏫</div>
-        <div class="teacher-name">হাফেজা আলেমা ফাতেমা</div>
-        <div class="teacher-title">মহিলা শিক্ষিকা</div>
-        <div class="teacher-tags"><span class="ttag">হাফেজা</span><span class="ttag">আলেমা</span><span class="ttag">শিশু বিশেষজ্ঞ</span></div>
-        <p class="teacher-desc">পূর্ণ কোরআনের হাফেজা ও আলেমা ডিগ্রিধারী। মহিলা ও শিশুদের বিশেষ পদ্ধতিতে পাঠদান। ধৈর্যশীল ও যত্নশীল।</p>
+        <div class="teacher-top">
+          <div class="teacher-avatar">👨‍🏫</div>
+          <div class="teacher-name">হাফেজ মাওলানা ইবরাহীম</div>
+          <span class="teacher-role">তাজউইদ বিশেষজ্ঞ</span>
+        </div>
+        <div class="teacher-bottom">
+          <div class="teacher-tags">
+            <span class="ttag">হাফেজ</span><span class="ttag">আলেম</span><span class="ttag">মাখরাজ</span>
+          </div>
+          <p class="teacher-desc">পূর্ণ কোরআনের হাফেজ ও আলেম। সহি মাখরাজ ও তাজউইদে উচ্চতর সনদপ্রাপ্ত। আন্তর্জাতিক সার্টিফিকেটধারী।</p>
+        </div>
       </div>
+
       <div class="teacher-card reveal" style="transition-delay:0.1s">
-        <div class="teacher-avatar">👨‍🏫</div>
-        <div class="teacher-name">হাফেজ মাওলানা ইবরাহীম</div>
-        <div class="teacher-title">তাজউইদ বিশেষজ্ঞ</div>
-        <div class="teacher-tags"><span class="ttag">হাফেজ</span><span class="ttag">মাওলানা</span><span class="ttag">মাখরাজ</span></div>
-        <p class="teacher-desc">পূর্ণ কোরআনের হাফেজ ও মাওলানা। সহি মাখরাজ ও তাজউইদে উচ্চতর সনদপ্রাপ্ত। আন্তর্জাতিক সার্টিফিকেট।</p>
+        <div class="teacher-top">
+          <div class="teacher-avatar">👨‍🏫</div>
+          <div class="teacher-name">হাফেজ মাওলানা ইউসুফ</div>
+          <span class="teacher-role">হেফজ বিশেষজ্ঞ</span>
+        </div>
+        <div class="teacher-bottom">
+          <div class="teacher-tags">
+            <span class="ttag">হাফেজ</span><span class="ttag">আলেম</span><span class="ttag">হেফজ</span>
+          </div>
+          <p class="teacher-desc">পূর্ণ কোরআনের হাফেজ ও আলেম। হেফজ ও মুরাজাআ পদ্ধতিতে বিশেষভাবে প্রশিক্ষিত।</p>
+        </div>
       </div>
+
       <div class="teacher-card reveal" style="transition-delay:0.15s">
-        <div class="teacher-avatar">👩‍🏫</div>
-        <div class="teacher-name">হাফেজা আলেমা মরিয়ম</div>
-        <div class="teacher-title">বেসিক কোর্স শিক্ষিকা</div>
-        <div class="teacher-tags"><span class="ttag">হাফেজা</span><span class="ttag">আলেমা</span><span class="ttag">নূরানী পদ্ধতি</span></div>
-        <p class="teacher-desc">পূর্ণ কোরআনের হাফেজা ও আলেমা। একেবারে নতুনদের ধাপে ধাপে শেখানোয় বিশেষ দক্ষতা।</p>
+        <div class="teacher-top">
+          <div class="teacher-avatar">👨‍🏫</div>
+          <div class="teacher-name">হাফেজ মাওলানা উমর</div>
+          <span class="teacher-role">বেসিক কোর্স বিশেষজ্ঞ</span>
+        </div>
+        <div class="teacher-bottom">
+          <div class="teacher-tags">
+            <span class="ttag">হাফেজ</span><span class="ttag">আলেম</span><span class="ttag">নূরানী</span>
+          </div>
+          <p class="teacher-desc">পূর্ণ কোরআনের হাফেজ ও আলেম। একেবারে নতুনদের ধাপে ধাপে শেখানোয় বিশেষ দক্ষতা।</p>
+        </div>
       </div>
+
       <div class="teacher-card reveal" style="transition-delay:0.2s">
-        <div class="teacher-avatar">👨‍🏫</div>
-        <div class="teacher-name">হাফেজ মাওলানা ইউসুফ</div>
-        <div class="teacher-title">হেফজ বিশেষজ্ঞ</div>
-        <div class="teacher-tags"><span class="ttag">হাফেজ</span><span class="ttag">মাওলানা</span><span class="ttag">হেফজ</span></div>
-        <p class="teacher-desc">পূর্ণ কোরআনের হাফেজ ও মাওলানা ডিগ্রিধারী। হেফজ ও পুনরাবৃত্তি পদ্ধতিতে বিশেষভাবে প্রশিক্ষিত।</p>
+        <div class="teacher-top">
+          <div class="teacher-avatar">👨‍🏫</div>
+          <div class="teacher-name">হাফেজ মাওলানা সালেহ</div>
+          <span class="teacher-role">প্রাপ্তবয়স্ক শিক্ষার্থী বিশেষজ্ঞ</span>
+        </div>
+        <div class="teacher-bottom">
+          <div class="teacher-tags">
+            <span class="ttag">হাফেজ</span><span class="ttag">আলেম</span><span class="ttag">তেলাওয়াত</span>
+          </div>
+          <p class="teacher-desc">পূর্ণ কোরআনের হাফেজ ও আলেম। প্রাপ্তবয়স্ক শিক্ষার্থীদের জন্য বিশেষ পদ্ধতিতে পাঠদান।</p>
+        </div>
       </div>
+
       <div class="teacher-card reveal" style="transition-delay:0.25s">
-        <div class="teacher-avatar">👩‍🏫</div>
-        <div class="teacher-name">হাফেজা আলেমা সুমাইয়া</div>
-        <div class="teacher-title">প্রাপ্তবয়স্ক শিক্ষিকা</div>
-        <div class="teacher-tags"><span class="ttag">হাফেজা</span><span class="ttag">আলেমা</span><span class="ttag">তেলাওয়াত</span></div>
-        <p class="teacher-desc">পূর্ণ কোরআনের হাফেজা ও আলেমা। প্রাপ্তবয়স্ক শিক্ষার্থীদের জন্য বিশেষ পদ্ধতিতে পাঠদান।</p>
+        <div class="teacher-top">
+          <div class="teacher-avatar">👨‍🏫</div>
+          <div class="teacher-name">হাফেজ মাওলানা হাসান</div>
+          <span class="teacher-role">শিশু শিক্ষা বিশেষজ্ঞ</span>
+        </div>
+        <div class="teacher-bottom">
+          <div class="teacher-tags">
+            <span class="ttag">হাফেজ</span><span class="ttag">আলেম</span><span class="ttag">শিশু বিশেষজ্ঞ</span>
+          </div>
+          <p class="teacher-desc">পূর্ণ কোরআনের হাফেজ ও আলেম। শিশুদের বিশেষ পদ্ধতিতে কোরআন শিক্ষায় অত্যন্ত ধৈর্যশীল ও দক্ষ।</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <section class="qual-section">
-  <div class="section-header reveal">
-    <div class="section-tag">শিক্ষকদের যোগ্যতা</div>
-    <h2 class="section-title">কেন আমাদের <span>শিক্ষকরা সেরা?</span></h2>
-  </div>
-  <div class="qual-grid">
-    <div class="qual-card reveal">
-      <div class="qual-icon">📖</div>
-      <div class="qual-title">পূর্ণ কোরআন হাফেজ/হাফেজা</div>
-      <p class="qual-desc">সকল পুরুষ শিক্ষক হাফেজ ও মাওলানা এবং সকল মহিলা শিক্ষিকা হাফেজা ও আলেমা। তাদের তেলাওয়াত যাচাই করা হয়েছে।</p>
+  <div class="qual-inner">
+    <div class="section-header reveal">
+      <div class="section-tag" style="background:rgba(212,168,67,0.15); border-color:rgba(212,168,67,0.3);">কেন সেরা</div>
+      <h2 class="section-title section-title-light">কেন আমাদের <span>শিক্ষকরা অনন্য?</span></h2>
     </div>
-    <div class="qual-card reveal" style="transition-delay:0.1s">
-      <div class="qual-icon">🏅</div>
-      <div class="qual-title">সনদপ্রাপ্ত ও ডিগ্রিধারী</div>
-      <p class="qual-desc">প্রতিটি শিক্ষক তাজউইদ ও হেফজে আনুষ্ঠানিক সনদপ্রাপ্ত। পুরুষ শিক্ষকরা মাওলানা ও মহিলা শিক্ষিকারা আলেমা ডিগ্রিধারী।</p>
-    </div>
-    <div class="qual-card reveal" style="transition-delay:0.2s">
-      <div class="qual-icon">🗣️</div>
-      <div class="qual-title">শুদ্ধ বাংলায় পাঠদান</div>
-      <p class="qual-desc">সম্পূর্ণ ক্লাস শুদ্ধ বাংলায় পরিচালিত হয় — যেকোনো প্রশ্নের উত্তর বাংলায়।</p>
+    <div class="qual-grid">
+      <div class="qual-card reveal">
+        <span class="qual-icon">📖</span>
+        <div class="qual-title">পূর্ণ কোরআন হাফেজ ও আলেম</div>
+        <p class="qual-desc">সকল শিক্ষক হাফেজ ও আলেম ডিগ্রিধারী। কোরআনের প্রতিটি শব্দে তাদের গভীর দক্ষতা রয়েছে।</p>
+      </div>
+      <div class="qual-card reveal" style="transition-delay:0.1s">
+        <span class="qual-icon">🏅</span>
+        <div class="qual-title">সনদপ্রাপ্ত ও ডিগ্রিধারী</div>
+        <p class="qual-desc">প্রতিটি শিক্ষক তাজউইদ ও হেফজে আনুষ্ঠানিক সনদপ্রাপ্ত। তাদের তেলাওয়াত যাচাই করা হয়েছে।</p>
+      </div>
+      <div class="qual-card reveal" style="transition-delay:0.2s">
+        <span class="qual-icon">🗣️</span>
+        <div class="qual-title">শুদ্ধ বাংলায় পাঠদান</div>
+        <p class="qual-desc">সম্পূর্ণ ক্লাস শুদ্ধ বাংলায় পরিচালিত। যেকোনো প্রশ্নের উত্তর মাতৃভাষায়।</p>
+      </div>
     </div>
   </div>
 </section>
 
+<section class="teacher-cta">
+  <div class="teacher-cta-inner">
+    <h2 class="section-title section-title-light" style="margin-bottom:16px;">আপনার শিক্ষক <span>বেছে নিন আজই</span></h2>
+    <p class="section-sub section-sub-light" style="margin:0 auto 36px;">Free পরামর্শে আমরা আপনার প্রয়োজন অনুযায়ী সঠিক শিক্ষক নির্বাচনে সাহায্য করব।</p>
+    <a href="contact.html" class="btn btn-whatsapp btn-lg">💬 শিক্ষক নির্বাচনে সাহায্য নিন</a>
+  </div>
+</section>
+
 <footer>
-  <div class="footer-top">
+  <div class="footer-main">
     <div class="footer-brand">
-      <div class="logo-icon" style="width:48px;height:48px;font-size:24px;">ق</div>
-      <p>Global Islamic Care — বিশ্বের যেকোনো প্রান্তে কোরআনের আলো পৌঁছে দেওয়াই আমাদের লক্ষ্য।</p>
-      <div class="social-links">
-        <a class="social-link" href="https://web.facebook.com/globalislamiccare1" target="_blank">f</a>
-        <a class="social-link" href="https://www.youtube.com/@Globalislamiccare" target="_blank">▶</a>
-        <a class="social-link" href="https://www.linkedin.com/company/global-islamic-care" target="_blank">in</a>
-        <a class="social-link wa" href="https://wa.me/8801733017521" target="_blank">✆</a>
+      <div class="ft-logo">
+        <div class="logo-mark" style="width:48px;height:48px;"><div class="logo-mark-inner" style="font-size:24px;">ق</div></div>
+        <div class="logo-text"><span class="lt-main">Global Islamic Care</span><span class="lt-sub">Quran Learning Online</span></div>
+      </div>
+      <p>বিশ্বের যেকোনো প্রান্তে কোরআনের আলো পৌঁছে দেওয়াই আমাদের লক্ষ্য।</p>
+      <div class="social-row">
+        <a class="social-icon" href="https://web.facebook.com/globalislamiccare1" target="_blank">f</a>
+        <a class="social-icon" href="https://www.youtube.com/@Globalislamiccare" target="_blank">▶</a>
+        <a class="social-icon" href="https://www.linkedin.com/company/global-islamic-care" target="_blank">in</a>
+        <a class="social-icon wa" href="https://wa.me/8801733017521" target="_blank">✆</a>
       </div>
     </div>
-    <div class="footer-col"><h4>কোর্স</h4><ul><li><a href="courses.html">তেলাওয়াত কোর্স</a></li><li><a href="courses.html">হেফজ প্রোগ্রাম</a></li><li><a href="contact.html">ফ্রি পরামর্শ</a></li></ul></div>
-    <div class="footer-col"><h4>তথ্য</h4><ul><li><a href="about.html">আমাদের সম্পর্কে</a></li><li><a href="blog.html">ব্লগ</a></li><li><a href="contact.html">যোগাযোগ</a></li></ul></div>
-    <div class="footer-col"><h4>নীতিমালা</h4><ul><li><a href="policy.html">পেমেন্ট পলিসি</a></li><li><a href="policy.html">রিফান্ড পলিসি</a></li></ul></div>
+    <div class="footer-col"><h5>কোর্সসমূহ</h5><ul><li><a href="courses.html">তেলাওয়াত কোর্স</a></li><li><a href="courses.html">হেফজ প্রোগ্রাম</a></li><li><a href="contact.html">Free পরামর্শ</a></li></ul></div>
+    <div class="footer-col"><h5>তথ্য</h5><ul><li><a href="about.html">আমাদের সম্পর্কে</a></li><li><a href="join-as-teacher.html">শিক্ষক হিসেবে যোগ দিন</a></li><li><a href="contact.html">যোগাযোগ</a></li></ul></div>
+    <div class="footer-col"><h5>নীতিমালা</h5><ul><li><a href="policy.html">পেমেন্ট পলিসি</a></li><li><a href="policy.html">রিফান্ড পলিসি</a></li></ul></div>
   </div>
   <div class="footer-bottom">
     <span>© ২০২৫ Global Islamic Care. সর্বস্বত্ব সংরক্ষিত।</span>
@@ -166,7 +270,9 @@
   </div>
 </footer>
 <script>
-  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.08});
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); });
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.1});
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 </script>
