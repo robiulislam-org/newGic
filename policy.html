@@ -7,36 +7,7 @@
 <meta name="description" content="Global Islamic Care-এর পেমেন্ট পলিসি, রিফান্ড পলিসি, গোপনীয়তা নীতি এবং শর্তাবলী।">
 <link rel="canonical" href="https://globalislamiccare.com/policy.html">
 <link rel="stylesheet" href="shared.css">
-<style>
-.policy-section { background: white; padding: 80px 5%; }
-.policy-inner { max-width: 860px; margin: 0 auto; }
-.policy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
-.policy-card { background: var(--gray-100); border-radius: 16px; padding: 26px; border: 1px solid var(--border); }
-.policy-card h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.policy-card ul li { font-size: 14px; color: var(--text-mid); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; line-height: 1.6; }
-.policy-card ul li:last-child { border-bottom: none; }
-.policy-card ul li::before { content: '•'; color: var(--blue-bright); font-weight: 900; flex-shrink: 0; margin-top: 2px; }
-.payment-methods { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-.pay-badge { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 600; color: var(--navy); }
 
-.policy-full { background: var(--gray-100); border-radius: 16px; padding: 26px; border: 1px solid var(--border); margin-bottom: 24px; }
-.policy-full h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
-.policy-full p { font-size: 14px; color: var(--text-mid); line-height: 1.8; margin-bottom: 10px; }
-.policy-full ul li { font-size: 14px; color: var(--text-mid); padding: 6px 0; display: flex; gap: 8px; line-height: 1.6; }
-.policy-full ul li::before { content: '→'; color: var(--blue-bright); font-weight: 700; flex-shrink: 0; }
-
-/* Important highlight */
-.policy-highlight {
-  background: linear-gradient(135deg, rgba(212,169,67,0.08), rgba(212,169,67,0.12));
-  border: 1px solid rgba(212,169,67,0.3); border-radius: 12px;
-  padding: 16px 20px; margin-bottom: 20px;
-  display: flex; align-items: flex-start; gap: 12px;
-  font-size: 14px; color: var(--text-mid); line-height: 1.7;
-}
-.policy-highlight strong { color: var(--navy); }
-
-@media (max-width: 640px) { .policy-grid { grid-template-columns: 1fr; } }
-</style>
 </head>
 <body>
 <nav>
@@ -51,7 +22,7 @@
     <a href="blog.html">ব্লগ</a>
     <a href="contact.html" class="nav-cta">💬 যোগাযোগ</a>
   </div>
-  <button class="nav-toggle" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  <button class="nav-toggle" aria-label="Toggle Navigation"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="page-hero">
@@ -157,10 +128,6 @@
     <span><a href="https://web.facebook.com/globalislamiccare1" target="_blank">Facebook</a> · <a href="https://www.youtube.com/@Globalislamiccare" target="_blank">YouTube</a></span>
   </div>
 </footer>
-<script>
-  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
-</script>
+<script src="script.js"></script>
 </body>
 </html>
