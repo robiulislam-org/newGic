@@ -9,6 +9,7 @@
 <meta name="author" content="Global Islamic Care">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1A5F9E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23C8972A'/><text y='.9em' font-size='70' x='15' fill='%230A1628' font-family='serif'>ق</text></svg>">
 <link rel="canonical" href="https://globalislamiccare.com/">
 
 <!-- Open Graph / Facebook -->
@@ -938,6 +939,8 @@ h1, h2, h3 { font-family: var(--font-body); font-weight: 700; line-height: 1.3; 
 .value-icon { font-size: 18px; flex-shrink: 0; }
 
 @media (max-width: 580px) { .values-grid { grid-template-columns: 1fr; } }
+@media (max-width: 580px) { .teacher-qualities { grid-template-columns: 1fr; } .teacher-promo { padding: 32px 24px; } }
+@media (max-width: 640px) { div.teaching-method-grid { grid-template-columns: 1fr !important; } }
 
 /* ───── TEACHERS PAGE ───── */
 .teachers-hero {
@@ -1142,6 +1145,76 @@ footer {
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 .toast.show { transform: translateY(0); opacity: 1; }
+
+/* ───── BACK TO TOP ───── */
+.back-to-top {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  width: 44px; height: 44px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 998;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(26,95,158,0.4);
+}
+.back-to-top.show { opacity: 1; transform: translateY(0); }
+.back-to-top:hover { background: var(--blue-mid); transform: translateY(-2px); }
+
+/* ───── NAV ACTIVE ───── */
+.nav-links a.active-page { color: var(--gold-light) !important; background: rgba(200,151,42,0.1); }
+
+/* ───── STATS SECTION ───── */
+.stats-section {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--dark) 100%);
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.stats-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(200,151,42,0.08) 0%, transparent 60%);
+}
+.stats-grid {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+.stat-card {
+  text-align: center;
+  padding: 28px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+.stat-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-3px); }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+@media (max-width: 700px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 400px) { .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; } }
 
 /* ───── WHATSAPP FLOAT ───── */
 .wa-float {
@@ -1409,6 +1482,28 @@ footer {
           💬 WhatsApp-এ পরামর্শ নিন
         </button>
         <p class="form-note">✓ সম্পূর্ণ বিনামূল্যে &nbsp;·&nbsp; <span>✓ কোনো বাধ্যবাধকতা নেই</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <div class="stat-num" data-target="500">০</div>
+        <div class="stat-label">সক্রিয় শিক্ষার্থী</div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay:0.1s">
+        <div class="stat-num" data-target="15">০</div>
+        <div class="stat-label">দেশ থেকে শিক্ষার্থী</div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay:0.2s">
+        <div class="stat-num" data-target="3">০</div>
+        <div class="stat-label">বছরের অভিজ্ঞতা</div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay:0.3s">
+        <div class="stat-num" data-target="98">০</div>
+        <div class="stat-label">% শিক্ষার্থী সন্তুষ্ট</div>
       </div>
     </div>
   </section>
@@ -1739,7 +1834,7 @@ footer {
         <p>শুরুতে একপেজ, তারপর ধীরে ধীরে বাড়ানো হয়। পুরনো পাঠ যেন ভুলে না যায় সেদিকে বিশেষ মনোযোগ দেওয়া হয়। তিন বছরের টার্গেটে সম্পূর্ণ হেফজ সম্পন্ন করা হয়।</p>
       </div>
     </div>
-    @media(max-width:580px){div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}}
+
 
     <div class="reveal" style="text-align:center;">
       <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg" style="margin-bottom:16px;">💬 ফ্রি কাউন্সেলিং সেশন বুক করুন</a>
@@ -2090,12 +2185,15 @@ footer {
       <span>·</span>
       <a onclick="showPage('contact')">যোগাযোগ</a>
     </div>
-    <span>© ২০২৫ Global Islamic Care · globalislamiccare.com · সর্বস্বত্ব সংরক্ষিত।</span>
+    <span>© <span id="copyrightYear">২০২৫</span> Global Islamic Care · globalislamiccare.com · সর্বস্বত্ব সংরক্ষিত।</span>
   </div>
 </footer>
 
 <!-- WhatsApp Float -->
 <a href="https://wa.me/8801733017521" target="_blank" class="wa-float" title="WhatsApp করুন">💬</a>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" title="উপরে যান">↑</button>
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
@@ -2110,6 +2208,10 @@ function showPage(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   // trigger reveal on new page
   setTimeout(checkReveal, 100);
+  // update nav active state
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active-page'));
+  const activeLink = document.querySelector(`.nav-links a[onclick*="'${id}'"]`);
+  if (activeLink) activeLink.classList.add('active-page');
 }
 
 // ───── NAV TOGGLE ─────
@@ -2144,9 +2246,11 @@ function bookTrial() {
   const name = document.getElementById('hName').value.trim();
   const phone = document.getElementById('hPhone').value.trim();
   const course = document.getElementById('hCourse').value;
+  if (!name) { showToast('❌ অনুগ্রহ করে আপনার নাম লিখুন'); return; }
+  if (!phone) { showToast('❌ অনুগ্রহ করে WhatsApp নম্বর দিন'); return; }
   let msg = 'আসসালামু আলাইকুম! আমি ফ্রি পরামর্শ নিতে চাই।';
-  if (name) msg += '\nনাম: ' + name;
-  if (phone) msg += '\nনম্বর: ' + phone;
+  msg += '\nনাম: ' + name;
+  msg += '\nনম্বর: ' + phone;
   if (course) msg += '\nকোর্স: ' + course;
   window.open('https://wa.me/8801733017521?text=' + encodeURIComponent(msg), '_blank');
   showToast('✅ WhatsApp খুলছে...');
@@ -2175,6 +2279,47 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
+
+// ───── BACK TO TOP ─────
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('show', window.scrollY > 400);
+});
+btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// ───── AUTO COPYRIGHT YEAR ─────
+document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+// ───── ANIMATED COUNTERS ─────
+function animateCounter(el) {
+  const target = +el.dataset.target;
+  const suffix = el.dataset.suffix || '';
+  const dur = 1800;
+  const step = target / (dur / 16);
+  let cur = 0;
+  const t = setInterval(() => {
+    cur += step;
+    if (cur >= target) { cur = target; clearInterval(t); }
+    el.textContent = Math.floor(cur).toLocaleString('bn-BD') + suffix;
+  }, 16);
+}
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.done) {
+      e.target.dataset.done = '1';
+      animateCounter(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-num').forEach(el => counterObserver.observe(el));
+// Update stat suffixes
+document.querySelectorAll('.stat-num').forEach(el => {
+  const t = +el.dataset.target;
+  if (t === 500) el.dataset.suffix = '+';
+  if (t === 15) el.dataset.suffix = '+';
+  if (t === 3) el.dataset.suffix = '+';
+  if (t === 98) el.dataset.suffix = '%';
+});
 </script>
 </body>
 </html>
