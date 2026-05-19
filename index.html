@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Islamic Care – অনলাইন কোরআন শিক্ষা ও হেফজুল কোরআন</title>
-<meta name="description" content="Global Islamic Care — হাফেজ-আলেম শিক্ষকের সাথে সম্পূর্ণ সহজ পদ্ধতিতে সহীহ কোরআন এবং হেফজ শিখুন। বিশ্বের যেকোনো দেশ থেকে বাংলায় শিখুন। মাসিক মাত্র ৳৩,০০০।">
+<meta name="description" content="Global Islamic Care — হাফেজ-আলেম শিক্ষকের সাথে সম্পূর্ণ সহজ পদ্ধতিতে সহীহ কোরআন এবং হেফজ শিখুন। বিশ্বের যেকোনো দেশ থেকে বাংলায় শিখুন। মাসিক মাত্র ৳৫,০০০ থেকে শুরু।">
 <meta name="keywords" content="অনলাইন কোরআন শিক্ষা, কোরআন ক্লাস বাংলা, হাফেজ শিক্ষক, তাজউইদ অনলাইন, হেফজ কোর্স, online quran learning, quran teaching, hifz quran, global islamic care, quran academy">
 <meta name="author" content="Global Islamic Care">
 <meta name="robots" content="index, follow">
@@ -627,11 +627,33 @@ h1, h2, h3 { font-family: var(--font-body); font-weight: 700; line-height: 1.3; 
 
 .course-price {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  flex-direction: column;
+  gap: 4px;
   margin-bottom: 16px;
   padding-top: 16px;
   border-top: 1px solid var(--border);
+}
+.course-price-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.course-price .amount-old {
+  font-size: 16px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  font-family: var(--font-display);
+  opacity: 0.7;
+}
+.course-price .discount-badge {
+  background: rgba(220,38,38,0.1);
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  border: 1px solid rgba(220,38,38,0.2);
 }
 .course-price .amount { font-size: 28px; font-weight: 700; color: var(--dark); font-family: var(--font-display); }
 .course-price .period { font-size: 13px; color: var(--text-muted); }
@@ -643,6 +665,27 @@ h1, h2, h3 { font-family: var(--font-body); font-weight: 700; line-height: 1.3; 
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 20px;
+}
+/* Admission fee row */
+.admission-fee-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(200,151,42,0.08), rgba(200,151,42,0.04));
+  border: 1px solid rgba(200,151,42,0.25);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+.admission-fee-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.admission-fee-amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
 }
 .course-card .btn { margin-top: auto; }
 
@@ -1334,7 +1377,7 @@ footer {
         </div>
         <div class="hero-points">
           <div class="hero-point"><div class="hero-point-dot">✓</div>শনি–বুধ, প্রতিদিন ৫০ মিনিট ক্লাস</div>
-          <div class="hero-point"><div class="hero-point-dot">✓</div>মাসিক মাত্র ৳৩,০০০ — ভর্তি ফি নেই</div>
+          <div class="hero-point"><div class="hero-point-dot">✓</div>মাসিক মাত্র ৳৫,০০০ থেকে শুরু — সর্বোচ্চ সাশ্রয়</div>
           <div class="hero-point"><div class="hero-point-dot">✓</div>একই পরিবারের ২-৩ জন একসাথে একই ফিতে</div>
           <div class="hero-point"><div class="hero-point-dot">✓</div>সম্পূর্ণ বাংলায় পাঠদান</div>
         </div>
@@ -1375,16 +1418,16 @@ footer {
     <div class="ticker-track" id="ticker">
       <span class="ticker-item"><span class="ticker-dot"></span>হাফেজ-আলেম শিক্ষক</span>
       <span class="ticker-item"><span class="ticker-dot"></span>সম্পূর্ণ বাংলায় পাঠদান</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>মাসিক মাত্র ৳৩,০০০</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>ভর্তি ফি নেই</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>মাসিক মাত্র ৳৫,০০০ থেকে শুরু</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>ভর্তি ফি সাশ্রয়ী মূল্যে</span>
       <span class="ticker-item"><span class="ticker-dot"></span>বিশ্বের যেকোনো দেশ থেকে</span>
       <span class="ticker-item"><span class="ticker-dot"></span>শিশু থেকে বয়স্ক সবার জন্য</span>
       <span class="ticker-item"><span class="ticker-dot"></span>পরিবারের ২-৩ জন একসাথে একই ফি</span>
       <span class="ticker-item"><span class="ticker-dot"></span>ফ্রি কাউন্সেলিং সেশন</span>
       <span class="ticker-item"><span class="ticker-dot"></span>হাফেজ-আলেম শিক্ষক</span>
       <span class="ticker-item"><span class="ticker-dot"></span>সম্পূর্ণ বাংলায় পাঠদান</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>মাসিক মাত্র ৳৩,০০০</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>ভর্তি ফি নেই</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>মাসিক মাত্র ৳৫,০০০ থেকে শুরু</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>ভর্তি ফি সাশ্রয়ী মূল্যে</span>
       <span class="ticker-item"><span class="ticker-dot"></span>বিশ্বের যেকোনো দেশ থেকে</span>
       <span class="ticker-item"><span class="ticker-dot"></span>শিশু থেকে বয়স্ক সবার জন্য</span>
       <span class="ticker-item"><span class="ticker-dot"></span>পরিবারের ২-৩ জন একসাথে একই ফি</span>
@@ -1405,7 +1448,7 @@ footer {
         <div class="why-card reveal" style="transition-delay:0.1s"><div class="why-icon">🌍</div><div class="why-title">যেকোনো দেশ থেকে</div><p class="why-desc">বাংলাদেশ, ইউকে, মালয়েশিয়া বা বিশ্বের যেকোনো প্রান্ত থেকে ক্লাস করুন — শুধু ইন্টারনেট থাকলেই হবে।</p></div>
         <div class="why-card reveal" style="transition-delay:0.2s"><div class="why-icon">🗣️</div><div class="why-title">সম্পূর্ণ বাংলায়</div><p class="why-desc">প্রতিটি ক্লাস শুদ্ধ বাংলায় পরিচালিত। মাতৃভাষায় শেখা সবচেয়ে সহজ ও কার্যকর।</p></div>
         <div class="why-card reveal" style="transition-delay:0.1s"><div class="why-icon">👨‍👩‍👧‍👦</div><div class="why-title">পরিবারের সকলের জন্য</div><p class="why-desc">৭ বছরের শিশু থেকে বয়স্ক — একই পরিবারের ২-৩ জন একসাথে গ্রুপে পড়তে পারবেন একই ফিতে।</p></div>
-        <div class="why-card reveal" style="transition-delay:0.2s"><div class="why-icon">💰</div><div class="why-title">সাশ্রয়ী মূল্য</div><p class="why-desc">মাসিক মাত্র ৳৩,০০০। কোনো ভর্তি ফি নেই। ক্লাস শুরুর আগেই ফ্রি পরামর্শ নিন।</p></div>
+        <div class="why-card reveal" style="transition-delay:0.2s"><div class="why-icon">💰</div><div class="why-title">সাশ্রয়ী মূল্য</div><p class="why-desc">মাসিক মাত্র ৳৫,০০০ থেকে শুরু। সাশ্রয়ী ভর্তি ফি। ক্লাস শুরুর আগেই ফ্রি পরামর্শ নিন।</p></div>
         <div class="why-card reveal" style="transition-delay:0.3s"><div class="why-icon">📅</div><div class="why-title">নিয়মিত সময়সূচি</div><p class="why-desc">শনিবার থেকে বুধবার, প্রতিটি ক্লাস ৫০ মিনিট। নিয়মিত পড়ায় দ্রুত উন্নতি নিশ্চিত।</p></div>
       </div>
     </div>
@@ -1475,7 +1518,7 @@ footer {
             <span>মাসিক ফি কত এবং ভর্তি ফি আছে কি?</span>
             <div class="faq-icon">+</div>
           </button>
-          <div class="faq-a">মাসিক ফি মাত্র ৳৩,০০০ টাকা। কোনো ভর্তি ফি নেই। একই পরিবারের ২-৩ জন একসাথে গ্রুপে পড়তে পারবেন একই ফিতে।</div>
+          <div class="faq-a">মাসিক ফি কোর্স ভেদে ৳৫,০০০ থেকে ৳৭,০০০ পর্যন্ত। প্রতিটি কোর্সে একবার ভর্তি ফি প্রযোজ্য (৳১,০০০ – ৳২,০০০)। ভর্তির সময় ডিসকাউন্টে মাসিক ফি পরিশোধ করুন। একই পরিবারের ২-৩ জন একসাথে গ্রুপে পড়তে পারবেন একই মাসিক ফিতে।</div>
         </div>
         <div class="faq-item reveal">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -1551,10 +1594,20 @@ footer {
               <li>সম্পূর্ণ বাংলায় পাঠদান</li>
               <li>শনি–বুধ, ৫০ মিনিট প্রতিটি ক্লাস</li>
             </ul>
+            <div class="admission-fee-row">
+              <span class="admission-fee-label">🎓 ভর্তি ফি (একবার)</span>
+              <span class="admission-fee-amount">৳১,০০০</span>
+            </div>
             <div class="course-price">
-              <span class="amount">৳৩,০০০</span>
-              <span class="period">/মাস</span>
-              <span class="badge">ভর্তি ফি নেই</span>
+              <div class="course-price-top">
+                <span class="amount-old">৳৭,০০০</span>
+                <span class="discount-badge">-৳২,০০০ ছাড়</span>
+              </div>
+              <div style="display:flex;align-items:baseline;gap:6px;">
+                <span class="amount">৳৫,০০০</span>
+                <span class="period">/মাস</span>
+                <span class="badge" style="margin-left:auto;">সাশ্রয়ী</span>
+              </div>
             </div>
             <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-blue btn-full">ভর্তি হতে WhatsApp করুন</a>
           </div>
@@ -1574,10 +1627,20 @@ footer {
               <li>বড়দের জন্যও বিশেষ ব্যবস্থা</li>
               <li>এক মাসে উল্লেখযোগ্য উন্নতি</li>
             </ul>
+            <div class="admission-fee-row">
+              <span class="admission-fee-label">🎓 ভর্তি ফি (একবার)</span>
+              <span class="admission-fee-amount">৳১,৫০০</span>
+            </div>
             <div class="course-price">
-              <span class="amount">৳৩,০০০</span>
-              <span class="period">/মাস</span>
-              <span class="badge">জনপ্রিয়</span>
+              <div class="course-price-top">
+                <span class="amount-old">৳৮,০০০</span>
+                <span class="discount-badge">-৳২,৫০০ ছাড়</span>
+              </div>
+              <div style="display:flex;align-items:baseline;gap:6px;">
+                <span class="amount">৳৫,৫০০</span>
+                <span class="period">/মাস</span>
+                <span class="badge" style="margin-left:auto;">জনপ্রিয়</span>
+              </div>
             </div>
             <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-primary btn-full">ভর্তি হতে WhatsApp করুন</a>
           </div>
@@ -1597,10 +1660,20 @@ footer {
               <li>নিয়মিত রিভিশন ও মনিটরিং</li>
               <li>ফ্রি কাউন্সেলিং সেশন অন্তর্ভুক্ত</li>
             </ul>
+            <div class="admission-fee-row">
+              <span class="admission-fee-label">🎓 ভর্তি ফি (একবার)</span>
+              <span class="admission-fee-amount">৳২,০০০</span>
+            </div>
             <div class="course-price">
-              <span class="amount">৳৩,০০০</span>
-              <span class="period">/মাস</span>
-              <span class="badge">বিশেষ কোর্স</span>
+              <div class="course-price-top">
+                <span class="amount-old">৳৯,০০০</span>
+                <span class="discount-badge">-৳২,০০০ ছাড়</span>
+              </div>
+              <div style="display:flex;align-items:baseline;gap:6px;">
+                <span class="amount">৳৭,০০০</span>
+                <span class="period">/মাস</span>
+                <span class="badge" style="margin-left:auto;">বিশেষ কোর্স</span>
+              </div>
             </div>
             <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-blue btn-full">ভর্তি হতে WhatsApp করুন</a>
           </div>
@@ -1611,7 +1684,7 @@ footer {
       <div style="margin-top:48px;background:linear-gradient(135deg,var(--blue-dark) 0%,var(--dark) 100%);border-radius:24px;padding:48px;text-align:center;box-shadow:var(--shadow);" class="reveal">
         <div style="font-size:40px;margin-bottom:12px;">👨‍👩‍👧‍👦</div>
         <h3 style="color:#fff;font-size:24px;margin-bottom:10px;">পারিবারিক গ্রুপ অফার</h3>
-        <p style="color:rgba(255,255,255,0.7);font-size:15px;max-width:560px;margin:0 auto 28px;line-height:1.85;">একই পরিবারের ২-৩ জন একসাথে গ্রুপে পড়তে পারবেন মাত্র <strong style="color:var(--gold-light)">৳৩,০০০ একই ফিতে</strong>। পরিবারের সকলে একসাথে কোরআন শিখুন।</p>
+        <p style="color:rgba(255,255,255,0.7);font-size:15px;max-width:560px;margin:0 auto 28px;line-height:1.85;">একই পরিবারের ২-৩ জন একসাথে গ্রুপে পড়তে পারবেন — মাসিক ফি একজনের মতোই। <strong style="color:var(--gold-light)">একটি ভর্তি ফি দিয়ে পুরো পরিবারের সাশ্রয়।</strong> পরিবারের সকলে একসাথে কোরআন শিখুন।</p>
         <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg">💬 পারিবারিক প্যাকেজ সম্পর্কে জানুন</a>
       </div>
     </div>
