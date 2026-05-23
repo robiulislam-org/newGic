@@ -1386,6 +1386,161 @@ footer {
 }
 .footer-policy-links a:hover { color: var(--gold-light); }
 .footer-policy-links span { color: rgba(255,255,255,0.15); font-size: 11px; }
+
+/* ───── COURSE VIEWER ───── */
+.cv-container {
+  display: flex;
+  max-width: 1140px;
+  margin: 0 auto;
+  min-height: calc(100vh - 70px);
+  background: var(--cream);
+}
+.cv-sidebar {
+  width: 320px;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+}
+.cv-sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--blue-dark), var(--dark));
+  color: #fff;
+}
+.cv-back-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  transition: color 0.2s;
+  font-family: var(--font-body);
+}
+.cv-back-btn:hover { color: var(--gold-light); }
+.cv-course-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.cv-progress-container {
+  margin-top: 16px;
+}
+.cv-progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.cv-progress-fill {
+  height: 100%;
+  background: var(--gold-light);
+  width: 0%;
+  transition: width 0.4s ease;
+}
+.cv-progress-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+.cv-chapter-list {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+.cv-chapter-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 24px;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+.cv-chapter-btn:hover {
+  background: rgba(26,95,158,0.03);
+}
+.cv-chapter-btn.active {
+  background: rgba(26,95,158,0.06);
+  border-left-color: var(--blue);
+}
+.cv-ch-num {
+  width: 24px; height: 24px;
+  background: rgba(26,95,158,0.1);
+  color: var(--blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.cv-chapter-btn.active .cv-ch-num {
+  background: var(--blue);
+  color: #fff;
+}
+.cv-ch-title {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.5;
+}
+.cv-main {
+  flex: 1;
+  padding: 40px 60px;
+  max-width: 800px;
+}
+.cv-main-content {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px;
+  box-shadow: var(--shadow);
+  font-size: 16px;
+  line-height: 2;
+  color: var(--text);
+}
+.cv-chapter-title {
+  font-size: 24px;
+  color: var(--blue-dark);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.cv-main-content p { margin-bottom: 16px; }
+.cv-nav-btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--border);
+}
+.cv-nav-btns button {
+  padding: 12px 24px;
+  font-size: 15px;
+}
+
+@media (max-width: 900px) {
+  .cv-container { flex-direction: column; }
+  .cv-sidebar { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border); }
+  .cv-chapter-list { max-height: 250px; overflow-y: auto; }
+  .cv-main { padding: 24px; }
+  .cv-main-content { padding: 24px; }
+  .cv-chapter-title { font-size: 20px; }
+}
 </style>
 </head>
 <body>
@@ -1401,6 +1556,7 @@ footer {
   </a>
   <div class="nav-links" id="navLinks">
     <a href="#" onclick="showPage('home');return false;">হোম</a>
+    <a href="#" onclick="showPage('mini-courses');return false;">মিনি-কোর্স <span style="background:var(--gold);color:var(--dark);padding:2px 6px;border-radius:4px;font-size:10px;margin-left:4px;font-weight:bold;">Free</span></a>
     <a href="#" onclick="showPage('courses');return false;">কোর্স</a>
     <a href="#" onclick="showPage('teachers');return false;">শিক্ষকবৃন্দ</a>
     <a href="#" onclick="showPage('about');return false;">আমাদের সম্পর্কে</a>
@@ -1659,6 +1815,51 @@ footer {
       </div>
     </div>
   </section>
+</div>
+
+<!-- ─────────── MINI COURSES PAGE ─────────── -->
+<div class="page" id="page-mini-courses">
+  <div class="policy-hero">
+    <div class="container">
+      <div class="section-label" style="margin:0 auto 16px;display:inline-flex;background:rgba(200,151,42,0.12);border-color:rgba(200,151,42,0.3);color:var(--gold-light);">ফ্রি মিনি-কোর্স</div>
+      <h1>ইসলামিক জ্ঞানের <span style="color:var(--gold-light)">ভাণ্ডার</span></h1>
+      <p style="margin-top:14px;">ছোট ছোট কোর্স, বড় বড় শিক্ষা। সম্পূর্ণ বিনামূল্যে নিজেকে ও পরিবারকে আলোকিত করুন।</p>
+    </div>
+  </div>
+  <section class="section courses-section" style="padding-top:60px;">
+    <div class="container">
+      <div class="courses-grid" id="mini-courses-grid">
+        <!-- Courses will be rendered here by JS -->
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ─────────── COURSE VIEWER PAGE ─────────── -->
+<div class="page" id="page-course-viewer" style="padding-top: 70px; min-height: 100vh; background: var(--cream);">
+  <div class="cv-container">
+    <div class="cv-sidebar">
+      <div class="cv-sidebar-header">
+        <button class="cv-back-btn" onclick="closeCourseViewer()">← সকল কোর্সে ফিরে যান</button>
+        <div class="cv-course-title" id="cv-course-title">কোর্সের নাম</div>
+        <div class="cv-progress-container">
+          <div class="cv-progress-bar"><div class="cv-progress-fill" id="cv-progress-fill"></div></div>
+          <div class="cv-progress-text" id="cv-progress-text">পার্ট ১ / ৫</div>
+        </div>
+      </div>
+      <div class="cv-chapter-list" id="cv-chapter-list">
+        <!-- Chapter buttons rendered by JS -->
+      </div>
+    </div>
+    <div class="cv-main" id="cv-main-content">
+      <div class="cv-main-content">
+        <h2 class="cv-chapter-title" id="cv-chapter-title">চ্যাপ্টার টাইটেল</h2>
+        <div id="cv-chapter-content">
+          <!-- Chapter content rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ─────────── COURSES PAGE ─────────── -->
@@ -2321,5 +2522,6 @@ document.querySelectorAll('.stat-num').forEach(el => {
   if (t === 98) el.dataset.suffix = '%';
 });
 </script>
+<script src="mini-courses.js"></script>
 </body>
 </html>
