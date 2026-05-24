@@ -2180,7 +2180,7 @@ miniCoursesData.forEach(course => {
       if (prevChapter.teaser.includes("অভিনন্দন") || prevChapter.teaser.includes("সম্পন্ন করেছেন")) {
         prevChapter.teaser = "পরের পার্টে — এই বিষয়ের আরও কিছু গুরুত্বপূর্ণ দিক! ✨";
       }
-      prevChapter.content = prevChapter.content.replace(/<div style="background:linear-gradient[\\s\\S]*?<\\/div>/, '');
+      prevChapter.content = prevChapter.content.replace(/<div style="background:linear-gradient[\\s\\S]*?<\/div>/, '');
     }
 
     course.chapters.push(extraChapter);
