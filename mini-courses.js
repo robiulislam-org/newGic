@@ -813,6 +813,165 @@ let totalXP = parseInt(localStorage.getItem('gic_xp') || '0');
 let completedChapters = JSON.parse(localStorage.getItem('gic_completed') || '[]');
 let streakCount = parseInt(localStorage.getItem('gic_streak') || '0');
 
+// Student Auth & Sync Variables
+const gicSupabaseUrl = "https://abpweawndpnaftkcsdcp.supabase.co";
+const gicSupabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y";
+let studentSession = JSON.parse(localStorage.getItem('gic_student_session') || 'null');
+
+// ============================================================
+//  STUDENT AUTHENTICATION (SUPABASE)
+// ============================================================
+
+function updateAuthUI() {
+  const authBar = document.getElementById('student-auth-bar');
+  if (!authBar) return;
+  
+  if (studentSession && studentSession.student_id) {
+    authBar.innerHTML = `
+      <div class="student-auth-info">
+        <div class="student-avatar">${studentSession.student_id.slice(-2)}</div>
+        <div class="student-details">
+          <h4>স্টুডেন্ট আইডি: ${studentSession.student_id}</h4>
+          <p>নম্বর: ${studentSession.phone} | <span style="color:var(--gold);">⚡ ${totalXP} XP</span></p>
+        </div>
+      </div>
+      <button class="btn btn-outline" onclick="logoutStudent()">লগআউট</button>
+    `;
+  } else {
+    authBar.innerHTML = `
+      <div class="student-auth-info">
+        <div class="student-avatar" style="background:#e2e8f0;color:#64748b;">?</div>
+        <div class="student-details">
+          <h4>আপনার কোনো স্টুডেন্ট আইডি নেই</h4>
+          <p>কোর্সের প্রগ্রেস সেভ করতে লগইন করুন</p>
+        </div>
+      </div>
+      <button class="btn btn-blue" onclick="openStudentAuth()">লগইন / আইডি তৈরি করুন</button>
+    `;
+  }
+}
+
+function openStudentAuth() {
+  document.getElementById('student-auth-modal').classList.add('active');
+  document.getElementById('auth-status').innerText = '';
+  document.getElementById('auth-phone').value = '';
+}
+
+function closeStudentAuth() {
+  document.getElementById('student-auth-modal').classList.remove('active');
+}
+
+async function submitStudentAuth() {
+  const phone = document.getElementById('auth-phone').value.trim();
+  const statusEl = document.getElementById('auth-status');
+  const loader = document.getElementById('auth-loading');
+  const submitBtn = document.getElementById('btn-submit-auth');
+  
+  if (!phone || phone.length < 11 || !phone.startsWith('01')) {
+    statusEl.className = 'auth-status error';
+    statusEl.innerText = 'দয়া করে সঠিক মোবাইল নাম্বার দিন (যেমন: 017...)';
+    return;
+  }
+
+  statusEl.innerText = '';
+  loader.style.display = 'block';
+  submitBtn.style.display = 'none';
+
+  try {
+    const response = await fetch(`${gicSupabaseUrl}/rest/v1/rpc/login_or_create_student`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': gicSupabaseKey,
+        'Authorization': `Bearer ${gicSupabaseKey}`
+      },
+      body: JSON.stringify({ p_phone: phone })
+    });
+
+    if (!response.ok) throw new Error('Network error');
+    
+    const data = await response.json();
+    
+    if (data.status === 'success') {
+      // Save session
+      studentSession = {
+        student_id: data.student_id,
+        phone: data.phone
+      };
+      localStorage.setItem('gic_student_session', JSON.stringify(studentSession));
+      
+      // Load progress if existing user
+      if (!data.is_new) {
+        totalXP = data.xp || 0;
+        completedChapters = data.completed_chapters || [];
+        streakCount = data.streak || 0;
+        localStorage.setItem('gic_xp', totalXP);
+        localStorage.setItem('gic_completed', JSON.stringify(completedChapters));
+        localStorage.setItem('gic_streak', streakCount);
+      }
+      
+      statusEl.className = 'auth-status success';
+      statusEl.innerText = data.is_new ? 'নতুন আইডি সফলভাবে তৈরি হয়েছে!' : 'লগইন সফল হয়েছে!';
+      
+      updateAuthUI();
+      renderMiniCourses();
+      
+      setTimeout(() => {
+        closeStudentAuth();
+        // Reset modal
+        loader.style.display = 'none';
+        submitBtn.style.display = 'block';
+      }, 1500);
+    } else {
+      throw new Error(data.message || 'Error');
+    }
+  } catch (error) {
+    statusEl.className = 'auth-status error';
+    statusEl.innerText = 'সার্ভার সমস্যা, একটু পর আবার চেষ্টা করুন।';
+    loader.style.display = 'none';
+    submitBtn.style.display = 'block';
+  }
+}
+
+function logoutStudent() {
+  studentSession = null;
+  localStorage.removeItem('gic_student_session');
+  // Optional: clear progress on logout if you want them to start fresh
+  // totalXP = 0; completedChapters = []; streakCount = 0;
+  // localStorage.removeItem('gic_xp'); localStorage.removeItem('gic_completed'); localStorage.removeItem('gic_streak');
+  updateAuthUI();
+  renderMiniCourses();
+}
+
+async function syncProgressToSupabase() {
+  if (!studentSession || !studentSession.student_id) return;
+  
+  try {
+    await fetch(`${gicSupabaseUrl}/rest/v1/rpc/sync_student_progress`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': gicSupabaseKey,
+        'Authorization': `Bearer ${gicSupabaseKey}`
+      },
+      body: JSON.stringify({
+        p_student_id: studentSession.student_id,
+        p_xp: totalXP,
+        p_completed: completedChapters,
+        p_streak: streakCount,
+        p_last_visit: localStorage.getItem('gic_last_visit') || ''
+      })
+    });
+  } catch (e) {
+    console.error('Failed to sync progress:', e);
+  }
+}
+
+// Initialize Auth UI on load
+document.addEventListener('DOMContentLoaded', () => {
+  updateAuthUI();
+});
+
 // ============================================================
 //  RENDER COURSE GRID
 // ============================================================
@@ -1109,6 +1268,7 @@ function checkAnswer(selectedIndex) {
   if (!completedChapters.includes(key)) {
     completedChapters.push(key);
     localStorage.setItem('gic_completed', JSON.stringify(completedChapters));
+    if (typeof syncProgressToSupabase === 'function') syncProgressToSupabase();
   }
 
   document.getElementById('cv-read-badge').style.display = 'inline-flex';
@@ -1147,6 +1307,7 @@ function enableNextButton() {
 function addXP(amount) {
   totalXP += amount;
   localStorage.setItem('gic_xp', totalXP);
+  if (typeof syncProgressToSupabase === 'function') syncProgressToSupabase();
 
   const floater = document.createElement('div');
   floater.textContent = '+' + amount + ' XP';
@@ -1269,6 +1430,9 @@ function updateStreakCount() {
       else { streakCount++; }
     } else { streakCount = 1; }
     localStorage.setItem('gic_streak', streakCount);
+    if (typeof syncProgressToSupabase === 'function') {
+      syncProgressToSupabase();
+    }
   }
 }
 
