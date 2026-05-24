@@ -372,7 +372,7 @@
       height: 6px;
       background-color: var(--green);
       border-radius: 50%;
-      margin-right: 6px;
+      margin-right: 8px;
       animation: pulse 1.5s infinite;
     }
 
@@ -425,7 +425,7 @@
     <div class="login-card">
       <div class="login-logo">ق</div>
       <h2>গ্লোবাল ইসলামিক কেয়ার</h2>
-      <p>অ্যাডমিন অ্যানালিটিক্স ড্যাশবোর্ড</p>
+      <p>অ্যাডমিন অ্যানালিটিক্স ড্যাশবোর্ড (Supabase)</p>
       
       <form id="login-form">
         <div class="form-group">
@@ -434,7 +434,7 @@
         </div>
         <button type="submit" class="btn-login">লগইন করুন</button>
       </form>
-      <div id="login-error">ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।</div>
+      <div id="login-error">ভুল পাসওয়ার্ড! অথবা ডেটাবেস কানেকশন ত্রুটি।</div>
     </div>
   </div>
 
@@ -443,7 +443,7 @@
     <header>
       <div class="header-left">
         <h1>📊 GIC Analytics Dashboard</h1>
-        <p>ওয়েবসাইট ভিজিটর ও লাইভ ট্র্যাকিং ড্যাশবোর্ড</p>
+        <p>ওয়েবসাইট ভিজিটর ও লাইভ ট্র্যাকিং ড্যাশবোর্ড (গুগল-মুক্ত ও প্রাইভেট)</p>
       </div>
       <div class="header-right">
         <div class="live-badge">
@@ -503,7 +503,7 @@
             </thead>
             <tbody id="live-users-table">
               <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">লোড হচ্ছে...</td>
+                <td colspan="2" style="text-align: center; color: var(--text-muted);">বর্তমানে কোনো ভিজিটর সক্রিয় নেই</td>
               </tr>
             </tbody>
           </table>
@@ -526,7 +526,7 @@
             </thead>
             <tbody id="top-pages-table">
               <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">লোড হচ্ছে...</td>
+                <td colspan="2" style="text-align: center; color: var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td>
               </tr>
             </tbody>
           </table>
@@ -546,7 +546,7 @@
             </thead>
             <tbody id="top-wa-table">
               <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">লোড হচ্ছে...</td>
+                <td colspan="2" style="text-align: center; color: var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td>
               </tr>
             </tbody>
           </table>
@@ -566,7 +566,7 @@
             </thead>
             <tbody id="top-regions-table">
               <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">লোড হচ্ছে...</td>
+                <td colspan="2" style="text-align: center; color: var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td>
               </tr>
             </tbody>
           </table>
@@ -576,179 +576,226 @@
   </div>
 
   <script type="module">
-    import { firebaseConfig, adminPassword } from "./gic-config.js";
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { supabaseUrl, supabaseAnonKey } from "./gic-config.js";
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    // Auth state check
-    if (sessionStorage.getItem("gic_admin_authed") === "true") {
-      showDashboard();
+    let supabase = null;
+    let authPassword = null;
+    let trafficChart = null;
+
+    // Check configuration on startup
+    const isSupabaseConfigured = 
+      supabaseUrl && 
+      supabaseUrl !== "PLACEHOLDER_SUPABASE_URL" && 
+      supabaseAnonKey && 
+      supabaseAnonKey !== "PLACEHOLDER_SUPABASE_ANON_KEY";
+
+    if (isSupabaseConfigured) {
+      supabase = createClient(supabaseUrl, supabaseAnonKey);
+    }
+
+    // Auto-login if previously authorized
+    const savedPassword = sessionStorage.getItem("gic_admin_password");
+    if (savedPassword) {
+      authPassword = savedPassword;
+      tryLogin(savedPassword);
     }
 
     // Login Form Submit
-    document.getElementById("login-form").addEventListener("submit", (e) => {
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const pwInput = document.getElementById("password").value;
-      if (pwInput === adminPassword) {
-        sessionStorage.setItem("gic_admin_authed", "true");
-        showDashboard();
-      } else {
+      
+      const success = await tryLogin(pwInput);
+      if (!success) {
         const err = document.getElementById("login-error");
         err.style.display = "block";
         setTimeout(() => err.style.display = "none", 3000);
       }
     });
 
-    // Logout
+    // Logout Action
     document.getElementById("logout-btn").addEventListener("click", () => {
-      sessionStorage.removeItem("gic_admin_authed");
+      sessionStorage.removeItem("gic_admin_password");
       window.location.reload();
     });
 
-    function showDashboard() {
+    // Authenticate by invoking get_analytics_summary Postgres Function
+    async function tryLogin(pwd) {
+      if (!supabase) {
+        alert("Supabase credentials not set! Set up gic-config.js.");
+        return false;
+      }
+
+      try {
+        const { data, error } = await supabase.rpc("get_analytics_summary", { pass_code: pwd });
+        
+        if (error) throw error;
+        if (data) {
+          authPassword = pwd;
+          sessionStorage.setItem("gic_admin_password", pwd);
+          showDashboard(data);
+          startDataRefreshLoop();
+          startLivePresenceTracking();
+          return true;
+        }
+      } catch (err) {
+        console.error("🔑 Login auth failed:", err);
+        sessionStorage.removeItem("gic_admin_password");
+      }
+      return false;
+    }
+
+    function showDashboard(initialData) {
       document.getElementById("login-container").style.display = "none";
       document.getElementById("dashboard-container").style.display = "block";
-      initFirebaseDashboard();
+      renderDashboardData(initialData);
     }
 
-    let trafficChart = null;
-
-    function initFirebaseDashboard() {
-      // Check if Config is default placeholders
-      if (!firebaseConfig.apiKey || firebaseConfig.apiKey === "PLACEHOLDER_API_KEY") {
-        alert("Firebase is not configured yet! Please edit gic-config.js file and enter your Firebase database credentials.");
-        return;
-      }
-
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase(app);
-
-      // ─── 1. REALTIME LIVE VISITORS ───
-      const liveRef = ref(db, "live_visitors");
-      onValue(liveRef, (snapshot) => {
-        const liveUsers = snapshot.val() || {};
-        const now = Date.now();
-        const activeUsersList = [];
-
-        // Filter users who pinged in the last 45 seconds (handling idle tabs/slow connection)
-        Object.keys(liveUsers).forEach(key => {
-          const user = liveUsers[key];
-          if (now - user.lastPing < 45000) {
-            activeUsersList.push(user);
+    // Periodically fetch historical aggregates (every 20 seconds)
+    function startDataRefreshLoop() {
+      setInterval(async () => {
+        if (!supabase || !authPassword) return;
+        try {
+          const { data, error } = await supabase.rpc("get_analytics_summary", { pass_code: authPassword });
+          if (!error && data) {
+            renderDashboardData(data);
           }
-        });
-
-        const activeCount = activeUsersList.length;
-        document.getElementById("metric-live").textContent = activeCount;
-        document.getElementById("live-visitors-count").textContent = `${activeCount} জন সক্রিয়`;
-
-        // Render Live Users table
-        const tbody = document.getElementById("live-users-table");
-        tbody.innerHTML = "";
-        
-        if (activeUsersList.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted);">বর্তমানে কোনো ভিজিটর সক্রিয় নেই</td></tr>`;
-        } else {
-          // Sort most recent first
-          activeUsersList.sort((a,b) => b.lastPing - a.lastPing);
-          activeUsersList.forEach(user => {
-            const tr = document.createElement("tr");
-            const pageClass = user.page === "home" ? "page-tag home" : "page-tag";
-            tr.innerHTML = `
-              <td>📍 ${user.city}, ${user.country}</td>
-              <td><span class="pulse-dot-mini"></span><span class="${pageClass}">${user.page}</span></td>
-            `;
-            tbody.appendChild(tr);
-          });
+        } catch (e) {
+          console.warn("🔄 Failed to refresh stats:", e);
         }
-      });
-
-      // ─── 2. GENERAL ANALYTICS & CHARTS ───
-      const analyticsRef = ref(db, "analytics");
-      onValue(analyticsRef, (snapshot) => {
-        const data = snapshot.val() || {};
-        const todayStr = getTodayString();
-        
-        // Today Stats
-        const dailyData = data.daily || {};
-        const todayData = dailyData[todayStr] || { views: 0, wa_clicks: 0 };
-        const todayViews = todayData.views || 0;
-        const todayWa = todayData.wa_clicks || 0;
-        const conversion = todayViews > 0 ? ((todayWa / todayViews) * 100).toFixed(1) : "0.0";
-
-        document.getElementById("metric-today-views").textContent = todayViews;
-        document.getElementById("metric-today-wa").textContent = todayWa;
-        document.getElementById("metric-conversion").textContent = `${conversion}%`;
-
-        // 7 Days Chart Data
-        const last7Days = [];
-        for (let i = 6; i >= 0; i--) {
-          const d = new Date();
-          d.setDate(d.getDate() - i);
-          const dateStr = getTodayStringForDate(d);
-          const formattedLabel = d.toLocaleDateString("bn-BD", { month: "short", day: "numeric" });
-          
-          const dayStats = dailyData[dateStr] || { views: 0, wa_clicks: 0 };
-          last7Days.push({
-            date: formattedLabel,
-            views: dayStats.views || 0,
-            wa: dayStats.wa_clicks || 0
-          });
-        }
-
-        renderChart(last7Days);
-
-        // Top Pages Overall
-        const pagesData = data.pages || {};
-        renderSimpleTable("top-pages-table", pagesData, "Views", true);
-
-        // Top WA clicks Overall
-        const waPagesData = data.wa_clicks_by_page || {};
-        renderSimpleTable("top-wa-table", waPagesData, "Clicks");
-
-        // Top Regions
-        const regionsData = data.regions || {};
-        renderSimpleTable("top-regions-table", regionsData, "Event Count", false, true);
-      });
+      }, 20000);
     }
 
-    function renderSimpleTable(elementId, objectData, valueLabel, isPage = false, isRegion = false) {
+    // Join Supabase Presence room and listen to live visitor WebSocket events
+    function startLivePresenceTracking() {
+      if (!supabase) return;
+
+      const liveChannel = supabase.channel("gic-live-room");
+      
+      liveChannel
+        .on("presence", { event: "sync" }, () => {
+          const state = liveChannel.presenceState();
+          const activeUsersList = [];
+
+          // Flatten presence map into list
+          Object.keys(state).forEach(key => {
+            const presences = state[key];
+            presences.forEach(presence => {
+              activeUsersList.push(presence);
+            });
+          });
+
+          const activeCount = activeUsersList.length;
+          document.getElementById("metric-live").textContent = activeCount;
+          document.getElementById("live-visitors-count").textContent = `${activeCount} জন সক্রিয়`;
+
+          // Render active visitors table
+          const tbody = document.getElementById("live-users-table");
+          tbody.innerHTML = "";
+
+          if (activeUsersList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 20px 0;">বর্তমানে কোনো ভিজিটর সক্রিয় নেই</td></tr>`;
+          } else {
+            // Sort: newly joined first
+            activeUsersList.sort((a, b) => new Date(b.joined_at) - new Date(a.joined_at));
+            activeUsersList.forEach(user => {
+              const tr = document.createElement("tr");
+              const pageClass = user.page === "home" ? "page-tag home" : "page-tag";
+              tr.innerHTML = `
+                <td>📍 ${user.city || "Unknown"}, ${user.country || "Unknown"}</td>
+                <td><span class="pulse-dot-mini"></span><span class="${pageClass}">${user.page || "home"}</span></td>
+              `;
+              tbody.appendChild(tr);
+            });
+          }
+        })
+        .subscribe();
+    }
+
+    // Render historical metrics and charts into the page
+    function renderDashboardData(stats) {
+      const todayViews = stats.today_views || 0;
+      const todayWa = stats.today_wa_clicks || 0;
+      const conversion = todayViews > 0 ? ((todayWa / todayViews) * 100).toFixed(1) : "0.0";
+
+      document.getElementById("metric-today-views").textContent = todayViews;
+      document.getElementById("metric-today-wa").textContent = todayWa;
+      document.getElementById("metric-conversion").textContent = `${conversion}%`;
+
+      // 1. Top Pages Table
+      renderTable("top-pages-table", stats.top_pages, "page", "count", true);
+
+      // 2. Top WhatsApp Sources
+      renderTable("top-wa-table", stats.top_wa_pages, "page", "count", true);
+
+      // 3. Top Regions
+      renderTable("top-regions-table", stats.top_regions, "city", "count", false, true);
+
+      // 4. Render 7 Days line chart
+      renderChart(stats.daily_traffic || []);
+    }
+
+    function renderTable(elementId, listData, keyName, valueName, isPage = false, isRegion = false) {
       const tbody = document.getElementById(elementId);
       tbody.innerHTML = "";
-
-      const sortedList = Object.keys(objectData).map(key => ({
-        name: key,
-        value: objectData[key]
-      })).sort((a, b) => b.value - a.value).slice(0, 8); // Top 8 items
-
-      if (sortedList.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td></tr>`;
+      
+      const list = listData || [];
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 12px;">কোনো ডাটা পাওয়া যায়নি</td></tr>`;
         return;
       }
 
-      sortedList.forEach(item => {
+      list.forEach(item => {
         const tr = document.createElement("tr");
-        let nameDisplay = item.name;
+        let nameDisplay = item[keyName];
+
         if (isPage) {
-          const pageClass = item.name === "home" ? "page-tag home" : "page-tag";
-          nameDisplay = `<span class="${pageClass}">${item.name}</span>`;
+          const pageClass = item[keyName] === "home" ? "page-tag home" : "page-tag";
+          nameDisplay = `<span class="${pageClass}">${item[keyName]}</span>`;
         } else if (isRegion) {
-          nameDisplay = `📍 ${item.name.replace("_", ", ")}`;
+          nameDisplay = `📍 ${item.city}, ${item.country}`;
         }
-        
+
         tr.innerHTML = `
           <td>${nameDisplay}</td>
-          <td style="font-weight: 700;">${item.value.toLocaleString("bn-BD")}</td>
+          <td style="font-weight: 700;">${item[valueName].toLocaleString("bn-BD")}</td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    function renderChart(chartData) {
+    // Chart.js line graph configuration
+    function renderChart(dailyData) {
       const ctx = document.getElementById("traffic-chart").getContext("2d");
-      const labels = chartData.map(d => d.date);
-      const views = chartData.map(d => d.views);
-      const waClicks = chartData.map(d => d.wa);
+
+      // Generate labels (Bengali Dates) and values
+      const labels = [];
+      const views = [];
+      const waClicks = [];
+
+      // Sort dates ascending
+      const sortedDaily = [...dailyData].sort((a,b) => new Date(a.date) - new Date(b.date));
+
+      // Fill in labels and data
+      sortedDaily.forEach(day => {
+        const dateObj = new Date(day.date);
+        const formattedLabel = dateObj.toLocaleDateString("bn-BD", { month: "short", day: "numeric" });
+        labels.push(formattedLabel);
+        views.push(day.views || 0);
+        waClicks.push(day.wa_clicks || 0);
+      });
+
+      // Fallback if empty data to make chart display something clean
+      if (labels.length === 0) {
+        for(let i=6; i>=0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          labels.push(d.toLocaleDateString("bn-BD", { month: "short", day: "numeric" }));
+          views.push(0);
+          waClicks.push(0);
+        }
+      }
 
       if (trafficChart) {
         trafficChart.data.labels = labels;
@@ -811,19 +858,6 @@
           }
         }
       });
-    }
-
-    // Helper functions for dates
-    function getTodayString() {
-      const d = new Date();
-      return getTodayStringForDate(d);
-    }
-
-    function getTodayStringForDate(d) {
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
     }
   </script>
 </body>
