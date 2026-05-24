@@ -1578,6 +1578,45 @@ footer {
   .cv-main-content { padding: 24px; }
   .cv-chapter-title { font-size: 20px; }
 }
+
+/* Category Filtering Bar */
+.category-tabs-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 4px 20px 4px;
+  margin-bottom: 24px;
+  scrollbar-width: none; /* Hide standard scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide standard scrollbar for IE/Edge */
+}
+.category-tabs-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+.category-tab-btn {
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.category-tab-btn:hover {
+  background: rgba(26,95,158,0.04);
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+.category-tab-btn.active {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+  color: #fff;
+  border-color: var(--blue-dark);
+  box-shadow: 0 4px 15px rgba(26,95,158,0.25);
+}
 </style>
 </head>
 <body>
@@ -1877,6 +1916,9 @@ footer {
         </div>
         <button class="btn btn-blue" id="btn-open-auth" onclick="openStudentAuth()">লগইন / আইডি তৈরি করুন</button>
       </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="category-tabs-container" id="category-tabs-container"></div>
 
       <div class="courses-grid" id="mini-courses-grid">
         <!-- Courses will be rendered here by JS -->
@@ -2593,6 +2635,7 @@ document.querySelectorAll('.stat-num').forEach(el => {
   </div>
 </div>
 
+<script src="courses-data.js"></script>
 <script src="mini-courses.js"></script>
 <script type="module" src="analytics.js"></script>
 </body>
