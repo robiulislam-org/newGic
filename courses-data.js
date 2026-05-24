@@ -2129,3 +2129,65 @@ rawNewCourses.forEach(rc => {
 
   miniCoursesData.push(course);
 });
+
+// ============================================================
+// DYNAMICALLY PAD COURSES TO HAVE AT LEAST 6 CHAPTERS
+// ============================================================
+miniCoursesData.forEach(course => {
+  const targetChapters = 6;
+  while (course.chapters.length < targetChapters) {
+    const partNum = course.chapters.length + 1;
+    
+    const extraChapter = {
+      title: `${course.title} - পর্ব ${partNum}`,
+      funFact: `এই কোর্সের ${partNum} নম্বর পর্বে আরও গভীর কিছু তথ্য রয়েছে যা আপনার চিন্তাধারা বদলে দিতে পারে! ✨`,
+      content: `
+        <p style="font-size:16px;">আজকে আমরা অত্যন্ত গুরুত্বপূর্ণ একটি বিষয় <strong>"${course.title}"</strong> এর ${partNum} নম্বর পর্ব নিয়ে আলোচনা করছি।</p>
+        <p>ইসলাম ও আধুনিক বিজ্ঞানের আলোকে এই বিষয়টি আমাদের জীবনে গুরুত্বপূর্ণ প্রভাব ফেলে। কোরআন এবং সুন্নাহর ভিত্তিতে এর গুরুত্ব অপরিসীম।</p>
+        <br>
+        <h4 style="color:var(--gold);margin-bottom:12px;">ফজিলত ও শিক্ষা</h4>
+        <ul style="list-style-type:none;padding-left:0;display:flex;flex-direction:column;gap:12px;">
+          <li style="background:var(--cream);padding:16px;border-radius:8px;">💡 <strong>বাস্তব প্রয়োগ:</strong> এই শিক্ষাটি আমাদের দৈনন্দিন জীবনে প্রয়োগ করলে আমরা দুনিয়া ও আখেরাতে সফল হতে পারব।</li>
+          <li style="background:var(--cream);padding:16px;border-radius:8px;">🌟 <strong>আধ্যাত্মিক উন্নতি:</strong> আল্লাহর প্রতি আমাদের বিশ্বাস আরও দৃঢ় হবে।</li>
+        </ul>
+        <blockquote style="background:rgba(26,95,158,0.05);border-left:4px solid var(--gold);padding:16px;margin:16px 0;border-radius:0 8px 8px 0;">
+          <p>আসুন আমরা এই শিক্ষাগুলো আমাদের দৈনন্দিন জীবনে বাস্তবায়ন করার চেষ্টা করি। আমীন!</p>
+        </blockquote>
+      `,
+      quiz: {
+        question: `এই কোর্সের ${partNum} নম্বর পর্বের মূল শিক্ষা কী?`,
+        options: ["গুরুত্বপূর্ণ শিক্ষা ও বাস্তব প্রয়োগ", "অপ্রয়োজনীয় তথ্য", "সাধারণ আলোচনা", "সঠিক উত্তর জানা নেই"],
+        correct: 0,
+        explanation: "প্রতিটি পর্ব থেকেই আমরা আমাদের জীবনের জন্য গুরুত্বপূর্ণ শিক্ষা লাভ করি।"
+      }
+    };
+    
+    if (course.chapters.length === targetChapters - 1) {
+      extraChapter.teaser = "🎉 অভিনন্দন! আপনি সফলভাবে এই কোর্সটি সম্পূর্ণ করেছেন! পরবর্তী নতুন আরেকটি কোর্স শুরু করুন!";
+      extraChapter.content += `
+        <div style="background:linear-gradient(135deg,var(--blue-dark),var(--dark));border-radius:12px;padding:24px;text-align:center;color:#fff;margin-top:24px;">
+          <h3 style="color:var(--gold-light);margin-bottom:12px;">আপনার ইসলামিক জ্ঞান আরও বাড়াতে চান?</h3>
+          <p style="color:rgba(255,255,255,0.8);font-size:14px;margin-bottom:20px;line-height:1.7;">আমাদের হাফেজ ওস্তাদদের সাথে ওয়ান-টু-ওয়ান ফ্রি লাইভ সেশনে যুক্ত হোন।</p>
+          <a href="https://wa.me/8801733017521" target="_blank" style="display:inline-block;background:#25D366;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold;box-shadow:0 4px 15px rgba(37,211,102,0.4);">💬 ফ্রি কাউন্সেলিং সেশন বুক করুন</a>
+        </div>
+      `;
+    } else {
+      extraChapter.teaser = `পরবর্তী চ্যাপ্টারে আমরা আরও চমৎকার কিছু রহস্য উন্মোচন করব! 🤩`;
+    }
+
+    const prevChapter = course.chapters[course.chapters.length - 1];
+    if (prevChapter) {
+      if (prevChapter.teaser.includes("অভিনন্দন") || prevChapter.teaser.includes("সম্পন্ন করেছেন")) {
+        prevChapter.teaser = "পরের পার্টে — এই বিষয়ের আরও কিছু গুরুত্বপূর্ণ দিক! ✨";
+      }
+      prevChapter.content = prevChapter.content.replace(/<div style="background:linear-gradient[\\s\\S]*?<\\/div>/, '');
+    }
+
+    course.chapters.push(extraChapter);
+  }
+  
+  course.partsCount = course.chapters.length;
+  if (parseInt(course.duration)) {
+    course.duration = (course.chapters.length * 11) + " মিনিট";
+  }
+});
