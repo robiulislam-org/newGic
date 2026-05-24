@@ -7,6 +7,7 @@
   <!-- Google Fonts & Chart.js -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   
   <style>
     :root {
@@ -575,24 +576,17 @@
     </div>
   </div>
 
-  <script type="module">
-    import { supabaseUrl, supabaseAnonKey } from "./gic-config.js";
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+  <script>
+    // ✅ Supabase Credentials
+    const supabaseUrl = "https://abpweawndpnaftkcsdcp.supabase.co";
+    const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y";
 
-    let supabase = null;
+    let supabaseClient = null;
     let authPassword = null;
     let trafficChart = null;
 
-    // Check configuration on startup
-    const isSupabaseConfigured = 
-      supabaseUrl && 
-      supabaseUrl !== "PLACEHOLDER_SUPABASE_URL" && 
-      supabaseAnonKey && 
-      supabaseAnonKey !== "PLACEHOLDER_SUPABASE_ANON_KEY";
-
-    if (isSupabaseConfigured) {
-      supabase = createClient(supabaseUrl, supabaseAnonKey);
-    }
+    // Initialize Supabase using global supabase object from CDN
+    supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
     // Auto-login if previously authorized
     const savedPassword = sessionStorage.getItem("gic_admin_password");
@@ -622,13 +616,8 @@
 
     // Authenticate by invoking get_analytics_summary Postgres Function
     async function tryLogin(pwd) {
-      if (!supabase) {
-        alert("Supabase credentials not set! Set up gic-config.js.");
-        return false;
-      }
-
       try {
-        const { data, error } = await supabase.rpc("get_analytics_summary", { pass_code: pwd });
+        const { data, error } = await supabaseClient.rpc("get_analytics_summary", { pass_code: pwd });
         
         if (error) throw error;
         if (data) {
@@ -655,9 +644,9 @@
     // Periodically fetch historical aggregates (every 20 seconds)
     function startDataRefreshLoop() {
       setInterval(async () => {
-        if (!supabase || !authPassword) return;
+        if (!supabaseClient || !authPassword) return;
         try {
-          const { data, error } = await supabase.rpc("get_analytics_summary", { pass_code: authPassword });
+          const { data, error } = await supabaseClient.rpc("get_analytics_summary", { pass_code: authPassword });
           if (!error && data) {
             renderDashboardData(data);
           }
@@ -669,9 +658,9 @@
 
     // Join Supabase Presence room and listen to live visitor WebSocket events
     function startLivePresenceTracking() {
-      if (!supabase) return;
+      if (!supabaseClient) return;
 
-      const liveChannel = supabase.channel("gic-live-room");
+      const liveChannel = supabaseClient.channel("gic-live-room");
       
       liveChannel
         .on("presence", { event: "sync" }, () => {
