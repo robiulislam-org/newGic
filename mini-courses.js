@@ -44,7 +44,7 @@ function updateAuthUI() {
         <div class="student-avatar">${studentSession.student_id.slice(-2)}</div>
         <div class="student-details">
           <h4>স্টুডেন্ট আইডি: <span style="color:var(--gold);font-family:monospace;">${studentSession.student_id}</span></h4>
-          <p>নম্বর: ${studentSession.phone} | <span style="color:var(--gold);">⚡ ${totalXP} XP</span> | 🔗 <a href="${refLink}" onclick="copyReferral(event,'${refLink}')" style="color:var(--blue);cursor:pointer;text-decoration:underline;">রেফারেল লিংক কপি করুন</a></p>
+          <p>নম্বর: ${studentSession.phone} | 🔗 <a href="${refLink}" onclick="copyReferral(event,'${refLink}')" style="color:var(--blue);cursor:pointer;text-decoration:underline;">রেফারেল লিংক কপি করুন</a></p>
         </div>
       </div>
       <button class="btn btn-outline" onclick="logoutStudent()">লগআউট</button>
@@ -268,18 +268,6 @@ function renderCategoryFilter() {
     tabContainer.appendChild(btn);
   });
 
-  // Dynamically append the 🏆 Global Leaderboard Tab at the end
-  const lbBtn = document.createElement('button');
-  lbBtn.className = `category-tab-btn ${activeCategory === 'leaderboard' ? 'active' : ''}`;
-  lbBtn.setAttribute('data-category', 'leaderboard');
-  lbBtn.innerHTML = `🏆 গ্লোবাল লিডারবোর্ড`;
-  lbBtn.onclick = () => {
-    activeCategory = 'leaderboard';
-    const buttons = tabContainer.querySelectorAll('.category-tab-btn');
-    buttons.forEach(b => b.classList.toggle('active', b.getAttribute('data-category') === 'leaderboard'));
-    renderMiniCourses();
-  };
-  tabContainer.appendChild(lbBtn);
 }
 
 function filterCoursesBySearch() {
@@ -525,7 +513,7 @@ function renderMiniCourses() {
 
         <div style="margin-bottom:16px; display:flex; justify-content:center; gap:6px; flex-wrap:wrap;">
           <span style="background:rgba(37,211,102,0.08); color:#1DA851; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; border:1px solid rgba(37,211,102,0.15);">✓ সম্পূর্ণ ফ্রি</span>
-          <span style="background:rgba(212,168,67,0.08); color:var(--gold); padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; border:1px solid rgba(212,168,67,0.15);">⚡ +${course.chapters.length * 10} XP</span>
+
         </div>
         <button onclick="openCourseViewer(${course.id})" class="btn btn-primary btn-full" style="margin-bottom:12px; font-size:15px; padding:14px; font-weight:800; letter-spacing:0.3px; border-radius:12px;">
           ${progress > 0 && progress < 100 ? '▶ চলুন এগিয়ে যাই →' : progress === 100 ? '🔄 পুনরায় পড়ুন' : '🚀 কোর্স শুরু করুন →'}
@@ -781,8 +769,8 @@ function openShareModal(courseId) {
 
 🌟 *কোর্সের বৈশিষ্ট্যসমূহ:*
 ✅ তাজউইদ ও সহীহ উচ্চারণ শিক্ষা
-✅ আকর্ষক কুইজ ও XP পয়েন্ট অর্জন
-✅ সম্পূর্ণ সমাপ্তির পর প্রশংসাপত্র (Certificate)
+✅ আকর্ষক ও সহজ প্রশ্ন-উত্তর (কুইজ)
+✅ অত্যন্ত আধুনিক ও আনন্দদায়ক শিক্ষাপদ্ধতি
 
 ✨ নিজেকে ও পরিবারকে আলোকিত করতে আজই ফ্রিতে কোর্সটি শুরু করুন!
 👇 সরাসরি নিচে দেওয়া লিংকে ক্লিক করে যুক্ত হোন:`;
