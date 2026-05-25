@@ -456,9 +456,7 @@ function renderMiniCourses() {
     }
 
     const difficulty = course.chapters.length <= 4 ? '🟢 সহজ' : course.chapters.length <= 6 ? '🟡 মাঝারি' : '🔴 অগ্রসর';
-    const rating = (4.7 + ((course.id * 7) % 3) * 0.1).toFixed(1);
-    const ratingCount = (course.id * 23 + 45) % 150 + 50;
-    const studentsCount = (course.id * 147 + 235) % 800 + 150;
+    const realCommentCount = (globalComments[course.id] || []).length;
 
     const card = document.createElement('div');
     card.className = 'course-card reveal visible';
@@ -506,9 +504,11 @@ function renderMiniCourses() {
           <span style="display:flex; align-items:center; gap:4px; background:var(--cream); padding:5px 10px; border-radius:20px;">📊 ${difficulty}</span>
         </div>
         
-        <!-- Ratings & Reviews -->
+        <!-- Real Comment Count -->
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; font-size:12.5px; font-weight:600; color:var(--text-muted); border-bottom:1px dashed var(--border); padding-bottom:12px;">
-          <span style="color:#f59e0b; display:flex; align-items:center; gap:4px;">⭐ ${rating} <span style="color:var(--text-muted); font-size:11px; font-weight:500;">(${ratingCount}+ রিভিউ)</span></span>
+          <span style="display:flex; align-items:center; gap:6px;">
+            💬 ${realCommentCount > 0 ? `<span style="color:var(--blue-dark); font-weight:700;">${realCommentCount}টি মন্তব্য</span>` : `<span style="color:var(--text-muted); font-weight:500;">এখনো কোনো মন্তব্য নেই</span>`}
+          </span>
         </div>
 
         <div style="margin-bottom:16px; display:flex; justify-content:center; gap:6px; flex-wrap:wrap;">
@@ -570,24 +570,10 @@ async function initializeGlobalDataInSupabase() {
   const initialLikes = {};
   const initialComments = {};
   
+  // No fake seed data - start with empty data for authenticity
   miniCoursesData.forEach(c => {
-    initialLikes[c.id] = (c.id * 17 + 43) % 89 + 12; // seed likes count
-    initialComments[c.id] = [
-      {
-        name: "আহমেদ রহমান",
-        text: "মাশাআল্লাহ, অনেক সুন্দর ও শিক্ষামূলক কোর্স! প্রতিটি পার্ট পড়ে অনেক নতুন কিছু শিখলাম।",
-        rating: 5,
-        time: "২৫/৫/২০২৬ সকাল ১০:১৫",
-        id: Date.now() - 100000
-      },
-      {
-        name: "উম্মে ফাতিমা",
-        text: "বাচ্চাদের জন্য চমৎকার একটি দ্বীনি উপহার। নামাজ ও ইসলামের বুনিয়াদী বিষয়গুলো খুব সহজে শেখানো হয়েছে।",
-        rating: 5,
-        time: "২৪/৫/২০২৬ দুপুর ২:৩০",
-        id: Date.now() - 50000
-      }
-    ];
+    initialLikes[c.id] = 0;
+    initialComments[c.id] = [];
   });
   
   try {
