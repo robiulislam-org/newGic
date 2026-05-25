@@ -46,7 +46,7 @@ function updateAuthUI() {
           <p>নম্বর: ${studentSession.phone}</p>
         </div>
       </div>
-      <button class="btn btn-outline" onclick="logoutStudent()">লগআউট</button>
+      <button class="btn" style="background: transparent; border: 2px solid #ef4444; color: #ef4444; font-size: 13px; padding: 10px 20px; font-weight: 700; border-radius: 10px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ef4444';" onclick="logoutStudent()">লগআউট</button>
     `;
   } else {
     authBar.innerHTML = `
