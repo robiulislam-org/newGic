@@ -505,11 +505,13 @@ function renderMiniCourses() {
         </div>
         
         <!-- Real Comment Count -->
+        ${realCommentCount > 0 ? `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; font-size:12.5px; font-weight:600; color:var(--text-muted); border-bottom:1px dashed var(--border); padding-bottom:12px;">
           <span style="display:flex; align-items:center; gap:6px;">
-            💬 ${realCommentCount > 0 ? `<span style="color:var(--blue-dark); font-weight:700;">${realCommentCount}টি মন্তব্য</span>` : `<span style="color:var(--text-muted); font-weight:500;">এখনো কোনো মন্তব্য নেই</span>`}
+            💬 <span style="color:var(--blue-dark); font-weight:700;">${realCommentCount}টি মন্তব্য</span>
           </span>
         </div>
+        ` : ''}
 
         <div style="margin-bottom:16px; display:flex; justify-content:center; gap:6px; flex-wrap:wrap;">
           <span style="background:rgba(37,211,102,0.08); color:#1DA851; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; border:1px solid rgba(37,211,102,0.15);">✓ সম্পূর্ণ ফ্রি</span>
