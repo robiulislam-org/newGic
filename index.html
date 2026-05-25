@@ -1895,11 +1895,35 @@ footer {
 
 <!-- ─────────── MINI COURSES PAGE ─────────── -->
 <div class="page" id="page-mini-courses">
-  <div class="policy-hero">
-    <div class="container">
-      <div class="section-label" style="margin:0 auto 16px;display:inline-flex;background:rgba(200,151,42,0.12);border-color:rgba(200,151,42,0.3);color:var(--gold-light);">ফ্রি মিনি-কোর্স</div>
-      <h1>ইসলামিক জ্ঞানের <span style="color:var(--gold-light)">ভাণ্ডার</span></h1>
-      <p style="margin-top:14px;">ছোট ছোট কোর্স, বড় বড় শিক্ষা। সম্পূর্ণ বিনামূল্যে নিজেকে ও পরিবারকে আলোকিত করুন।</p>
+  <div class="policy-hero" style="background: linear-gradient(135deg, var(--dark) 0%, var(--blue-dark) 100%); position: relative; overflow: hidden; padding: 80px 24px 70px; border-bottom: 2px solid rgba(212, 168, 67, 0.25);">
+    <div style="position: absolute; right: -80px; top: -80px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(200,151,42,0.12) 0%, transparent 70%); border-radius: 50%;"></div>
+    <div style="position: absolute; left: -60px; bottom: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(26,95,158,0.15) 0%, transparent 70%); border-radius: 50%;"></div>
+    <div class="container" style="position: relative; z-index: 2; text-align: center;">
+      <div class="section-label" style="margin:0 auto 16px;display:inline-flex;background:rgba(200,151,42,0.15);border-color:rgba(200,151,42,0.4);color:var(--gold-light);box-shadow: 0 4px 12px rgba(200,151,42,0.15);">🎓 ফ্রি মিনি-কোর্স</div>
+      <h1 style="color:#fff; font-size: clamp(28px, 5vw, 46px); font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">ইসলামিক জ্ঞানের <span style="color:var(--gold-light); background: linear-gradient(120deg, var(--gold-light), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ভাণ্ডার</span></h1>
+      <p style="margin-top:14px; color: rgba(255,255,255,0.85); font-size: clamp(14px, 2.5vw, 17px); max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.8;">ছোট ছোট কোর্স, বড় বড় শিক্ষা। সম্পূর্ণ বিনামূল্যে নিজেকে ও পরিবারকে আলোকিত করুন এবং অর্জন করুন সম্মাননা সার্টিফিকেট!</p>
+      
+      <!-- Real-Time Search Bar -->
+      <div class="search-container" style="max-width:550px; margin: 26px auto 0; position: relative;">
+        <span style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; color: rgba(255,255,255,0.6);">🔍</span>
+        <input type="text" id="course-search-input" placeholder="যেকোনো কোর্স খুঁজুন (যেমন: নামাজ, দোয়া, সিরাত, চরিত্র...)" style="width:100%; padding: 16px 20px 16px 50px; border-radius: 30px; border: 1.5px solid rgba(212,168,67,0.3); background: rgba(255,255,255,0.07); color: #fff; font-size: 15.5px; font-family: var(--font-body); outline: none; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0,0,0,0.3); backdrop-filter: blur(10px);" oninput="filterCoursesBySearch()">
+      </div>
+
+      <!-- Stats Counters Grid -->
+      <div style="display: flex; justify-content: center; gap: 12px; margin-top: 32px; flex-wrap: wrap;">
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 15px; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); transition: all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)';" onmouseout="this.style.background='rgba(255,255,255,0.04)';">
+          <span style="font-size: 20px;">👥</span>
+          <span style="color: #fff; font-size: 13.5px; font-weight: 600;"><span style="color: var(--gold-light); font-weight: 800;">১,৫০০+</span> সফল শিক্ষার্থী</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 15px; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); transition: all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)';" onmouseout="this.style.background='rgba(255,255,255,0.04)';">
+          <span style="font-size: 20px;">📖</span>
+          <span style="color: #fff; font-size: 13.5px; font-weight: 600;"><span style="color: var(--gold-light); font-weight: 800;">১০০+</span> ফ্রি অধ্যায়</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 15px; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); transition: all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)';" onmouseout="this.style.background='rgba(255,255,255,0.04)';">
+          <span style="font-size: 20px;">🏆</span>
+          <span style="color: #fff; font-size: 13.5px; font-weight: 600;"><span style="color: var(--gold-light); font-weight: 800;">১০০%</span> ফ্রি সার্টিফিকেট</span>
+        </div>
+      </div>
     </div>
   </div>
   <section class="section courses-section" style="padding-top:60px;">
@@ -1920,8 +1944,73 @@ footer {
       <!-- Category Filter Tabs -->
       <div class="category-tabs-container" id="category-tabs-container"></div>
 
+      <!-- Global Leaderboard Section (hidden by default, toggled via JS) -->
+      <div id="leaderboard-section" style="display:none; margin-top:20px; background:#fff; border-radius:20px; padding:32px; border:1.5px solid var(--border); box-shadow:var(--shadow);">
+        <div style="text-align:center; margin-bottom:24px;">
+          <span style="font-size:48px;">🏆</span>
+          <h2 style="color:var(--blue-dark); margin-top:10px; font-weight:700;">গ্লোবাল লিডারবোর্ড (টপ ১০)</h2>
+          <p style="color:var(--text-muted); font-size:14px;">প্রতিটি চ্যাপ্টার শেষ করে এবং কুইজে অংশ নিয়ে XP অর্জন করুন এবং টপে থাকুন!</p>
+        </div>
+        <div id="leaderboard-loading" style="text-align:center; padding:20px;">
+          <div class="spinner" style="border-top-color:var(--gold); margin:0 auto;"></div>
+          <p style="margin-top:10px; color:var(--text-muted); font-size:13px;">লোড হচ্ছে...</p>
+        </div>
+        <div id="leaderboard-list" style="max-width:500px; margin:0 auto; display:none; flex-direction:column; gap:12px;">
+          <!-- Loaded dynamically by JS -->
+        </div>
+        <div id="my-rank-container" style="max-width:500px; margin:20px auto 0; padding-top:16px; border-top:1.5px dashed var(--border); display:none; text-align:center;">
+          <!-- User's own ranking -->
+        </div>
+      </div>
+
       <div class="courses-grid" id="mini-courses-grid">
         <!-- Courses will be rendered here by JS -->
+      </div>
+
+      <!-- 👨‍👩‍👧‍👦 Parents' Corner Section -->
+      <div class="reveal" style="margin-top:56px; background:linear-gradient(135deg, #0f2b48 0%, #061524 100%); border-radius:24px; padding:40px; color:#fff; border:1.5px solid rgba(212,168,67,0.3); position:relative; overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,0.35);">
+        <div style="position:absolute; right:-50px; top:-50px; width:180px; height:180px; background:rgba(212,168,67,0.06); border-radius:50%;"></div>
+        <div style="position:absolute; left:-40px; bottom:-40px; width:140px; height:140px; background:rgba(26,95,158,0.08); border-radius:50%;"></div>
+        
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px; position:relative; z-index:2;">
+          <span style="font-size:36px; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));">👨‍👩‍👧‍👦</span>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:1px; font-family:var(--font-display);">Parent's Corner</div>
+            <h3 style="color:#fff; font-size:22px; margin:0; font-weight:700;">অভিভাবক কর্নার — আপনার সন্তানের সুন্দর ভবিষ্যৎ</h3>
+          </div>
+        </div>
+        
+        <p style="color:rgba(255,255,255,0.85); font-size:14.5px; line-height:1.85; margin-bottom:24px; position:relative; z-index:2;">
+          প্রিয় অভিভাবক, আজকের ইন্টারনেটের যুগে সন্তানদের ইসলামিক আদব-কায়দা ও সহীহ দ্বীনি শিক্ষা দেওয়া সবচেয়ে বড় চ্যালেঞ্জ। GIC-এর ফ্রি মিনি-কোর্সগুলো এমনভাবে ডিজাইন করা হয়েছে যা আপনার সন্তানের মধ্যে নৈতিক চরিত্র গঠন, আল্লাহর প্রতি ভালোবাসা এবং ইসলামিক বুনিয়াদী জ্ঞান অত্যন্ত আনন্দের সাথে ও খেলার ছলে (Gamified) তৈরি করবে। প্রতিটি কোর্সে রয়েছে মজার কুইজ ও প্রাইজ পয়েন্ট (XP) যা তাদের পড়ার আগ্রহ দ্বিগুণ করে দেয়!
+        </p>
+        
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-bottom:28px; position:relative; z-index:2;">
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:18px; border-radius:14px; display:flex; gap:12px;">
+            <span style="font-size:24px; color:var(--gold-light);">🛡️</span>
+            <div>
+              <h5 style="color:#fff; font-size:14.5px; margin-bottom:4px; font-weight:700;">নিরাপদ ও দ্বীনি পরিবেশ</h5>
+              <p style="color:rgba(255,255,255,0.65); font-size:12.5px; line-height:1.6;">অনলাইনের বিভ্রান্তি থেকে দূরে রেখে আপনার সন্তানকে সুস্থ ও গঠনমূলক ইসলামিক শিক্ষায় ব্যস্ত রাখুন।</p>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:18px; border-radius:14px; display:flex; gap:12px;">
+            <span style="font-size:24px; color:var(--gold-light);">⚡</span>
+            <div>
+              <h5 style="color:#fff; font-size:14.5px; margin-bottom:4px; font-weight:700;">গেমিফাইড লার্নিং (XP & Streak)</h5>
+              <p style="color:rgba(255,255,255,0.65); font-size:12.5px; line-height:1.6;">পয়েন্ট অর্জন, স্ট্রিক ও লেভেল আপের মাধ্যমে শিক্ষার্থীরা আনন্দের সাথে সম্পূর্ণ কোর্স শেষ করতে উদ্বুদ্ধ হয়।</p>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:18px; border-radius:14px; display:flex; gap:12px;">
+            <span style="font-size:24px; color:var(--gold-light);">📜</span>
+            <div>
+              <h5 style="color:#fff; font-size:14.5px; margin-bottom:4px; font-weight:700;">অফিসিয়াল সার্টিফিকেট</h5>
+              <p style="color:rgba(255,255,255,0.65); font-size:12.5px; line-height:1.6;">কোর্স সম্পন্ন করার সাথে সাথে শিশুর যোগ্যতা ও চেষ্টার স্বীকৃতিস্বরূপ প্রশংসা সনদপত্র প্রদান করা হয়।</p>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; position:relative; z-index:2;">
+          <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg" style="box-shadow:0 6px 20px rgba(37,211,102,0.3); font-weight:700;">💬 ফ্রি ওস্তাদ পরামর্শ ও লাইভ ডেমো ক্লাস বুক করুন</a>
+        </div>
       </div>
     </div>
   </section>
@@ -2631,6 +2720,65 @@ document.querySelectorAll('.stat-num').forEach(el => {
       <div class="auth-loading" id="auth-loading"><div class="spinner"></div></div>
       <button class="btn btn-blue btn-full" id="btn-submit-auth" onclick="submitStudentAuth()">কন্টিনিউ করুন</button>
       <div class="auth-status" id="auth-status"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────── COMMENT MODAL ─────────── -->
+<div class="auth-modal" id="comment-modal" style="z-index:20000;">
+  <div class="modal-box" style="background:#fff; border-radius:20px; max-width:560px; width:100%; max-height:88vh; overflow-y:auto; box-shadow:0 24px 80px rgba(0,0,0,0.3); animation:slideUp 0.3s ease;">
+    <div class="modal-header" style="background:linear-gradient(135deg,#0a1628,#1a5f9e); padding:20px 24px; border-radius:20px 20px 0 0; display:flex; align-items:center; justify-content:space-between;">
+      <span id="comment-modal-title" style="color:#fff; font-weight:700; font-size:16px;">💬 মন্তব্য</span>
+      <button onclick="closeCommentModal()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center;">×</button>
+    </div>
+    <div class="modal-body" style="padding:20px 24px;">
+      <div id="comments-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px;"></div>
+      <div class="comment-input-row" style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
+        <input type="text" id="comment-name" class="comment-input" placeholder="আপনার নাম (ঐচ্ছিক)" style="width:100%; padding:12px; border:1.5px solid var(--border); border-radius:10px; font-family:var(--font-body); font-size:14px; color:var(--text); background:var(--cream); resize:none;">
+        <textarea id="comment-text" class="comment-input" rows="3" placeholder="আপনার অনুভূতি বা মন্তব্য লিখুন..." style="width:100%; padding:12px; border:1.5px solid var(--border); border-radius:10px; font-family:var(--font-body); font-size:14px; color:var(--text); background:var(--cream); resize:vertical;"></textarea>
+        <div class="star-rating-row" style="display:flex; align-items:center; gap:8px;">
+          <label style="font-size:14px; font-weight:600; color:var(--text);">রেটিং:</label>
+          <select id="comment-rating" class="rating-select" style="padding:8px; border:1.5px solid var(--border); border-radius:10px; font-family:var(--font-body); font-size:14px; background:var(--cream); color:var(--text);">
+            <option value="5">⭐⭐⭐⭐⭐ অসাধারণ</option>
+            <option value="4">⭐⭐⭐⭐ ভালো</option>
+            <option value="3">⭐⭐⭐ ঠিক আছে</option>
+            <option value="2">⭐⭐ মাঝারি</option>
+            <option value="1">⭐ আরও উন্নতি দরকার</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="submitComment(document.getElementById('comment-modal').dataset.courseId)" style="font-size:14.5px; padding:12px;">মন্তব্য পোস্ট করুন ✅</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────── SHARE MODAL ─────────── -->
+<div class="auth-modal" id="share-modal" style="z-index:20000;">
+  <div class="modal-box" style="background:#fff; border-radius:20px; max-width:500px; width:100%; box-shadow:0 24px 80px rgba(0,0,0,0.3); animation:slideUp 0.3s ease;">
+    <div class="modal-header" style="background:linear-gradient(135deg,#0a1628,#1a5f9e); padding:20px 24px; border-radius:20px 20px 0 0; display:flex; align-items:center; justify-content:space-between;">
+      <span style="color:#fff; font-weight:700; font-size:16px;">📤 কোর্স শেয়ার করুন</span>
+      <button onclick="closeShareModal()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center;">×</button>
+    </div>
+    <div class="modal-body" style="padding:20px 24px;">
+      <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">বন্ধু ও পরিবারকে এই ফ্রি কোর্সের কথা জানান। শেয়ার করলে +3 XP পাবেন!</p>
+      <div class="share-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;">
+        <a id="share-wa" href="#" target="_blank" class="share-item" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px; border-radius:14px; border:1.5px solid rgba(37,211,102,0.3); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(37,211,102,0.06); color:#1DA851; font-weight:700; font-size:14px;">
+          <span class="share-icon" style="font-size:32px;">💬</span>
+          <span>WhatsApp</span>
+        </a>
+        <a id="share-fb" href="#" target="_blank" class="share-item" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px; border-radius:14px; border:1.5px solid rgba(24,119,242,0.3); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(24,119,242,0.06); color:#1877F2; font-weight:700; font-size:14px;">
+          <span class="share-icon" style="font-size:32px;">📘</span>
+          <span>Facebook</span>
+        </a>
+        <a id="share-tw" href="#" target="_blank" class="share-item" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px; border-radius:14px; border:1.5px solid rgba(29,161,242,0.3); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(29,161,242,0.06); color:#1DA1F2; font-weight:700; font-size:14px;">
+          <span class="share-icon" style="font-size:32px;">🐦</span>
+          <span>Twitter/X</span>
+        </a>
+        <button id="share-copy" class="share-item" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px; border-radius:14px; border:1.5px solid var(--border); cursor:pointer; transition:all 0.2s; background:var(--cream); color:var(--text); font-weight:700; font-size:14px;">
+          <span class="share-icon" style="font-size:32px;">🔗</span>
+          <span>লিংক কপি</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
