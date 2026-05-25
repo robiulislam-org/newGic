@@ -38,13 +38,12 @@ function updateAuthUI() {
   if (!authBar) return;
 
   if (studentSession && studentSession.student_id) {
-    const refLink = `${window.location.origin}${window.location.pathname}?ref=${studentSession.student_id}`;
     authBar.innerHTML = `
       <div class="student-auth-info">
         <div class="student-avatar">${studentSession.student_id.slice(-2)}</div>
         <div class="student-details">
           <h4>স্টুডেন্ট আইডি: <span style="color:var(--gold);font-family:monospace;">${studentSession.student_id}</span></h4>
-          <p>নম্বর: ${studentSession.phone} | 🔗 <a href="${refLink}" onclick="copyReferral(event,'${refLink}')" style="color:var(--blue);cursor:pointer;text-decoration:underline;">রেফারেল লিংক কপি করুন</a></p>
+          <p>নম্বর: ${studentSession.phone}</p>
         </div>
       </div>
       <button class="btn btn-outline" onclick="logoutStudent()">লগআউট</button>
@@ -194,6 +193,20 @@ async function awardReferrer(referrerId) {
 function logoutStudent() {
   studentSession = null;
   localStorage.removeItem('gic_student_session');
+  
+  // Reset local student progress state
+  totalXP = 0;
+  completedChapters = [];
+  streakCount = 0;
+  courseLikes = {};
+  
+  localStorage.removeItem('gic_xp');
+  localStorage.removeItem('gic_completed');
+  localStorage.removeItem('gic_streak');
+  localStorage.removeItem('gic_likes');
+  localStorage.removeItem('gic_comments');
+  localStorage.removeItem('gic_last_visit');
+
   updateAuthUI();
   renderMiniCourses();
 }
