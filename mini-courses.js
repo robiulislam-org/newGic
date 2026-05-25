@@ -435,7 +435,7 @@ function renderMiniCourses() {
     const completedCount = completedChapters.filter(k => k.startsWith(`${course.id}-`)).length;
     const progress = Math.round((completedCount / course.chapters.length) * 100);
     const isLiked = courseLikes[course.id] || false;
-    const commentCount = (courseComments[course.id] || []).length;
+    const commentCount = (globalComments[course.id] || []).length;
     const isCompleted = progress === 100;
 
     // Upgraded Badges and Metadata
@@ -619,7 +619,7 @@ async function updateGlobalDataInSupabase() {
 //  LIKE SYSTEM (Globally Persistent)
 // ============================================================
 function getLikeCount(courseId) {
-  return globalLikes[courseId] || ((courseId * 17 + 43) % 89 + 12);
+  return globalLikes[courseId] !== undefined ? globalLikes[courseId] : 0;
 }
 
 async function toggleLike(courseId, btn) {
@@ -627,8 +627,8 @@ async function toggleLike(courseId, btn) {
   courseLikes[courseId] = !previouslyLiked;
   localStorage.setItem('gic_likes', JSON.stringify(courseLikes));
 
-  if (!globalLikes[courseId]) {
-    globalLikes[courseId] = (courseId * 17 + 43) % 89 + 12;
+  if (globalLikes[courseId] === undefined) {
+    globalLikes[courseId] = 0;
   }
 
   if (courseLikes[courseId]) {
@@ -869,7 +869,7 @@ function renderCourseEngagementBar(courseId) {
 
   const course = miniCoursesData.find(c => c.id === courseId);
   const isLiked = courseLikes[courseId] || false;
-  const commentCount = (courseComments[courseId] || []).length;
+  const commentCount = (globalComments[courseId] || []).length;
 
   const bar = document.createElement('div');
   bar.id = 'cv-engagement-bar';
