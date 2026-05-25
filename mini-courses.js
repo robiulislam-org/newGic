@@ -506,12 +506,10 @@ function renderMiniCourses() {
         <div class="course-title-text" style="font-size:17.5px; line-height:1.45; font-weight:700; color:#fff;">${course.title}</div>
         <div class="course-tagline" style="color:rgba(255,215,100,0.95); font-size:12.5px; margin-top:5px; font-weight:600;">${course.tagline}</div>
         
-        ${progress > 0 ? `
-          <div style="margin-top:14px; background:rgba(255,255,255,0.18); border-radius:20px; height:6px; overflow:hidden;">
-            <div style="background:linear-gradient(90deg,var(--gold),#f59e0b); height:100%; width:${progress}%; border-radius:20px; transition:width 0.5s ease;"></div>
-          </div>
-          <div style="color:rgba(255,255,255,0.7); font-size:11px; margin-top:6px; font-weight:600;">${completedCount}/${course.chapters.length} পার্ট সম্পন্ন • ${progress}%</div>
-        ` : ''}
+        <div style="margin-top:14px; background:rgba(255,255,255,0.18); border-radius:20px; height:6px; overflow:hidden;">
+          <div style="background:linear-gradient(90deg,var(--gold),#f59e0b); height:100%; width:${progress}%; border-radius:20px; transition:width 0.5s ease;"></div>
+        </div>
+        <div style="color:rgba(255,255,255,0.7); font-size:11px; margin-top:6px; font-weight:600;">${completedCount}/${course.chapters.length} পার্ট সম্পন্ন • ${progress}%</div>
       </div>
       <div class="course-body" style="padding: 20px; background:#fff;">
         <div style="display:flex; justify-content:space-between; margin-bottom:14px; font-size:11.5px; color:var(--text-muted); font-weight:700; flex-wrap:wrap; gap:8px;">
@@ -520,24 +518,20 @@ function renderMiniCourses() {
           <span style="display:flex; align-items:center; gap:4px; background:var(--cream); padding:5px 10px; border-radius:20px;">📊 ${difficulty}</span>
         </div>
         
-        <!-- Ratings & Students -->
+        <!-- Ratings & Reviews -->
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; font-size:12.5px; font-weight:600; color:var(--text-muted); border-bottom:1px dashed var(--border); padding-bottom:12px;">
           <span style="color:#f59e0b; display:flex; align-items:center; gap:4px;">⭐ ${rating} <span style="color:var(--text-muted); font-size:11px; font-weight:500;">(${ratingCount}+ রিভিউ)</span></span>
-          <span>👥 ${studentsCount}+ শিক্ষার্থী</span>
         </div>
 
         <div style="margin-bottom:16px; display:flex; justify-content:center; gap:6px; flex-wrap:wrap;">
           <span style="background:rgba(37,211,102,0.08); color:#1DA851; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; border:1px solid rgba(37,211,102,0.15);">✓ সম্পূর্ণ ফ্রি</span>
           <span style="background:rgba(212,168,67,0.08); color:var(--gold); padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; border:1px solid rgba(212,168,67,0.15);">⚡ +${course.chapters.length * 10} XP</span>
         </div>
-        <button onclick="openCourseViewer(${course.id})" class="btn btn-primary btn-full" style="margin-bottom:12px; font-size:14.5px; padding:12px; font-weight:700; letter-spacing:0.3px;">
+        <button onclick="openCourseViewer(${course.id})" class="btn btn-primary btn-full" style="margin-bottom:12px; font-size:15px; padding:14px; font-weight:800; letter-spacing:0.3px; border-radius:12px;">
           ${progress > 0 && progress < 100 ? '▶ চলুন এগিয়ে যাই →' : progress === 100 ? '🔄 পুনরায় পড়ুন' : '🚀 কোর্স শুরু করুন →'}
         </button>
         <!-- Social Bar -->
         <div class="course-social-bar" style="display:flex; align-items:center; gap:8px; padding-top:10px; border-top:1px solid var(--border);">
-          <button class="social-btn like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${course.id}, this)" title="লাইক করুন" style="font-size:11.5px; padding:6px 12px;">
-            ${isLiked ? '❤️' : '🤍'} <span class="like-count">${getLikeCount(course.id)}</span>
-          </button>
           <button class="social-btn" onclick="openCommentModal(${course.id})" title="মন্তব্য করুন" style="font-size:11.5px; padding:6px 12px;">
             💬 <span>${commentCount}</span>
           </button>
