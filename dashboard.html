@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Global Islamic Care - Admin Analytics Dashboard</title>
-  <!-- Google Fonts & Chart.js -->
+  <title>GIC Admin Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  
   <style>
     :root {
       --bg: #060b13;
-      --card-bg: rgba(13, 22, 38, 0.7);
-      --card-border: rgba(255, 255, 255, 0.06);
+      --sidebar-bg: #0a1220;
+      --card-bg: rgba(13,22,38,0.85);
+      --card-border: rgba(255,255,255,0.07);
       --text: #e2e8f0;
       --text-muted: #94a3b8;
       --blue: #1e6091;
@@ -22,1331 +21,1584 @@
       --gold-light: #e5b95c;
       --green: #10b981;
       --red: #f43f5e;
-      --font: 'Outfit', 'Hind Siliguri', sans-serif;
+      --purple: #8b5cf6;
+      --teal: #14b8a6;
+      --orange: #f97316;
+      --font: 'Outfit','Hind Siliguri',sans-serif;
+      --sidebar-w: 240px;
     }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;display:flex;overflow-x:hidden;}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    /* ── LOGIN ── */
+    #login-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;}
+    .login-box{background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(20px);border-radius:20px;padding:44px 36px;width:100%;max-width:400px;text-align:center;}
+    .login-logo{width:64px;height:64px;background:linear-gradient(135deg,var(--blue),var(--gold));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 20px;}
+    .login-box h2{font-size:22px;font-weight:700;margin-bottom:6px;}
+    .login-box p{color:var(--text-muted);font-size:13px;margin-bottom:28px;}
+    .inp{width:100%;padding:13px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-size:15px;outline:none;transition:.3s;margin-bottom:14px;}
+    .inp:focus{border-color:var(--blue-light);box-shadow:0 0 12px rgba(58,134,200,.2);}
+    .btn-primary{width:100%;padding:13px;background:linear-gradient(135deg,var(--blue),var(--blue-light));border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:.3s;}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(30,96,145,.4);}
+    #login-err{color:var(--red);font-size:13px;margin-top:12px;display:none;}
 
-    body {
-      background-color: var(--bg);
-      background-image: 
-        radial-gradient(at 10% 20%, rgba(30, 96, 145, 0.15) 0px, transparent 50%),
-        radial-gradient(at 90% 80%, rgba(200, 151, 42, 0.12) 0px, transparent 50%);
-      background-attachment: fixed;
-      color: var(--text);
-      font-family: var(--font);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
+    /* ── SIDEBAR ── */
+    #sidebar{width:var(--sidebar-w);background:var(--sidebar-bg);border-right:1px solid var(--card-border);display:none;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;}
+    .sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--card-border);margin-bottom:16px;}
+    .sidebar-logo span{font-size:18px;font-weight:800;background:linear-gradient(90deg,var(--blue-light),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .sidebar-logo small{display:block;font-size:11px;color:var(--text-muted);margin-top:2px;}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;cursor:pointer;border-radius:0;transition:.2s;font-size:14px;font-weight:500;color:var(--text-muted);border-left:3px solid transparent;}
+    .nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+    .nav-item.active{color:var(--blue-light);background:rgba(58,134,200,.1);border-left-color:var(--blue-light);}
+    .nav-icon{font-size:18px;width:22px;text-align:center;}
+    .nav-section{padding:16px 20px 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(148,163,184,.5);}
+    .sidebar-bottom{margin-top:auto;padding:16px 20px;border-top:1px solid var(--card-border);}
+    .live-pill{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);padding:7px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--green);margin-bottom:12px;}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;}
+    @keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
+    .btn-logout{width:100%;padding:9px;background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);border-radius:8px;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;transition:.2s;}
+    .btn-logout:hover{background:var(--red);color:#fff;}
 
-    /* ───── LOGIN CONTAINER ───── */
-    #login-container {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+    /* ── MAIN CONTENT ── */
+    #main-content{display:none;flex:1;margin-left:var(--sidebar-w);padding:28px 28px 60px;overflow-x:hidden;animation:fadeIn .5s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-    .login-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-radius: 24px;
-      padding: 40px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      text-align: center;
-      animation: fadeIn 0.6s ease;
-    }
+    /* ── PAGE HEADER ── */
+    .page-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+    .page-hdr h1{font-size:24px;font-weight:800;letter-spacing:-.02em;}
+    .page-hdr p{color:var(--text-muted);font-size:13px;margin-top:4px;}
+    .hdr-actions{display:flex;gap:10px;flex-wrap:wrap;}
 
-    .login-logo {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, var(--blue), var(--gold));
-      color: #fff;
-      font-size: 28px;
-      font-weight: 700;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-    }
+    /* ── TAB PAGES ── */
+    .tab-page{display:none;}
+    .tab-page.active{display:block;}
 
-    .login-card h2 {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, #fff 50%, var(--text-muted) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    /* ── STAT CARDS ── */
+    .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+    .stat-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;transition:transform .25s;}
+    .stat-card:hover{transform:translateY(-3px);}
+    .stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--blue-light));}
+    .stat-card.g::after{background:var(--green);}
+    .stat-card.gd::after{background:var(--gold);}
+    .stat-card.p::after{background:var(--purple);}
+    .stat-card.t::after{background:var(--teal);}
+    .stat-card.o::after{background:var(--orange);}
+    .stat-card.r::after{background:var(--red);}
+    .stat-label{font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+    .stat-val{font-size:30px;font-weight:800;line-height:1;}
+    .stat-val.live{color:var(--green);}
+    .stat-sub{font-size:12px;color:var(--text-muted);margin-top:8px;}
+    .stat-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;}
+    .stat-badge.up{background:rgba(16,185,129,.15);color:var(--green);}
+    .stat-badge.dn{background:rgba(244,63,94,.15);color:var(--red);}
 
-    .login-card p {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-bottom: 28px;
-    }
+    /* ── CARDS ── */
+    .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:22px;backdrop-filter:blur(12px);}
+    .card+.card{margin-top:20px;}
+    .card-title{font-size:16px;font-weight:700;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+    .card-title .sub{font-size:12px;color:var(--text-muted);font-weight:400;}
 
-    .form-group {
-      margin-bottom: 20px;
-      text-align: left;
-    }
+    /* ── GRID LAYOUTS ── */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px;}
+    .grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;}
+    @media(max-width:1100px){.grid-2,.grid-3,.grid-2-1{grid-template-columns:1fr;}}
 
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
+    /* ── TABLES ── */
+    .tbl-wrap{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;}
+    th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07);font-weight:600;white-space:nowrap;}
+    td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
+    tr:last-child td{border:none;}
+    tr:hover td{background:rgba(255,255,255,.02);}
+    .empty-row td{text-align:center;color:var(--text-muted);padding:24px;}
 
-    .form-input {
-      width: 100%;
-      padding: 14px 18px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-      transition: all 0.3s;
-    }
+    /* ── BADGES ── */
+    .src-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+    .src-badge.facebook{background:rgba(24,119,242,.15);color:#4e9af7;}
+    .src-badge.youtube{background:rgba(255,0,0,.12);color:#ff5252;}
+    .src-badge.instagram{background:rgba(225,48,108,.15);color:#f472b6;}
+    .src-badge.twitter,.src-badge.x{background:rgba(29,161,242,.12);color:#60d0f5;}
+    .src-badge.google{background:rgba(66,133,244,.15);color:#7bb5fb;}
+    .src-badge.tiktok{background:rgba(105,201,208,.15);color:#6dd5d2;}
+    .src-badge.direct{background:rgba(148,163,184,.15);color:#94a3b8;}
+    .src-badge.other{background:rgba(200,151,42,.15);color:var(--gold-light);}
+    .src-badge.linkedin{background:rgba(10,102,194,.15);color:#4dabef;}
+    .src-badge.bing{background:rgba(0,168,232,.15);color:#48b5e8;}
+    .pg-tag{background:rgba(58,134,200,.15);color:var(--blue-light);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600;}
+    .pg-tag.home{background:rgba(200,151,42,.15);color:var(--gold-light);}
+    .status-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+    .status-badge.active{background:rgba(16,185,129,.15);color:var(--green);}
+    .status-badge.inactive{background:rgba(244,63,94,.15);color:var(--red);}
+    .status-badge.warn{background:rgba(249,115,22,.15);color:var(--orange);}
 
-    .form-input:focus {
-      border-color: var(--blue-light);
-      background: rgba(255, 255, 255, 0.06);
-      box-shadow: 0 0 15px rgba(58, 134, 200, 0.2);
-    }
+    /* ── PROGRESS BAR ── */
+    .bar-wrap{display:flex;align-items:center;gap:8px;}
+    .bar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue-light),var(--gold));transition:width .8s cubic-bezier(.4,0,.2,1);}
+    .bar-lbl{font-size:12px;font-weight:700;color:var(--gold-light);white-space:nowrap;min-width:48px;text-align:right;}
 
-    .btn-login {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 10px;
-    }
+    /* ── SEARCH & FILTER BAR ── */
+    .filter-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+    .search-inp{flex:1;min-width:200px;padding:9px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:9px;color:#fff;font-size:13px;outline:none;transition:.2s;}
+    .search-inp:focus{border-color:var(--blue-light);}
+    .filter-sel{padding:9px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:9px;color:var(--text);font-size:13px;outline:none;cursor:pointer;}
 
-    .btn-login:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(30, 96, 145, 0.4);
-    }
+    /* ── BUTTONS ── */
+    .btn{padding:9px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.2s;display:inline-flex;align-items:center;gap:6px;}
+    .btn:hover{transform:translateY(-1px);}
+    .btn-green{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3);}
+    .btn-green:hover{background:var(--green);color:#fff;}
+    .btn-gold{background:rgba(200,151,42,.15);color:var(--gold-light);border:1px solid rgba(200,151,42,.3);}
+    .btn-gold:hover{background:var(--gold);color:#fff;}
+    .btn-blue{background:rgba(58,134,200,.15);color:var(--blue-light);border:1px solid rgba(58,134,200,.3);}
+    .btn-blue:hover{background:var(--blue-light);color:#fff;}
+    .btn-red{background:rgba(244,63,94,.1);color:var(--red);border:1px solid rgba(244,63,94,.2);}
+    .btn-purple{background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3);}
+    .btn-teal{background:rgba(20,184,166,.15);color:var(--teal);border:1px solid rgba(20,184,166,.3);}
+    .btn-teal:hover{background:var(--teal);color:#fff;}
+    .btn-sm{padding:5px 10px;font-size:11px;}
 
-    #login-error {
-      color: var(--red);
-      font-size: 13px;
-      margin-top: 14px;
-      display: none;
-    }
+    /* ── FUNNEL ── */
+    .funnel-wrap{padding:8px 0;}
+    .funnel-step{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+    .funnel-bar-outer{flex:1;height:36px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden;position:relative;}
+    .funnel-bar-inner{height:100%;border-radius:8px;display:flex;align-items:center;padding-left:12px;font-size:13px;font-weight:700;transition:width 1s ease;}
+    .funnel-label{min-width:130px;font-size:13px;font-weight:600;}
+    .funnel-num{min-width:60px;text-align:right;font-size:14px;font-weight:800;}
+    .funnel-pct{min-width:45px;text-align:right;font-size:12px;color:var(--text-muted);}
+    .funnel-arrow{font-size:16px;color:var(--text-muted);}
 
-    /* ───── MAIN DASHBOARD ───── */
-    #dashboard-container {
-      display: none;
-      padding: 32px;
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
-      animation: fadeIn 0.8s ease;
-    }
+    /* ── ALERT CARDS ── */
+    .alert-box{border-radius:12px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:flex-start;gap:12px;font-size:13px;}
+    .alert-box.warn{background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);}
+    .alert-box.info{background:rgba(58,134,200,.08);border:1px solid rgba(58,134,200,.2);}
+    .alert-box.success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);}
+    .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+    .alert-title{font-weight:700;margin-bottom:4px;}
+    .alert-desc{color:var(--text-muted);}
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 32px;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 20px;
-    }
+    /* ── PHONE LIST ── */
+    .phone-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);padding:4px 10px;border-radius:20px;font-size:12px;cursor:pointer;transition:.2s;}
+    .phone-chip:hover{background:var(--green);color:#fff;}
 
-    .header-left h1 {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
+    /* ── SCROLLABLE CONTAINER ── */
+    .scroll-box{max-height:420px;overflow-y:auto;}
+    .scroll-box::-webkit-scrollbar{width:5px;}
+    .scroll-box::-webkit-scrollbar-track{background:transparent;}
+    .scroll-box::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
 
-    .header-left p {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-top: 4px;
-    }
+    /* ── TOAST ── */
+    #toast{position:fixed;bottom:30px;right:30px;background:#1e293b;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 18px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:.3s;pointer-events:none;max-width:320px;}
+    #toast.show{opacity:1;transform:translateY(0);}
+    #toast.ok{border-color:rgba(16,185,129,.4);color:var(--green);}
+    #toast.err{border-color:rgba(244,63,94,.4);color:var(--red);}
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    /* ── INFO TOOLTIP ── */
+    .info-tip{position:relative;display:inline-flex;}
+    .info-tip .tip-text{display:none;position:absolute;bottom:calc(100%+8px);left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid var(--card-border);border-radius:8px;padding:8px 12px;font-size:12px;width:200px;z-index:50;color:var(--text-muted);}
+    .info-tip:hover .tip-text{display:block;}
 
-    .live-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--green);
-    }
+    /* ── WAM GENERATOR ── */
+    .wa-preview{background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2);border-radius:10px;padding:12px;font-size:13px;word-break:break-all;color:#4caf82;margin-top:10px;display:none;}
 
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      background-color: var(--green);
-      border-radius: 50%;
-      animation: pulse 1.5s infinite;
-    }
+    /* ── SECTION DIVIDER ── */
+    .sec-div{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(148,163,184,.5);padding:8px 0;margin:4px 0 14px;border-bottom:1px solid rgba(255,255,255,.05);}
 
-    .btn-logout {
-      background: rgba(244, 63, 94, 0.1);
-      border: 1px solid rgba(244, 63, 94, 0.2);
-      color: var(--red);
-      padding: 8px 16px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+    /* ── CHART HEIGHTS ── */
+    .chart-h350{position:relative;height:350px;}
+    .chart-h260{position:relative;height:260px;}
+    .chart-h300{position:relative;height:300px;}
 
-    .btn-logout:hover {
-      background: var(--red);
-      color: #fff;
-    }
-
-    /* ───── METRIC CARDS ───── */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin-bottom: 32px;
-    }
-
-    .metric-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s;
-    }
-
-    .metric-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .metric-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--blue-light);
-    }
-
-    .metric-card.gold::before { background: var(--gold); }
-    .metric-card.green::before { background: var(--green); }
-
-    .metric-label {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    .metric-value {
-      font-size: 32px;
-      font-weight: 800;
-      line-height: 1;
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-    }
-
-    .metric-value.live {
-      color: var(--green);
-      animation: pulseText 2s infinite;
-    }
-
-    /* ───── CHARTS & TABLES GRID ───── */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-
-    @media (max-width: 1024px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 24px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-title span.sub {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    /* ───── TABLES ───── */
-    .table-container {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-
-    th {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      font-weight: 600;
-    }
-
-    td {
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      font-size: 14px;
-      color: var(--text);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .page-tag {
-      background: rgba(58, 134, 200, 0.15);
-      color: var(--blue-light);
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .page-tag.home {
-      background: rgba(200, 151, 42, 0.15);
-      color: var(--gold-light);
-    }
-
-    .pulse-dot-mini {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background-color: var(--green);
-      border-radius: 50%;
-      margin-right: 8px;
-      animation: pulse 1.5s infinite;
-    }
-
-    /* ───── BOTTOM ROW TABLES ───── */
-    .bottom-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-    }
-
-    /* ───── SOURCE BADGE ───── */
-    .source-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: capitalize;
-    }
-    .source-badge.facebook  { background: rgba(24,119,242,0.15); color: #4e9af7; }
-    .source-badge.youtube   { background: rgba(255,0,0,0.12);    color: #ff5252; }
-    .source-badge.linkedin  { background: rgba(10,102,194,0.15);  color: #4dabef; }
-    .source-badge.instagram { background: rgba(225,48,108,0.15);  color: #f472b6; }
-    .source-badge.twitter,
-    .source-badge.x         { background: rgba(29,161,242,0.12);  color: #60d0f5; }
-    .source-badge.google    { background: rgba(66,133,244,0.15);  color: #7bb5fb; }
-    .source-badge.tiktok    { background: rgba(105,201,208,0.15); color: #6dd5d2; }
-    .source-badge.direct    { background: rgba(148,163,184,0.15); color: #94a3b8; }
-    .source-badge.other     { background: rgba(200,151,42,0.15);  color: var(--gold-light); }
-    .source-badge.bing      { background: rgba(0,168,232,0.15);   color: #48b5e8; }
-
-    /* ───── TIME BAR ───── */
-    .time-bar-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .time-bar-track {
-      flex: 1;
-      height: 6px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-    .time-bar-fill {
-      height: 100%;
-      border-radius: 6px;
-      background: linear-gradient(90deg, var(--blue-light), var(--gold));
-      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .time-bar-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--gold-light);
-      white-space: nowrap;
-      min-width: 54px;
-      text-align: right;
-    }
-
-    /* ───── SOURCE GRID ───── */
-    .source-analytics-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-    @media (max-width: 1024px) {
-      .source-analytics-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ───── METRIC CARD SECONDARY ───── */
-    .metric-card.purple::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
-    .metric-card.teal::before   { background: linear-gradient(90deg, #0d9488, #2dd4bf); }
-
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(0.9); opacity: 0.5; }
-      50% { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(0.9); opacity: 0.5; }
-    }
-
-    @keyframes pulseText {
-      0% { text-shadow: 0 0 0px rgba(16, 185, 129, 0); }
-      50% { text-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
-      100% { text-shadow: 0 0 0px rgba(16, 185, 129, 0); }
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.02);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.1);
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255,255,255,0.2);
-    }
+    /* ── MISC ── */
+    ::-webkit-scrollbar{width:5px;height:5px;}
+    ::-webkit-scrollbar-track{background:rgba(255,255,255,.02);}
+    ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2);}
+    .center-text{text-align:center;color:var(--text-muted);padding:30px;}
+    .fw700{font-weight:700;}
+    .text-green{color:var(--green);}
+    .text-red{color:var(--red);}
+    .text-gold{color:var(--gold-light);}
+    .text-blue{color:var(--blue-light);}
+    .text-muted{color:var(--text-muted);}
+    .text-purple{color:#a78bfa;}
+    .text-teal{color:var(--teal);}
+    .text-orange{color:var(--orange);}
+    small{font-size:12px;}
+    .mt8{margin-top:8px;}
+    .mt16{margin-top:16px;}
+    .mt20{margin-top:20px;}
+    .mb16{margin-bottom:16px;}
   </style>
 </head>
 <body>
 
-  <!-- Login Form -->
-  <div id="login-container">
-    <div class="login-card">
-      <div class="login-logo">ق</div>
-      <h2>গ্লোবাল ইসলামিক কেয়ার</h2>
-      <p>অ্যাডমিন অ্যানালিটিক্স ড্যাশবোর্ড (Supabase)</p>
-      
-      <form id="login-form">
-        <div class="form-group">
-          <label for="password">অ্যাডমিন পাসওয়ার্ড লিখুন</label>
-          <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="login-wrap">
+  <div class="login-box">
+    <div class="login-logo">🕌</div>
+    <h2>গ্লোবাল ইসলামিক কেয়ার</h2>
+    <p>অ্যাডমিন ড্যাশবোর্ড — পাসওয়ার্ড দিয়ে প্রবেশ করুন</p>
+    <form id="login-form">
+      <input type="password" id="pw-inp" class="inp" placeholder="পাসওয়ার্ড লিখুন..." required autocomplete="current-password">
+      <button type="submit" class="btn-primary">✅ প্রবেশ করুন</button>
+    </form>
+    <div id="login-err">❌ ভুল পাসওয়ার্ড বা সংযোগ ত্রুটি</div>
+  </div>
+</div>
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <span>GIC Dashboard</span>
+    <small>Global Islamic Care</small>
+  </div>
+
+  <div class="nav-section">মূল মেনু</div>
+  <div class="nav-item active" onclick="switchTab('analytics')">
+    <span class="nav-icon">📊</span> অ্যানালিটিক্স
+  </div>
+  <div class="nav-item" onclick="switchTab('leads')">
+    <span class="nav-icon">📱</span> লিডস ও ফোন নম্বর
+  </div>
+  <div class="nav-item" onclick="switchTab('students')">
+    <span class="nav-icon">👨‍🎓</span> স্টুডেন্ট ডিরেক্টরি
+  </div>
+  <div class="nav-item" onclick="switchTab('funnel')">
+    <span class="nav-icon">🔽</span> কনভার্সন ফানেল
+  </div>
+
+  <div class="nav-section">ক্যাম্পেইন</div>
+  <div class="nav-item" onclick="switchTab('campaigns')">
+    <span class="nav-icon">🎯</span> UTM ক্যাম্পেইন
+  </div>
+  <div class="nav-item" onclick="switchTab('whatsapp')">
+    <span class="nav-icon">💬</span> WhatsApp টুলস
+  </div>
+
+  <div class="nav-section">রিপোর্ট</div>
+  <div class="nav-item" onclick="switchTab('reports')">
+    <span class="nav-icon">📥</span> এক্সপোর্ট ও রিপোর্ট
+  </div>
+  <div class="nav-item" onclick="switchTab('alerts')">
+    <span class="nav-icon">🔔</span> অ্যালার্ট <span id="alert-badge" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="live-pill"><div class="dot"></div> লাইভ: <span id="sb-live">0</span> জন সক্রিয়</div>
+    <button class="btn-logout" onclick="doLogout()">🚪 লগআউট</button>
+  </div>
+</nav>
+
+<!-- ══════════════ MAIN CONTENT ══════════════ -->
+<div id="main-content">
+
+  <!-- ═══ TAB: ANALYTICS ═══ -->
+  <div class="tab-page active" id="tab-analytics">
+    <div class="page-hdr">
+      <div>
+        <h1>📊 ভিজিটর অ্যানালিটিক্স</h1>
+        <p>কোথা থেকে, কোন প্ল্যাটফর্ম থেকে, কতজন আসছে — সব তথ্য এখানে</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="refreshAll()">🔄 রিফ্রেশ</button>
+      </div>
+    </div>
+
+    <!-- Stat Cards Row 1 -->
+    <div class="stat-row">
+      <div class="stat-card g">
+        <div class="stat-label">🟢 এখন সক্রিয় ভিজিটর</div>
+        <div class="stat-val live" id="m-live">0</div>
+        <div class="stat-sub">রিয়েল-টাইম প্রেজেন্স</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">👁️ আজকের ভিজিটর</div>
+        <div class="stat-val" id="m-today">0</div>
+        <div class="stat-sub" id="m-today-sub">পেজ ভিউ সংখ্যা</div>
+      </div>
+      <div class="stat-card gd">
+        <div class="stat-label">💬 আজকের WhatsApp ক্লিক</div>
+        <div class="stat-val" id="m-wa">0</div>
+        <div class="stat-sub" id="m-wa-sub">কনভার্সন হার: <span id="m-cvr">0%</span></div>
+      </div>
+      <div class="stat-card p">
+        <div class="stat-label">📡 শীর্ষ ট্রাফিক সোর্স</div>
+        <div class="stat-val" id="m-src" style="font-size:18px;">—</div>
+        <div class="stat-sub">আজকের সর্বোচ্চ উৎস</div>
+      </div>
+      <div class="stat-card t">
+        <div class="stat-label">⏱️ সর্বোচ্চ সময় পেজ</div>
+        <div class="stat-val" id="m-time" style="font-size:16px;">—</div>
+        <div class="stat-sub">গড় সময় অনুযায়ী</div>
+      </div>
+      <div class="stat-card o">
+        <div class="stat-label">🌍 শীর্ষ অঞ্চল</div>
+        <div class="stat-val" id="m-region" style="font-size:16px;">—</div>
+        <div class="stat-sub">সবচেয়ে বেশি ভিজিটর</div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid-2-1">
+      <div class="card">
+        <div class="card-title">
+          <span>📈 ৭ দিনের ট্রাফিক ট্রেন্ড</span>
+          <span class="sub">পেজ ভিউ বনাম WhatsApp ক্লিক</span>
         </div>
-        <button type="submit" class="btn-login">লগইন করুন</button>
-      </form>
-      <div id="login-error">ভুল পাসওয়ার্ড! অথবা ডেটাবেস কানেকশন ত্রুটি।</div>
+        <div class="chart-h350"><canvas id="ch-traffic"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🟢 এখন সক্রিয় ভিজিটর</div>
+        <div class="scroll-box">
+          <table>
+            <thead><tr><th>অঞ্চল</th><th>পেজ</th><th>সোর্স</th></tr></thead>
+            <tbody id="live-tbl"><tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Source & Page Time -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">
+          <span>🌐 ট্রাফিক সোর্স বিশ্লেষণ</span>
+          <span class="sub">কোথা থেকে ভিজিটর আসছে</span>
+        </div>
+        <div class="chart-h260"><canvas id="ch-source"></canvas></div>
+        <div id="source-legend" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span>⏳ পেজ টাইম বিশ্লেষণ</span>
+          <span class="sub">প্রতিটি পেজে গড় সময় (সেকেন্ড)</span>
+        </div>
+        <div class="chart-h260"><canvas id="ch-pagetime"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Location Table & Page Views -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📍 শীর্ষ ভিজিটর অঞ্চলসমূহ</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>দেশ ও শহর</th><th>ভিজিট</th><th>শেয়ার</th></tr></thead>
+            <tbody id="regions-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📄 সর্বাধিক দেখা পেজসমূহ</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>পেজ</th><th>ভিউ</th><th>গড় সময়</th></tr></thead>
+            <tbody id="pages-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Source Detail Table -->
+    <div class="card">
+      <div class="card-title">
+        <span>📊 সোর্স ডিটেইলস (সর্বকালীন)</span>
+        <span class="sub">প্রতিটি প্ল্যাটফর্ম থেকে মোট ভিজিট</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>প্ল্যাটফর্ম / সোর্স</th><th>মোট ভিজিট</th><th>শেয়ার</th></tr></thead>
+          <tbody id="source-detail-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <!-- Dashboard Content -->
-  <div id="dashboard-container">
-    <header>
-      <div class="header-left">
-        <h1>📊 GIC Analytics Dashboard</h1>
-        <p>ওয়েবসাইট ভিজিটর ও লাইভ ট্র্যাকিং ড্যাশবোর্ড (গুগল-মুক্ত ও প্রাইভেট)</p>
+  <!-- ═══ TAB: LEADS ═══ -->
+  <div class="tab-page" id="tab-leads">
+    <div class="page-hdr">
+      <div>
+        <h1>📱 লিডস ও ফোন নম্বর</h1>
+        <p>যারা রেজিস্ট্রেশন করেছে তাদের ফোন নম্বর — সংরক্ষণ ও ব্যবহার করুন</p>
       </div>
-      <div class="header-right">
-        <div class="live-badge">
-          <div class="live-dot"></div>
-          <span>লাইভ ট্র্যাকিং সচল</span>
-        </div>
-        <button class="btn-logout" id="logout-btn">লগআউট</button>
-      </div>
-    </header>
-
-    <!-- Metrics Row -->
-    <div class="metrics-grid">
-      <div class="metric-card green">
-        <div class="metric-label">&#128994; লাইভ ভিজিটর (Active Users)</div>
-        <div class="metric-value live" id="metric-live">0</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">&#128065; আজকের পেজ ভিউ</div>
-        <div class="metric-value" id="metric-today-views">0</div>
-      </div>
-      <div class="metric-card gold">
-        <div class="metric-label">&#128172; আজকের হোয়াটসঅ্যাপ ক্লিক</div>
-        <div class="metric-value" id="metric-today-wa">0</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">&#128202; হোয়াটসঅ্যাপ কনভার্সন রেট</div>
-        <div class="metric-value" id="metric-conversion">0%</div>
-      </div>
-      <div class="metric-card purple">
-        <div class="metric-label">&#128285; আজকের প্রধান ট্রাফিক সোর্স</div>
-        <div class="metric-value" id="metric-top-source" style="font-size:22px; text-transform:capitalize;">&mdash;</div>
-      </div>
-      <div class="metric-card teal">
-        <div class="metric-label">&#9201; সর্বোচ্চ গড় সময় (পেজ)</div>
-        <div class="metric-value" id="metric-top-time" style="font-size:22px;">&mdash;</div>
+      <div class="hdr-actions">
+        <button class="btn btn-green" onclick="exportPhonesCSV()">📥 CSV ডাউনলোড</button>
+        <button class="btn btn-gold" onclick="copyAllPhones()">📋 সব নম্বর কপি</button>
+        <button class="btn btn-purple" onclick="switchTab('whatsapp')">💬 WhatsApp টুল</button>
       </div>
     </div>
 
-    <!-- Charts & Active Users -->
-    <div class="dashboard-grid">
-      <!-- Traffic Chart -->
-      <div class="card">
-        <div class="card-title">
-          <span>📈 ট্রাফিকের বিবরণ (গত ৭ দিন)</span>
-          <span class="sub">পেজ ভিউ বনাম হোয়াটসঅ্যাপ ক্লিক</span>
-        </div>
-        <div style="position: relative; height: 350px;">
-          <canvas id="traffic-chart"></canvas>
-        </div>
+    <!-- Quick Stats -->
+    <div class="stat-row" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+      <div class="stat-card g">
+        <div class="stat-label">📱 মোট ফোন নম্বর</div>
+        <div class="stat-val" id="lead-total">0</div>
+        <div class="stat-sub">রেজিস্ট্রেশনে সংরক্ষিত</div>
       </div>
-
-      <!-- Live Users Details -->
-      <div class="card">
-        <div class="card-title">
-          <span>🟢 লাইভ ভিজিটর লিস্ট</span>
-          <span class="sub" id="live-visitors-count">০ জন সক্রিয়</span>
-        </div>
-        <div class="table-container" style="max-height: 350px; overflow-y: auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>অঞ্চল / শহর</th>
-                <th>সক্রিয় পেজ</th>
-                <th>সোর্স</th>
-              </tr>
-            </thead>
-            <tbody id="live-users-table">
-              <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">বর্তমানে কোনো ভিজিটর সক্রিয় নেই</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="stat-card">
+        <div class="stat-label">✅ সক্রিয় স্টুডেন্ট</div>
+        <div class="stat-val text-green" id="lead-active">0</div>
+        <div class="stat-sub">৭ দিনের মধ্যে লগইন</div>
+      </div>
+      <div class="stat-card r">
+        <div class="stat-label">⚠️ নিষ্ক্রিয় স্টুডেন্ট</div>
+        <div class="stat-val text-red" id="lead-inactive">0</div>
+        <div class="stat-sub">৭+ দিন লগইন নেই</div>
+      </div>
+      <div class="stat-card gd">
+        <div class="stat-label">🏆 কোর্স কমপ্লিট</div>
+        <div class="stat-val text-gold" id="lead-completed">0</div>
+        <div class="stat-sub">সম্পূর্ণ করেছে</div>
       </div>
     </div>
 
-    <!-- ══════ TRAFFIC SOURCE & PAGE TIME SECTION ══════ -->
-    <div class="source-analytics-grid">
-      <!-- Traffic Source Doughnut Chart -->
-      <div class="card">
-        <div class="card-title">
-          <span>&#127760; ট্রাফিক সোর্স বিশ্লেষণ</span>
-          <span class="sub">কোথা থেকে ভিজিটর আসছে</span>
-        </div>
-        <div style="position: relative; height: 260px; display:flex; align-items:center; justify-content:center;">
-          <canvas id="source-chart"></canvas>
-        </div>
-        <div id="source-legend" style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; justify-content:center;"></div>
-      </div>
-
-      <!-- Page Time Bar Chart -->
-      <div class="card">
-        <div class="card-title">
-          <span>&#9201; পেজ টাইম বিশ্লেষণ</span>
-          <span class="sub">গড় সময় (সেকেন্ড)</span>
-        </div>
-        <div style="position: relative; height: 300px;">
-          <canvas id="pagetime-chart"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════ TRAFFIC SOURCE TABLE + UTM CAMPAIGNS ══════ -->
-    <div class="source-analytics-grid" style="margin-bottom: 32px;">
-      <!-- Traffic Source Table (detailed) -->
-      <div class="card">
-        <div class="card-title">&#128225; সোর্স ডিটেইলস (সর্বকালীন)</div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>সোর্স / প্ল্যাটফর্ম</th>
-                <th>ভিজিট সংখ্যা</th>
-                <th>শেয়ার</th>
-              </tr>
-            </thead>
-            <tbody id="source-table">
-              <tr><td colspan="3" style="text-align:center; color:var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- UTM Campaigns Table -->
-      <div class="card">
-        <div class="card-title">&#127919; UTM ক্যাম্পেইন ট্র্যাকিং</div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>ক্যাম্পেইন</th>
-                <th>মিডিয়াম</th>
-                <th>ভিজিট</th>
-              </tr>
-            </thead>
-            <tbody id="utm-table">
-              <tr><td colspan="3" style="text-align:center; color:var(--text-muted);">কোনো UTM ডাটা নেই</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom Tables Row -->
-    <div class="bottom-grid">
-      <!-- Top Visited Pages with time -->
-      <div class="card">
-        <div class="card-title">&#128273; সর্বাধিক ভিউ হওয়া পেজসমূহ</div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>পেজের নাম</th>
-                <th>মোট ভিউ</th>
-              </tr>
-            </thead>
-            <tbody id="top-pages-table">
-              <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Page Time Detail Table -->
-      <div class="card">
-        <div class="card-title">&#8987; পেজ অনুযায়ী গড় সময়</div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>পেজ</th>
-                <th>গড় সময়</th>
-                <th>সেশন</th>
-              </tr>
-            </thead>
-            <tbody id="page-time-table">
-              <tr><td colspan="3" style="text-align:center; color:var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Top WhatsApp Click Pages -->
-      <div class="card">
-        <div class="card-title">&#128172; হোয়াটসঅ্যাপ ক্লিক উৎস পেজ</div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>উৎস পেজ</th>
-                <th>ক্লিক সংখ্যা</th>
-              </tr>
-            </thead>
-            <tbody id="top-wa-table">
-              <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Top Visitor Regions -->
-      <div class="card">
-        <div class="card-title">&#127757; প্রধান ভিজিটর অঞ্চলসমূহ</div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>দেশ ও শহর</th>
-                <th>ইভেন্ট সংখ্যা</th>
-              </tr>
-            </thead>
-            <tbody id="top-regions-table">
-              <tr>
-                <td colspan="2" style="text-align: center; color: var(--text-muted);">কোনো ডাটা পাওয়া যায়নি</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════ STUDENTS DIRECTORY ══════ -->
-    <div class="card" style="margin-top: 32px;">
+    <!-- Phone list with search -->
+    <div class="card">
       <div class="card-title">
-        <span>👨‍🎓 নিবন্ধিত স্টুডেন্ট তালিকা (মিনি কোর্স)</span>
-        <span class="sub" id="total-students-count">০ জন স্টুডেন্ট</span>
+        <span>📋 সম্পূর্ণ ফোন নম্বর তালিকা</span>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sm btn-green" onclick="exportPhonesCSV()">⬇️ CSV</button>
+          <button class="btn btn-sm btn-blue" onclick="exportPhonesExcel()">📊 Excel টেক্সট</button>
+        </div>
       </div>
-      <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+      <div class="filter-bar">
+        <input type="text" id="leads-search" class="search-inp" placeholder="🔍 নাম, নম্বর বা স্টুডেন্ট আইডি দিয়ে খুঁজুন..." oninput="filterLeads()">
+        <select class="filter-sel" id="leads-filter" onchange="filterLeads()">
+          <option value="all">সব স্টুডেন্ট</option>
+          <option value="active">সক্রিয় (৭ দিনের মধ্যে)</option>
+          <option value="inactive">নিষ্ক্রিয় (৭+ দিন)</option>
+          <option value="completed">কোর্স শেষ করেছে</option>
+        </select>
+      </div>
+      <div class="scroll-box">
         <table>
           <thead>
             <tr>
+              <th>#</th>
               <th>স্টুডেন্ট আইডি</th>
-              <th>মোবাইল নাম্বার</th>
-              <th>মোট XP</th>
-              <th>কমপ্লিট করা চ্যাপ্টার</th>
+              <th>ফোন নম্বর</th>
+              <th>XP পয়েন্ট</th>
+              <th>চ্যাপ্টার</th>
               <th>সর্বশেষ লগইন</th>
+              <th>স্ট্যাটাস</th>
+              <th>অ্যাকশন</th>
             </tr>
           </thead>
-          <tbody id="students-table">
+          <tbody id="leads-tbl">
+            <tr class="empty-row"><td colspan="8">ডেটা লোড হচ্ছে...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-muted);">
+        মোট দেখানো হচ্ছে: <span id="leads-shown">0</span> জন | মোট: <span id="leads-total-count">0</span> জন
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: STUDENTS ═══ -->
+  <div class="tab-page" id="tab-students">
+    <div class="page-hdr">
+      <div>
+        <h1>👨‍🎓 স্টুডেন্ট ডিরেক্টরি</h1>
+        <p>নিবন্ধিত সকল স্টুডেন্টের বিস্তারিত তথ্য</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-green" onclick="exportStudentsCSV()">📥 CSV এক্সপোর্ট</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>📋 স্টুডেন্ট তালিকা</span>
+        <span class="sub" id="stu-count-lbl">০ জন নিবন্ধিত</span>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="stu-search" class="search-inp" placeholder="🔍 খুঁজুন..." oninput="filterStudents()">
+        <select class="filter-sel" id="stu-sort" onchange="filterStudents()">
+          <option value="recent">সাম্প্রতিক লগইন</option>
+          <option value="xp">সর্বোচ্চ XP</option>
+          <option value="chapters">সর্বোচ্চ চ্যাপ্টার</option>
+        </select>
+      </div>
+      <div class="scroll-box">
+        <table>
+          <thead>
             <tr>
-              <td colspan="5" style="text-align: center; color: var(--text-muted);">কোনো স্টুডেন্ট পাওয়া যায়নি</td>
+              <th>#</th>
+              <th>স্টুডেন্ট আইডি</th>
+              <th>মোবাইল নম্বর</th>
+              <th>XP পয়েন্ট</th>
+              <th>সম্পন্ন চ্যাপ্টার</th>
+              <th>সর্বশেষ লগইন</th>
+              <th>স্ট্যাটাস</th>
             </tr>
+          </thead>
+          <tbody id="stu-tbl">
+            <tr class="empty-row"><td colspan="7">ডেটা লোড হচ্ছে...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
-
   </div>
 
-  <script>
-    // ✅ Supabase Credentials
-    const supabaseUrl = "https://abpweawndpnaftkcsdcp.supabase.co";
-    const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y";
+  <!-- ═══ TAB: FUNNEL ═══ -->
+  <div class="tab-page" id="tab-funnel">
+    <div class="page-hdr">
+      <div>
+        <h1>🔽 কনভার্সন ফানেল</h1>
+        <p>কতজন ভিজিটর থেকে কতজন স্টুডেন্ট হচ্ছে — পুরো পথ দেখুন</p>
+      </div>
+    </div>
 
-    let supabaseClient = null;
-    let authPassword = null;
-    let trafficChart = null;
-    let sourceChart = null;
-    let pageTimeChart = null;
-
-    // Source icons & colors
-    const SOURCE_META = {
-      facebook:  { icon: '&#128309;', color: '#4e9af7', label: 'Facebook' },
-      youtube:   { icon: '&#128308;', color: '#ff5252', label: 'YouTube' },
-      linkedin:  { icon: '&#128312;', color: '#4dabef', label: 'LinkedIn' },
-      instagram: { icon: '&#127800;', color: '#f472b6', label: 'Instagram' },
-      twitter:   { icon: '&#128038;', color: '#60d0f5', label: 'Twitter/X' },
-      x:         { icon: '&#10006;', color: '#60d0f5', label: 'X (Twitter)' },
-      google:    { icon: '&#128993;', color: '#7bb5fb', label: 'Google' },
-      tiktok:    { icon: '&#127925;', color: '#6dd5d2', label: 'TikTok' },
-      direct:    { icon: '&#128279;', color: '#94a3b8', label: 'Direct' },
-      bing:      { icon: '&#128269;', color: '#48b5e8', label: 'Bing' },
-      other:     { icon: '&#127760;', color: '#e5b95c', label: 'অন্যান্য' },
-    };
-
-    // Initialize Supabase using global supabase object from CDN
-    supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
-
-    // Auto-login if previously authorized
-    const savedPassword = sessionStorage.getItem("gic_admin_password");
-    if (savedPassword) {
-      authPassword = savedPassword;
-      tryLogin(savedPassword);
-    }
-
-    // Login Form Submit
-    document.getElementById("login-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const pwInput = document.getElementById("password").value;
-      
-      const success = await tryLogin(pwInput);
-      if (!success) {
-        const err = document.getElementById("login-error");
-        err.style.display = "block";
-        setTimeout(() => err.style.display = "none", 3000);
-      }
-    });
-
-    // Logout Action
-    document.getElementById("logout-btn").addEventListener("click", () => {
-      sessionStorage.removeItem("gic_admin_password");
-      window.location.reload();
-    });
-
-    // Authenticate by invoking get_analytics_summary Postgres Function
-    async function tryLogin(pwd) {
-      try {
-        const { data, error } = await supabaseClient.rpc("get_analytics_summary", { pass_code: pwd });
-        
-        if (error) throw error;
-        if (data) {
-          authPassword = pwd;
-          sessionStorage.setItem("gic_admin_password", pwd);
-          showDashboard(data);
-          startDataRefreshLoop();
-          startLivePresenceTracking();
-          fetchStudentsList(pwd);
-          return true;
-        }
-      } catch (err) {
-        console.error("🔑 Login auth failed:", err);
-        sessionStorage.removeItem("gic_admin_password");
-      }
-      return false;
-    }
-
-    function showDashboard(initialData) {
-      document.getElementById("login-container").style.display = "none";
-      document.getElementById("dashboard-container").style.display = "block";
-      renderDashboardData(initialData);
-    }
-    
-    // Fetch Students List
-    async function fetchStudentsList(pwd) {
-      try {
-        const { data, error } = await supabaseClient.rpc("get_students_list", { pass_code: pwd });
-        if (error || !data) return;
-        
-        document.getElementById("total-students-count").innerText = `${data.length} জন স্টুডেন্ট`;
-        
-        const tbody = document.getElementById("students-table");
-        if (data.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">কোনো স্টুডেন্ট পাওয়া যায়নি</td></tr>';
-          return;
-        }
-        
-        tbody.innerHTML = data.map(s => `
-          <tr>
-            <td><strong style="color:var(--blue-light);">${s.student_id}</strong></td>
-            <td>${s.phone}</td>
-            <td><span style="color:var(--gold);">⚡ ${s.xp} XP</span></td>
-            <td>${s.chapters_completed_count} টি পার্ট</td>
-            <td style="color:var(--text-muted); font-size: 13px;">${s.last_active}</td>
-          </tr>
-        `).join('');
-      } catch (e) {
-        console.error("Failed to load students", e);
-      }
-    }
-
-    // Periodically fetch historical aggregates (every 20 seconds)
-    function startDataRefreshLoop() {
-      setInterval(async () => {
-        if (!supabaseClient || !authPassword) return;
-        try {
-          const { data, error } = await supabaseClient.rpc("get_analytics_summary", { pass_code: authPassword });
-          if (!error && data) {
-            renderDashboardData(data);
-          }
-        } catch (e) {
-          console.warn("🔄 Failed to refresh stats:", e);
-        }
-      }, 20000);
-    }
-
-    // Join Supabase Presence room and listen to live visitor WebSocket events
-    function startLivePresenceTracking() {
-      if (!supabaseClient) return;
-
-      const liveChannel = supabaseClient.channel("gic-live-room");
-      
-      liveChannel
-        .on("presence", { event: "sync" }, () => {
-          const state = liveChannel.presenceState();
-          const activeUsersList = [];
-
-          // Flatten presence map into list
-          Object.keys(state).forEach(key => {
-            const presences = state[key];
-            presences.forEach(presence => {
-              activeUsersList.push(presence);
-            });
-          });
-
-          const activeCount = activeUsersList.length;
-          document.getElementById("metric-live").textContent = activeCount;
-          document.getElementById("live-visitors-count").textContent = `${activeCount} জন সক্রিয়`;
-
-          // Render active visitors table
-          const tbody = document.getElementById("live-users-table");
-          tbody.innerHTML = "";
-
-          if (activeUsersList.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 20px 0;">বর্তমানে কোনো ভিজিটর সক্রিয় নেই</td></tr>`;
-          } else {
-            // Sort: newly joined first
-            activeUsersList.sort((a, b) => new Date(b.joined_at) - new Date(a.joined_at));
-            activeUsersList.forEach(user => {
-              const tr = document.createElement("tr");
-              const pageClass = user.page === "home" ? "page-tag home" : "page-tag";
-              const srcMeta = (typeof SOURCE_META !== 'undefined' && SOURCE_META[user.referrer_source]) 
-                ? SOURCE_META[user.referrer_source] 
-                : { icon: '&#128279;', label: user.referrer_source || 'direct' };
-              tr.innerHTML = `
-                <td>&#128205; ${user.city || "Unknown"}, ${user.country || "Unknown"}</td>
-                <td><span class="pulse-dot-mini"></span><span class="${pageClass}">${user.page || "home"}</span></td>
-                <td><span class="source-badge ${user.referrer_source || 'direct'}">${srcMeta.icon} ${srcMeta.label}</span></td>
-              `;
-              tbody.appendChild(tr);
-            });
-          }
-        })
-        .subscribe();
-    }
-
-    // Render historical metrics and charts into the page
-    function renderDashboardData(stats) {
-      const todayViews = stats.today_views || 0;
-      const todayWa = stats.today_wa_clicks || 0;
-      const conversion = todayViews > 0 ? ((todayWa / todayViews) * 100).toFixed(1) : "0.0";
-
-      document.getElementById("metric-today-views").textContent = todayViews;
-      document.getElementById("metric-today-wa").textContent = todayWa;
-      document.getElementById("metric-conversion").textContent = `${conversion}%`;
-
-      // Top Source Today
-      const sourcesToday = stats.traffic_sources_today || [];
-      if (sourcesToday.length > 0) {
-        const topSrc = sourcesToday[0];
-        const meta = SOURCE_META[topSrc.source] || SOURCE_META.other;
-        document.getElementById("metric-top-source").innerHTML = `${meta.icon} ${meta.label}`;
-      } else {
-        document.getElementById("metric-top-source").innerHTML = "&mdash;";
-      }
-
-      // Top Page Time Today
-      const timeToday = stats.page_time_today || [];
-      if (timeToday.length > 0) {
-        const topTime = timeToday[0];
-        const mins = Math.floor(topTime.avg_seconds / 60);
-        const secs = topTime.avg_seconds % 60;
-        const tlabel = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
-        document.getElementById("metric-top-time").innerHTML = `${topTime.page} - ${tlabel}`;
-      } else {
-        document.getElementById("metric-top-time").innerHTML = "&mdash;";
-      }
-
-      // 1. Top Pages Table
-      renderTable("top-pages-table", stats.top_pages, "page", "count", true);
-
-      // 2. Top WhatsApp Sources
-      renderTable("top-wa-table", stats.top_wa_pages, "page", "count", true);
-
-      // 3. Top Regions
-      renderTable("top-regions-table", stats.top_regions, "city", "count", false, true);
-
-      // 4. Render 7 Days line chart
-      renderChart(stats.daily_traffic || []);
-
-      // 5. Traffic Source Doughnut Chart
-      renderSourceChart(stats.traffic_sources || []);
-
-      // 6. Source Detail Table
-      renderSourceTable(stats.traffic_sources || []);
-
-      // 7. Page Time Bar Chart
-      renderPageTimeChart(stats.page_time_stats || []);
-
-      // 8. Page Time Detail Table
-      renderPageTimeTable(stats.page_time_stats || []);
-
-      // 9. UTM Campaigns Table
-      renderUtmTable(stats.utm_campaigns || []);
-    }
-
-    function renderTable(elementId, listData, keyName, valueName, isPage = false, isRegion = false) {
-      const tbody = document.getElementById(elementId);
-      tbody.innerHTML = "";
-      
-      const list = listData || [];
-      if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 12px;">কোনো ডাটা পাওয়া যায়নি</td></tr>`;
-        return;
-      }
-
-      list.forEach(item => {
-        const tr = document.createElement("tr");
-        let nameDisplay = item[keyName];
-
-        if (isPage) {
-          const pageClass = item[keyName] === "home" ? "page-tag home" : "page-tag";
-          nameDisplay = `<span class="${pageClass}">${item[keyName]}</span>`;
-        } else if (isRegion) {
-          nameDisplay = `📍 ${item.city}, ${item.country}`;
-        }
-
-        tr.innerHTML = `
-          <td>${nameDisplay}</td>
-          <td style="font-weight: 700;">${item[valueName].toLocaleString("bn-BD")}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    // Chart.js line graph configuration
-    function renderChart(dailyData) {
-      const ctx = document.getElementById("traffic-chart").getContext("2d");
-
-      // Generate labels (Bengali Dates) and values
-      const labels = [];
-      const views = [];
-      const waClicks = [];
-
-      // Sort dates ascending
-      const sortedDaily = [...dailyData].sort((a,b) => new Date(a.date) - new Date(b.date));
-
-      // Fill in labels and data
-      sortedDaily.forEach(day => {
-        const dateObj = new Date(day.date);
-        const formattedLabel = dateObj.toLocaleDateString("bn-BD", { month: "short", day: "numeric" });
-        labels.push(formattedLabel);
-        views.push(day.views || 0);
-        waClicks.push(day.wa_clicks || 0);
-      });
-
-      // Fallback if empty data to make chart display something clean
-      if (labels.length === 0) {
-        for(let i=6; i>=0; i--) {
-          const d = new Date();
-          d.setDate(d.getDate() - i);
-          labels.push(d.toLocaleDateString("bn-BD", { month: "short", day: "numeric" }));
-          views.push(0);
-          waClicks.push(0);
-        }
-      }
-
-      if (trafficChart) {
-        trafficChart.data.labels = labels;
-        trafficChart.data.datasets[0].data = views;
-        trafficChart.data.datasets[1].data = waClicks;
-        trafficChart.update();
-        return;
-      }
-
-      trafficChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: 'পেজ ভিউ',
-              data: views,
-              borderColor: '#3a86c8',
-              backgroundColor: 'rgba(58, 134, 200, 0.1)',
-              borderWidth: 3,
-              tension: 0.3,
-              fill: true,
-              pointBackgroundColor: '#3a86c8',
-              pointRadius: 4
-            },
-            {
-              label: 'হোয়াটসঅ্যাপ ক্লিক',
-              data: waClicks,
-              borderColor: '#e5b95c',
-              backgroundColor: 'rgba(229, 185, 92, 0.1)',
-              borderWidth: 3,
-              tension: 0.3,
-              fill: true,
-              pointBackgroundColor: '#e5b95c',
-              pointRadius: 4
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              labels: {
-                color: '#94a3b8',
-                font: { family: 'Outfit, Hind Siliguri', size: 12 }
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { color: 'rgba(255, 255, 255, 0.05)' },
-              ticks: { color: '#94a3b8', font: { family: 'Outfit, Hind Siliguri' } }
-            },
-            y: {
-              grid: { color: 'rgba(255, 255, 255, 0.05)' },
-              ticks: { color: '#94a3b8', font: { family: 'Outfit, Hind Siliguri' } },
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    }
-
-    // ── Traffic Source Doughnut Chart ──────────────────────────────────────────
-    function renderSourceChart(sources) {
-      const canvas = document.getElementById("source-chart");
-      const ctx = canvas.getContext("2d");
-
-      const labels = [];
-      const values = [];
-      const colors = [];
-
-      if (!sources || sources.length === 0) {
-        sources = [{ source: 'direct', count: 1 }];
-      }
-
-      sources.forEach(s => {
-        const meta = SOURCE_META[s.source] || SOURCE_META.other;
-        labels.push(meta.label);
-        values.push(Number(s.count));
-        colors.push(meta.color);
-      });
-
-      // Render legend
-      const legendEl = document.getElementById("source-legend");
-      legendEl.innerHTML = "";
-      const total = values.reduce((a, b) => a + b, 0);
-      labels.forEach((lbl, i) => {
-        const pct = total > 0 ? ((values[i] / total) * 100).toFixed(1) : 0;
-        const src = (sources[i] || {}).source || 'other';
-        const meta = SOURCE_META[src] || SOURCE_META.other;
-        legendEl.innerHTML += `
-          <div style="display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:4px;">
-            <div style="width:10px;height:10px;border-radius:50%;background:${colors[i]};flex-shrink:0;"></div>
-            <span class="source-badge ${src}">${meta.icon} ${lbl}</span>
-            <span style="color:var(--text-muted);">${values[i].toLocaleString('bn-BD')} (${pct}%)</span>
-          </div>`;
-      });
-
-      if (sourceChart) {
-        sourceChart.data.labels = labels;
-        sourceChart.data.datasets[0].data = values;
-        sourceChart.data.datasets[0].backgroundColor = colors;
-        sourceChart.update();
-        return;
-      }
-
-      sourceChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: values,
-            backgroundColor: colors,
-            borderColor: 'rgba(6, 11, 19, 0.8)',
-            borderWidth: 3,
-            hoverOffset: 10
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '65%',
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                  const pct = ((ctx.raw / total) * 100).toFixed(1);
-                  return ` ${ctx.label}: ${ctx.raw.toLocaleString('bn-BD')} (${pct}%)`;
-                }
-              }
-            }
-          }
-        }
-      });
-    }
-
-    // ── Source Detail Table ────────────────────────────────────────────────────
-    function renderSourceTable(sources) {
-      const tbody = document.getElementById("source-table");
-      tbody.innerHTML = "";
-      if (!sources || sources.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:12px;">কোনো ডাটা পাওয়া যায়নি</td></tr>`;
-        return;
-      }
-      const total = sources.reduce((s, r) => s + Number(r.count), 0);
-      sources.forEach(s => {
-        const meta = SOURCE_META[s.source] || SOURCE_META.other;
-        const pct = total > 0 ? ((Number(s.count) / total) * 100).toFixed(1) : 0;
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><span class="source-badge ${s.source}">${meta.icon} ${meta.label}</span></td>
-          <td style="font-weight:700;">${Number(s.count).toLocaleString('bn-BD')}</td>
-          <td>
-            <div class="time-bar-wrap">
-              <div class="time-bar-track"><div class="time-bar-fill" style="width:${pct}%; background:${meta.color};"></div></div>
-              <span class="time-bar-label" style="color:${meta.color};">${pct}%</span>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📊 ভিজিটর → স্টুডেন্ট ফানেল</div>
+        <div class="funnel-wrap" id="funnel-steps">
+          <div class="center-text">ডেটা লোড হচ্ছে...</div>
+        </div>
+        <div style="margin-top:16px;padding:14px;background:rgba(255,255,255,.03);border-radius:10px;">
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">🎯 মূল পারফরম্যান্স সংখ্যা</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);">ভিজিটর → রেজিস্ট্রেশন</div>
+              <div style="font-size:22px;font-weight:800;" id="f-v2r">—</div>
             </div>
-          </td>`;
-        tbody.appendChild(tr);
-      });
-    }
-
-    // ── Page Time Bar Chart ────────────────────────────────────────────────────
-    function renderPageTimeChart(pageStats) {
-      const canvas = document.getElementById("pagetime-chart");
-      const ctx = canvas.getContext("2d");
-
-      if (!pageStats || pageStats.length === 0) {
-        if (pageTimeChart) {
-          pageTimeChart.data.labels = [];
-          pageTimeChart.data.datasets[0].data = [];
-          pageTimeChart.update();
-        }
-        return;
-      }
-
-      const labels = pageStats.map(p => p.page);
-      const avgSeconds = pageStats.map(p => Number(p.avg_seconds) || 0);
-      const barColors = labels.map((_, i) => {
-        const hue = (i * 47 + 200) % 360;
-        return `hsla(${hue}, 70%, 60%, 0.85)`;
-      });
-
-      if (pageTimeChart) {
-        pageTimeChart.data.labels = labels;
-        pageTimeChart.data.datasets[0].data = avgSeconds;
-        pageTimeChart.data.datasets[0].backgroundColor = barColors;
-        pageTimeChart.update();
-        return;
-      }
-
-      pageTimeChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'গড় সময় (সেকেন্ড)',
-            data: avgSeconds,
-            backgroundColor: barColors,
-            borderRadius: 8,
-            borderSkipped: false
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          indexAxis: 'y',
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const s = ctx.raw;
-                  const m = Math.floor(s / 60);
-                  const sec = s % 60;
-                  return m > 0 ? ` ${m} মিনিট ${sec} সেকেন্ড` : ` ${sec} সেকেন্ড`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { color: 'rgba(255,255,255,0.04)' },
-              ticks: { color: '#94a3b8', callback: v => `${v}s` }
-            },
-            y: {
-              grid: { display: false },
-              ticks: { color: '#e2e8f0', font: { family: 'Outfit, Hind Siliguri' } }
-            }
-          }
-        }
-      });
-    }
-
-    // ── Page Time Detail Table ─────────────────────────────────────────────────
-    function renderPageTimeTable(pageStats) {
-      const tbody = document.getElementById("page-time-table");
-      tbody.innerHTML = "";
-      if (!pageStats || pageStats.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:12px;">কোনো ডাটা পাওয়া যায়নি</td></tr>`;
-        return;
-      }
-      const maxSec = Math.max(...pageStats.map(p => Number(p.avg_seconds) || 0), 1);
-      pageStats.forEach(p => {
-        const s = Number(p.avg_seconds) || 0;
-        const m = Math.floor(s / 60);
-        const sec = s % 60;
-        const label = m > 0 ? `${m}m ${sec}s` : `${s}s`;
-        const pct = ((s / maxSec) * 100).toFixed(0);
-        const pageClass = p.page === 'home' ? 'page-tag home' : 'page-tag';
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><span class="${pageClass}">${p.page}</span></td>
-          <td>
-            <div class="time-bar-wrap">
-              <div class="time-bar-track"><div class="time-bar-fill" style="width:${pct}%;"></div></div>
-              <span class="time-bar-label">${label}</span>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);">রেজিস্ট্রেশন → কোর্স সক্রিয়</div>
+              <div style="font-size:22px;font-weight:800;" id="f-r2c">—</div>
             </div>
-          </td>
-          <td style="color:var(--text-muted); font-size:12px;">${Number(p.sessions).toLocaleString('bn-BD')} সেশন</td>`;
-        tbody.appendChild(tr);
-      });
-    }
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);">WhatsApp কনভার্সন</div>
+              <div style="font-size:22px;font-weight:800;" id="f-wa">—</div>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);">কোর্স কমপ্লিশন রেট</div>
+              <div style="font-size:22px;font-weight:800;" id="f-comp">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    // ── UTM Campaigns Table ────────────────────────────────────────────────────
-    function renderUtmTable(campaigns) {
-      const tbody = document.getElementById("utm-table");
-      tbody.innerHTML = "";
-      if (!campaigns || campaigns.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:12px;">কোনো UTM ক্যাম্পেইন ডাটা নেই</td></tr>`;
-        return;
-      }
-      campaigns.forEach(c => {
-        const tr = document.createElement("tr");
-        const srcMeta = SOURCE_META[c.utm_source] || SOURCE_META.other;
-        tr.innerHTML = `
-          <td style="font-weight:600;">${c.utm_campaign || '&mdash;'}</td>
-          <td><span class="source-badge ${c.utm_source || 'other'}">${srcMeta.icon} ${c.utm_medium || c.utm_source || '&mdash;'}</span></td>
-          <td style="font-weight:700;">${Number(c.visits).toLocaleString('bn-BD')}</td>`;
-        tbody.appendChild(tr);
-      });
+      <div class="card">
+        <div class="card-title">💡 পরামর্শ ও অ্যাকশন আইটেম</div>
+        <div id="funnel-advice">
+          <div class="center-text">ডেটা লোড হলে পরামর্শ দেখাবে</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WhatsApp Click Source -->
+    <div class="card">
+      <div class="card-title">
+        <span>💬 WhatsApp ক্লিক উৎস পেজ</span>
+        <span class="sub">কোন পেজ থেকে সবচেয়ে বেশি মানুষ WhatsApp-এ যাচ্ছে</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>পেজ</th><th>ক্লিক সংখ্যা</th><th>কার্যকারিতা</th></tr></thead>
+          <tbody id="wa-src-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: CAMPAIGNS ═══ -->
+  <div class="tab-page" id="tab-campaigns">
+    <div class="page-hdr">
+      <div>
+        <h1>🎯 UTM ক্যাম্পেইন ট্র্যাকিং</h1>
+        <p>কোন ক্যাম্পেইন থেকে কতজন ভিজিটর আসছে — ROI ট্র্যাক করুন</p>
+      </div>
+    </div>
+
+    <div class="alert-box info">
+      <div class="alert-icon">ℹ️</div>
+      <div>
+        <div class="alert-title">UTM লিংক কীভাবে তৈরি করবেন?</div>
+        <div class="alert-desc">আপনার লিংকে যোগ করুন: <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;">?utm_source=facebook&utm_medium=post&utm_campaign=রমজান-অফার</code></div>
+      </div>
+    </div>
+
+    <div class="card mt16">
+      <div class="card-title">📋 সক্রিয় ক্যাম্পেইনসমূহ</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>ক্যাম্পেইন নাম</th><th>সোর্স</th><th>মিডিয়াম</th><th>মোট ভিজিট</th><th>পারফরম্যান্স</th></tr></thead>
+          <tbody id="utm-tbl"><tr class="empty-row"><td colspan="5">কোনো UTM ডেটা নেই</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- UTM Builder Tool -->
+    <div class="card mt20">
+      <div class="card-title">🛠️ UTM লিংক বিল্ডার</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">আপনার ওয়েবসাইট URL</div>
+          <input type="text" id="utm-url" class="search-inp" placeholder="https://robiulislam.org" style="width:100%;">
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">সোর্স (utm_source)</div>
+          <select id="utm-src" class="filter-sel" style="width:100%;">
+            <option value="facebook">Facebook</option>
+            <option value="youtube">YouTube</option>
+            <option value="instagram">Instagram</option>
+            <option value="tiktok">TikTok</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="telegram">Telegram</option>
+            <option value="sms">SMS</option>
+            <option value="email">Email</option>
+          </select>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">মিডিয়াম (utm_medium)</div>
+          <select id="utm-med" class="filter-sel" style="width:100%;">
+            <option value="post">Post</option>
+            <option value="story">Story</option>
+            <option value="reel">Reel</option>
+            <option value="video">Video</option>
+            <option value="group">Group</option>
+            <option value="ad">Ad</option>
+            <option value="bio">Bio Link</option>
+          </select>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">ক্যাম্পেইন নাম (utm_campaign)</div>
+          <input type="text" id="utm-camp" class="search-inp" placeholder="যেমন: রমজান-কোর্স-২০২৬" style="width:100%;">
+        </div>
+      </div>
+      <button class="btn btn-blue mt16" onclick="buildUtmLink()">🔗 UTM লিংক তৈরি করুন</button>
+      <div id="utm-result" style="display:none;margin-top:12px;">
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">তৈরি হওয়া লিংক:</div>
+        <div style="background:rgba(58,134,200,.1);border:1px solid rgba(58,134,200,.2);border-radius:10px;padding:12px;font-size:13px;word-break:break-all;color:var(--blue-light);" id="utm-link-text"></div>
+        <button class="btn btn-sm btn-blue" style="margin-top:8px;" onclick="copyUtmLink()">📋 কপি করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: WHATSAPP ═══ -->
+  <div class="tab-page" id="tab-whatsapp">
+    <div class="page-hdr">
+      <div>
+        <h1>💬 WhatsApp টুলস</h1>
+        <p>স্টুডেন্টদের সাথে যোগাযোগ করুন — বাল্ক মেসেজ ও ব্যক্তিগত যোগাযোগ</p>
+      </div>
+    </div>
+
+    <!-- Bulk Message Generator -->
+    <div class="card">
+      <div class="card-title">📢 WhatsApp বাল্ক মেসেজ জেনারেটর</div>
+      <div class="alert-box info">
+        <div class="alert-icon">💡</div>
+        <div>
+          <div class="alert-title">কীভাবে কাজ করে?</div>
+          <div class="alert-desc">একটি মেসেজ লিখুন। সিস্টেম আপনার সব স্টুডেন্টের জন্য আলাদা WhatsApp লিংক তৈরি করবে। একে একে ক্লিক করে মেসেজ পাঠাতে পারবেন।</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">মেসেজ লিখুন (বাংলায় লিখতে পারবেন):</div>
+        <textarea id="wa-msg" style="width:100%;min-height:120px;padding:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:14px;font-family:inherit;outline:none;resize:vertical;" placeholder="আস-সালামু আলাইকুম! আমাদের নতুন কোর্স শুরু হতে যাচ্ছে..."></textarea>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-green" onclick="generateWaLinks('all')">💬 সকলকে মেসেজ ({{count}} জন)</button>
+        <button class="btn btn-red" onclick="generateWaLinks('inactive')">⚠️ শুধু নিষ্ক্রিয়দের</button>
+        <button class="btn btn-gold" onclick="generateWaLinks('active')">✅ শুধু সক্রিয়দের</button>
+      </div>
+
+      <div id="wa-links-wrap" style="display:none;margin-top:16px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px;">📱 WhatsApp লিংকসমূহ (<span id="wa-link-count">0</span> জন):</div>
+        <div id="wa-links-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:300px;overflow-y:auto;"></div>
+      </div>
+    </div>
+
+    <!-- Individual Quick Contact -->
+    <div class="card mt20">
+      <div class="card-title">📞 দ্রুত যোগাযোগ</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">যেকোনো নম্বরে সরাসরি WhatsApp মেসেজ পাঠান:</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <input type="tel" id="quick-phone" class="search-inp" placeholder="ফোন নম্বর (01XXXXXXXXX)" style="flex:1;min-width:200px;">
+        <input type="text" id="quick-msg" class="search-inp" placeholder="মেসেজ লিখুন..." style="flex:2;min-width:200px;">
+        <button class="btn btn-green" onclick="quickWa()">💬 পাঠান</button>
+      </div>
+    </div>
+
+    <!-- Number Stats -->
+    <div class="card mt20">
+      <div class="card-title">📊 ফোন নম্বর পরিসংখ্যান</div>
+      <div id="wa-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;">
+        <div style="text-align:center;padding:16px;background:rgba(255,255,255,.03);border-radius:10px;">
+          <div style="font-size:28px;font-weight:800;" id="ws-total">—</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">মোট নম্বর</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:rgba(255,255,255,.03);border-radius:10px;">
+          <div style="font-size:28px;font-weight:800;color:var(--green);" id="ws-active">—</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">সক্রিয় (৭ দিন)</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:rgba(255,255,255,.03);border-radius:10px;">
+          <div style="font-size:28px;font-weight:800;color:var(--red);" id="ws-inactive">—</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">নিষ্ক্রিয় (৭+ দিন)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: REPORTS ═══ -->
+  <div class="tab-page" id="tab-reports">
+    <div class="page-hdr">
+      <div>
+        <h1>📥 এক্সপোর্ট ও রিপোর্ট</h1>
+        <p>যেকোনো ডেটা ডাউনলোড করুন বা প্রিন্ট করুন</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📱 ফোন নম্বর এক্সপোর্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">সব রেজিস্ট্রেশন করা স্টুডেন্টের ফোন নম্বর বিভিন্ন ফরম্যাটে ডাউনলোড করুন</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-green" onclick="exportPhonesCSV()" style="justify-content:flex-start;">
+            📊 CSV ফরম্যাট — Excel-এ খুলতে পারবেন
+          </button>
+          <button class="btn btn-blue" onclick="exportPhonesExcel()" style="justify-content:flex-start;">
+            📋 টেক্সট ফরম্যাট — WhatsApp ব্রডকাস্টের জন্য
+          </button>
+          <button class="btn btn-gold" onclick="copyAllPhones()" style="justify-content:flex-start;">
+            📑 ক্লিপবোর্ডে কপি — সরাসরি পেস্ট করুন
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">👨‍🎓 স্টুডেন্ট ডেটা এক্সপোর্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">আইডি, ফোন, XP, চ্যাপ্টার — সম্পূর্ণ রেকর্ড</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-green" onclick="exportStudentsCSV()" style="justify-content:flex-start;">
+            📊 পূর্ণ স্টুডেন্ট ডেটা CSV
+          </button>
+          <button class="btn btn-red" onclick="exportInactiveCSV()" style="justify-content:flex-start;">
+            ⚠️ শুধু নিষ্ক্রিয় স্টুডেন্ট CSV
+          </button>
+          <button class="btn btn-purple" onclick="exportCompletedCSV()" style="justify-content:flex-start;">
+            🏆 কোর্স কমপ্লিট করা স্টুডেন্ট
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📊 অ্যানালিটিক্স রিপোর্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">ট্রাফিক ও সোর্স ডেটা ডাউনলোড করুন</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-blue" onclick="exportTrafficCSV()" style="justify-content:flex-start;">
+            📈 ৭ দিনের ট্রাফিক ডেটা
+          </button>
+          <button class="btn btn-teal" onclick="exportSourceCSV()" style="justify-content:flex-start;">
+            🌐 সোর্স বিশ্লেষণ CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🖨️ রিপোর্ট প্রিন্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">ড্যাশবোর্ডের সারসংক্ষেপ প্রিন্ট করুন বা PDF সেভ করুন</p>
+        <button class="btn btn-blue" onclick="window.print()" style="justify-content:flex-start;width:100%;">
+          🖨️ প্রিন্ট / PDF সেভ করুন
+        </button>
+      </div>
+    </div>
+
+    <!-- Data Preview -->
+    <div class="card">
+      <div class="card-title">👁️ রিপোর্ট প্রিভিউ</div>
+      <div id="report-preview" class="center-text">উপরে যেকোনো এক্সপোর্ট বাটনে ক্লিক করলে এখানে প্রিভিউ দেখাবে</div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: ALERTS ═══ -->
+  <div class="tab-page" id="tab-alerts">
+    <div class="page-hdr">
+      <div>
+        <h1>🔔 অ্যালার্ট ও নোটিফিকেশন</h1>
+        <p>গুরুত্বপূর্ণ আপডেট ও অ্যাকশন আইটেম</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="refreshAll()">🔄 আপডেট করুন</button>
+      </div>
+    </div>
+
+    <div id="alerts-container">
+      <div class="center-text">ডেটা লোড হচ্ছে...</div>
+    </div>
+  </div>
+
+</div><!-- /main-content -->
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════
+const SUPA_URL = "https://abpweawndpnaftkcsdcp.supabase.co";
+const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y";
+const INACTIVE_DAYS = 7;
+
+const SOURCE_META = {
+  facebook:  { icon:'📘', color:'#4e9af7',  label:'Facebook' },
+  youtube:   { icon:'▶️', color:'#ff5252',  label:'YouTube' },
+  linkedin:  { icon:'💼', color:'#4dabef',  label:'LinkedIn' },
+  instagram: { icon:'📸', color:'#f472b6',  label:'Instagram' },
+  twitter:   { icon:'🐦', color:'#60d0f5',  label:'Twitter/X' },
+  x:         { icon:'✖️', color:'#60d0f5',  label:'X (Twitter)' },
+  google:    { icon:'🔍', color:'#7bb5fb',  label:'Google' },
+  tiktok:    { icon:'🎵', color:'#6dd5d2',  label:'TikTok' },
+  direct:    { icon:'🔗', color:'#94a3b8',  label:'Direct' },
+  bing:      { icon:'🔎', color:'#48b5e8',  label:'Bing' },
+  other:     { icon:'🌐', color:'#e5b95c',  label:'অন্যান্য' },
+};
+
+let db = null, authPwd = null;
+let allStudents = [], allTraffic = {}, allSources = [], allPageTimes = [], allRegions = [], allWaPages = [], allUtm = [], allDailyTraffic = [];
+let chartTraffic = null, chartSource = null, chartPagetime = null;
+let liveChannel = null;
+
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+db = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+const savedPwd = sessionStorage.getItem("gic_admin_pwd");
+if (savedPwd) { authPwd = savedPwd; attemptLogin(savedPwd); }
+
+document.getElementById("login-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const ok = await attemptLogin(document.getElementById("pw-inp").value);
+  if (!ok) {
+    const err = document.getElementById("login-err");
+    err.style.display = "block";
+    setTimeout(() => err.style.display = "none", 3000);
+  }
+});
+
+async function attemptLogin(pwd) {
+  try {
+    const { data, error } = await db.rpc("get_analytics_summary", { pass_code: pwd });
+    if (error) throw error;
+    if (data) {
+      authPwd = pwd;
+      sessionStorage.setItem("gic_admin_pwd", pwd);
+      showDashboard(data);
+      return true;
     }
-  </script>
+  } catch(e) {
+    console.error("Login failed:", e);
+    sessionStorage.removeItem("gic_admin_pwd");
+  }
+  return false;
+}
+
+function showDashboard(data) {
+  document.getElementById("login-wrap").style.display = "none";
+  document.getElementById("sidebar").style.display = "flex";
+  document.getElementById("main-content").style.display = "block";
+  processData(data);
+  loadStudents();
+  startLiveTracking();
+  startAutoRefresh();
+}
+
+function doLogout() {
+  sessionStorage.removeItem("gic_admin_pwd");
+  location.reload();
+}
+
+// ══════════════════════════════════════════════════════
+// DATA PROCESSING
+// ══════════════════════════════════════════════════════
+function processData(stats) {
+  allDailyTraffic = stats.daily_traffic || [];
+  allSources = stats.traffic_sources || [];
+  allPageTimes = stats.page_time_stats || [];
+  allRegions = stats.top_regions || [];
+  allWaPages = stats.top_wa_pages || [];
+  allUtm = stats.utm_campaigns || [];
+  allTraffic = {
+    todayViews: stats.today_views || 0,
+    todayWa: stats.today_wa_clicks || 0,
+    sourceToday: stats.traffic_sources_today || [],
+    timeToday: stats.page_time_today || [],
+    topPages: stats.top_pages || [],
+  };
+
+  renderAnalytics();
+  renderFunnel();
+  renderCampaigns();
+  buildAlerts();
+  updateWaStats();
+  updateWaBtnLabel();
+}
+
+function renderAnalytics() {
+  const { todayViews, todayWa, sourceToday, timeToday, topPages } = allTraffic;
+  const cvr = todayViews > 0 ? ((todayWa / todayViews) * 100).toFixed(1) : "0.0";
+
+  setText("m-today", todayViews.toLocaleString("bn-BD"));
+  setText("m-wa", todayWa.toLocaleString("bn-BD"));
+  setText("m-cvr", cvr + "%");
+
+  if (sourceToday.length > 0) {
+    const m = SOURCE_META[sourceToday[0].source] || SOURCE_META.other;
+    setText("m-src", m.icon + " " + m.label);
+  }
+  if (timeToday.length > 0) {
+    const t = timeToday[0];
+    const mn = Math.floor(t.avg_seconds / 60), sc = t.avg_seconds % 60;
+    setText("m-time", t.page + " (" + (mn > 0 ? mn + "m " : "") + sc + "s)");
+  }
+  if (allRegions.length > 0) {
+    const r = allRegions[0];
+    setText("m-region", "📍 " + r.city + ", " + (r.country || ""));
+  }
+
+  renderTrafficChart(allDailyTraffic);
+  renderSourceChart(allSources);
+  renderPageTimeChart(allPageTimes);
+  renderRegionsTable();
+  renderPagesTable(topPages);
+  renderSourceDetailTable(allSources);
+}
+
+// ── CHARTS ──────────────────────────────────────────
+function renderTrafficChart(daily) {
+  const ctx = document.getElementById("ch-traffic").getContext("2d");
+  const sorted = [...daily].sort((a,b) => new Date(a.date)-new Date(b.date));
+  const labels = sorted.map(d => new Date(d.date).toLocaleDateString("bn-BD", { month:"short", day:"numeric" }));
+  const views = sorted.map(d => d.views || 0);
+  const wa = sorted.map(d => d.wa_clicks || 0);
+
+  if (!labels.length) {
+    for(let i=6;i>=0;i--){
+      const dt = new Date(); dt.setDate(dt.getDate()-i);
+      labels.push(dt.toLocaleDateString("bn-BD",{month:"short",day:"numeric"}));
+      views.push(0); wa.push(0);
+    }
+  }
+
+  if (chartTraffic) { chartTraffic.data.labels=labels; chartTraffic.data.datasets[0].data=views; chartTraffic.data.datasets[1].data=wa; chartTraffic.update(); return; }
+  chartTraffic = new Chart(ctx, {
+    type:"line", data:{labels, datasets:[
+      {label:"পেজ ভিউ", data:views, borderColor:"#3a86c8", backgroundColor:"rgba(58,134,200,.1)", borderWidth:2.5, tension:.35, fill:true, pointBackgroundColor:"#3a86c8", pointRadius:4},
+      {label:"WhatsApp ক্লিক", data:wa, borderColor:"#e5b95c", backgroundColor:"rgba(229,185,92,.1)", borderWidth:2.5, tension:.35, fill:true, pointBackgroundColor:"#e5b95c", pointRadius:4}
+    ]},
+    options:{responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:"#94a3b8",font:{family:"Outfit"}}}},
+      scales:{x:{grid:{color:"rgba(255,255,255,.05)"},ticks:{color:"#94a3b8"}},
+              y:{grid:{color:"rgba(255,255,255,.05)"},ticks:{color:"#94a3b8"},beginAtZero:true}}}
+  });
+}
+
+function renderSourceChart(sources) {
+  const ctx = document.getElementById("ch-source").getContext("2d");
+  if (!sources.length) sources = [{source:"direct",count:1}];
+  const labels = [], vals = [], colors = [];
+  sources.forEach(s => {
+    const m = SOURCE_META[s.source] || SOURCE_META.other;
+    labels.push(m.label); vals.push(Number(s.count)); colors.push(m.color);
+  });
+  const total = vals.reduce((a,b)=>a+b,0);
+  const legend = document.getElementById("source-legend");
+  legend.innerHTML = labels.map((l,i) => {
+    const pct = total > 0 ? ((vals[i]/total)*100).toFixed(1) : 0;
+    const src = (sources[i]||{}).source||"other";
+    const m = SOURCE_META[src]||SOURCE_META.other;
+    return `<div style="display:flex;align-items:center;gap:5px;font-size:12px;">
+      <div style="width:9px;height:9px;border-radius:50%;background:${colors[i]};"></div>
+      <span class="src-badge ${src}">${m.icon} ${l}</span>
+      <span style="color:var(--text-muted);">${vals[i]} (${pct}%)</span>
+    </div>`;
+  }).join("");
+
+  if (chartSource) { chartSource.data.labels=labels; chartSource.data.datasets[0].data=vals; chartSource.data.datasets[0].backgroundColor=colors; chartSource.update(); return; }
+  chartSource = new Chart(ctx, {
+    type:"doughnut",
+    data:{labels, datasets:[{data:vals, backgroundColor:colors, borderColor:"rgba(6,11,19,.8)", borderWidth:3, hoverOffset:8}]},
+    options:{responsive:true, maintainAspectRatio:false, cutout:"65%",
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0); return ` ${c.label}: ${c.raw} (${((c.raw/t)*100).toFixed(1)}%)`;}}}}}
+  });
+}
+
+function renderPageTimeChart(ps) {
+  const ctx = document.getElementById("ch-pagetime").getContext("2d");
+  if (!ps.length) return;
+  const labels = ps.map(p=>p.page);
+  const vals = ps.map(p=>Number(p.avg_seconds)||0);
+  const colors = labels.map((_,i)=>`hsla(${(i*53+200)%360},65%,58%,.85)`);
+  if (chartPagetime) { chartPagetime.data.labels=labels; chartPagetime.data.datasets[0].data=vals; chartPagetime.data.datasets[0].backgroundColor=colors; chartPagetime.update(); return; }
+  chartPagetime = new Chart(ctx, {
+    type:"bar",
+    data:{labels, datasets:[{label:"গড় সময়", data:vals, backgroundColor:colors, borderRadius:8, borderSkipped:false}]},
+    options:{responsive:true, maintainAspectRatio:false, indexAxis:"y",
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>{const s=c.raw,m=Math.floor(s/60); return m>0?` ${m}m ${s%60}s`:` ${s}s`;}}}},
+      scales:{x:{grid:{color:"rgba(255,255,255,.04)"},ticks:{color:"#94a3b8",callback:v=>`${v}s`}},
+              y:{grid:{display:false},ticks:{color:"#e2e8f0"}}}}
+  });
+}
+
+// ── TABLES ──────────────────────────────────────────
+function renderRegionsTable() {
+  const tbody = document.getElementById("regions-tbl");
+  if (!allRegions.length) { tbody.innerHTML = emptyRow(3); return; }
+  const total = allRegions.reduce((s,r)=>s+Number(r.count),0);
+  tbody.innerHTML = allRegions.map(r => {
+    const pct = total > 0 ? ((Number(r.count)/total)*100).toFixed(1) : 0;
+    return `<tr>
+      <td>📍 ${r.city||"Unknown"}, ${r.country||"Unknown"}</td>
+      <td class="fw700">${Number(r.count).toLocaleString("bn-BD")}</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;"></div></div><span class="bar-lbl">${pct}%</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+function renderPagesTable(pages) {
+  const tbody = document.getElementById("pages-tbl");
+  if (!pages.length) { tbody.innerHTML = emptyRow(3); return; }
+  tbody.innerHTML = pages.map(p => {
+    const ptStat = allPageTimes.find(x=>x.page===p.page);
+    let timeStr = "—";
+    if (ptStat) { const s=Number(ptStat.avg_seconds),m=Math.floor(s/60); timeStr = m>0?`${m}m ${s%60}s`:`${s}s`; }
+    const cls = p.page==="home"?"pg-tag home":"pg-tag";
+    return `<tr>
+      <td><span class="${cls}">${p.page}</span></td>
+      <td class="fw700">${Number(p.count).toLocaleString("bn-BD")}</td>
+      <td class="text-gold">${timeStr}</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderSourceDetailTable(sources) {
+  const tbody = document.getElementById("source-detail-tbl");
+  if (!sources.length) { tbody.innerHTML = emptyRow(3); return; }
+  const total = sources.reduce((s,r)=>s+Number(r.count),0);
+  tbody.innerHTML = sources.map(s => {
+    const m = SOURCE_META[s.source]||SOURCE_META.other;
+    const pct = total > 0 ? ((Number(s.count)/total)*100).toFixed(1) : 0;
+    return `<tr>
+      <td><span class="src-badge ${s.source}">${m.icon} ${m.label}</span></td>
+      <td class="fw700">${Number(s.count).toLocaleString("bn-BD")}</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${m.color};"></div></div><span class="bar-lbl" style="color:${m.color};">${pct}%</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+// ══════════════════════════════════════════════════════
+// STUDENTS / LEADS
+// ══════════════════════════════════════════════════════
+async function loadStudents() {
+  try {
+    const { data, error } = await db.rpc("get_students_list", { pass_code: authPwd });
+    if (error || !data) return;
+    allStudents = data;
+    renderLeads();
+    renderStudents();
+    updateLeadStats();
+    updateWaStats();
+    updateWaBtnLabel();
+    buildAlerts();
+  } catch(e) { console.error("Students load failed", e); }
+}
+
+function isActive(s) {
+  if (!s.last_active) return false;
+  const diff = (Date.now() - new Date(s.last_active).getTime()) / 86400000;
+  return diff <= INACTIVE_DAYS;
+}
+
+function hasCompleted(s) {
+  return s.chapters_completed_count >= 1; // adjust threshold as needed
+}
+
+function formatDate(d) {
+  if (!d) return "কখনো না";
+  try {
+    return new Date(d).toLocaleDateString("bn-BD", { year:"numeric", month:"short", day:"numeric" });
+  } catch(e) { return d; }
+}
+
+function statusBadge(s) {
+  if (isActive(s)) return `<span class="status-badge active">✅ সক্রিয়</span>`;
+  if (!s.last_active) return `<span class="status-badge warn">🆕 নতুন</span>`;
+  return `<span class="status-badge inactive">💤 নিষ্ক্রিয়</span>`;
+}
+
+function updateLeadStats() {
+  const active = allStudents.filter(isActive).length;
+  const inactive = allStudents.filter(s => !isActive(s)).length;
+  const completed = allStudents.filter(hasCompleted).length;
+  setText("lead-total", allStudents.length);
+  setText("lead-active", active);
+  setText("lead-inactive", inactive);
+  setText("lead-completed", completed);
+}
+
+function renderLeads(filtered) {
+  const list = filtered || allStudents;
+  const tbody = document.getElementById("leads-tbl");
+  setText("leads-shown", list.length);
+  setText("leads-total-count", allStudents.length);
+  setText("lead-total", allStudents.length);
+
+  if (!list.length) { tbody.innerHTML = emptyRow(8); return; }
+  tbody.innerHTML = list.map((s, i) => `
+    <tr>
+      <td class="text-muted">${i+1}</td>
+      <td><strong class="text-blue">${s.student_id||"—"}</strong></td>
+      <td>
+        <span class="phone-chip" onclick="copyPhone('${s.phone||""}')" title="কপি করুন">
+          📱 ${s.phone||"নেই"}
+        </span>
+      </td>
+      <td><span class="text-gold">⚡ ${s.xp||0} XP</span></td>
+      <td>${s.chapters_completed_count||0} টি</td>
+      <td style="font-size:12px;">${formatDate(s.last_active)}</td>
+      <td>${statusBadge(s)}</td>
+      <td>
+        ${s.phone ? `<a href="https://wa.me/880${String(s.phone).replace(/^0/,"")}?text=আস-সালামু+আলাইকুম" target="_blank" class="btn btn-sm btn-green">💬</a>` : "—"}
+      </td>
+    </tr>
+  `).join("");
+}
+
+function filterLeads() {
+  const q = document.getElementById("leads-search").value.toLowerCase();
+  const f = document.getElementById("leads-filter").value;
+  let list = allStudents.filter(s => {
+    const match = !q || (s.student_id||"").toLowerCase().includes(q) || (s.phone||"").includes(q);
+    let statusOk = true;
+    if (f === "active") statusOk = isActive(s);
+    else if (f === "inactive") statusOk = !isActive(s);
+    else if (f === "completed") statusOk = hasCompleted(s);
+    return match && statusOk;
+  });
+  renderLeads(list);
+}
+
+function renderStudents(filtered) {
+  const sort = document.getElementById("stu-sort")?.value || "recent";
+  const list = (filtered || allStudents).slice().sort((a,b) => {
+    if (sort === "xp") return (b.xp||0)-(a.xp||0);
+    if (sort === "chapters") return (b.chapters_completed_count||0)-(a.chapters_completed_count||0);
+    return new Date(b.last_active||0)-new Date(a.last_active||0);
+  });
+  setText("stu-count-lbl", list.length + " জন নিবন্ধিত");
+  const tbody = document.getElementById("stu-tbl");
+  if (!list.length) { tbody.innerHTML = emptyRow(7); return; }
+  tbody.innerHTML = list.map((s,i) => `
+    <tr>
+      <td class="text-muted">${i+1}</td>
+      <td><strong class="text-blue">${s.student_id||"—"}</strong></td>
+      <td><span class="phone-chip" onclick="copyPhone('${s.phone||""}')" title="ক্লিক করে কপি করুন">📱 ${s.phone||"নেই"}</span></td>
+      <td><span class="text-gold">⚡ ${s.xp||0}</span></td>
+      <td>${s.chapters_completed_count||0} টি চ্যাপ্টার</td>
+      <td style="font-size:12px;">${formatDate(s.last_active)}</td>
+      <td>${statusBadge(s)}</td>
+    </tr>
+  `).join("");
+}
+
+function filterStudents() {
+  const q = document.getElementById("stu-search").value.toLowerCase();
+  const list = allStudents.filter(s =>
+    !q || (s.student_id||"").toLowerCase().includes(q) || (s.phone||"").includes(q)
+  );
+  renderStudents(list);
+}
+
+// ══════════════════════════════════════════════════════
+// CONVERSION FUNNEL
+// ══════════════════════════════════════════════════════
+function renderFunnel() {
+  const totalVisits = allDailyTraffic.reduce((s,d)=>s+(d.views||0),0) || allTraffic.todayViews * 7;
+  const totalStudents = allStudents.length;
+  const activeStudents = allStudents.filter(isActive).length;
+  const completedStudents = allStudents.filter(hasCompleted).length;
+  const totalWa = allDailyTraffic.reduce((s,d)=>s+(d.wa_clicks||0),0) || allTraffic.todayWa * 7;
+
+  const steps = [
+    { label:"🌐 মোট ভিজিটর", val:totalVisits, color:"#3a86c8" },
+    { label:"💬 WhatsApp ক্লিক", val:totalWa, color:"#e5b95c" },
+    { label:"📝 নিবন্ধন (রেজিস্ট্রেশন)", val:totalStudents, color:"#8b5cf6" },
+    { label:"✅ সক্রিয় স্টুডেন্ট", val:activeStudents, color:"#10b981" },
+    { label:"🏆 কোর্স সম্পন্ন", val:completedStudents, color:"#f97316" },
+  ];
+
+  const max = steps[0].val || 1;
+  const el = document.getElementById("funnel-steps");
+  el.innerHTML = steps.map(step => {
+    const pct = Math.max(((step.val / max) * 100).toFixed(0), 2);
+    return `<div class="funnel-step">
+      <div class="funnel-label">${step.label}</div>
+      <div class="funnel-bar-outer">
+        <div class="funnel-bar-inner" style="width:${pct}%;background:${step.color}22;border-left:3px solid ${step.color};">
+          <span style="color:${step.color};">${step.val.toLocaleString("bn-BD")}</span>
+        </div>
+      </div>
+      <div class="funnel-num" style="color:${step.color};">${step.val.toLocaleString("bn-BD")}</div>
+    </div>`;
+  }).join(`<div style="text-align:center;font-size:18px;color:rgba(148,163,184,.4);margin:-6px 0 8px 130px;">↓</div>`);
+
+  const v2r = totalVisits > 0 ? ((totalStudents/totalVisits)*100).toFixed(2) : "0.00";
+  const r2c = totalStudents > 0 ? ((activeStudents/totalStudents)*100).toFixed(1) : "0.0";
+  const waRate = totalVisits > 0 ? ((totalWa/totalVisits)*100).toFixed(1) : "0.0";
+  const compRate = totalStudents > 0 ? ((completedStudents/totalStudents)*100).toFixed(1) : "0.0";
+
+  setText("f-v2r", v2r + "%");
+  setText("f-r2c", r2c + "%");
+  setText("f-wa", waRate + "%");
+  setText("f-comp", compRate + "%");
+
+  // Advice
+  const advice = document.getElementById("funnel-advice");
+  let tips = [];
+  if (parseFloat(v2r) < 1) tips.push({ type:"warn", title:"রেজিস্ট্রেশন রেট কম", desc:`প্রতি ১০০ জন ভিজিটরে মাত্র ${v2r}% রেজিস্ট্রেশন করছে। ল্যান্ডিং পেজে আরো আকর্ষণীয় CTA যোগ করুন।` });
+  if (parseFloat(waRate) < 5) tips.push({ type:"info", title:"WhatsApp ক্লিক বাড়ান", desc:"WhatsApp বাটন আরো দৃশ্যমান করুন এবং প্রতিটি পেজে যোগ করুন।" });
+  if (parseFloat(r2c) < 50) tips.push({ type:"warn", title:"স্টুডেন্ট রিটেনশন উন্নত করুন", desc:`${100-parseFloat(r2c)}% স্টুডেন্ট সক্রিয় নয়। তাদের WhatsApp রিমাইন্ডার পাঠান।` });
+  if (parseFloat(compRate) > 50) tips.push({ type:"success", title:"কোর্স কমপ্লিশন ভালো!", desc:`${compRate}% স্টুডেন্ট কোর্স সম্পন্ন করেছে — এটি একটি ভালো হার।` });
+  if (!tips.length) tips.push({ type:"success", title:"ড্যাশবোর্ড কার্যকর", desc:"সব মেট্রিক্স ট্র্যাক করা হচ্ছে। আরো ডেটা জমলে পরামর্শ দেখাবে।" });
+
+  advice.innerHTML = tips.map(t => `
+    <div class="alert-box ${t.type}">
+      <div class="alert-icon">${t.type==="warn"?"⚠️":t.type==="success"?"✅":"💡"}</div>
+      <div><div class="alert-title">${t.title}</div><div class="alert-desc">${t.desc}</div></div>
+    </div>`).join("");
+
+  // WA pages table
+  const tbody = document.getElementById("wa-src-tbl");
+  if (!allWaPages.length) { tbody.innerHTML = emptyRow(3); return; }
+  const maxWa = Math.max(...allWaPages.map(p=>Number(p.count)),1);
+  tbody.innerHTML = allWaPages.map(p => {
+    const eff = ((Number(p.count)/maxWa)*100).toFixed(0);
+    return `<tr>
+      <td><span class="${p.page==="home"?"pg-tag home":"pg-tag"}">${p.page}</span></td>
+      <td class="fw700">${Number(p.count).toLocaleString("bn-BD")}</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${eff}%;background:var(--green);"></div></div><span class="bar-lbl text-green">${eff}%</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+// ══════════════════════════════════════════════════════
+// CAMPAIGNS
+// ══════════════════════════════════════════════════════
+function renderCampaigns() {
+  const tbody = document.getElementById("utm-tbl");
+  if (!allUtm.length) { tbody.innerHTML = emptyRow(5); return; }
+  const maxV = Math.max(...allUtm.map(c=>Number(c.visits)),1);
+  tbody.innerHTML = allUtm.map(c => {
+    const m = SOURCE_META[c.utm_source]||SOURCE_META.other;
+    const pct = ((Number(c.visits)/maxV)*100).toFixed(0);
+    return `<tr>
+      <td class="fw700">${c.utm_campaign||"—"}</td>
+      <td><span class="src-badge ${c.utm_source||"other"}">${m.icon} ${m.label}</span></td>
+      <td>${c.utm_medium||"—"}</td>
+      <td class="fw700 text-blue">${Number(c.visits).toLocaleString("bn-BD")}</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${m.color};"></div></div><span class="bar-lbl" style="color:${m.color};">${pct}%</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+function buildUtmLink() {
+  const base = document.getElementById("utm-url").value.trim() || "https://robiulislam.org";
+  const src = document.getElementById("utm-src").value;
+  const med = document.getElementById("utm-med").value;
+  const camp = encodeURIComponent(document.getElementById("utm-camp").value.trim() || "campaign");
+  const link = `${base}?utm_source=${src}&utm_medium=${med}&utm_campaign=${camp}`;
+  document.getElementById("utm-link-text").textContent = link;
+  document.getElementById("utm-result").style.display = "block";
+}
+
+function copyUtmLink() {
+  const txt = document.getElementById("utm-link-text").textContent;
+  navigator.clipboard.writeText(txt).then(() => toast("✅ UTM লিংক কপি হয়েছে!", "ok"));
+}
+
+// ══════════════════════════════════════════════════════
+// ALERTS
+// ══════════════════════════════════════════════════════
+function buildAlerts() {
+  const container = document.getElementById("alerts-container");
+  const alerts = [];
+  const inactive = allStudents.filter(s => !isActive(s) && s.last_active);
+  if (inactive.length > 0) {
+    alerts.push({
+      type:"warn",
+      title:`⚠️ ${inactive.length} জন স্টুডেন্ট ${INACTIVE_DAYS}+ দিন ধরে নিষ্ক্রিয়`,
+      desc:`এদের WhatsApp রিমাইন্ডার পাঠান যাতে তারা কোর্সে ফিরে আসে।`,
+      action:{ label:"💬 WhatsApp মেসেজ পাঠান", fn:"switchTab('whatsapp')" }
+    });
+  }
+  const newStudents = allStudents.filter(s => !s.last_active);
+  if (newStudents.length > 0) {
+    alerts.push({
+      type:"info",
+      title:`🆕 ${newStudents.length} জন নতুন রেজিস্ট্রেশন — এখনো লগইন করেনি`,
+      desc:`এরা রেজিস্ট্রেশন করেছে কিন্তু এখনো কোনো কার্যক্রম করেনি। স্বাগত মেসেজ পাঠান!`,
+      action:{ label:"📋 তালিকা দেখুন", fn:"switchTab('leads')" }
+    });
+  }
+  const totalVisits = allDailyTraffic.reduce((s,d)=>s+(d.views||0),0);
+  const conversion = totalVisits > 0 ? ((allStudents.length/totalVisits)*100) : 0;
+  if (conversion < 0.5 && totalVisits > 50) {
+    alerts.push({
+      type:"warn",
+      title:"📉 রেজিস্ট্রেশন কনভার্সন রেট মাত্র " + conversion.toFixed(2) + "%",
+      desc:"ফানেল অপ্টিমাইজ করুন। ল্যান্ডিং পেজে রেজিস্ট্রেশন ফর্ম আরো সহজ করুন।",
+      action:{ label:"🔽 ফানেল দেখুন", fn:"switchTab('funnel')" }
+    });
+  }
+  if (!allUtm.length) {
+    alerts.push({
+      type:"info",
+      title:"🎯 UTM ক্যাম্পেইন শুরু করুন",
+      desc:"আপনার সোশ্যাল মিডিয়া পোস্টে UTM লিংক যোগ করলে কোন পোস্ট থেকে বেশি ভিজিটর আসছে তা জানতে পারবেন।",
+      action:{ label:"🛠️ UTM লিংক তৈরি করুন", fn:"switchTab('campaigns')" }
+    });
+  }
+  if (!alerts.length) {
+    alerts.push({ type:"success", title:"✅ সব ঠিকঠাক আছে!", desc:"কোনো সমস্যা নেই। ড্যাশবোর্ড সচল আছে।" });
+  }
+  const badge = document.getElementById("alert-badge");
+  const warnCount = alerts.filter(a=>a.type==="warn").length;
+  if (warnCount > 0) { badge.textContent = warnCount; badge.style.display = "inline"; }
+  container.innerHTML = alerts.map(a => `
+    <div class="alert-box ${a.type}" style="margin-bottom:14px;">
+      <div class="alert-icon">${a.type==="warn"?"⚠️":a.type==="success"?"✅":"ℹ️"}</div>
+      <div style="flex:1;">
+        <div class="alert-title">${a.title}</div>
+        <div class="alert-desc">${a.desc}</div>
+        ${a.action ? `<button class="btn btn-sm btn-blue" style="margin-top:10px;" onclick="${a.action.fn}">${a.action.label}</button>` : ""}
+      </div>
+    </div>`).join("");
+}
+
+// ══════════════════════════════════════════════════════
+// WHATSAPP TOOLS
+// ══════════════════════════════════════════════════════
+function updateWaStats() {
+  const active = allStudents.filter(isActive).length;
+  const inactive = allStudents.filter(s=>!isActive(s)).length;
+  setText("ws-total", allStudents.length);
+  setText("ws-active", active);
+  setText("ws-inactive", inactive);
+}
+
+function updateWaBtnLabel() {
+  const btn = document.querySelector("button[onclick=\"generateWaLinks('all')\"]");
+  if (btn) btn.innerHTML = `💬 সকলকে মেসেজ (${allStudents.length} জন)`;
+}
+
+function generateWaLinks(filter) {
+  const msg = encodeURIComponent(document.getElementById("wa-msg").value.trim() || "আস-সালামু আলাইকুম!");
+  let list = allStudents;
+  if (filter === "active") list = allStudents.filter(isActive);
+  if (filter === "inactive") list = allStudents.filter(s=>!isActive(s));
+
+  const phones = list.map(s=>s.phone).filter(Boolean);
+  if (!phones.length) { toast("কোনো ফোন নম্বর পাওয়া যায়নি", "err"); return; }
+
+  const container = document.getElementById("wa-links-container");
+  setText("wa-link-count", phones.length);
+  container.innerHTML = phones.map(p => {
+    const num = "880" + String(p).replace(/^0/,"");
+    return `<a href="https://wa.me/${num}?text=${msg}" target="_blank" class="btn btn-green" style="text-decoration:none;font-size:12px;">
+      💬 ${p}
+    </a>`;
+  }).join("");
+  document.getElementById("wa-links-wrap").style.display = "block";
+  toast(`✅ ${phones.length}টি WhatsApp লিংক তৈরি হয়েছে!`, "ok");
+}
+
+function quickWa() {
+  const ph = document.getElementById("quick-phone").value.trim().replace(/^0/,"");
+  const msg = encodeURIComponent(document.getElementById("quick-msg").value.trim() || "আস-সালামু আলাইকুম!");
+  if (!ph) { toast("ফোন নম্বর দিন", "err"); return; }
+  window.open(`https://wa.me/880${ph}?text=${msg}`, "_blank");
+}
+
+// ══════════════════════════════════════════════════════
+// EXPORT FUNCTIONS
+// ══════════════════════════════════════════════════════
+function exportPhonesCSV() {
+  if (!allStudents.length) { toast("কোনো ডেটা নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,XP পয়েন্ট,চ্যাপ্টার,সর্বশেষ লগইন,স্ট্যাটাস"];
+  allStudents.forEach(s => {
+    rows.push(`${s.student_id||""},${s.phone||""},${s.xp||0},${s.chapters_completed_count||0},${s.last_active||""},${isActive(s)?"সক্রিয়":"নিষ্ক্রিয়"}`);
+  });
+  downloadCSV("GIC-Phone-Numbers.csv", rows.join("\n"));
+  previewReport("📱 ফোন নম্বর তালিকা", allStudents.map(s=>`${s.student_id}: ${s.phone}`));
+  toast("✅ CSV ডাউনলোড শুরু হয়েছে", "ok");
+}
+
+function exportStudentsCSV() {
+  if (!allStudents.length) { toast("কোনো ডেটা নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,XP,চ্যাপ্টার,সর্বশেষ লগইন"];
+  allStudents.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.xp||0},${s.chapters_completed_count||0},${s.last_active||""}`));
+  downloadCSV("GIC-Students.csv", rows.join("\n"));
+  toast("✅ স্টুডেন্ট CSV ডাউনলোড হচ্ছে", "ok");
+}
+
+function exportInactiveCSV() {
+  const inactive = allStudents.filter(s=>!isActive(s)&&s.last_active);
+  if (!inactive.length) { toast("কোনো নিষ্ক্রিয় স্টুডেন্ট নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,সর্বশেষ লগইন"];
+  inactive.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.last_active||""}`));
+  downloadCSV("GIC-Inactive-Students.csv", rows.join("\n"));
+  toast(`✅ ${inactive.length} জন নিষ্ক্রিয় — CSV ডাউনলোড হচ্ছে`, "ok");
+}
+
+function exportCompletedCSV() {
+  const comp = allStudents.filter(hasCompleted);
+  if (!comp.length) { toast("কোনো কমপ্লিট করা স্টুডেন্ট নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,XP,চ্যাপ্টার"];
+  comp.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.xp||0},${s.chapters_completed_count||0}`));
+  downloadCSV("GIC-Completed-Students.csv", rows.join("\n"));
+  toast(`✅ ${comp.length} জন কমপ্লিটেড স্টুডেন্ট CSV`, "ok");
+}
+
+function exportPhonesExcel() {
+  if (!allStudents.length) { toast("কোনো ডেটা নেই", "err"); return; }
+  const phones = allStudents.map(s=>s.phone||"").filter(Boolean).join("\n");
+  const blob = new Blob([phones], { type:"text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "GIC-Phone-List.txt";
+  a.click();
+  toast("✅ ফোন নম্বর টেক্সট ফাইল ডাউনলোড হচ্ছে", "ok");
+}
+
+function exportTrafficCSV() {
+  if (!allDailyTraffic.length) { toast("কোনো ট্রাফিক ডেটা নেই", "err"); return; }
+  const rows = ["তারিখ,পেজ ভিউ,WhatsApp ক্লিক"];
+  allDailyTraffic.forEach(d => rows.push(`${d.date},${d.views||0},${d.wa_clicks||0}`));
+  downloadCSV("GIC-Traffic.csv", rows.join("\n"));
+  toast("✅ ট্রাফিক CSV ডাউনলোড হচ্ছে", "ok");
+}
+
+function exportSourceCSV() {
+  if (!allSources.length) { toast("কোনো সোর্স ডেটা নেই", "err"); return; }
+  const rows = ["সোর্স/প্ল্যাটফর্ম,মোট ভিজিট"];
+  allSources.forEach(s => rows.push(`${s.source},${s.count}`));
+  downloadCSV("GIC-Sources.csv", rows.join("\n"));
+  toast("✅ সোর্স CSV ডাউনলোড হচ্ছে", "ok");
+}
+
+function copyAllPhones() {
+  const phones = allStudents.map(s=>s.phone||"").filter(Boolean).join("\n");
+  if (!phones) { toast("কোনো ফোন নম্বর নেই", "err"); return; }
+  navigator.clipboard.writeText(phones).then(() => toast(`✅ ${allStudents.length}টি নম্বর কপি হয়েছে!`, "ok"));
+}
+
+function copyPhone(ph) {
+  if (!ph) return;
+  navigator.clipboard.writeText(ph).then(() => toast("📱 " + ph + " কপি হয়েছে", "ok"));
+}
+
+function downloadCSV(filename, content) {
+  const BOM = "\uFEFF"; // UTF-8 BOM for Excel compatibility
+  const blob = new Blob([BOM + content], { type:"text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+
+function previewReport(title, lines) {
+  const el = document.getElementById("report-preview");
+  if (!el) return;
+  el.innerHTML = `<div style="font-weight:700;margin-bottom:10px;">${title}</div>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.8;">${lines.slice(0,20).join("<br>")}</div>
+    ${lines.length > 20 ? `<div style="font-size:12px;color:var(--text-muted);margin-top:8px;">...এবং আরো ${lines.length-20}টি</div>` : ""}`;
+}
+
+// ══════════════════════════════════════════════════════
+// LIVE TRACKING
+// ══════════════════════════════════════════════════════
+function startLiveTracking() {
+  liveChannel = db.channel("gic-live-room");
+  liveChannel.on("presence", { event:"sync" }, () => {
+    const state = liveChannel.presenceState();
+    const list = [];
+    Object.values(state).forEach(presences => presences.forEach(p => list.push(p)));
+    const count = list.length;
+    setText("m-live", count);
+    setText("sb-live", count);
+
+    const tbody = document.getElementById("live-tbl");
+    if (!list.length) { tbody.innerHTML = `<tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr>`; return; }
+    list.sort((a,b) => new Date(b.joined_at)-new Date(a.joined_at));
+    tbody.innerHTML = list.map(u => {
+      const m = SOURCE_META[u.referrer_source]||SOURCE_META.direct;
+      return `<tr>
+        <td>📍 ${u.city||"Unknown"}, ${u.country||"?"}</td>
+        <td><span class="${u.page==="home"?"pg-tag home":"pg-tag"}">◉ ${u.page||"home"}</span></td>
+        <td><span class="src-badge ${u.referrer_source||"direct"}">${m.icon} ${m.label}</span></td>
+      </tr>`;
+    }).join("");
+  }).subscribe();
+}
+
+function startAutoRefresh() {
+  setInterval(async () => {
+    if (!db || !authPwd) return;
+    try {
+      const { data } = await db.rpc("get_analytics_summary", { pass_code: authPwd });
+      if (data) processData(data);
+    } catch(e) {}
+  }, 20000);
+}
+
+async function refreshAll() {
+  toast("🔄 রিফ্রেশ হচ্ছে...", "ok");
+  try {
+    const { data } = await db.rpc("get_analytics_summary", { pass_code: authPwd });
+    if (data) processData(data);
+    await loadStudents();
+    toast("✅ ডেটা আপডেট হয়েছে!", "ok");
+  } catch(e) { toast("❌ রিফ্রেশ ব্যর্থ হয়েছে", "err"); }
+}
+
+// ══════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════
+function switchTab(id) {
+  document.querySelectorAll(".tab-page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.getElementById("tab-" + id)?.classList.add("active");
+  document.querySelector(`.nav-item[onclick="switchTab('${id}')"]`)?.classList.add("active");
+}
+
+// ══════════════════════════════════════════════════════
+// UTILITIES
+// ══════════════════════════════════════════════════════
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function emptyRow(cols) {
+  return `<tr class="empty-row"><td colspan="${cols}">কোনো ডেটা পাওয়া যায়নি</td></tr>`;
+}
+
+let toastTimer;
+function toast(msg, type="ok") {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.className = "show " + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.className = "", 3000);
+}
+</script>
 </body>
 </html>
