@@ -1677,10 +1677,23 @@ footer {
   50% { opacity: 1; transform: scale(1.8); }
 }
 @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+#course-search-input {
+  width: 100%;
+  padding: 14px 20px 14px 48px;
+  border: 2px solid rgba(212,168,67,0.25);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.96);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text);
+  outline: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(10,22,40,0.07);
+}
 #course-search-input:focus {
-  border-color: rgba(212,168,67,0.7) !important;
-  background: rgba(255,255,255,0.12) !important;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 3px rgba(212,168,67,0.25) !important;
+  border-color: var(--gold) !important;
+  background: #fff !important;
+  box-shadow: 0 8px 30px rgba(212,168,67,0.15) !important;
 }
 .mc-mini-testimonial {
   background: #fff; border: 1px solid var(--border); border-radius: 18px;
@@ -1992,7 +2005,7 @@ footer {
 <div class="page" id="page-mini-courses">
 
   <!-- ── HERO SECTION REDESIGNED ── -->
-  <div style="background: linear-gradient(160deg, #050e1f 0%, #0b2444 50%, #0a1e3d 100%); position: relative; overflow: hidden; padding: 90px 24px 75px; border-bottom: 2px solid rgba(212,168,67,0.3);">
+  <div id="mc-hero" style="background: linear-gradient(160deg, #050e1f 0%, #0b2444 50%, #0a1e3d 100%); position: relative; overflow: hidden; padding: 90px 24px 75px; border-bottom: 2px solid rgba(212,168,67,0.3);">
     <div style="position:absolute;right:-100px;top:-100px;width:350px;height:350px;background:radial-gradient(circle,rgba(200,151,42,0.14) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
     <div style="position:absolute;left:-80px;bottom:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(26,95,158,0.2) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
     <div style="position:absolute;top:22%;left:8%;width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:0.6;animation:starTwinkle 3s ease-in-out infinite;"></div>
@@ -2040,6 +2053,12 @@ footer {
           </div>
         </div>
         <button class="btn btn-primary" id="btn-open-auth" onclick="openStudentAuth()" style="font-size:13.5px;padding:11px 22px;">🚀 লগইন / আইডি তৈরি করুন</button>
+      </div>
+
+      <!-- Search Bar -->
+      <div style="margin-bottom:20px;position:relative;">
+        <input id="course-search-input" type="text" placeholder="কোর্স খুঁজুন... (যেমন: নামাজ, দোয়া, কোরআন)" oninput="filterCoursesBySearch()">
+        <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none;">🔍</span>
       </div>
 
       <!-- Category Filter Tabs -->
@@ -2843,7 +2862,7 @@ window.addEventListener('scroll', () => {
 btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 // ───── AUTO COPYRIGHT YEAR ─────
-document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+document.getElementById('copyrightYear').textContent = String(new Date().getFullYear()).replace(/[0-9]/g, d => '০১২৩৪৫৬৭৮৯'[d]);
 
 // ───── ANIMATED COUNTERS ─────
 function animateCounter(el) {

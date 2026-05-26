@@ -840,7 +840,9 @@ function renderXPBar() {
     </div>
   `;
 
-  const heroSection = document.querySelector('#page-mini-courses .policy-hero');
+  const heroSection = document.querySelector('#page-mini-courses .policy-hero')
+    || document.querySelector('#mc-hero')
+    || document.querySelector('#page-mini-courses > div:first-child');
   if (heroSection) heroSection.insertAdjacentElement('afterend', bar);
 }
 
