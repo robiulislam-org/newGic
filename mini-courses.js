@@ -766,7 +766,7 @@ function openShareModal(courseId) {
   const shareUrl = window.location.origin + window.location.pathname + '?course=' + cId +
     (studentSession ? '&ref=' + studentSession.student_id : '');
     
-  const shareText = `📖 *${course.title}* — সম্পূর্ণ ফ্রি ইসলামিক মিনি-কোর্স!
+  const shareText = `📖 *${course.title}* — সম্পূর্ণ ফ্রি GIC Hub কোর্স!
 
 🌟 *কোর্সের বৈশিষ্ট্যসমূহ:*
 ✅ তাজউইদ ও সহীহ উচ্চারণ শিক্ষা
@@ -1392,7 +1392,7 @@ function completeCourse() {
 
   const shareUrl = window.location.origin + window.location.pathname + '?course=' + currentCourseId +
     (studentSession ? '&ref=' + studentSession.student_id : '');
-  const shareText = `🏆 আমি GIC-এর "${course.title}" কোর্স সম্পন্ন করেছি! তুমিও শুরু করো — সম্পূর্ণ বিনামূল্যে!`;
+  const shareText = `🏆 আমি GIC Hub-এর "${course.title}" কোর্স সম্পন্ন করেছি! তুমিও শুরু করো — সম্পূর্ণ বিনামূল্যে! 🕌`;
 
   const modal = document.createElement('div');
   modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:20000;display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn 0.3s ease;overflow-y:auto;`;
@@ -1446,7 +1446,7 @@ function completeCourse() {
           <h3 id="cert-student-name" style="font-family:var(--font-body); font-size:28px; color:var(--gold); font-weight:800; margin-bottom:14px;">[শিক্ষার্থীর নাম]</h3>
           
           <p style="font-size:13.5px; line-height:1.75; color:var(--text); max-width:550px; margin:0 auto 18px;">
-            সফলভাবে ও নিষ্ঠার সাথে GIC-এর ফ্রি মিনি-কোর্স <strong id="cert-course-name" style="color:var(--blue-dark); font-size:14.5px;">"[কোর্সের নাম]"</strong> সম্পন্ন করায় তার ইসলামিক জ্ঞান ও আগ্রহের স্বীকৃতিস্বরূপ এই সনদপত্র অর্পণ করা হলো।
+            সফলভাবে ও নিষ্ঠার সাথে <strong style="color:var(--blue);">GIC Hub</strong>-এর <strong id="cert-course-name" style="color:var(--blue-dark); font-size:14.5px;">"[কোর্সের নাম]"</strong> কোর্সটি সম্পন্ন করায় তার ইসলামিক জ্ঞান ও আগ্রহের স্বীকৃতিস্বরূপ এই সনদপত্র অর্পণ করা হলো।
           </p>
           
           <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px; font-size:12px;">
