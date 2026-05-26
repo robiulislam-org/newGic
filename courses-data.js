@@ -23,11 +23,1080 @@ const categoriesData = {
 };
 
 const miniCoursesData = [
-  // ==========================================
-  // COURSE 1 — সম্পূর্ণ নামাজ কোর্স (12 পার্ট)
+// ==========================================
+  // COURSE 1 — পবিত্রতার পূর্ণ গাইড (10 পার্ট)
   // ==========================================
   {
     id: 1,
+    title: "পবিত্রতার পূর্ণ গাইড",
+    icon: "💧",
+    duration: "৭৫ মিনিট",
+    partsCount: 10,
+    tagline: "কখন অপবিত্র হই, কীভাবে পবিত্র হই — ইসলামের সম্পূর্ণ তাহারাত গাইড!",
+    color: "#0891b2",
+    category: "pillars",
+    chapters: [
+
+      // ── পার্ট ১ ──
+      {
+        title: "পার্ট ১ — পবিত্রতা কী এবং কেন? ইসলামের তাহারাত",
+        funFact: "রাসুলুল্লাহ (সা.) বলেছেন: 'পবিত্রতা ঈমানের অর্ধেক!' — মাত্র পরিষ্কার থাকা দিয়ে আপনি অর্ধেক ঈমান অর্জন করতে পারেন! 🌟",
+        teaser: "পরের পার্টে — অপবিত্রতার প্রকারভেদ: কোনটা বড় অপবিত্রতা, কোনটা ছোট — এবং কীভাবে বুঝবেন আপনি কোন ধরনে আছেন।",
+        content: `
+          <p>ইসলামে <strong>তাহারাত</strong> (পবিত্রতা) একটি মৌলিক বিষয়। আল্লাহ বলেছেন: <em>"নিশ্চয়ই আল্লাহ তাওবাকারীদের ভালোবাসেন এবং ভালোবাসেন পবিত্রতা অর্জনকারীদের।"</em> (সূরা বাকারা: ২২২)</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">💧 পবিত্রতা দুই ধরনের</h4>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:16px;border-radius:12px;border-left:4px solid #0891b2;">
+              <strong style="color:#0891b2;">১. বাহ্যিক পবিত্রতা (হিসি):</strong>
+              <p style="font-size:14px;margin-top:6px;">শরীর, কাপড় ও নামাজের স্থান নাজাসাত (অপবিত্র বস্তু) থেকে পাক রাখা।</p>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(212,168,67,0.02));padding:16px;border-radius:12px;border-left:4px solid var(--gold);">
+              <strong style="color:var(--gold);">২. আত্মিক পবিত্রতা (মানোয়ি):</strong>
+              <p style="font-size:14px;margin-top:6px;">শির্ক, কুফর, মুনাফেকি থেকে অন্তরকে পরিষ্কার রাখা — এটি আরও গভীর পবিত্রতা।</p>
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">🔑 তাহারাতের তিনটি মাধ্যম</h4>
+          <ul style="list-style-type:none;padding-left:0;display:flex;flex-direction:column;gap:10px;">
+            <li style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🚿</span>
+              <div><strong>অজু:</strong> ছোট অপবিত্রতা থেকে পবিত্রতা অর্জন</div>
+            </li>
+            <li style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🛁</span>
+              <div><strong>গোসল:</strong> বড় অপবিত্রতা (জানাবাত) থেকে পবিত্রতা অর্জন</div>
+            </li>
+            <li style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🌍</span>
+              <div><strong>তায়াম্মুম:</strong> পানি না পেলে মাটি দিয়ে পবিত্রতা অর্জন</div>
+            </li>
+          </ul>
+          <br>
+          <blockquote style="background:rgba(8,145,178,0.05);border-left:4px solid var(--gold);padding:16px;margin:16px 0;border-radius:0 10px 10px 0;">
+            <p style="font-family:var(--font-arabic);font-size:18px;text-align:right;color:var(--blue-dark);margin-bottom:8px;line-height:2;">الطَّهُورُ شَطْرُ الْإِيمَانِ</p>
+            <p>"পবিত্রতা ঈমানের অর্ধেক।" — (সহিহ মুসলিম: ২২৩)</p>
+          </blockquote>
+        `,
+        quiz: {
+          question: "সহিহ মুসলিমের হাদিস অনুযায়ী পবিত্রতা ঈমানের কতটুকু?",
+          options: ["এক তৃতীয়াংশ", "এক চতুর্থাংশ", "অর্ধেক", "তিন চতুর্থাংশ"],
+          correct: 2,
+          explanation: "সহিহ মুসলিমের (২২৩) হাদিসে রাসুলুল্লাহ (সা.) বলেছেন — 'আত্তাহুরু শাত্রুল ঈমান' — পবিত্রতা ঈমানের অর্ধেক। তাই পবিত্রতাকে ঈমানের সাথে সমান গুরুত্ব দেওয়া হয়েছে।"
+        }
+      },
+
+      // ── পার্ট ২ ──
+      {
+        title: "পার্ট ২ — নাজাসাত: অপবিত্রতার প্রকারভেদ",
+        funFact: "ইসলামে অপবিত্রতা দুই ধরনের — হুকমি ও হাকিকি। আপনার শরীর দেখতে পরিষ্কার হলেও হুকমি অপবিত্রতায় থাকতে পারেন, যা শুধু অজু/গোসলেই দূর হয়! 🔍",
+        teaser: "পরের পার্টে — ইস্তিঞ্জা: টয়লেট ব্যবহারের ইসলামিক আদব, যা জানলে প্রতিটি ওয়াশরুম ব্যবহার ইবাদতে পরিণত হবে!",
+        content: `
+          <p>নাজাসাত বা অপবিত্রতা দুই ধরনের। একটি দেখা যায়, একটি দেখা যায় না — কিন্তু দুটোই নামাজের জন্য সমস্যা।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📋 নাজাসাতের প্রকারভেদ</h4>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:18px;border-radius:14px;border-left:4px solid #ef4444;">
+              <strong style="color:#dc2626;">হুকমি নাজাসাত (অদৃশ্য অপবিত্রতা):</strong>
+              <p style="font-size:14px;margin-top:8px;">শরীরে কোনো নোংরা পদার্থ নেই, কিন্তু শরিয়তের দৃষ্টিতে অপবিত্র। যেমন:</p>
+              <ul style="font-size:14px;margin-top:8px;padding-left:16px;display:flex;flex-direction:column;gap:4px;">
+                <li>✦ <strong>হাদাসে আসগার (ছোট):</strong> অজু নষ্ট হলে — গ্যাস, টয়লেট, ঘুম ইত্যাদি</li>
+                <li>✦ <strong>হাদাসে আকবার (বড়):</strong> গোসল ফরজ হলে — স্বামী-স্ত্রীর মিলন, স্বপ্নদোষ ইত্যাদি</li>
+              </ul>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(249,115,22,0.02));padding:18px;border-radius:14px;border-left:4px solid #f97316;">
+              <strong style="color:#ea580c;">হাকিকি নাজাসাত (দৃশ্যমান অপবিত্রতা):</strong>
+              <p style="font-size:14px;margin-top:8px;">শরীর বা কাপড়ে নোংরা পদার্থ লেগে থাকা। যেমন:</p>
+              <ul style="font-size:14px;margin-top:8px;padding-left:16px;display:flex;flex-direction:column;gap:4px;">
+                <li>✦ প্রস্রাব, পায়খানা, রক্ত, মদ</li>
+                <li>✦ শূকর, কুকুরের লালা</li>
+                <li>✦ মৃত পশুর শরীর</li>
+              </ul>
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">🧹 নাজাসাত দূর করার উপায়</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:var(--cream);padding:14px;border-radius:10px;">
+              <strong>হুকমি নাজাসাত:</strong> অজু বা গোসলের মাধ্যমে দূর হয়
+            </div>
+            <div style="background:var(--cream);padding:14px;border-radius:10px;">
+              <strong>হাকিকি নাজাসাত:</strong> পানি দিয়ে ধুয়ে পরিষ্কার করতে হবে
+            </div>
+          </div>
+          <br>
+          <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:16px;border-radius:12px;text-align:center;font-weight:600;">
+            💡 কাপড়ে নাজাসাত লাগলে তিনবার ধুয়ে প্রতিবার ভালো করে চিপলে পাক হয়!
+          </div>
+        `,
+        quiz: {
+          question: "হাদাসে আসগার (ছোট অপবিত্রতা) কী দিয়ে দূর হয়?",
+          options: ["শুধু পানি দিয়ে", "অজু দিয়ে", "গোসল দিয়ে", "তায়াম্মুম দিয়ে"],
+          correct: 1,
+          explanation: "হাদাসে আসগার বা ছোট অপবিত্রতা (যেমন অজু ভেঙে যাওয়া) অজুর মাধ্যমে দূর হয়। আর হাদাসে আকবার বা বড় অপবিত্রতা গোসলের মাধ্যমে দূর হয়।"
+        }
+      },
+
+      // ── পার্ট ৩ ──
+      {
+        title: "পার্ট ৩ — ইস্তিঞ্জা: টয়লেট ব্যবহারের ইসলামিক আদব",
+        funFact: "নবীজি (সা.) টয়লেটে প্রবেশের আগে বাঁ পা দিয়ে ঢুকতেন এবং বের হতেন ডান পা দিয়ে! এই ছোট্ট অভ্যাস সুন্নত — প্রতিবার মেনে চললে সওয়াব পাবেন! 👣",
+        teaser: "পরের পার্টে — অজুর পূর্ণ পদ্ধতি: ফরজ কোনগুলো, সুন্নত কোনগুলো এবং কোন ভুলগুলো অজু নষ্ট করে দেয়।",
+        content: `
+          <p>টয়লেট ব্যবহার মানুষের স্বাভাবিক প্রয়োজন — কিন্তু ইসলাম এটাকেও একটি আদব ও সুন্নতের বিষয় বানিয়ে দিয়েছে।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🚪 টয়লেটে প্রবেশের আদব</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">1️⃣</span>
+              <div><strong>বাঁ পা দিয়ে প্রবেশ করুন</strong> এবং দোয়া পড়ুন:<br>
+              <span style="font-family:var(--font-arabic);font-size:16px;color:var(--blue-dark);">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ</span><br>
+              <em style="font-size:13px;">"হে আল্লাহ! আমি পুরুষ শয়তান ও মহিলা শয়তান থেকে আপনার আশ্রয় চাই।"</em></div>
+            </div>
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">2️⃣</span>
+              <div><strong>কিবলামুখী না হওয়া:</strong> টয়লেটে বসার সময় কিবলার দিকে বা পেছন ফিরে বসবেন না (খোলা জায়গায়)।</div>
+            </div>
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">3️⃣</span>
+              <div><strong>কথা না বলা:</strong> টয়লেটে অপ্রয়োজনীয় কথা বলা বা ফোনে কথা বলা মাকরুহ।</div>
+            </div>
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">4️⃣</span>
+              <div><strong>ডান হাত ব্যবহার না করা:</strong> ইস্তিঞ্জা (পরিষ্কার করা) সর্বদা বাঁ হাতে করুন।</div>
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🚪 বের হওয়ার আদব</h4>
+          <div style="background:var(--cream);padding:14px;border-radius:10px;">
+            <strong>ডান পা দিয়ে বের হন</strong> এবং পড়ুন:<br>
+            <span style="font-family:var(--font-arabic);font-size:16px;color:var(--blue-dark);">غُفْرَانَكَ</span><br>
+            <em style="font-size:13px;">"হে আল্লাহ! আমি আপনার ক্ষমা চাই।"</em>
+          </div>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">💧 ইস্তিঞ্জার পদ্ধতি</h4>
+          <div style="background:linear-gradient(135deg,rgba(8,145,178,0.06),rgba(8,145,178,0.01));padding:16px;border-radius:12px;">
+            <p style="font-size:14px;">পানি দিয়ে ভালোভাবে পরিষ্কার করুন। ঢিলা-কুলুখ (টিস্যু) ব্যবহার করা যায়, তবে পানি উত্তম। পবিত্রতা নিশ্চিত না হওয়া পর্যন্ত পরিষ্কার করুন।</p>
+          </div>
+        `,
+        quiz: {
+          question: "টয়লেটে প্রবেশের সময় কোন পা আগে দিতে হয়?",
+          options: ["ডান পা", "বাঁ পা", "যেকোনো পা", "একসাথে দুই পা"],
+          correct: 1,
+          explanation: "টয়লেটে প্রবেশের সময় বাঁ পা আগে দেওয়া সুন্নত এবং বের হওয়ার সময় ডান পা আগে দেওয়া সুন্নত। এটি নবীজি (সা.)-এর অভ্যাস ছিল।"
+        }
+      },
+
+      // ── পার্ট ৪ ──
+      {
+        title: "পার্ট ৪ — অজু: পদ্ধতি, ফরজ ও সুন্নত",
+        funFact: "অজুর সময় যে অঙ্গগুলো ধোয়া হয়, কিয়ামতে সেগুলো নূরে ঝলমল করবে। রাসুলুল্লাহ (সা.) বলেছেন — এই আলোর কারণেই তিনি তাঁর উম্মতকে চিনবেন! ✨",
+        teaser: "পরের পার্টে — অজু কখন ভাঙে? অনেকেই জানেন না এমন কিছু কারণ যা অজু নষ্ট করে দেয়।",
+        content: `
+          <p>অজু হলো ছোট অপবিত্রতা দূর করার মাধ্যম। নামাজের আগে এটি ফরজ। আসুন জেনে নিই সঠিক পদ্ধতি।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📌 অজুর ফরজ (৪টি)</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:24px;font-weight:900;color:#0891b2;">১</span>
+              <div><strong>মুখমণ্ডল ধোয়া:</strong> চুলের গোড়া থেকে থুতনি পর্যন্ত, এক কান থেকে অন্য কান পর্যন্ত</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:24px;font-weight:900;color:#0891b2;">২</span>
+              <div><strong>উভয় হাত কনুই পর্যন্ত ধোয়া</strong></div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:24px;font-weight:900;color:#0891b2;">৩</span>
+              <div><strong>মাথার চার ভাগের এক ভাগ মাসেহ করা</strong></div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:24px;font-weight:900;color:#0891b2;">৪</span>
+              <div><strong>উভয় পা টাখনু পর্যন্ত ধোয়া</strong></div>
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">⭐ অজুর সুন্নত (গুরুত্বপূর্ণ কিছু)</h4>
+          <ul style="list-style-type:none;padding-left:0;display:flex;flex-direction:column;gap:8px;">
+            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ বিসমিল্লাহ দিয়ে শুরু করা</li>
+            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ ডান দিক থেকে শুরু করা</li>
+            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ প্রতিটি অঙ্গ তিনবার ধোয়া</li>
+            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ মিসওয়াক করা</li>
+            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ কুলি করা ও নাকে পানি দেওয়া</li>
+            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ পুরো মাথা মাসেহ করা</li>
+            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ উভয় কান মাসেহ করা</li>
+          </ul>
+          <br>
+          <blockquote style="background:rgba(8,145,178,0.05);border-left:4px solid var(--gold);padding:16px;margin:16px 0;border-radius:0 10px 10px 0;text-align:center;">
+            <p style="font-weight:700;color:var(--blue-dark);">অজুর শেষে পড়ুন: <span style="font-family:var(--font-arabic);font-size:16px;">أَشْهَدُ أَن لَّا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</span></p>
+            <p style="font-size:13px;margin-top:6px;color:var(--text-muted);">এই দোয়া পড়লে জান্নাতের ৮টি দরজা খুলে দেওয়া হয় — (মুসলিম: ২৩৪)</p>
+          </blockquote>
+        `,
+        quiz: {
+          question: "অজুর ফরজ কতটি?",
+          options: ["তিনটি", "চারটি", "পাঁচটি", "ছয়টি"],
+          correct: 1,
+          explanation: "অজুর ফরজ চারটি: ১. মুখমণ্ডল ধোয়া, ২. উভয় হাত কনুই পর্যন্ত ধোয়া, ৩. মাথার এক চতুর্থাংশ মাসেহ করা, ৪. উভয় পা টাখনু পর্যন্ত ধোয়া।"
+        }
+      },
+
+      // ── পার্ট ৫ ──
+      {
+        title: "পার্ট ৫ — অজু কখন ভাঙে? ভঙ্গের কারণসমূহ",
+        funFact: "অনেকে জানেন না — জোরে হাসলে নামাজ নষ্ট হয়, কিন্তু অজু নষ্ট হয় না। আবার পরিষ্কার ঘুমের পর অজু ভেঙে যায়! জ্ঞান না থাকলে ভুল হয়! 😅",
+        teaser: "পরের পার্টে — গোসল: কখন ফরজ হয়, কীভাবে করতে হয় এবং গোসলের ফরজ কতটি।",
+        content: `
+          <p>অজু করার পর কিছু কারণে তা নষ্ট হয়ে যায়। এগুলো জানা অত্যন্ত জরুরি — না জানলে অজু না থাকলেও মনে করতে পারেন আছে।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">❌ অজু ভঙ্গের কারণ</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>১. পায়খানা বা প্রস্রাব করা</strong> — সামান্য হলেও অজু ভাঙে
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>২. বায়ু নির্গত হওয়া (গ্যাস)</strong> — যেকোনো রাস্তায়
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>৩. ঘুমানো</strong> — হেলান দিয়ে বা শুয়ে ঘুমালে অজু ভাঙে (নামাজে ঘুম আসলে ভাঙে না)
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>৪. বেহুঁশ হওয়া বা পাগল হওয়া</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>৫. রক্ত বা পুঁজ বের হওয়া</strong> — শরীরের কোনো স্থান থেকে প্রবাহিত হলে
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>৬. বমি করা</strong> — মুখ ভরে বমি হলে অজু ভাঙে
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>৭. নামাজে উচ্চস্বরে হাসা</strong> — নামাজ ও অজু উভয়ই ভাঙে
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">✅ যা অজু ভাঙে না</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">
+              ✓ নামাজে ঘুমের ঝিমুনি আসলে (যদি কোমর থেকে পা না উঠে)
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">
+              ✓ স্বামী-স্ত্রীর হাত ধরলে (হানাফি মতে)
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">
+              ✓ নামাজে জোরে হাসলে নামাজ ভাঙে কিন্তু অজু ভাঙে না (নামাজের বাইরে)
+            </div>
+          </div>
+        `,
+        quiz: {
+          question: "কোন অবস্থায় ঘুমালে অজু ভাঙে?",
+          options: ["নামাজে দাঁড়িয়ে ঘুমালে", "হেলান দিয়ে বা শুয়ে ঘুমালে", "বসে সামান্য ঝিমুনি আসলে", "চোখ বন্ধ থাকলে"],
+          correct: 1,
+          explanation: "হেলান দিয়ে বা শুয়ে ঘুমালে অজু ভেঙে যায়। কারণ এই অবস্থায় শরীর সম্পূর্ণ শিথিল হয়ে যায় এবং অজু নষ্টকারী কিছু বের হতে পারে। তবে নামাজে দাঁড়িয়ে বা বসে হালকা ঘুম আসলে অজু ভাঙে না।"
+        }
+      },
+
+      // ── পার্ট ৬ ──
+      {
+        title: "পার্ট ৬ — গোসল: কখন ফরজ এবং সঠিক পদ্ধতি",
+        funFact: "গোসলের ফরজ মাত্র ৩টি, কিন্তু এই ৩টি সঠিকভাবে করলেই গোসল পূর্ণ হয়। বাকিগুলো সুন্নত — করলে সওয়াব, না করলেও গোসল শুদ্ধ! 🚿",
+        teaser: "পরের পার্টে — হায়েয ও নিফাস: নারীদের বিশেষ পবিত্রতার বিধান যা প্রতিটি মুসলিম নারীর জানা জরুরি।",
+        content: `
+          <p>গোসল হলো বড় অপবিত্রতা (হাদাসে আকবার) থেকে পবিত্র হওয়ার উপায়। এটি ফরজ হলে গোসল না করে নামাজ পড়া হবে না।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">⚠️ গোসল ফরজ হওয়ার কারণ</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>১. স্ত্রী সহবাস</strong> — বীর্য নির্গত হোক বা না হোক
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>২. স্বপ্নদোষ</strong> — বীর্য নির্গত হলে
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>৩. হায়েয (মাসিক) শেষ হলে</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>৪. নিফাস (প্রসব রক্ত) শেষ হলে</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
+              <strong>৫. ইসলাম গ্রহণ করলে</strong> (অমুসলিম থেকে মুসলিম হলে)
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📌 গোসলের ফরজ (৩টি)</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:24px;font-weight:900;color:#0891b2;">১</span>
+              <div><strong>কুলি করা:</strong> মুখের ভেতর ভালোভাবে পানি পৌঁছানো</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:24px;font-weight:900;color:#0891b2;">২</span>
+              <div><strong>নাকে পানি দেওয়া:</strong> নাকের ভেতর পর্যন্ত পানি পৌঁছানো</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:24px;font-weight:900;color:#0891b2;">৩</span>
+              <div><strong>সারা শরীরে পানি পৌঁছানো:</strong> মাথার চুল থেকে পায়ের নখ পর্যন্ত</div>
+            </div>
+          </div>
+          <br>
+          <div style="background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));padding:16px;border-radius:12px;font-size:14px;">
+            <strong>⚠️ সতর্কতা:</strong> নাভি, বগল, চুলের গোড়া, কানের পেছনে — এসব জায়গায় পানি পৌঁছানো নিশ্চিত করুন। একটি জায়গাও শুকনো থাকলে গোসল হবে না!
+          </div>
+        `,
+        quiz: {
+          question: "গোসলের ফরজ কতটি?",
+          options: ["দুইটি", "তিনটি", "চারটি", "পাঁচটি"],
+          correct: 1,
+          explanation: "গোসলের ফরজ তিনটি: ১. কুলি করা (মুখে পানি পৌঁছানো), ২. নাকে পানি দেওয়া, ৩. সারা শরীরে পানি পৌঁছানো। এই তিনটি সঠিকভাবে করলেই গোসল শুদ্ধ হয়।"
+        }
+      },
+
+      // ── পার্ট ৭ ──
+      {
+        title: "পার্ট ৭ — হায়েয ও নিফাস: নারীদের বিশেষ পবিত্রতার বিধান",
+        funFact: "হায়েযের সময় নারীরা নামাজ পড়েন না — এটি শাস্তি নয়, এটি আল্লাহর বিশেষ সুবিধা। রাসুলুল্লাহ (সা.) বলেছেন এই সময়ের নামাজের কাযা নেই — কোনো সওয়াব মিস হয় না! 🌹",
+        teaser: "পরের পার্টে — তায়াম্মুম: পানি না পেলে বা ব্যবহার করতে না পারলে কীভাবে পবিত্র হবেন।",
+        content: `
+          <p>হায়েয (মাসিক) ও নিফাস (প্রসব রক্ত) নারীজীবনের স্বাভাবিক প্রক্রিয়া। ইসলামে এ সময়ের জন্য বিশেষ বিধান রয়েছে।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🌸 হায়েযের সময় যা করা যাবে না</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ নামাজ পড়া (কাযাও নেই)</div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ রোযা রাখা (পরে কাযা করতে হবে)</div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ কাবা তাওয়াফ করা</div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ মসজিদে অবস্থান করা</div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ সহবাস করা</div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">✅ হায়েযের সময় যা করা যাবে</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">✓ কোরআন তিলাওয়াত (না ছুঁয়ে মুখে মুখে)</div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">✓ জিকির ও দোয়া করা</div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">✓ দ্বীনি ইলম শেখা</div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">✓ দান-সদকা করা</div>
+          </div>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">🛁 পবিত্র হওয়ার পর</h4>
+          <p style="font-size:14px;">হায়েয বা নিফাস শেষ হলে ফরজ গোসল করতে হবে। তারপর স্বাভাবিকভাবে নামাজ, রোযা সব করতে পারবেন।</p>
+          <br>
+          <div style="background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));padding:16px;border-radius:12px;text-align:center;font-size:14px;font-weight:600;">
+            💚 হায়েযের সময় নামাজ না পড়লেও আল্লাহ পূর্ণ সওয়াব লিখে দেন — কারণ এটি আল্লাহর নির্দেশেই হচ্ছে!
+          </div>
+        `,
+        quiz: {
+          question: "হায়েযের সময় ছেড়ে দেওয়া রোযার কী করতে হয়?",
+          options: ["কাযা করতে হয়", "কাযা করতে হয় না", "কাফফারা দিতে হয়", "সদকা করতে হয়"],
+          correct: 0,
+          explanation: "হায়েযের সময় রোযা রাখা যায় না, কিন্তু এই রোযাগুলো পরে কাযা করতে হয়। অন্যদিকে নামাজের কাযা নেই — নামাজ মাফ হয়ে যায়। (সহিহ বুখারি: ৩০৪)"
+        }
+      },
+
+      // ── পার্ট ৮ ──
+      {
+        title: "পার্ট ৮ — তায়াম্মুম: পানি না থাকলে যা করবেন",
+        funFact: "তায়াম্মুম শুধু মুসলিমদের জন্য বিশেষ সুবিধা! পূর্ববর্তী নবীদের উম্মতের এই সুবিধা ছিল না। রাসুলুল্লাহ (সা.) বলেছেন — 'পুরো পৃথিবী আমার উম্মতের জন্য মসজিদ ও পবিত্রকারী!' 🌍",
+        teaser: "পরের পার্টে — মোজার উপর মাসেহ: ঠান্ডায় বা ভ্রমণে অজু করার সহজ পদ্ধতি।",
+        content: `
+          <p>তায়াম্মুম হলো পানি না পেলে বা ব্যবহার করতে না পারলে মাটি বা পবিত্র জমিন দিয়ে পবিত্রতা অর্জনের বিকল্প পদ্ধতি।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📌 তায়াম্মুম কখন করা যাবে</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">🌊</span>
+              <div><strong>পানি না পাওয়া গেলে:</strong> মরুভূমি, ভ্রমণ বা বিপদে যখন পানি নেই</div>
+            </div>
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">🤒</span>
+              <div><strong>অসুস্থতায়:</strong> পানি ব্যবহারে ক্ষতি হওয়ার সম্ভাবনা থাকলে</div>
+            </div>
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">❄️</span>
+              <div><strong>প্রচণ্ড ঠান্ডায়:</strong> পানি ব্যবহারে শরীরে ক্ষতির আশঙ্কা থাকলে</div>
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📋 তায়াম্মুমের পদ্ধতি</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#0891b2;">১</span>
+              <div>নিয়্যত করুন এবং <strong>বিসমিল্লাহ</strong> বলুন</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#0891b2;">২</span>
+              <div>পবিত্র মাটি বা দেওয়ালে <strong>উভয় হাত মেরে</strong> হাত ঝাড়ুন</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#0891b2;">৩</span>
+              <div>সেই হাত দিয়ে <strong>পুরো মুখমণ্ডল</strong> মাসেহ করুন</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#0891b2;">৪</span>
+              <div>আবার হাত মেরে <strong>উভয় হাত কনুই পর্যন্ত</strong> মাসেহ করুন</div>
+            </div>
+          </div>
+          <br>
+          <blockquote style="background:rgba(8,145,178,0.05);border-left:4px solid var(--gold);padding:16px;margin:16px 0;border-radius:0 10px 10px 0;">
+            <p style="font-family:var(--font-arabic);font-size:18px;text-align:right;color:var(--blue-dark);margin-bottom:8px;line-height:2;">وَإِن كُنتُم مَّرْضَىٰ أَوْ عَلَىٰ سَفَرٍ ... فَتَيَمَّمُوا صَعِيدًا طَيِّبًا</p>
+            <p>"...যদি তোমরা অসুস্থ হও বা সফরে থাকো... তাহলে পবিত্র মাটি দিয়ে তায়াম্মুম করো।" — (সূরা মায়িদা: ৬)</p>
+          </blockquote>
+        `,
+        quiz: {
+          question: "তায়াম্মুমে কতবার মাটিতে হাত মারতে হয়?",
+          options: ["একবার", "দুইবার", "তিনবার", "চারবার"],
+          correct: 1,
+          explanation: "তায়াম্মুমে দুইবার মাটিতে হাত মারতে হয় — একবার মুখমণ্ডল মাসেহের জন্য, আরেকবার উভয় হাত কনুই পর্যন্ত মাসেহের জন্য। (সহিহ বুখারি: ৩৩৮)"
+        }
+      },
+
+      // ── পার্ট ৯ ──
+      {
+        title: "পার্ট ৯ — মোজার উপর মাসেহ (মাসেহ আলাল খুফফাইন)",
+        funFact: "মোজার উপর মাসেহ করলে মোজা খুলতে হয় না — এটি রাসুলুল্লাহ (সা.)-এর বিশেষ সুন্নত! মুকিমদের জন্য ১ দিন, মুসাফিরদের জন্য ৩ দিন পর্যন্ত এই সুবিধা! 🧦",
+        teaser: "শেষ পার্টে — পবিত্রতা ও আধুনিক জীবন: আজকের দৈনন্দিন জীবনে পবিত্রতা রক্ষার ব্যবহারিক উপায়।",
+        content: `
+          <p>চামড়ার মোজা বা পুরু মোজা পরা অবস্থায় অজুতে পা ধোয়ার বদলে মোজার উপর ভেজা হাত বুলানো জায়েয — এটিকে বলে <strong>মাসেহ আলাল খুফফাইন</strong>।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">✅ শর্তাবলী</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:var(--cream);padding:12px;border-radius:10px;">✦ অজু থাকা অবস্থায় মোজা পরতে হবে</div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;">✦ মোজা পুরু হতে হবে (পানি ঢুকবে না এমন)</div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;">✦ মোজায় বড় ছিদ্র থাকলে হবে না</div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">⏱️ সময়সীমা</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.1),rgba(8,145,178,0.03));padding:16px;border-radius:12px;text-align:center;">
+              <div style="font-size:28px;font-weight:900;color:#0891b2;">১ দিন</div>
+              <div style="font-size:13px;margin-top:4px;color:var(--text-muted);">মুকিম (যিনি বাড়িতে আছেন)</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));padding:16px;border-radius:12px;text-align:center;">
+              <div style="font-size:28px;font-weight:900;color:var(--gold);">৩ দিন</div>
+              <div style="font-size:13px;margin-top:4px;color:var(--text-muted);">মুসাফির (যিনি সফরে আছেন)</div>
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 পদ্ধতি</h4>
+          <p style="font-size:14px;">ভেজা হাতের আঙুলগুলো পায়ের আঙুলের দিক থেকে হাঁটু পর্যন্ত মোজার উপর বুলিয়ে দিন। শুধু উপরের অংশে — নিচে নয়।</p>
+          <br>
+          <div style="background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));padding:16px;border-radius:12px;font-size:14px;">
+            <strong>⚠️ মাসেহ বাতিল হয় যখন:</strong> সময়সীমা শেষ হলে, মোজা খুললে, গোসল ফরজ হলে।
+          </div>
+        `,
+        quiz: {
+          question: "মুসাফিরের জন্য মোজার উপর মাসেহের সময়সীমা কত?",
+          options: ["১ দিন ১ রাত", "২ দিন ২ রাত", "৩ দিন ৩ রাত", "৭ দিন"],
+          correct: 2,
+          explanation: "মুসাফিরের জন্য মোজার উপর মাসেহের সময়সীমা ৩ দিন ৩ রাত (৭২ ঘণ্টা)। আর মুকিম (বাড়িতে থাকা ব্যক্তি)-এর জন্য ১ দিন ১ রাত (২৪ ঘণ্টা)। (সহিহ মুসলিম: ২৭৬)"
+        }
+      },
+
+      // ── পার্ট ১০ ──
+      {
+        title: "পার্ট ১০ — পবিত্রতা ও আধুনিক জীবন: সারসংক্ষেপ",
+        funFact: "আধুনিক বিজ্ঞান প্রমাণ করেছে — দিনে পাঁচবার অজু করা ব্যক্তির ত্বকের ব্যাকটেরিয়া অন্যদের তুলনায় ৭০% কম! ইসলামের পবিত্রতার বিধান আসলে প্রতিষেধক চিকিৎসা! 🔬",
+        teaser: "🎉 অভিনন্দন! পবিত্রতার পূর্ণ গাইড সম্পন্ন! আপনি এখন জানেন — কখন অপবিত্র হন, কীভাবে পবিত্র হবেন!",
+        content: `
+          <p>এই কোর্সে আমরা পবিত্রতার সম্পূর্ণ বিষয়গুলো শিখেছি। এখন দৈনন্দিন জীবনে এগুলো কীভাবে সহজে মেনে চলবেন তা দেখি।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📅 প্রতিদিনের পবিত্রতার রুটিন</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.06),rgba(8,145,178,0.01));padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🌅</span>
+              <div><strong>সকালে উঠে:</strong> ফজরের আগে অজু করুন, ঘুমের কারণে অজু নষ্ট হয়</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.06),rgba(8,145,178,0.01));padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🚿</span>
+              <div><strong>টয়লেটের পর:</strong> ইস্তিঞ্জা করে পুনরায় অজু করুন</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.06),rgba(8,145,178,0.01));padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🌙</span>
+              <div><strong>রাতে ঘুমানোর আগে:</strong> অজু থাকা অবস্থায় ঘুমানো সুন্নত</div>
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🏆 এই কোর্স থেকে যা শিখলেন</h4>
+          <div style="background:linear-gradient(135deg,#0a1628,#1a3a6e);border-radius:16px;padding:24px;color:#fff;">
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
+              <li style="display:flex;gap:10px;"><span>✅</span><span>পবিত্রতার <strong>দুই প্রকার</strong> ও গুরুত্ব বুঝলেন</span></li>
+              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>ইস্তিঞ্জার</strong> সঠিক আদব শিখলেন</span></li>
+              <li style="display:flex;gap:10px;"><span>✅</span><span>অজুর <strong>ফরজ, সুন্নত ও ভঙ্গের কারণ</strong> জানলেন</span></li>
+              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>গোসলের ফরজ</strong> ও কারণ শিখলেন</span></li>
+              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>তায়াম্মুম</strong> ও মোজার উপর মাসেহ জানলেন</span></li>
+            </ul>
+            <div style="margin-top:20px;padding:16px;background:rgba(8,145,178,0.2);border-radius:10px;text-align:center;border:1px solid rgba(8,145,178,0.4);">
+              <p style="color:#7dd3fc;font-weight:700;font-size:15px;">💧 পবিত্রতা শুধু শরীরের নয় — এটি আত্মার প্রস্তুতি!</p>
+            </div>
+          </div>
+        `,
+        quiz: {
+          question: "অজু থাকা অবস্থায় ঘুমানো কোন ধরনের আমল?",
+          options: ["ফরজ", "ওয়াজিব", "সুন্নত", "মুস্তাহাব"],
+          correct: 2,
+          explanation: "অজু থাকা অবস্থায় ঘুমানো সুন্নত। রাসুলুল্লাহ (সা.) বলেছেন — যে ব্যক্তি অজু অবস্থায় ঘুমায়, তার পাশে একজন ফেরেশতা থাকেন এবং ভোরে উঠলে ওই ফেরেশতা বলেন: 'হে আল্লাহ! আপনার বান্দাকে ক্ষমা করুন।' (ইবনে হিব্বান)"
+        }
+      }
+
+    ] // end chapters
+  }, // end course 1
+
+// ==========================================
+  // COURSE 2 — নামাজের মাসলা-মাসায়েল (10 পার্ট)
+  // ==========================================
+  {
+    id: 2,
+    title: "নামাজের মাসলা-মাসায়েল",
+    icon: "📖",
+    duration: "৮০ মিনিট",
+    partsCount: 10,
+    tagline: "নামাজের ফরজ, ওয়াজিব, সুন্নত — সকল মাসলা এক জায়গায়!",
+    color: "#7c3aed",
+    category: "pillars",
+    chapters: [
+
+      // ── পার্ট ১ ──
+      {
+        title: "পার্ট ১ — নামাজের শর্তাবলী (শুরুত): নামাজ শুরুর আগে",
+        funFact: "নামাজের শর্তাবলী পূরণ না হলে নামাজ শুরুই হয় না! অনেকে না জেনেই নামাজ পড়েন, কিন্তু একটি শর্ত না থাকলে পুরো নামাজ আবার পড়তে হবে! 😮",
+        teaser: "পরের পার্টে — নামাজের ফরজ: ৭টি ফরজ যার একটি বাদ পড়লে নামাজই হবে না!",
+        content: `
+          <p>নামাজের <strong>শুরুত</strong> হলো সেই শর্তাবলী যা নামাজ শুরু করার আগেই পূরণ করতে হয়। এগুলো না থাকলে নামাজ শুদ্ধ হবে না।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📋 নামাজের শর্তাবলী</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">১</span>
+              <div><strong>মুসলিম হওয়া:</strong> নামাজ শুধু মুসলিমের জন্য ফরজ</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">২</span>
+              <div><strong>জ্ঞান থাকা:</strong> পাগল ও অচেতন অবস্থায় নামাজ নেই</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৩</span>
+              <div><strong>বয়স:</strong> বালেগ হলে ফরজ, ১০ বছর হলে শিক্ষা দিতে হবে</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৪</span>
+              <div><strong>পবিত্রতা:</strong> শরীর, কাপড় ও নামাজের স্থান পাক হওয়া</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৫</span>
+              <div><strong>সতর ঢাকা:</strong> পুরুষের নাভি থেকে হাঁটু, নারীর মুখ ও হাত ছাড়া পুরো শরীর</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৬</span>
+              <div><strong>কিবলামুখী হওয়া:</strong> কাবার দিকে মুখ করে দাঁড়ানো</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৭</span>
+              <div><strong>ওয়াক্ত হওয়া:</strong> নামাজের নির্ধারিত সময় আসলে</div>
+            </div>
+          </div>
+        `,
+        quiz: {
+          question: "পুরুষের সতর কতটুকু?",
+          options: ["বুক থেকে হাঁটু পর্যন্ত", "নাভি থেকে হাঁটু পর্যন্ত", "শুধু গোপনাঙ্গ", "কোমর থেকে হাঁটু পর্যন্ত"],
+          correct: 1,
+          explanation: "পুরুষের সতর নাভি থেকে হাঁটু পর্যন্ত। নামাজে এটি অবশ্যই ঢেকে রাখতে হবে। নাভির নিচ এবং হাঁটু পর্যন্ত এই অংশ খোলা থাকলে নামাজ হবে না।"
+        }
+      },
+
+      // ── পার্ট ২ ──
+      {
+        title: "পার্ট ২ — নামাজের ফরজ: যা বাদ পড়লে নামাজ বাতিল",
+        funFact: "নামাজের ফরজ মাত্র ৭টি — কিন্তু এর মধ্যে একটিও বাদ পড়লে পুরো নামাজ আবার পড়তে হবে! কোনো ক্ষমা নেই, কোনো সিজদা সাহু নেই! 🚫",
+        teaser: "পরের পার্টে — নামাজের ওয়াজিব: যা বাদ পড়লে সিজদা সাহু দিয়ে নামাজ রক্ষা করা যায়।",
+        content: `
+          <p>নামাজের <strong>ফরজ</strong> হলো সেই অপরিহার্য অংশগুলো যা বাদ পড়লে নামাজ হবে না — ইচ্ছায় হোক বা ভুলে।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:16px;">🔴 নামাজের ৭টি ফরজ</h4>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ১</span>
+                <strong>তাকবিরে তাহরিমা</strong>
+              </div>
+              <p style="font-size:14px;color:var(--text-muted);">"আল্লাহু আকবার" বলে নামাজ শুরু করা — এটি নামাজের দরজা</p>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ২</span>
+                <strong>কিয়াম (দাঁড়ানো)</strong>
+              </div>
+              <p style="font-size:14px;color:var(--text-muted);">ফরজ নামাজে দাঁড়িয়ে পড়া — অক্ষম হলে বসে বা শুয়ে পড়া যাবে</p>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৩</span>
+                <strong>কিরাত (কোরআন পড়া)</strong>
+              </div>
+              <p style="font-size:14px;color:var(--text-muted);">কমপক্ষে একটি আয়াত বা তিন ছোট আয়াত পরিমাণ পড়া</p>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৪</span>
+                <strong>রুকু</strong>
+              </div>
+              <p style="font-size:14px;color:var(--text-muted);">কোমর সমান্তরাল করে ঝুঁকে রুকু করা</p>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৫</span>
+                <strong>সিজদা (দুটি)</strong>
+              </div>
+              <p style="font-size:14px;color:var(--text-muted);">প্রতি রাকাতে দুটি সিজদা, ৭টি অঙ্গ মাটিতে লাগানো</p>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৬</span>
+                <strong>শেষ বৈঠক (তাশাহহুদের পরিমাণ)</strong>
+              </div>
+              <p style="font-size:14px;color:var(--text-muted);">শেষ রাকাতে তাশাহহুদ পড়া পর্যন্ত বসা</p>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৭</span>
+                <strong>সালামে নামাজ শেষ করা</strong>
+              </div>
+              <p style="font-size:14px;color:var(--text-muted);">"আস-সালামু আলাইকুম ওয়া রাহমাতুল্লাহ" বলে নামাজ শেষ করা</p>
+            </div>
+          </div>
+        `,
+        quiz: {
+          question: "নামাজের ফরজ কতটি?",
+          options: ["৫টি", "৬টি", "৭টি", "৮টি"],
+          correct: 2,
+          explanation: "নামাজের ফরজ ৭টি: তাকবিরে তাহরিমা, কিয়াম, কিরাত, রুকু, সিজদা, শেষ বৈঠক এবং সালামে নামাজ শেষ করা। এর যেকোনো একটি বাদ পড়লে নামাজ বাতিল হয়ে যায়।"
+        }
+      },
+
+      // ── পার্ট ৩ ──
+      {
+        title: "পার্ট ৩ — নামাজের ওয়াজিব: সিজদা সাহু দিয়ে যা রক্ষা হয়",
+        funFact: "নামাজের ওয়াজিব ভুলে বাদ পড়লে সিজদা সাহু দিয়ে নামাজ রক্ষা পায়! কিন্তু ইচ্ছাকৃতভাবে বাদ দিলে নামাজ নষ্ট হয়ে যায়। ভুল আর ইচ্ছা — দুটো আলাদা! ⚠️",
+        teaser: "পরের পার্টে — নামাজের সুন্নাত: যা না করলে নামাজ হয়, কিন্তু করলে নামাজ অনেক সুন্দর হয়।",
+        content: `
+          <p>নামাজের <strong>ওয়াজিব</strong> হলো সেই বিষয়গুলো যা ফরজের মতো গুরুত্বপূর্ণ, কিন্তু ভুলে বাদ পড়লে সিজদা সাহু দিলে নামাজ হয়ে যায়।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🟡 নামাজের গুরুত্বপূর্ণ ওয়াজিবসমূহ</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
+              <strong>১. সূরা ফাতিহা পড়া</strong> — প্রতি রাকাতে (ফরজ নামাজের হানাফি মতে ওয়াজিব)
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
+              <strong>২. প্রথম দুই রাকাতে সূরার সাথে অতিরিক্ত কিরাত</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
+              <strong>৩. রুকু ও সিজদায় তিনবার তাসবিহ পড়া</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
+              <strong>৪. রুকু থেকে সোজা হয়ে দাঁড়ানো (কওমা)</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
+              <strong>৫. দুই সিজদার মাঝে সোজা হয়ে বসা (জলসা)</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
+              <strong>৬. প্রথম বৈঠক (দুই রাকাতের পর বসা)</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
+              <strong>৭. উভয় বৈঠকে তাশাহহুদ পড়া</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
+              <strong>৮. ফজর ও মাগরিব-এশায় ইমামের জোরে পড়া</strong>
+            </div>
+          </div>
+          <br>
+          <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:16px;border-radius:12px;">
+            <strong style="color:#7c3aed;">⚖️ মনে রাখুন:</strong>
+            <p style="font-size:14px;margin-top:8px;">ওয়াজিব ভুলে ছুটলে → সিজদা সাহু দিলে নামাজ হয়<br>ওয়াজিব ইচ্ছাকৃত ছাড়লে → নামাজ আবার পড়তে হবে</p>
+          </div>
+        `,
+        quiz: {
+          question: "ওয়াজিব ভুলে বাদ পড়লে নামাজ রক্ষার উপায় কী?",
+          options: ["নামাজ আবার পড়তে হবে", "সিজদা সাহু দিলে হবে", "দোয়া পড়লে হবে", "কিছু করতে হবে না"],
+          correct: 1,
+          explanation: "ওয়াজিব ভুলে বাদ পড়লে নামাজের শেষে সিজদা সাহু দিলে নামাজ হয়ে যায়। কিন্তু ইচ্ছাকৃতভাবে ওয়াজিব ছেড়ে দিলে নামাজ নষ্ট হয় এবং আবার পড়তে হবে।"
+        }
+      },
+
+      // ── পার্ট ৪ ──
+      {
+        title: "পার্ট ৪ — নামাজের সুন্নাত: সৌন্দর্য ও পূর্ণতার পথ",
+        funFact: "নামাজের সুন্নাতগুলো পালন করলে নামাজ আরও সুন্দর হয়। রাসুলুল্লাহ (সা.) বলেছেন: 'তোমরা আমাকে যেভাবে নামাজ পড়তে দেখেছ, সেভাবেই পড়ো।' সুন্নাত মানেই নবীজির পদ্ধতি! 💎",
+        teaser: "পরের পার্টে — নামাজের মুস্তাহাব: এই ছোট্ট কাজগুলো করলে নামাজে আরও বেশি সওয়াব পাবেন।",
+        content: `
+          <p>নামাজের <strong>সুন্নাত</strong> হলো নবীজি (সা.) নিয়মিত যা করতেন। না করলে নামাজ হয়, কিন্তু সওয়াব কম হয় এবং নামাজ অসম্পূর্ণ থাকে।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">⭐ নামাজের গুরুত্বপূর্ণ সুন্নাতসমূহ</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ ছানা পড়া</strong><br>তাকবিরের পর সুবহানাকা পড়া
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ আউজুবিল্লাহ পড়া</strong><br>সূরা ফাতিহার আগে
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ বিসমিল্লাহ পড়া</strong><br>প্রতিটি সূরার আগে
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ আমিন বলা</strong><br>সূরা ফাতিহার পরে
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ রুকুতে হাত রাখা</strong><br>হাঁটুতে হাত দিয়ে রুকু
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ তাকবির বলা</strong><br>প্রতিটি অবস্থান পরিবর্তনে
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ সামিআল্লাহ বলা</strong><br>রুকু থেকে উঠে
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ দরুদ পড়া</strong><br>শেষ বৈঠকে তাশাহহুদের পরে
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ দোয়া মাসুরা পড়া</strong><br>দরুদের পর
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
+              <strong>✦ উভয় দিকে সালাম</strong><br>শুধু ডানে নয়, বামেও
+            </div>
+          </div>
+          <br>
+          <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:16px;border-radius:12px;text-align:center;font-size:14px;font-weight:600;">
+            💡 সুন্নাত ছেড়ে দিলে নামাজ হয়, কিন্তু নামাজ পূর্ণাঙ্গ হয় না। নবীজির মতো নামাজ পড়াই লক্ষ্য!
+          </div>
+        `,
+        quiz: {
+          question: "সূরা ফাতিহার পরে কী বলা সুন্নত?",
+          options: ["সুবহানাল্লাহ", "আলহামদুলিল্লাহ", "আমিন", "আল্লাহু আকবার"],
+          correct: 2,
+          explanation: "সূরা ফাতিহা পড়ার পরে 'আমিন' বলা সুন্নত। রাসুলুল্লাহ (সা.) সূরা ফাতিহা পড়ার পর 'আমিন' বলতেন। জামায়াতে নামাজে ইমামের আমিনের সাথে মুক্তাদিরাও আমিন বলবে। (বুখারি: ৭৮০)"
+        }
+      },
+
+      // ── পার্ট ৫ ──
+      {
+        title: "পার্ট ৫ — নামাজের মুস্তাহাব ও মাকরুহ",
+        funFact: "নামাজে হাই তোলা মাকরুহ! রাসুলুল্লাহ (সা.) বলেছেন — হাই আসলে শয়তানের দিক থেকে, তাই সাধ্যমতো হাই চাপুন! নামাজে হাই আসলে মুখ ঢেকে নিন। 😮",
+        teaser: "পরের পার্টে — নামাজ ভঙ্গের কারণ: কোন কাজগুলো নামাজ সম্পূর্ণ নষ্ট করে দেয়।",
+        content: `
+          <p><strong>মুস্তাহাব</strong> হলো করলে সওয়াব, না করলে গুনাহ নেই। <strong>মাকরুহ</strong> হলো করলে গুনাহ, না করলে সওয়াব।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">✨ নামাজের মুস্তাহাব</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
+              ✓ সুতরা রাখা (সামনে কিছু রাখা)
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
+              ✓ সিজদায় বেশি সময় থাকা ও বেশি দোয়া করা
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
+              ✓ রাতের নামাজে দীর্ঘ কিরাত পড়া
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
+              ✓ নামাজের আগে মিসওয়াক করা
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">⚠️ নামাজে মাকরুহ কাজ</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ কাপড় বা শরীর নিয়ে খেলা করা
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ নামাজে এদিক-ওদিক তাকানো
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ আঙুল ফোটানো বা জোড়া লাগানো
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ হাই তোলা বা মুখ খোলা
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ নামাজে উঁচু স্থান বা মাটির উপর পড়া
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ প্রস্রাবের বেগ নিয়ে নামাজ পড়া
+            </div>
+          </div>
+        `,
+        quiz: {
+          question: "নামাজে এদিক-ওদিক তাকানো কোন ধরনের কাজ?",
+          options: ["ফরজ ছাড়া", "ওয়াজিব ছাড়া", "মাকরুহ", "নামাজ ভঙ্গকারী"],
+          correct: 2,
+          explanation: "নামাজে এদিক-ওদিক তাকানো মাকরুহ। রাসুলুল্লাহ (সা.) বলেছেন — এটি শয়তানের কাজ, শয়তান বান্দার নামাজ থেকে মনোযোগ সরিয়ে নেয়। (বুখারি: ৭৫১)"
+        }
+      },
+
+      // ── পার্ট ৬ ──
+      {
+        title: "পার্ট ৬ — নামাজ ভঙ্গের কারণ",
+        funFact: "নামাজের মধ্যে কথা বললে নামাজ নষ্ট হয়ে যায়! প্রাথমিক যুগে নামাজে কথা বলা জায়েয ছিল, পরে তা নিষিদ্ধ হয়। এটা ধীরে ধীরে নিষিদ্ধ হওয়া অন্যতম বিধান! 📜",
+        teaser: "পরের পার্টে — সিজদা সাহু: ভুল হলে কীভাবে নামাজ রক্ষা করবেন এই সহজ পদ্ধতিতে।",
+        content: `
+          <p>কিছু কাজ করলে নামাজ সম্পূর্ণ নষ্ট হয়ে যায় এবং আবার শুরু থেকে পড়তে হয়।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🚫 নামাজ ভঙ্গের কারণসমূহ</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
+              <strong>১. কথা বলা</strong> — ইচ্ছায় বা অনিচ্ছায়, একটি শব্দও বললে নামাজ যায়
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
+              <strong>২. অজু নষ্ট হওয়া</strong> — নামাজের মধ্যে অজু ভেঙে গেলে
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
+              <strong>৩. কিবলা থেকে বুক সরিয়ে নেওয়া</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
+              <strong>৪. খাওয়া বা পান করা</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
+              <strong>৫. অট্টহাসি দেওয়া</strong> — জোরে হাসলে নামাজ ও অজু উভয়ই ভাঙে
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
+              <strong>৬. সতর খুলে যাওয়া</strong> — কাপড় সরে গিয়ে সতর প্রকাশ পেলে
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
+              <strong>৭. নামাজের মধ্যে অনেক বেশি নড়াচড়া করা</strong>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
+              <strong>৮. ভুল পড়া যা অর্থ পরিবর্তন করে</strong>
+            </div>
+          </div>
+          <br>
+          <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:12px;font-size:14px;">
+            <strong style="color:#7c3aed;">💡 মনে রাখুন:</strong> নামাজের মধ্যে হাঁচি দিলে মনে মনে 'আলহামদুলিল্লাহ' বলুন — মুখে বললে নামাজ ভেঙে যাবে!
+          </div>
+        `,
+        quiz: {
+          question: "নামাজের মধ্যে জোরে হাসলে কী হয়?",
+          options: ["শুধু নামাজ ভাঙে", "শুধু অজু ভাঙে", "নামাজ ও অজু উভয়ই ভাঙে", "কিছুই হয় না"],
+          correct: 2,
+          explanation: "নামাজের মধ্যে অট্টহাসি (জোরে হাসা) দিলে নামাজ এবং অজু উভয়ই নষ্ট হয়ে যায়। নামাজ পুনরায় পড়তে হবে এবং নতুন অজু করতে হবে।"
+        }
+      },
+
+      // ── পার্ট ৭ ──
+      {
+        title: "পার্ট ৭ — সিজদা সাহু: ভুল হলে নামাজ রক্ষার পদ্ধতি",
+        funFact: "সিজদা সাহু দেওয়ার পর নামাজ পূর্ণ হয়ে যায়! আল্লাহ কতটা দয়ালু দেখুন — ভুলের কারণে নামাজ নষ্ট হয় না, বরং সিজদা দিলেই ক্ষমা! ❤️",
+        teaser: "পরের পার্টে — কাযা নামাজ ও মুসাফিরের নামাজ: নামাজ ছুটে গেলে কী করবেন।",
+        content: `
+          <p><strong>সিজদা সাহু</strong> হলো নামাজের মধ্যে কোনো ওয়াজিব ভুলে গেলে বা অতিরিক্ত কিছু হলে নামাজের শেষে দেওয়া দুটি বিশেষ সিজদা।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📌 কখন সিজদা সাহু দেবেন</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:14px;">✦ কোনো ওয়াজিব ভুলে বাদ পড়লে</div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:14px;">✦ ভুলে একটি রাকাত বেশি পড়লে</div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:14px;">✦ প্রথম বৈঠক ভুলে না করলে</div>
+            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:14px;">✦ তাশাহহুদ ভুলে বাদ পড়লে</div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📋 সিজদা সাহুর পদ্ধতি</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">১</span>
+              <div>নামাজের শেষ বৈঠকে তাশাহহুদ পড়ুন</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">২</span>
+              <div>শুধু <strong>ডানে একটি সালাম</strong> ফেরান</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৩</span>
+              <div><strong>দুটি সিজদা</strong> করুন (প্রতিটিতে তিনবার সুবহানা রাব্বিয়াল আ'লা)</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৪</span>
+              <div>আবার বৈঠকে বসে তাশাহহুদ, দরুদ ও দোয়া পড়ে <strong>উভয় দিকে সালাম</strong> ফেরান</div>
+            </div>
+          </div>
+        `,
+        quiz: {
+          question: "সিজদা সাহুর সময় কতটি সালাম দিয়ে সিজদায় যেতে হয়?",
+          options: ["কোনো সালাম নেই", "শুধু ডানে একটি সালাম", "উভয় দিকে সালাম", "তিনটি সালাম"],
+          correct: 1,
+          explanation: "সিজদা সাহুর সময় তাশাহহুদ পড়ে শুধু ডানে একটি সালাম দিয়ে সিজদায় যেতে হয়। দুটি সিজদা করার পর আবার বসে তাশাহহুদ, দরুদ ও দোয়া পড়ে উভয় দিকে সালাম দিয়ে নামাজ শেষ করতে হয়।"
+        }
+      },
+
+      // ── পার্ট ৮ ──
+      {
+        title: "পার্ট ৮ — কাযা নামাজ ও মুসাফিরের নামাজ",
+        funFact: "ঘুমের কারণে বা ভুলে নামাজ ছুটে গেলে গুনাহ নেই! রাসুলুল্লাহ (সা.) নিজেও একবার সফরে ঘুমিয়ে ফজর মিস করেছিলেন এবং পরে কাযা পড়েছিলেন! ঘুমে নামাজ ছুটলে উঠে পড়ে নিন! 💤",
+        teaser: "পরের পার্টে — নামাজের প্রকারভেদ: ফরজ, ওয়াজিব, সুন্নত ও নফল নামাজের পূর্ণ তালিকা।",
+        content: `
+          <p>কখনো কখনো নামাজ ছুটে যায় — ঘুমে, ভুলে বা জরুরি কারণে। তখন <strong>কাযা</strong> পড়তে হয়।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📌 কাযা নামাজের বিধান</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">😴</span>
+              <div><strong>ঘুম বা ভুলে ছুটলে:</strong> স্মরণ হলেই বা জাগলেই পড়তে হবে। দেরি না করাই ভালো।</div>
+            </div>
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">⚠️</span>
+              <div><strong>ইচ্ছাকৃতভাবে ছাড়লে:</strong> গুনাহ হবে — তবে তওবা করে কাযা পড়তে হবে।</div>
+            </div>
+            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:20px;">📋</span>
+              <div><strong>কাযা পড়ার পদ্ধতি:</strong> মূল নামাজের মতোই পড়বেন, শুধু নিয়্যতে 'কাযা' বলবেন।</div>
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">✈️ মুসাফিরের নামাজ (কসর)</h4>
+          <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:18px;border-radius:14px;">
+            <p style="font-size:14px;margin-bottom:10px;">৭৮ কিলোমিটারের বেশি দূরে সফরে গেলে <strong>কসর</strong> পড়া যায়:</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div style="background:#fff;padding:12px;border-radius:10px;text-align:center;">
+                <div style="font-weight:700;color:#7c3aed;">জোহর ৪ → ২</div>
+                <div style="font-size:12px;color:var(--text-muted);">রাকাত অর্ধেক</div>
+              </div>
+              <div style="background:#fff;padding:12px;border-radius:10px;text-align:center;">
+                <div style="font-weight:700;color:#7c3aed;">আসর ৪ → ২</div>
+                <div style="font-size:12px;color:var(--text-muted);">রাকাত অর্ধেক</div>
+              </div>
+              <div style="background:#fff;padding:12px;border-radius:10px;text-align:center;">
+                <div style="font-weight:700;color:#7c3aed;">এশা ৪ → ২</div>
+                <div style="font-size:12px;color:var(--text-muted);">রাকাত অর্ধেক</div>
+              </div>
+              <div style="background:#fff;padding:12px;border-radius:10px;text-align:center;">
+                <div style="font-weight:700;color:#22c55e;">ফজর ও মাগরিব</div>
+                <div style="font-size:12px;color:var(--text-muted);">অপরিবর্তিত</div>
+              </div>
+            </div>
+          </div>
+        `,
+        quiz: {
+          question: "সফরে কতটুকু দূরত্বে কসর নামাজ পড়া যায়?",
+          options: ["৪৮ কিলোমিটার", "৭৮ কিলোমিটার", "১০০ কিলোমিটার", "৫০ কিলোমিটার"],
+          correct: 1,
+          explanation: "৭৮ কিলোমিটার (হানাফি মতে ৩ দিনের পথ বা ৪৮ মাইল) বা তার বেশি দূরে সফরে গেলে কসর নামাজ পড়া যায়। এটি আল্লাহর বিশেষ অনুগ্রহ মুসাফিরদের জন্য।"
+        }
+      },
+
+      // ── পার্ট ৯ ──
+      {
+        title: "পার্ট ৯ — নামাজে ইমাম-মুক্তাদি: জামায়াতের নিয়মকানুন",
+        funFact: "জামায়াতে নামাজ পড়ার সময় ইমামের একটু আগে সিজদা দেওয়া হারাম! রাসুলুল্লাহ (সা.) বলেছেন — যে ব্যক্তি ইমামের আগে মাথা উঠায়, তার মাথা গাধার মাথা হওয়ার আশঙ্কা! 🐴",
+        teaser: "শেষ পার্টে — নামাজের প্রকারভেদ: কোন নামাজ কত রাকাত, কোনটা ফরজ কোনটা সুন্নত।",
+        content: `
+          <p>জামায়াতে নামাজে ইমাম ও মুক্তাদির মধ্যে কিছু গুরুত্বপূর্ণ নিয়ম রয়েছে।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">👥 মুক্তাদির করণীয়</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
+              ✓ ইমামের সাথে বা পরে তাকবির দেওয়া (কখনো আগে নয়)
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
+              ✓ সূরা ফাতিহা ও অতিরিক্ত কিরাত মুক্তাদিকে পড়তে হয় না (হানাফি মতে)
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
+              ✓ ইমাম ভুল করলে পুরুষ 'সুবহানাল্লাহ', মহিলা তালি দেবেন
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">⛔ মুক্তাদির যা করা যাবে না</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ ইমামের আগে রুকু বা সিজদায় যাওয়া
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ ইমামের আগে সালাম ফেরানো
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
+              ✗ ইমাম থেকে দুই রাকাত পিছিয়ে পড়া
+            </div>
+          </div>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">🏃 মাসবুকের (পিছিয়ে পড়া) নিয়ম</h4>
+          <p style="font-size:14px;">যদি জামায়াতের মাঝে এসে শরিক হন — ইমামের সাথে বাকি নামাজ পড়ুন, সালামের পর নিজে বাকি রাকাতগুলো পূর্ণ করুন।</p>
+        `,
+        quiz: {
+          question: "জামায়াতে ইমাম ভুল করলে পুরুষ মুক্তাদি কী করবেন?",
+          options: ["চুপ থাকবেন", "'সুবহানাল্লাহ' বলবেন", "তালি দেবেন", "সালাম দিয়ে বের হবেন"],
+          correct: 1,
+          explanation: "জামায়াতে ইমাম ভুল করলে পুরুষ মুক্তাদি 'সুবহানাল্লাহ' বলে সতর্ক করবেন এবং মহিলা মুক্তাদি তালি দেবেন। (বুখারি: ১২০৩)"
+        }
+      },
+
+      // ── পার্ট ১০ ──
+      {
+        title: "পার্ট ১০ — নামাজের প্রকারভেদ: কোনটা কত রাকাত",
+        funFact: "একটু হিসাব করুন — দিনে ৫ ওয়াক্তের মোট ফরজ রাকাত ১৭টি। সুন্নত মিলিয়ে মোট ৪৮-৫২ রাকাত! প্রতিটি রাকাত মানেই আল্লাহর সামনে একবার পূর্ণ উপস্থিতি! 🕌",
+        teaser: "🎉 অভিনন্দন! নামাজের মাসলা-মাসায়েলের পূর্ণ কোর্স শেষ! এখন আপনি নামাজের একজন সচেতন মুসল্লি!",
+        content: `
+          <p>নামাজের প্রকারভেদ জানলে কোন নামাজ কতটুকু গুরুত্বপূর্ণ তা বুঝতে পারবেন।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📊 ৫ ওয়াক্তের রাকাত সংখ্যা</h4>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+              <thead>
+                <tr style="background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(124,58,237,0.05));">
+                  <th style="padding:10px;text-align:left;border-radius:8px 0 0 0;">নামাজ</th>
+                  <th style="padding:10px;text-align:center;color:#7c3aed;">ফরজ</th>
+                  <th style="padding:10px;text-align:center;color:var(--gold);">সুন্নত</th>
+                  <th style="padding:10px;text-align:center;color:#22c55e;">নফল</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
+                  <td style="padding:10px;font-weight:600;">ফজর</td>
+                  <td style="padding:10px;text-align:center;">২</td>
+                  <td style="padding:10px;text-align:center;">২ (আগে)</td>
+                  <td style="padding:10px;text-align:center;">—</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.02);">
+                  <td style="padding:10px;font-weight:600;">জোহর</td>
+                  <td style="padding:10px;text-align:center;">৪</td>
+                  <td style="padding:10px;text-align:center;">৪+২</td>
+                  <td style="padding:10px;text-align:center;">২</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
+                  <td style="padding:10px;font-weight:600;">আসর</td>
+                  <td style="padding:10px;text-align:center;">৪</td>
+                  <td style="padding:10px;text-align:center;">৪ (আগে)</td>
+                  <td style="padding:10px;text-align:center;">—</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.02);">
+                  <td style="padding:10px;font-weight:600;">মাগরিব</td>
+                  <td style="padding:10px;text-align:center;">৩</td>
+                  <td style="padding:10px;text-align:center;">২ (পরে)</td>
+                  <td style="padding:10px;text-align:center;">২</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px;font-weight:600;">এশা</td>
+                  <td style="padding:10px;text-align:center;">৪</td>
+                  <td style="padding:10px;text-align:center;">৪+২+৩(বিতর)</td>
+                  <td style="padding:10px;text-align:center;">২</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🏆 এই কোর্স থেকে যা শিখলেন</h4>
+          <div style="background:linear-gradient(135deg,#0a1628,#1a3a6e);border-radius:16px;padding:24px;color:#fff;">
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
+              <li style="display:flex;gap:10px;"><span>✅</span><span>নামাজের <strong>সব শর্তাবলী</strong> জানলেন</span></li>
+              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>ফরজ, ওয়াজিব, সুন্নত</strong> পার্থক্য বুঝলেন</span></li>
+              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>সিজদা সাহু</strong> দিতে শিখলেন</span></li>
+              <li style="display:flex;gap:10px;"><span>✅</span><span>কাযা ও <strong>মুসাফিরের নামাজ</strong> জানলেন</span></li>
+              <li style="display:flex;gap:10px;"><span>✅</span><span>পাঁচ ওয়াক্তের <strong>সম্পূর্ণ রাকাত</strong> জানলেন</span></li>
+            </ul>
+          </div>
+        `,
+        quiz: {
+          question: "পাঁচ ওয়াক্তের ফরজ নামাজের মোট রাকাত কতটি?",
+          options: ["১৫ রাকাত", "১৭ রাকাত", "১৯ রাকাত", "২০ রাকাত"],
+          correct: 1,
+          explanation: "পাঁচ ওয়াক্তের ফরজ নামাজের মোট রাকাত ১৭টি: ফজর ২ + জোহর ৪ + আসর ৪ + মাগরিব ৩ + এশা ৪ = ১৭ রাকাত।"
+        }
+      }
+
+    ] // end chapters
+  }, // end course 2
+
+// ==========================================
+  // COURSE 3 — সম্পূর্ণ নামাজ কোর্স (16 পার্ট)
+  // ==========================================
+  {
+    id: 3,
     title: "নামাজের ভেতরের অর্থ ও সৌন্দর্য",
     icon: "🕌",
     duration: "১৩০ মিনিট",
@@ -855,1079 +1924,9 @@ const miniCoursesData = [
       }
 
     ] // end chapters
-  }  // end course 1
-,
+  }  , // end course 3
 
-  // ==========================================
-  // COURSE 2 — পবিত্রতার পূর্ণ গাইড (10 পার্ট)
-  // ==========================================
-  {
-    id: 2,
-    title: "পবিত্রতার পূর্ণ গাইড",
-    icon: "💧",
-    duration: "৭৫ মিনিট",
-    partsCount: 10,
-    tagline: "কখন অপবিত্র হই, কীভাবে পবিত্র হই — ইসলামের সম্পূর্ণ তাহারাত গাইড!",
-    color: "#0891b2",
-    category: "pillars",
-    chapters: [
-
-      // ── পার্ট ১ ──
-      {
-        title: "পার্ট ১ — পবিত্রতা কী এবং কেন? ইসলামের তাহারাত",
-        funFact: "রাসুলুল্লাহ (সা.) বলেছেন: 'পবিত্রতা ঈমানের অর্ধেক!' — মাত্র পরিষ্কার থাকা দিয়ে আপনি অর্ধেক ঈমান অর্জন করতে পারেন! 🌟",
-        teaser: "পরের পার্টে — অপবিত্রতার প্রকারভেদ: কোনটা বড় অপবিত্রতা, কোনটা ছোট — এবং কীভাবে বুঝবেন আপনি কোন ধরনে আছেন।",
-        content: `
-          <p>ইসলামে <strong>তাহারাত</strong> (পবিত্রতা) একটি মৌলিক বিষয়। আল্লাহ বলেছেন: <em>"নিশ্চয়ই আল্লাহ তাওবাকারীদের ভালোবাসেন এবং ভালোবাসেন পবিত্রতা অর্জনকারীদের।"</em> (সূরা বাকারা: ২২২)</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">💧 পবিত্রতা দুই ধরনের</h4>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:16px;border-radius:12px;border-left:4px solid #0891b2;">
-              <strong style="color:#0891b2;">১. বাহ্যিক পবিত্রতা (হিসি):</strong>
-              <p style="font-size:14px;margin-top:6px;">শরীর, কাপড় ও নামাজের স্থান নাজাসাত (অপবিত্র বস্তু) থেকে পাক রাখা।</p>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(212,168,67,0.02));padding:16px;border-radius:12px;border-left:4px solid var(--gold);">
-              <strong style="color:var(--gold);">২. আত্মিক পবিত্রতা (মানোয়ি):</strong>
-              <p style="font-size:14px;margin-top:6px;">শির্ক, কুফর, মুনাফেকি থেকে অন্তরকে পরিষ্কার রাখা — এটি আরও গভীর পবিত্রতা।</p>
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--blue-dark);margin-bottom:12px;">🔑 তাহারাতের তিনটি মাধ্যম</h4>
-          <ul style="list-style-type:none;padding-left:0;display:flex;flex-direction:column;gap:10px;">
-            <li style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;">🚿</span>
-              <div><strong>অজু:</strong> ছোট অপবিত্রতা থেকে পবিত্রতা অর্জন</div>
-            </li>
-            <li style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;">🛁</span>
-              <div><strong>গোসল:</strong> বড় অপবিত্রতা (জানাবাত) থেকে পবিত্রতা অর্জন</div>
-            </li>
-            <li style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;">🌍</span>
-              <div><strong>তায়াম্মুম:</strong> পানি না পেলে মাটি দিয়ে পবিত্রতা অর্জন</div>
-            </li>
-          </ul>
-          <br>
-          <blockquote style="background:rgba(8,145,178,0.05);border-left:4px solid var(--gold);padding:16px;margin:16px 0;border-radius:0 10px 10px 0;">
-            <p style="font-family:var(--font-arabic);font-size:18px;text-align:right;color:var(--blue-dark);margin-bottom:8px;line-height:2;">الطَّهُورُ شَطْرُ الْإِيمَانِ</p>
-            <p>"পবিত্রতা ঈমানের অর্ধেক।" — (সহিহ মুসলিম: ২২৩)</p>
-          </blockquote>
-        `,
-        quiz: {
-          question: "সহিহ মুসলিমের হাদিস অনুযায়ী পবিত্রতা ঈমানের কতটুকু?",
-          options: ["এক তৃতীয়াংশ", "এক চতুর্থাংশ", "অর্ধেক", "তিন চতুর্থাংশ"],
-          correct: 2,
-          explanation: "সহিহ মুসলিমের (২২৩) হাদিসে রাসুলুল্লাহ (সা.) বলেছেন — 'আত্তাহুরু শাত্রুল ঈমান' — পবিত্রতা ঈমানের অর্ধেক। তাই পবিত্রতাকে ঈমানের সাথে সমান গুরুত্ব দেওয়া হয়েছে।"
-        }
-      },
-
-      // ── পার্ট ২ ──
-      {
-        title: "পার্ট ২ — নাজাসাত: অপবিত্রতার প্রকারভেদ",
-        funFact: "ইসলামে অপবিত্রতা দুই ধরনের — হুকমি ও হাকিকি। আপনার শরীর দেখতে পরিষ্কার হলেও হুকমি অপবিত্রতায় থাকতে পারেন, যা শুধু অজু/গোসলেই দূর হয়! 🔍",
-        teaser: "পরের পার্টে — ইস্তিঞ্জা: টয়লেট ব্যবহারের ইসলামিক আদব, যা জানলে প্রতিটি ওয়াশরুম ব্যবহার ইবাদতে পরিণত হবে!",
-        content: `
-          <p>নাজাসাত বা অপবিত্রতা দুই ধরনের। একটি দেখা যায়, একটি দেখা যায় না — কিন্তু দুটোই নামাজের জন্য সমস্যা।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📋 নাজাসাতের প্রকারভেদ</h4>
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:18px;border-radius:14px;border-left:4px solid #ef4444;">
-              <strong style="color:#dc2626;">হুকমি নাজাসাত (অদৃশ্য অপবিত্রতা):</strong>
-              <p style="font-size:14px;margin-top:8px;">শরীরে কোনো নোংরা পদার্থ নেই, কিন্তু শরিয়তের দৃষ্টিতে অপবিত্র। যেমন:</p>
-              <ul style="font-size:14px;margin-top:8px;padding-left:16px;display:flex;flex-direction:column;gap:4px;">
-                <li>✦ <strong>হাদাসে আসগার (ছোট):</strong> অজু নষ্ট হলে — গ্যাস, টয়লেট, ঘুম ইত্যাদি</li>
-                <li>✦ <strong>হাদাসে আকবার (বড়):</strong> গোসল ফরজ হলে — স্বামী-স্ত্রীর মিলন, স্বপ্নদোষ ইত্যাদি</li>
-              </ul>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(249,115,22,0.02));padding:18px;border-radius:14px;border-left:4px solid #f97316;">
-              <strong style="color:#ea580c;">হাকিকি নাজাসাত (দৃশ্যমান অপবিত্রতা):</strong>
-              <p style="font-size:14px;margin-top:8px;">শরীর বা কাপড়ে নোংরা পদার্থ লেগে থাকা। যেমন:</p>
-              <ul style="font-size:14px;margin-top:8px;padding-left:16px;display:flex;flex-direction:column;gap:4px;">
-                <li>✦ প্রস্রাব, পায়খানা, রক্ত, মদ</li>
-                <li>✦ শূকর, কুকুরের লালা</li>
-                <li>✦ মৃত পশুর শরীর</li>
-              </ul>
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--blue-dark);margin-bottom:12px;">🧹 নাজাসাত দূর করার উপায়</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:var(--cream);padding:14px;border-radius:10px;">
-              <strong>হুকমি নাজাসাত:</strong> অজু বা গোসলের মাধ্যমে দূর হয়
-            </div>
-            <div style="background:var(--cream);padding:14px;border-radius:10px;">
-              <strong>হাকিকি নাজাসাত:</strong> পানি দিয়ে ধুয়ে পরিষ্কার করতে হবে
-            </div>
-          </div>
-          <br>
-          <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:16px;border-radius:12px;text-align:center;font-weight:600;">
-            💡 কাপড়ে নাজাসাত লাগলে তিনবার ধুয়ে প্রতিবার ভালো করে চিপলে পাক হয়!
-          </div>
-        `,
-        quiz: {
-          question: "হাদাসে আসগার (ছোট অপবিত্রতা) কী দিয়ে দূর হয়?",
-          options: ["শুধু পানি দিয়ে", "অজু দিয়ে", "গোসল দিয়ে", "তায়াম্মুম দিয়ে"],
-          correct: 1,
-          explanation: "হাদাসে আসগার বা ছোট অপবিত্রতা (যেমন অজু ভেঙে যাওয়া) অজুর মাধ্যমে দূর হয়। আর হাদাসে আকবার বা বড় অপবিত্রতা গোসলের মাধ্যমে দূর হয়।"
-        }
-      },
-
-      // ── পার্ট ৩ ──
-      {
-        title: "পার্ট ৩ — ইস্তিঞ্জা: টয়লেট ব্যবহারের ইসলামিক আদব",
-        funFact: "নবীজি (সা.) টয়লেটে প্রবেশের আগে বাঁ পা দিয়ে ঢুকতেন এবং বের হতেন ডান পা দিয়ে! এই ছোট্ট অভ্যাস সুন্নত — প্রতিবার মেনে চললে সওয়াব পাবেন! 👣",
-        teaser: "পরের পার্টে — অজুর পূর্ণ পদ্ধতি: ফরজ কোনগুলো, সুন্নত কোনগুলো এবং কোন ভুলগুলো অজু নষ্ট করে দেয়।",
-        content: `
-          <p>টয়লেট ব্যবহার মানুষের স্বাভাবিক প্রয়োজন — কিন্তু ইসলাম এটাকেও একটি আদব ও সুন্নতের বিষয় বানিয়ে দিয়েছে।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">🚪 টয়লেটে প্রবেশের আদব</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">1️⃣</span>
-              <div><strong>বাঁ পা দিয়ে প্রবেশ করুন</strong> এবং দোয়া পড়ুন:<br>
-              <span style="font-family:var(--font-arabic);font-size:16px;color:var(--blue-dark);">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ</span><br>
-              <em style="font-size:13px;">"হে আল্লাহ! আমি পুরুষ শয়তান ও মহিলা শয়তান থেকে আপনার আশ্রয় চাই।"</em></div>
-            </div>
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">2️⃣</span>
-              <div><strong>কিবলামুখী না হওয়া:</strong> টয়লেটে বসার সময় কিবলার দিকে বা পেছন ফিরে বসবেন না (খোলা জায়গায়)।</div>
-            </div>
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">3️⃣</span>
-              <div><strong>কথা না বলা:</strong> টয়লেটে অপ্রয়োজনীয় কথা বলা বা ফোনে কথা বলা মাকরুহ।</div>
-            </div>
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">4️⃣</span>
-              <div><strong>ডান হাত ব্যবহার না করা:</strong> ইস্তিঞ্জা (পরিষ্কার করা) সর্বদা বাঁ হাতে করুন।</div>
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">🚪 বের হওয়ার আদব</h4>
-          <div style="background:var(--cream);padding:14px;border-radius:10px;">
-            <strong>ডান পা দিয়ে বের হন</strong> এবং পড়ুন:<br>
-            <span style="font-family:var(--font-arabic);font-size:16px;color:var(--blue-dark);">غُفْرَانَكَ</span><br>
-            <em style="font-size:13px;">"হে আল্লাহ! আমি আপনার ক্ষমা চাই।"</em>
-          </div>
-          <br>
-          <h4 style="color:var(--blue-dark);margin-bottom:12px;">💧 ইস্তিঞ্জার পদ্ধতি</h4>
-          <div style="background:linear-gradient(135deg,rgba(8,145,178,0.06),rgba(8,145,178,0.01));padding:16px;border-radius:12px;">
-            <p style="font-size:14px;">পানি দিয়ে ভালোভাবে পরিষ্কার করুন। ঢিলা-কুলুখ (টিস্যু) ব্যবহার করা যায়, তবে পানি উত্তম। পবিত্রতা নিশ্চিত না হওয়া পর্যন্ত পরিষ্কার করুন।</p>
-          </div>
-        `,
-        quiz: {
-          question: "টয়লেটে প্রবেশের সময় কোন পা আগে দিতে হয়?",
-          options: ["ডান পা", "বাঁ পা", "যেকোনো পা", "একসাথে দুই পা"],
-          correct: 1,
-          explanation: "টয়লেটে প্রবেশের সময় বাঁ পা আগে দেওয়া সুন্নত এবং বের হওয়ার সময় ডান পা আগে দেওয়া সুন্নত। এটি নবীজি (সা.)-এর অভ্যাস ছিল।"
-        }
-      },
-
-      // ── পার্ট ৪ ──
-      {
-        title: "পার্ট ৪ — অজু: পদ্ধতি, ফরজ ও সুন্নত",
-        funFact: "অজুর সময় যে অঙ্গগুলো ধোয়া হয়, কিয়ামতে সেগুলো নূরে ঝলমল করবে। রাসুলুল্লাহ (সা.) বলেছেন — এই আলোর কারণেই তিনি তাঁর উম্মতকে চিনবেন! ✨",
-        teaser: "পরের পার্টে — অজু কখন ভাঙে? অনেকেই জানেন না এমন কিছু কারণ যা অজু নষ্ট করে দেয়।",
-        content: `
-          <p>অজু হলো ছোট অপবিত্রতা দূর করার মাধ্যম। নামাজের আগে এটি ফরজ। আসুন জেনে নিই সঠিক পদ্ধতি।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📌 অজুর ফরজ (৪টি)</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:24px;font-weight:900;color:#0891b2;">১</span>
-              <div><strong>মুখমণ্ডল ধোয়া:</strong> চুলের গোড়া থেকে থুতনি পর্যন্ত, এক কান থেকে অন্য কান পর্যন্ত</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:24px;font-weight:900;color:#0891b2;">২</span>
-              <div><strong>উভয় হাত কনুই পর্যন্ত ধোয়া</strong></div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:24px;font-weight:900;color:#0891b2;">৩</span>
-              <div><strong>মাথার চার ভাগের এক ভাগ মাসেহ করা</strong></div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:24px;font-weight:900;color:#0891b2;">৪</span>
-              <div><strong>উভয় পা টাখনু পর্যন্ত ধোয়া</strong></div>
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">⭐ অজুর সুন্নত (গুরুত্বপূর্ণ কিছু)</h4>
-          <ul style="list-style-type:none;padding-left:0;display:flex;flex-direction:column;gap:8px;">
-            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ বিসমিল্লাহ দিয়ে শুরু করা</li>
-            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ ডান দিক থেকে শুরু করা</li>
-            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ প্রতিটি অঙ্গ তিনবার ধোয়া</li>
-            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ মিসওয়াক করা</li>
-            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ কুলি করা ও নাকে পানি দেওয়া</li>
-            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ পুরো মাথা মাসেহ করা</li>
-            <li style="background:var(--cream);padding:12px;border-radius:8px;">✦ উভয় কান মাসেহ করা</li>
-          </ul>
-          <br>
-          <blockquote style="background:rgba(8,145,178,0.05);border-left:4px solid var(--gold);padding:16px;margin:16px 0;border-radius:0 10px 10px 0;text-align:center;">
-            <p style="font-weight:700;color:var(--blue-dark);">অজুর শেষে পড়ুন: <span style="font-family:var(--font-arabic);font-size:16px;">أَشْهَدُ أَن لَّا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</span></p>
-            <p style="font-size:13px;margin-top:6px;color:var(--text-muted);">এই দোয়া পড়লে জান্নাতের ৮টি দরজা খুলে দেওয়া হয় — (মুসলিম: ২৩৪)</p>
-          </blockquote>
-        `,
-        quiz: {
-          question: "অজুর ফরজ কতটি?",
-          options: ["তিনটি", "চারটি", "পাঁচটি", "ছয়টি"],
-          correct: 1,
-          explanation: "অজুর ফরজ চারটি: ১. মুখমণ্ডল ধোয়া, ২. উভয় হাত কনুই পর্যন্ত ধোয়া, ৩. মাথার এক চতুর্থাংশ মাসেহ করা, ৪. উভয় পা টাখনু পর্যন্ত ধোয়া।"
-        }
-      },
-
-      // ── পার্ট ৫ ──
-      {
-        title: "পার্ট ৫ — অজু কখন ভাঙে? ভঙ্গের কারণসমূহ",
-        funFact: "অনেকে জানেন না — জোরে হাসলে নামাজ নষ্ট হয়, কিন্তু অজু নষ্ট হয় না। আবার পরিষ্কার ঘুমের পর অজু ভেঙে যায়! জ্ঞান না থাকলে ভুল হয়! 😅",
-        teaser: "পরের পার্টে — গোসল: কখন ফরজ হয়, কীভাবে করতে হয় এবং গোসলের ফরজ কতটি।",
-        content: `
-          <p>অজু করার পর কিছু কারণে তা নষ্ট হয়ে যায়। এগুলো জানা অত্যন্ত জরুরি — না জানলে অজু না থাকলেও মনে করতে পারেন আছে।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">❌ অজু ভঙ্গের কারণ</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>১. পায়খানা বা প্রস্রাব করা</strong> — সামান্য হলেও অজু ভাঙে
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>২. বায়ু নির্গত হওয়া (গ্যাস)</strong> — যেকোনো রাস্তায়
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>৩. ঘুমানো</strong> — হেলান দিয়ে বা শুয়ে ঘুমালে অজু ভাঙে (নামাজে ঘুম আসলে ভাঙে না)
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>৪. বেহুঁশ হওয়া বা পাগল হওয়া</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>৫. রক্ত বা পুঁজ বের হওয়া</strong> — শরীরের কোনো স্থান থেকে প্রবাহিত হলে
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>৬. বমি করা</strong> — মুখ ভরে বমি হলে অজু ভাঙে
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>৭. নামাজে উচ্চস্বরে হাসা</strong> — নামাজ ও অজু উভয়ই ভাঙে
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">✅ যা অজু ভাঙে না</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">
-              ✓ নামাজে ঘুমের ঝিমুনি আসলে (যদি কোমর থেকে পা না উঠে)
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">
-              ✓ স্বামী-স্ত্রীর হাত ধরলে (হানাফি মতে)
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">
-              ✓ নামাজে জোরে হাসলে নামাজ ভাঙে কিন্তু অজু ভাঙে না (নামাজের বাইরে)
-            </div>
-          </div>
-        `,
-        quiz: {
-          question: "কোন অবস্থায় ঘুমালে অজু ভাঙে?",
-          options: ["নামাজে দাঁড়িয়ে ঘুমালে", "হেলান দিয়ে বা শুয়ে ঘুমালে", "বসে সামান্য ঝিমুনি আসলে", "চোখ বন্ধ থাকলে"],
-          correct: 1,
-          explanation: "হেলান দিয়ে বা শুয়ে ঘুমালে অজু ভেঙে যায়। কারণ এই অবস্থায় শরীর সম্পূর্ণ শিথিল হয়ে যায় এবং অজু নষ্টকারী কিছু বের হতে পারে। তবে নামাজে দাঁড়িয়ে বা বসে হালকা ঘুম আসলে অজু ভাঙে না।"
-        }
-      },
-
-      // ── পার্ট ৬ ──
-      {
-        title: "পার্ট ৬ — গোসল: কখন ফরজ এবং সঠিক পদ্ধতি",
-        funFact: "গোসলের ফরজ মাত্র ৩টি, কিন্তু এই ৩টি সঠিকভাবে করলেই গোসল পূর্ণ হয়। বাকিগুলো সুন্নত — করলে সওয়াব, না করলেও গোসল শুদ্ধ! 🚿",
-        teaser: "পরের পার্টে — হায়েয ও নিফাস: নারীদের বিশেষ পবিত্রতার বিধান যা প্রতিটি মুসলিম নারীর জানা জরুরি।",
-        content: `
-          <p>গোসল হলো বড় অপবিত্রতা (হাদাসে আকবার) থেকে পবিত্র হওয়ার উপায়। এটি ফরজ হলে গোসল না করে নামাজ পড়া হবে না।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">⚠️ গোসল ফরজ হওয়ার কারণ</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>১. স্ত্রী সহবাস</strong> — বীর্য নির্গত হোক বা না হোক
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>২. স্বপ্নদোষ</strong> — বীর্য নির্গত হলে
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>৩. হায়েয (মাসিক) শেষ হলে</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>৪. নিফাস (প্রসব রক্ত) শেষ হলে</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:14px;border-radius:10px;border-left:3px solid #ef4444;">
-              <strong>৫. ইসলাম গ্রহণ করলে</strong> (অমুসলিম থেকে মুসলিম হলে)
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📌 গোসলের ফরজ (৩টি)</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:24px;font-weight:900;color:#0891b2;">১</span>
-              <div><strong>কুলি করা:</strong> মুখের ভেতর ভালোভাবে পানি পৌঁছানো</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:24px;font-weight:900;color:#0891b2;">২</span>
-              <div><strong>নাকে পানি দেওয়া:</strong> নাকের ভেতর পর্যন্ত পানি পৌঁছানো</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;border-left:3px solid #0891b2;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:24px;font-weight:900;color:#0891b2;">৩</span>
-              <div><strong>সারা শরীরে পানি পৌঁছানো:</strong> মাথার চুল থেকে পায়ের নখ পর্যন্ত</div>
-            </div>
-          </div>
-          <br>
-          <div style="background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));padding:16px;border-radius:12px;font-size:14px;">
-            <strong>⚠️ সতর্কতা:</strong> নাভি, বগল, চুলের গোড়া, কানের পেছনে — এসব জায়গায় পানি পৌঁছানো নিশ্চিত করুন। একটি জায়গাও শুকনো থাকলে গোসল হবে না!
-          </div>
-        `,
-        quiz: {
-          question: "গোসলের ফরজ কতটি?",
-          options: ["দুইটি", "তিনটি", "চারটি", "পাঁচটি"],
-          correct: 1,
-          explanation: "গোসলের ফরজ তিনটি: ১. কুলি করা (মুখে পানি পৌঁছানো), ২. নাকে পানি দেওয়া, ৩. সারা শরীরে পানি পৌঁছানো। এই তিনটি সঠিকভাবে করলেই গোসল শুদ্ধ হয়।"
-        }
-      },
-
-      // ── পার্ট ৭ ──
-      {
-        title: "পার্ট ৭ — হায়েয ও নিফাস: নারীদের বিশেষ পবিত্রতার বিধান",
-        funFact: "হায়েযের সময় নারীরা নামাজ পড়েন না — এটি শাস্তি নয়, এটি আল্লাহর বিশেষ সুবিধা। রাসুলুল্লাহ (সা.) বলেছেন এই সময়ের নামাজের কাযা নেই — কোনো সওয়াব মিস হয় না! 🌹",
-        teaser: "পরের পার্টে — তায়াম্মুম: পানি না পেলে বা ব্যবহার করতে না পারলে কীভাবে পবিত্র হবেন।",
-        content: `
-          <p>হায়েয (মাসিক) ও নিফাস (প্রসব রক্ত) নারীজীবনের স্বাভাবিক প্রক্রিয়া। ইসলামে এ সময়ের জন্য বিশেষ বিধান রয়েছে।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">🌸 হায়েযের সময় যা করা যাবে না</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ নামাজ পড়া (কাযাও নেই)</div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ রোযা রাখা (পরে কাযা করতে হবে)</div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ কাবা তাওয়াফ করা</div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ মসজিদে অবস্থান করা</div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;">❌ সহবাস করা</div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">✅ হায়েযের সময় যা করা যাবে</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">✓ কোরআন তিলাওয়াত (না ছুঁয়ে মুখে মুখে)</div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">✓ জিকির ও দোয়া করা</div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">✓ দ্বীনি ইলম শেখা</div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;">✓ দান-সদকা করা</div>
-          </div>
-          <br>
-          <h4 style="color:var(--blue-dark);margin-bottom:12px;">🛁 পবিত্র হওয়ার পর</h4>
-          <p style="font-size:14px;">হায়েয বা নিফাস শেষ হলে ফরজ গোসল করতে হবে। তারপর স্বাভাবিকভাবে নামাজ, রোযা সব করতে পারবেন।</p>
-          <br>
-          <div style="background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));padding:16px;border-radius:12px;text-align:center;font-size:14px;font-weight:600;">
-            💚 হায়েযের সময় নামাজ না পড়লেও আল্লাহ পূর্ণ সওয়াব লিখে দেন — কারণ এটি আল্লাহর নির্দেশেই হচ্ছে!
-          </div>
-        `,
-        quiz: {
-          question: "হায়েযের সময় ছেড়ে দেওয়া রোযার কী করতে হয়?",
-          options: ["কাযা করতে হয়", "কাযা করতে হয় না", "কাফফারা দিতে হয়", "সদকা করতে হয়"],
-          correct: 0,
-          explanation: "হায়েযের সময় রোযা রাখা যায় না, কিন্তু এই রোযাগুলো পরে কাযা করতে হয়। অন্যদিকে নামাজের কাযা নেই — নামাজ মাফ হয়ে যায়। (সহিহ বুখারি: ৩০৪)"
-        }
-      },
-
-      // ── পার্ট ৮ ──
-      {
-        title: "পার্ট ৮ — তায়াম্মুম: পানি না থাকলে যা করবেন",
-        funFact: "তায়াম্মুম শুধু মুসলিমদের জন্য বিশেষ সুবিধা! পূর্ববর্তী নবীদের উম্মতের এই সুবিধা ছিল না। রাসুলুল্লাহ (সা.) বলেছেন — 'পুরো পৃথিবী আমার উম্মতের জন্য মসজিদ ও পবিত্রকারী!' 🌍",
-        teaser: "পরের পার্টে — মোজার উপর মাসেহ: ঠান্ডায় বা ভ্রমণে অজু করার সহজ পদ্ধতি।",
-        content: `
-          <p>তায়াম্মুম হলো পানি না পেলে বা ব্যবহার করতে না পারলে মাটি বা পবিত্র জমিন দিয়ে পবিত্রতা অর্জনের বিকল্প পদ্ধতি।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📌 তায়াম্মুম কখন করা যাবে</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">🌊</span>
-              <div><strong>পানি না পাওয়া গেলে:</strong> মরুভূমি, ভ্রমণ বা বিপদে যখন পানি নেই</div>
-            </div>
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">🤒</span>
-              <div><strong>অসুস্থতায়:</strong> পানি ব্যবহারে ক্ষতি হওয়ার সম্ভাবনা থাকলে</div>
-            </div>
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">❄️</span>
-              <div><strong>প্রচণ্ড ঠান্ডায়:</strong> পানি ব্যবহারে শরীরে ক্ষতির আশঙ্কা থাকলে</div>
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📋 তায়াম্মুমের পদ্ধতি</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#0891b2;">১</span>
-              <div>নিয়্যত করুন এবং <strong>বিসমিল্লাহ</strong> বলুন</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#0891b2;">২</span>
-              <div>পবিত্র মাটি বা দেওয়ালে <strong>উভয় হাত মেরে</strong> হাত ঝাড়ুন</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#0891b2;">৩</span>
-              <div>সেই হাত দিয়ে <strong>পুরো মুখমণ্ডল</strong> মাসেহ করুন</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.08),rgba(8,145,178,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#0891b2;">৪</span>
-              <div>আবার হাত মেরে <strong>উভয় হাত কনুই পর্যন্ত</strong> মাসেহ করুন</div>
-            </div>
-          </div>
-          <br>
-          <blockquote style="background:rgba(8,145,178,0.05);border-left:4px solid var(--gold);padding:16px;margin:16px 0;border-radius:0 10px 10px 0;">
-            <p style="font-family:var(--font-arabic);font-size:18px;text-align:right;color:var(--blue-dark);margin-bottom:8px;line-height:2;">وَإِن كُنتُم مَّرْضَىٰ أَوْ عَلَىٰ سَفَرٍ ... فَتَيَمَّمُوا صَعِيدًا طَيِّبًا</p>
-            <p>"...যদি তোমরা অসুস্থ হও বা সফরে থাকো... তাহলে পবিত্র মাটি দিয়ে তায়াম্মুম করো।" — (সূরা মায়িদা: ৬)</p>
-          </blockquote>
-        `,
-        quiz: {
-          question: "তায়াম্মুমে কতবার মাটিতে হাত মারতে হয়?",
-          options: ["একবার", "দুইবার", "তিনবার", "চারবার"],
-          correct: 1,
-          explanation: "তায়াম্মুমে দুইবার মাটিতে হাত মারতে হয় — একবার মুখমণ্ডল মাসেহের জন্য, আরেকবার উভয় হাত কনুই পর্যন্ত মাসেহের জন্য। (সহিহ বুখারি: ৩৩৮)"
-        }
-      },
-
-      // ── পার্ট ৯ ──
-      {
-        title: "পার্ট ৯ — মোজার উপর মাসেহ (মাসেহ আলাল খুফফাইন)",
-        funFact: "মোজার উপর মাসেহ করলে মোজা খুলতে হয় না — এটি রাসুলুল্লাহ (সা.)-এর বিশেষ সুন্নত! মুকিমদের জন্য ১ দিন, মুসাফিরদের জন্য ৩ দিন পর্যন্ত এই সুবিধা! 🧦",
-        teaser: "শেষ পার্টে — পবিত্রতা ও আধুনিক জীবন: আজকের দৈনন্দিন জীবনে পবিত্রতা রক্ষার ব্যবহারিক উপায়।",
-        content: `
-          <p>চামড়ার মোজা বা পুরু মোজা পরা অবস্থায় অজুতে পা ধোয়ার বদলে মোজার উপর ভেজা হাত বুলানো জায়েয — এটিকে বলে <strong>মাসেহ আলাল খুফফাইন</strong>।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">✅ শর্তাবলী</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:var(--cream);padding:12px;border-radius:10px;">✦ অজু থাকা অবস্থায় মোজা পরতে হবে</div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;">✦ মোজা পুরু হতে হবে (পানি ঢুকবে না এমন)</div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;">✦ মোজায় বড় ছিদ্র থাকলে হবে না</div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">⏱️ সময়সীমা</h4>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.1),rgba(8,145,178,0.03));padding:16px;border-radius:12px;text-align:center;">
-              <div style="font-size:28px;font-weight:900;color:#0891b2;">১ দিন</div>
-              <div style="font-size:13px;margin-top:4px;color:var(--text-muted);">মুকিম (যিনি বাড়িতে আছেন)</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));padding:16px;border-radius:12px;text-align:center;">
-              <div style="font-size:28px;font-weight:900;color:var(--gold);">৩ দিন</div>
-              <div style="font-size:13px;margin-top:4px;color:var(--text-muted);">মুসাফির (যিনি সফরে আছেন)</div>
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 পদ্ধতি</h4>
-          <p style="font-size:14px;">ভেজা হাতের আঙুলগুলো পায়ের আঙুলের দিক থেকে হাঁটু পর্যন্ত মোজার উপর বুলিয়ে দিন। শুধু উপরের অংশে — নিচে নয়।</p>
-          <br>
-          <div style="background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));padding:16px;border-radius:12px;font-size:14px;">
-            <strong>⚠️ মাসেহ বাতিল হয় যখন:</strong> সময়সীমা শেষ হলে, মোজা খুললে, গোসল ফরজ হলে।
-          </div>
-        `,
-        quiz: {
-          question: "মুসাফিরের জন্য মোজার উপর মাসেহের সময়সীমা কত?",
-          options: ["১ দিন ১ রাত", "২ দিন ২ রাত", "৩ দিন ৩ রাত", "৭ দিন"],
-          correct: 2,
-          explanation: "মুসাফিরের জন্য মোজার উপর মাসেহের সময়সীমা ৩ দিন ৩ রাত (৭২ ঘণ্টা)। আর মুকিম (বাড়িতে থাকা ব্যক্তি)-এর জন্য ১ দিন ১ রাত (২৪ ঘণ্টা)। (সহিহ মুসলিম: ২৭৬)"
-        }
-      },
-
-      // ── পার্ট ১০ ──
-      {
-        title: "পার্ট ১০ — পবিত্রতা ও আধুনিক জীবন: সারসংক্ষেপ",
-        funFact: "আধুনিক বিজ্ঞান প্রমাণ করেছে — দিনে পাঁচবার অজু করা ব্যক্তির ত্বকের ব্যাকটেরিয়া অন্যদের তুলনায় ৭০% কম! ইসলামের পবিত্রতার বিধান আসলে প্রতিষেধক চিকিৎসা! 🔬",
-        teaser: "🎉 অভিনন্দন! পবিত্রতার পূর্ণ গাইড সম্পন্ন! আপনি এখন জানেন — কখন অপবিত্র হন, কীভাবে পবিত্র হবেন!",
-        content: `
-          <p>এই কোর্সে আমরা পবিত্রতার সম্পূর্ণ বিষয়গুলো শিখেছি। এখন দৈনন্দিন জীবনে এগুলো কীভাবে সহজে মেনে চলবেন তা দেখি।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📅 প্রতিদিনের পবিত্রতার রুটিন</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.06),rgba(8,145,178,0.01));padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;">🌅</span>
-              <div><strong>সকালে উঠে:</strong> ফজরের আগে অজু করুন, ঘুমের কারণে অজু নষ্ট হয়</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.06),rgba(8,145,178,0.01));padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;">🚿</span>
-              <div><strong>টয়লেটের পর:</strong> ইস্তিঞ্জা করে পুনরায় অজু করুন</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(8,145,178,0.06),rgba(8,145,178,0.01));padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;">🌙</span>
-              <div><strong>রাতে ঘুমানোর আগে:</strong> অজু থাকা অবস্থায় ঘুমানো সুন্নত</div>
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">🏆 এই কোর্স থেকে যা শিখলেন</h4>
-          <div style="background:linear-gradient(135deg,#0a1628,#1a3a6e);border-radius:16px;padding:24px;color:#fff;">
-            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
-              <li style="display:flex;gap:10px;"><span>✅</span><span>পবিত্রতার <strong>দুই প্রকার</strong> ও গুরুত্ব বুঝলেন</span></li>
-              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>ইস্তিঞ্জার</strong> সঠিক আদব শিখলেন</span></li>
-              <li style="display:flex;gap:10px;"><span>✅</span><span>অজুর <strong>ফরজ, সুন্নত ও ভঙ্গের কারণ</strong> জানলেন</span></li>
-              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>গোসলের ফরজ</strong> ও কারণ শিখলেন</span></li>
-              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>তায়াম্মুম</strong> ও মোজার উপর মাসেহ জানলেন</span></li>
-            </ul>
-            <div style="margin-top:20px;padding:16px;background:rgba(8,145,178,0.2);border-radius:10px;text-align:center;border:1px solid rgba(8,145,178,0.4);">
-              <p style="color:#7dd3fc;font-weight:700;font-size:15px;">💧 পবিত্রতা শুধু শরীরের নয় — এটি আত্মার প্রস্তুতি!</p>
-            </div>
-          </div>
-        `,
-        quiz: {
-          question: "অজু থাকা অবস্থায় ঘুমানো কোন ধরনের আমল?",
-          options: ["ফরজ", "ওয়াজিব", "সুন্নত", "মুস্তাহাব"],
-          correct: 2,
-          explanation: "অজু থাকা অবস্থায় ঘুমানো সুন্নত। রাসুলুল্লাহ (সা.) বলেছেন — যে ব্যক্তি অজু অবস্থায় ঘুমায়, তার পাশে একজন ফেরেশতা থাকেন এবং ভোরে উঠলে ওই ফেরেশতা বলেন: 'হে আল্লাহ! আপনার বান্দাকে ক্ষমা করুন।' (ইবনে হিব্বান)"
-        }
-      }
-
-    ] // end chapters
-  }, // end course 2
-
-  // ==========================================
-  // COURSE 3 — নামাজের মাসলা-মাসায়েল (10 পার্ট)
-  // ==========================================
-  {
-    id: 3,
-    title: "নামাজের মাসলা-মাসায়েল",
-    icon: "📖",
-    duration: "৮০ মিনিট",
-    partsCount: 10,
-    tagline: "নামাজের ফরজ, ওয়াজিব, সুন্নত — সকল মাসলা এক জায়গায়!",
-    color: "#7c3aed",
-    category: "pillars",
-    chapters: [
-
-      // ── পার্ট ১ ──
-      {
-        title: "পার্ট ১ — নামাজের শর্তাবলী (শুরুত): নামাজ শুরুর আগে",
-        funFact: "নামাজের শর্তাবলী পূরণ না হলে নামাজ শুরুই হয় না! অনেকে না জেনেই নামাজ পড়েন, কিন্তু একটি শর্ত না থাকলে পুরো নামাজ আবার পড়তে হবে! 😮",
-        teaser: "পরের পার্টে — নামাজের ফরজ: ৭টি ফরজ যার একটি বাদ পড়লে নামাজই হবে না!",
-        content: `
-          <p>নামাজের <strong>শুরুত</strong> হলো সেই শর্তাবলী যা নামাজ শুরু করার আগেই পূরণ করতে হয়। এগুলো না থাকলে নামাজ শুদ্ধ হবে না।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📋 নামাজের শর্তাবলী</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">১</span>
-              <div><strong>মুসলিম হওয়া:</strong> নামাজ শুধু মুসলিমের জন্য ফরজ</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">২</span>
-              <div><strong>জ্ঞান থাকা:</strong> পাগল ও অচেতন অবস্থায় নামাজ নেই</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৩</span>
-              <div><strong>বয়স:</strong> বালেগ হলে ফরজ, ১০ বছর হলে শিক্ষা দিতে হবে</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৪</span>
-              <div><strong>পবিত্রতা:</strong> শরীর, কাপড় ও নামাজের স্থান পাক হওয়া</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৫</span>
-              <div><strong>সতর ঢাকা:</strong> পুরুষের নাভি থেকে হাঁটু, নারীর মুখ ও হাত ছাড়া পুরো শরীর</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৬</span>
-              <div><strong>কিবলামুখী হওয়া:</strong> কাবার দিকে মুখ করে দাঁড়ানো</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;border-left:3px solid #7c3aed;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৭</span>
-              <div><strong>ওয়াক্ত হওয়া:</strong> নামাজের নির্ধারিত সময় আসলে</div>
-            </div>
-          </div>
-        `,
-        quiz: {
-          question: "পুরুষের সতর কতটুকু?",
-          options: ["বুক থেকে হাঁটু পর্যন্ত", "নাভি থেকে হাঁটু পর্যন্ত", "শুধু গোপনাঙ্গ", "কোমর থেকে হাঁটু পর্যন্ত"],
-          correct: 1,
-          explanation: "পুরুষের সতর নাভি থেকে হাঁটু পর্যন্ত। নামাজে এটি অবশ্যই ঢেকে রাখতে হবে। নাভির নিচ এবং হাঁটু পর্যন্ত এই অংশ খোলা থাকলে নামাজ হবে না।"
-        }
-      },
-
-      // ── পার্ট ২ ──
-      {
-        title: "পার্ট ২ — নামাজের ফরজ: যা বাদ পড়লে নামাজ বাতিল",
-        funFact: "নামাজের ফরজ মাত্র ৭টি — কিন্তু এর মধ্যে একটিও বাদ পড়লে পুরো নামাজ আবার পড়তে হবে! কোনো ক্ষমা নেই, কোনো সিজদা সাহু নেই! 🚫",
-        teaser: "পরের পার্টে — নামাজের ওয়াজিব: যা বাদ পড়লে সিজদা সাহু দিয়ে নামাজ রক্ষা করা যায়।",
-        content: `
-          <p>নামাজের <strong>ফরজ</strong> হলো সেই অপরিহার্য অংশগুলো যা বাদ পড়লে নামাজ হবে না — ইচ্ছায় হোক বা ভুলে।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:16px;">🔴 নামাজের ৭টি ফরজ</h4>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ১</span>
-                <strong>তাকবিরে তাহরিমা</strong>
-              </div>
-              <p style="font-size:14px;color:var(--text-muted);">"আল্লাহু আকবার" বলে নামাজ শুরু করা — এটি নামাজের দরজা</p>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ২</span>
-                <strong>কিয়াম (দাঁড়ানো)</strong>
-              </div>
-              <p style="font-size:14px;color:var(--text-muted);">ফরজ নামাজে দাঁড়িয়ে পড়া — অক্ষম হলে বসে বা শুয়ে পড়া যাবে</p>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৩</span>
-                <strong>কিরাত (কোরআন পড়া)</strong>
-              </div>
-              <p style="font-size:14px;color:var(--text-muted);">কমপক্ষে একটি আয়াত বা তিন ছোট আয়াত পরিমাণ পড়া</p>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৪</span>
-                <strong>রুকু</strong>
-              </div>
-              <p style="font-size:14px;color:var(--text-muted);">কোমর সমান্তরাল করে ঝুঁকে রুকু করা</p>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৫</span>
-                <strong>সিজদা (দুটি)</strong>
-              </div>
-              <p style="font-size:14px;color:var(--text-muted);">প্রতি রাকাতে দুটি সিজদা, ৭টি অঙ্গ মাটিতে লাগানো</p>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৬</span>
-                <strong>শেষ বৈঠক (তাশাহহুদের পরিমাণ)</strong>
-              </div>
-              <p style="font-size:14px;color:var(--text-muted);">শেষ রাকাতে তাশাহহুদ পড়া পর্যন্ত বসা</p>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(124,58,237,0.01));padding:16px;border-radius:12px;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;">ফরজ ৭</span>
-                <strong>সালামে নামাজ শেষ করা</strong>
-              </div>
-              <p style="font-size:14px;color:var(--text-muted);">"আস-সালামু আলাইকুম ওয়া রাহমাতুল্লাহ" বলে নামাজ শেষ করা</p>
-            </div>
-          </div>
-        `,
-        quiz: {
-          question: "নামাজের ফরজ কতটি?",
-          options: ["৫টি", "৬টি", "৭টি", "৮টি"],
-          correct: 2,
-          explanation: "নামাজের ফরজ ৭টি: তাকবিরে তাহরিমা, কিয়াম, কিরাত, রুকু, সিজদা, শেষ বৈঠক এবং সালামে নামাজ শেষ করা। এর যেকোনো একটি বাদ পড়লে নামাজ বাতিল হয়ে যায়।"
-        }
-      },
-
-      // ── পার্ট ৩ ──
-      {
-        title: "পার্ট ৩ — নামাজের ওয়াজিব: সিজদা সাহু দিয়ে যা রক্ষা হয়",
-        funFact: "নামাজের ওয়াজিব ভুলে বাদ পড়লে সিজদা সাহু দিয়ে নামাজ রক্ষা পায়! কিন্তু ইচ্ছাকৃতভাবে বাদ দিলে নামাজ নষ্ট হয়ে যায়। ভুল আর ইচ্ছা — দুটো আলাদা! ⚠️",
-        teaser: "পরের পার্টে — নামাজের সুন্নাত: যা না করলে নামাজ হয়, কিন্তু করলে নামাজ অনেক সুন্দর হয়।",
-        content: `
-          <p>নামাজের <strong>ওয়াজিব</strong> হলো সেই বিষয়গুলো যা ফরজের মতো গুরুত্বপূর্ণ, কিন্তু ভুলে বাদ পড়লে সিজদা সাহু দিলে নামাজ হয়ে যায়।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">🟡 নামাজের গুরুত্বপূর্ণ ওয়াজিবসমূহ</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
-              <strong>১. সূরা ফাতিহা পড়া</strong> — প্রতি রাকাতে (ফরজ নামাজের হানাফি মতে ওয়াজিব)
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
-              <strong>২. প্রথম দুই রাকাতে সূরার সাথে অতিরিক্ত কিরাত</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
-              <strong>৩. রুকু ও সিজদায় তিনবার তাসবিহ পড়া</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
-              <strong>৪. রুকু থেকে সোজা হয়ে দাঁড়ানো (কওমা)</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
-              <strong>৫. দুই সিজদার মাঝে সোজা হয়ে বসা (জলসা)</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
-              <strong>৬. প্রথম বৈঠক (দুই রাকাতের পর বসা)</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
-              <strong>৭. উভয় বৈঠকে তাশাহহুদ পড়া</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(234,179,8,0.02));padding:14px;border-radius:10px;border-left:3px solid #eab308;">
-              <strong>৮. ফজর ও মাগরিব-এশায় ইমামের জোরে পড়া</strong>
-            </div>
-          </div>
-          <br>
-          <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:16px;border-radius:12px;">
-            <strong style="color:#7c3aed;">⚖️ মনে রাখুন:</strong>
-            <p style="font-size:14px;margin-top:8px;">ওয়াজিব ভুলে ছুটলে → সিজদা সাহু দিলে নামাজ হয়<br>ওয়াজিব ইচ্ছাকৃত ছাড়লে → নামাজ আবার পড়তে হবে</p>
-          </div>
-        `,
-        quiz: {
-          question: "ওয়াজিব ভুলে বাদ পড়লে নামাজ রক্ষার উপায় কী?",
-          options: ["নামাজ আবার পড়তে হবে", "সিজদা সাহু দিলে হবে", "দোয়া পড়লে হবে", "কিছু করতে হবে না"],
-          correct: 1,
-          explanation: "ওয়াজিব ভুলে বাদ পড়লে নামাজের শেষে সিজদা সাহু দিলে নামাজ হয়ে যায়। কিন্তু ইচ্ছাকৃতভাবে ওয়াজিব ছেড়ে দিলে নামাজ নষ্ট হয় এবং আবার পড়তে হবে।"
-        }
-      },
-
-      // ── পার্ট ৪ ──
-      {
-        title: "পার্ট ৪ — নামাজের সুন্নাত: সৌন্দর্য ও পূর্ণতার পথ",
-        funFact: "নামাজের সুন্নাতগুলো পালন করলে নামাজ আরও সুন্দর হয়। রাসুলুল্লাহ (সা.) বলেছেন: 'তোমরা আমাকে যেভাবে নামাজ পড়তে দেখেছ, সেভাবেই পড়ো।' সুন্নাত মানেই নবীজির পদ্ধতি! 💎",
-        teaser: "পরের পার্টে — নামাজের মুস্তাহাব: এই ছোট্ট কাজগুলো করলে নামাজে আরও বেশি সওয়াব পাবেন।",
-        content: `
-          <p>নামাজের <strong>সুন্নাত</strong> হলো নবীজি (সা.) নিয়মিত যা করতেন। না করলে নামাজ হয়, কিন্তু সওয়াব কম হয় এবং নামাজ অসম্পূর্ণ থাকে।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">⭐ নামাজের গুরুত্বপূর্ণ সুন্নাতসমূহ</h4>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ ছানা পড়া</strong><br>তাকবিরের পর সুবহানাকা পড়া
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ আউজুবিল্লাহ পড়া</strong><br>সূরা ফাতিহার আগে
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ বিসমিল্লাহ পড়া</strong><br>প্রতিটি সূরার আগে
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ আমিন বলা</strong><br>সূরা ফাতিহার পরে
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ রুকুতে হাত রাখা</strong><br>হাঁটুতে হাত দিয়ে রুকু
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ তাকবির বলা</strong><br>প্রতিটি অবস্থান পরিবর্তনে
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ সামিআল্লাহ বলা</strong><br>রুকু থেকে উঠে
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ দরুদ পড়া</strong><br>শেষ বৈঠকে তাশাহহুদের পরে
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ দোয়া মাসুরা পড়া</strong><br>দরুদের পর
-            </div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:13px;">
-              <strong>✦ উভয় দিকে সালাম</strong><br>শুধু ডানে নয়, বামেও
-            </div>
-          </div>
-          <br>
-          <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:16px;border-radius:12px;text-align:center;font-size:14px;font-weight:600;">
-            💡 সুন্নাত ছেড়ে দিলে নামাজ হয়, কিন্তু নামাজ পূর্ণাঙ্গ হয় না। নবীজির মতো নামাজ পড়াই লক্ষ্য!
-          </div>
-        `,
-        quiz: {
-          question: "সূরা ফাতিহার পরে কী বলা সুন্নত?",
-          options: ["সুবহানাল্লাহ", "আলহামদুলিল্লাহ", "আমিন", "আল্লাহু আকবার"],
-          correct: 2,
-          explanation: "সূরা ফাতিহা পড়ার পরে 'আমিন' বলা সুন্নত। রাসুলুল্লাহ (সা.) সূরা ফাতিহা পড়ার পর 'আমিন' বলতেন। জামায়াতে নামাজে ইমামের আমিনের সাথে মুক্তাদিরাও আমিন বলবে। (বুখারি: ৭৮০)"
-        }
-      },
-
-      // ── পার্ট ৫ ──
-      {
-        title: "পার্ট ৫ — নামাজের মুস্তাহাব ও মাকরুহ",
-        funFact: "নামাজে হাই তোলা মাকরুহ! রাসুলুল্লাহ (সা.) বলেছেন — হাই আসলে শয়তানের দিক থেকে, তাই সাধ্যমতো হাই চাপুন! নামাজে হাই আসলে মুখ ঢেকে নিন। 😮",
-        teaser: "পরের পার্টে — নামাজ ভঙ্গের কারণ: কোন কাজগুলো নামাজ সম্পূর্ণ নষ্ট করে দেয়।",
-        content: `
-          <p><strong>মুস্তাহাব</strong> হলো করলে সওয়াব, না করলে গুনাহ নেই। <strong>মাকরুহ</strong> হলো করলে গুনাহ, না করলে সওয়াব।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">✨ নামাজের মুস্তাহাব</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
-              ✓ সুতরা রাখা (সামনে কিছু রাখা)
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
-              ✓ সিজদায় বেশি সময় থাকা ও বেশি দোয়া করা
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
-              ✓ রাতের নামাজে দীর্ঘ কিরাত পড়া
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
-              ✓ নামাজের আগে মিসওয়াক করা
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">⚠️ নামাজে মাকরুহ কাজ</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ কাপড় বা শরীর নিয়ে খেলা করা
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ নামাজে এদিক-ওদিক তাকানো
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ আঙুল ফোটানো বা জোড়া লাগানো
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ হাই তোলা বা মুখ খোলা
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ নামাজে উঁচু স্থান বা মাটির উপর পড়া
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ প্রস্রাবের বেগ নিয়ে নামাজ পড়া
-            </div>
-          </div>
-        `,
-        quiz: {
-          question: "নামাজে এদিক-ওদিক তাকানো কোন ধরনের কাজ?",
-          options: ["ফরজ ছাড়া", "ওয়াজিব ছাড়া", "মাকরুহ", "নামাজ ভঙ্গকারী"],
-          correct: 2,
-          explanation: "নামাজে এদিক-ওদিক তাকানো মাকরুহ। রাসুলুল্লাহ (সা.) বলেছেন — এটি শয়তানের কাজ, শয়তান বান্দার নামাজ থেকে মনোযোগ সরিয়ে নেয়। (বুখারি: ৭৫১)"
-        }
-      },
-
-      // ── পার্ট ৬ ──
-      {
-        title: "পার্ট ৬ — নামাজ ভঙ্গের কারণ",
-        funFact: "নামাজের মধ্যে কথা বললে নামাজ নষ্ট হয়ে যায়! প্রাথমিক যুগে নামাজে কথা বলা জায়েয ছিল, পরে তা নিষিদ্ধ হয়। এটা ধীরে ধীরে নিষিদ্ধ হওয়া অন্যতম বিধান! 📜",
-        teaser: "পরের পার্টে — সিজদা সাহু: ভুল হলে কীভাবে নামাজ রক্ষা করবেন এই সহজ পদ্ধতিতে।",
-        content: `
-          <p>কিছু কাজ করলে নামাজ সম্পূর্ণ নষ্ট হয়ে যায় এবং আবার শুরু থেকে পড়তে হয়।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">🚫 নামাজ ভঙ্গের কারণসমূহ</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
-              <strong>১. কথা বলা</strong> — ইচ্ছায় বা অনিচ্ছায়, একটি শব্দও বললে নামাজ যায়
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
-              <strong>২. অজু নষ্ট হওয়া</strong> — নামাজের মধ্যে অজু ভেঙে গেলে
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
-              <strong>৩. কিবলা থেকে বুক সরিয়ে নেওয়া</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
-              <strong>৪. খাওয়া বা পান করা</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
-              <strong>৫. অট্টহাসি দেওয়া</strong> — জোরে হাসলে নামাজ ও অজু উভয়ই ভাঙে
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
-              <strong>৬. সতর খুলে যাওয়া</strong> — কাপড় সরে গিয়ে সতর প্রকাশ পেলে
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
-              <strong>৭. নামাজের মধ্যে অনেক বেশি নড়াচড়া করা</strong>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02));padding:14px;border-radius:10px;border-left:4px solid #ef4444;">
-              <strong>৮. ভুল পড়া যা অর্থ পরিবর্তন করে</strong>
-            </div>
-          </div>
-          <br>
-          <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:12px;font-size:14px;">
-            <strong style="color:#7c3aed;">💡 মনে রাখুন:</strong> নামাজের মধ্যে হাঁচি দিলে মনে মনে 'আলহামদুলিল্লাহ' বলুন — মুখে বললে নামাজ ভেঙে যাবে!
-          </div>
-        `,
-        quiz: {
-          question: "নামাজের মধ্যে জোরে হাসলে কী হয়?",
-          options: ["শুধু নামাজ ভাঙে", "শুধু অজু ভাঙে", "নামাজ ও অজু উভয়ই ভাঙে", "কিছুই হয় না"],
-          correct: 2,
-          explanation: "নামাজের মধ্যে অট্টহাসি (জোরে হাসা) দিলে নামাজ এবং অজু উভয়ই নষ্ট হয়ে যায়। নামাজ পুনরায় পড়তে হবে এবং নতুন অজু করতে হবে।"
-        }
-      },
-
-      // ── পার্ট ৭ ──
-      {
-        title: "পার্ট ৭ — সিজদা সাহু: ভুল হলে নামাজ রক্ষার পদ্ধতি",
-        funFact: "সিজদা সাহু দেওয়ার পর নামাজ পূর্ণ হয়ে যায়! আল্লাহ কতটা দয়ালু দেখুন — ভুলের কারণে নামাজ নষ্ট হয় না, বরং সিজদা দিলেই ক্ষমা! ❤️",
-        teaser: "পরের পার্টে — কাযা নামাজ ও মুসাফিরের নামাজ: নামাজ ছুটে গেলে কী করবেন।",
-        content: `
-          <p><strong>সিজদা সাহু</strong> হলো নামাজের মধ্যে কোনো ওয়াজিব ভুলে গেলে বা অতিরিক্ত কিছু হলে নামাজের শেষে দেওয়া দুটি বিশেষ সিজদা।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📌 কখন সিজদা সাহু দেবেন</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:14px;">✦ কোনো ওয়াজিব ভুলে বাদ পড়লে</div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:14px;">✦ ভুলে একটি রাকাত বেশি পড়লে</div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:14px;">✦ প্রথম বৈঠক ভুলে না করলে</div>
-            <div style="background:var(--cream);padding:12px;border-radius:10px;font-size:14px;">✦ তাশাহহুদ ভুলে বাদ পড়লে</div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📋 সিজদা সাহুর পদ্ধতি</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">১</span>
-              <div>নামাজের শেষ বৈঠকে তাশাহহুদ পড়ুন</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">২</span>
-              <div>শুধু <strong>ডানে একটি সালাম</strong> ফেরান</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৩</span>
-              <div><strong>দুটি সিজদা</strong> করুন (প্রতিটিতে তিনবার সুবহানা রাব্বিয়াল আ'লা)</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:14px;border-radius:10px;display:flex;gap:12px;align-items:center;">
-              <span style="font-size:22px;font-weight:900;color:#7c3aed;">৪</span>
-              <div>আবার বৈঠকে বসে তাশাহহুদ, দরুদ ও দোয়া পড়ে <strong>উভয় দিকে সালাম</strong> ফেরান</div>
-            </div>
-          </div>
-        `,
-        quiz: {
-          question: "সিজদা সাহুর সময় কতটি সালাম দিয়ে সিজদায় যেতে হয়?",
-          options: ["কোনো সালাম নেই", "শুধু ডানে একটি সালাম", "উভয় দিকে সালাম", "তিনটি সালাম"],
-          correct: 1,
-          explanation: "সিজদা সাহুর সময় তাশাহহুদ পড়ে শুধু ডানে একটি সালাম দিয়ে সিজদায় যেতে হয়। দুটি সিজদা করার পর আবার বসে তাশাহহুদ, দরুদ ও দোয়া পড়ে উভয় দিকে সালাম দিয়ে নামাজ শেষ করতে হয়।"
-        }
-      },
-
-      // ── পার্ট ৮ ──
-      {
-        title: "পার্ট ৮ — কাযা নামাজ ও মুসাফিরের নামাজ",
-        funFact: "ঘুমের কারণে বা ভুলে নামাজ ছুটে গেলে গুনাহ নেই! রাসুলুল্লাহ (সা.) নিজেও একবার সফরে ঘুমিয়ে ফজর মিস করেছিলেন এবং পরে কাযা পড়েছিলেন! ঘুমে নামাজ ছুটলে উঠে পড়ে নিন! 💤",
-        teaser: "পরের পার্টে — নামাজের প্রকারভেদ: ফরজ, ওয়াজিব, সুন্নত ও নফল নামাজের পূর্ণ তালিকা।",
-        content: `
-          <p>কখনো কখনো নামাজ ছুটে যায় — ঘুমে, ভুলে বা জরুরি কারণে। তখন <strong>কাযা</strong> পড়তে হয়।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📌 কাযা নামাজের বিধান</h4>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">😴</span>
-              <div><strong>ঘুম বা ভুলে ছুটলে:</strong> স্মরণ হলেই বা জাগলেই পড়তে হবে। দেরি না করাই ভালো।</div>
-            </div>
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">⚠️</span>
-              <div><strong>ইচ্ছাকৃতভাবে ছাড়লে:</strong> গুনাহ হবে — তবে তওবা করে কাযা পড়তে হবে।</div>
-            </div>
-            <div style="background:var(--cream);padding:14px;border-radius:10px;display:flex;gap:12px;align-items:flex-start;">
-              <span style="font-size:20px;">📋</span>
-              <div><strong>কাযা পড়ার পদ্ধতি:</strong> মূল নামাজের মতোই পড়বেন, শুধু নিয়্যতে 'কাযা' বলবেন।</div>
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">✈️ মুসাফিরের নামাজ (কসর)</h4>
-          <div style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(124,58,237,0.02));padding:18px;border-radius:14px;">
-            <p style="font-size:14px;margin-bottom:10px;">৭৮ কিলোমিটারের বেশি দূরে সফরে গেলে <strong>কসর</strong> পড়া যায়:</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-              <div style="background:#fff;padding:12px;border-radius:10px;text-align:center;">
-                <div style="font-weight:700;color:#7c3aed;">জোহর ৪ → ২</div>
-                <div style="font-size:12px;color:var(--text-muted);">রাকাত অর্ধেক</div>
-              </div>
-              <div style="background:#fff;padding:12px;border-radius:10px;text-align:center;">
-                <div style="font-weight:700;color:#7c3aed;">আসর ৪ → ২</div>
-                <div style="font-size:12px;color:var(--text-muted);">রাকাত অর্ধেক</div>
-              </div>
-              <div style="background:#fff;padding:12px;border-radius:10px;text-align:center;">
-                <div style="font-weight:700;color:#7c3aed;">এশা ৪ → ২</div>
-                <div style="font-size:12px;color:var(--text-muted);">রাকাত অর্ধেক</div>
-              </div>
-              <div style="background:#fff;padding:12px;border-radius:10px;text-align:center;">
-                <div style="font-weight:700;color:#22c55e;">ফজর ও মাগরিব</div>
-                <div style="font-size:12px;color:var(--text-muted);">অপরিবর্তিত</div>
-              </div>
-            </div>
-          </div>
-        `,
-        quiz: {
-          question: "সফরে কতটুকু দূরত্বে কসর নামাজ পড়া যায়?",
-          options: ["৪৮ কিলোমিটার", "৭৮ কিলোমিটার", "১০০ কিলোমিটার", "৫০ কিলোমিটার"],
-          correct: 1,
-          explanation: "৭৮ কিলোমিটার (হানাফি মতে ৩ দিনের পথ বা ৪৮ মাইল) বা তার বেশি দূরে সফরে গেলে কসর নামাজ পড়া যায়। এটি আল্লাহর বিশেষ অনুগ্রহ মুসাফিরদের জন্য।"
-        }
-      },
-
-      // ── পার্ট ৯ ──
-      {
-        title: "পার্ট ৯ — নামাজে ইমাম-মুক্তাদি: জামায়াতের নিয়মকানুন",
-        funFact: "জামায়াতে নামাজ পড়ার সময় ইমামের একটু আগে সিজদা দেওয়া হারাম! রাসুলুল্লাহ (সা.) বলেছেন — যে ব্যক্তি ইমামের আগে মাথা উঠায়, তার মাথা গাধার মাথা হওয়ার আশঙ্কা! 🐴",
-        teaser: "শেষ পার্টে — নামাজের প্রকারভেদ: কোন নামাজ কত রাকাত, কোনটা ফরজ কোনটা সুন্নত।",
-        content: `
-          <p>জামায়াতে নামাজে ইমাম ও মুক্তাদির মধ্যে কিছু গুরুত্বপূর্ণ নিয়ম রয়েছে।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">👥 মুক্তাদির করণীয়</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
-              ✓ ইমামের সাথে বা পরে তাকবির দেওয়া (কখনো আগে নয়)
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
-              ✓ সূরা ফাতিহা ও অতিরিক্ত কিরাত মুক্তাদিকে পড়তে হয় না (হানাফি মতে)
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(34,197,94,0.01));padding:12px;border-radius:10px;border-left:3px solid #22c55e;font-size:14px;">
-              ✓ ইমাম ভুল করলে পুরুষ 'সুবহানাল্লাহ', মহিলা তালি দেবেন
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">⛔ মুক্তাদির যা করা যাবে না</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ ইমামের আগে রুকু বা সিজদায় যাওয়া
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ ইমামের আগে সালাম ফেরানো
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(239,68,68,0.06),rgba(239,68,68,0.01));padding:12px;border-radius:10px;border-left:3px solid #ef4444;font-size:14px;">
-              ✗ ইমাম থেকে দুই রাকাত পিছিয়ে পড়া
-            </div>
-          </div>
-          <br>
-          <h4 style="color:var(--blue-dark);margin-bottom:12px;">🏃 মাসবুকের (পিছিয়ে পড়া) নিয়ম</h4>
-          <p style="font-size:14px;">যদি জামায়াতের মাঝে এসে শরিক হন — ইমামের সাথে বাকি নামাজ পড়ুন, সালামের পর নিজে বাকি রাকাতগুলো পূর্ণ করুন।</p>
-        `,
-        quiz: {
-          question: "জামায়াতে ইমাম ভুল করলে পুরুষ মুক্তাদি কী করবেন?",
-          options: ["চুপ থাকবেন", "'সুবহানাল্লাহ' বলবেন", "তালি দেবেন", "সালাম দিয়ে বের হবেন"],
-          correct: 1,
-          explanation: "জামায়াতে ইমাম ভুল করলে পুরুষ মুক্তাদি 'সুবহানাল্লাহ' বলে সতর্ক করবেন এবং মহিলা মুক্তাদি তালি দেবেন। (বুখারি: ১২০৩)"
-        }
-      },
-
-      // ── পার্ট ১০ ──
-      {
-        title: "পার্ট ১০ — নামাজের প্রকারভেদ: কোনটা কত রাকাত",
-        funFact: "একটু হিসাব করুন — দিনে ৫ ওয়াক্তের মোট ফরজ রাকাত ১৭টি। সুন্নত মিলিয়ে মোট ৪৮-৫২ রাকাত! প্রতিটি রাকাত মানেই আল্লাহর সামনে একবার পূর্ণ উপস্থিতি! 🕌",
-        teaser: "🎉 অভিনন্দন! নামাজের মাসলা-মাসায়েলের পূর্ণ কোর্স শেষ! এখন আপনি নামাজের একজন সচেতন মুসল্লি!",
-        content: `
-          <p>নামাজের প্রকারভেদ জানলে কোন নামাজ কতটুকু গুরুত্বপূর্ণ তা বুঝতে পারবেন।</p>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">📊 ৫ ওয়াক্তের রাকাত সংখ্যা</h4>
-          <div style="overflow-x:auto;">
-            <table style="width:100%;border-collapse:collapse;font-size:13px;">
-              <thead>
-                <tr style="background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(124,58,237,0.05));">
-                  <th style="padding:10px;text-align:left;border-radius:8px 0 0 0;">নামাজ</th>
-                  <th style="padding:10px;text-align:center;color:#7c3aed;">ফরজ</th>
-                  <th style="padding:10px;text-align:center;color:var(--gold);">সুন্নত</th>
-                  <th style="padding:10px;text-align:center;color:#22c55e;">নফল</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
-                  <td style="padding:10px;font-weight:600;">ফজর</td>
-                  <td style="padding:10px;text-align:center;">২</td>
-                  <td style="padding:10px;text-align:center;">২ (আগে)</td>
-                  <td style="padding:10px;text-align:center;">—</td>
-                </tr>
-                <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.02);">
-                  <td style="padding:10px;font-weight:600;">জোহর</td>
-                  <td style="padding:10px;text-align:center;">৪</td>
-                  <td style="padding:10px;text-align:center;">৪+২</td>
-                  <td style="padding:10px;text-align:center;">২</td>
-                </tr>
-                <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
-                  <td style="padding:10px;font-weight:600;">আসর</td>
-                  <td style="padding:10px;text-align:center;">৪</td>
-                  <td style="padding:10px;text-align:center;">৪ (আগে)</td>
-                  <td style="padding:10px;text-align:center;">—</td>
-                </tr>
-                <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.02);">
-                  <td style="padding:10px;font-weight:600;">মাগরিব</td>
-                  <td style="padding:10px;text-align:center;">৩</td>
-                  <td style="padding:10px;text-align:center;">২ (পরে)</td>
-                  <td style="padding:10px;text-align:center;">২</td>
-                </tr>
-                <tr>
-                  <td style="padding:10px;font-weight:600;">এশা</td>
-                  <td style="padding:10px;text-align:center;">৪</td>
-                  <td style="padding:10px;text-align:center;">৪+২+৩(বিতর)</td>
-                  <td style="padding:10px;text-align:center;">২</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <br>
-          <h4 style="color:var(--gold);margin-bottom:12px;">🏆 এই কোর্স থেকে যা শিখলেন</h4>
-          <div style="background:linear-gradient(135deg,#0a1628,#1a3a6e);border-radius:16px;padding:24px;color:#fff;">
-            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
-              <li style="display:flex;gap:10px;"><span>✅</span><span>নামাজের <strong>সব শর্তাবলী</strong> জানলেন</span></li>
-              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>ফরজ, ওয়াজিব, সুন্নত</strong> পার্থক্য বুঝলেন</span></li>
-              <li style="display:flex;gap:10px;"><span>✅</span><span><strong>সিজদা সাহু</strong> দিতে শিখলেন</span></li>
-              <li style="display:flex;gap:10px;"><span>✅</span><span>কাযা ও <strong>মুসাফিরের নামাজ</strong> জানলেন</span></li>
-              <li style="display:flex;gap:10px;"><span>✅</span><span>পাঁচ ওয়াক্তের <strong>সম্পূর্ণ রাকাত</strong> জানলেন</span></li>
-            </ul>
-          </div>
-        `,
-        quiz: {
-          question: "পাঁচ ওয়াক্তের ফরজ নামাজের মোট রাকাত কতটি?",
-          options: ["১৫ রাকাত", "১৭ রাকাত", "১৯ রাকাত", "২০ রাকাত"],
-          correct: 1,
-          explanation: "পাঁচ ওয়াক্তের ফরজ নামাজের মোট রাকাত ১৭টি: ফজর ২ + জোহর ৪ + আসর ৪ + মাগরিব ৩ + এশা ৪ = ১৭ রাকাত।"
-        }
-      }
-
-    ] // end chapters
-  }, // end course 3
-
-  // ==========================================
+// ==========================================
   // COURSE 4 — নামাজ পরবর্তী আমল (8 পার্ট)
   // ==========================================
   {
@@ -2307,6 +2306,305 @@ const miniCoursesData = [
       }
 
     ] // end chapters
-  }  // end course 4
+  }  , // end course 4
+
+// ==========================================
+  // COURSE 5 — নফল নামাজের সম্পূর্ণ গাইড (10 পার্ট)
+  // ==========================================
+  {
+    id: 5,
+    title: "নফল নামাজের সম্পূর্ণ গাইড",
+    icon: "🌙",
+    duration: "১০০ মিনিট",
+    partsCount: 10,
+    tagline: "ফরজের পরেও আল্লাহর ভালোবাসা পাওয়ার রাস্তা — নফল নামাজের সম্পূর্ণ গাইড!",
+    color: "#1e3a5f",
+    category: "pillars",
+    chapters: [
+
+      // ── পার্ট ১ ──
+      {
+        title: "পার্ট ১ — নফল নামাজ কী? কেন পড়বেন?",
+        funFact: "হাদিসে আছে — কিয়ামতের দিন প্রথম হিসাব হবে নামাজের। ফরজে কমতি থাকলে নফল দিয়ে পূরণ করা হবে! নফল নামাজ আক্ষরিক অর্থেই আপনার 'ব্যাকআপ' সিস্টেম! 🛡️",
+        teaser: "পরের পার্টে — রাতের শেষ প্রহরের সেই অলৌকিক নামাজ যা আল্লাহ নিজে কুরআনে বারবার উল্লেখ করেছেন — তাহাজ্জুদ!",
+        content: `
+          <p>নফল নামাজ হলো আল্লাহ তাআলার নৈকট্য ও ভালোবাসা অর্জনের অত্যন্ত সহজ ও নিশ্চিত মাধ্যম। ফরজ নামাজের ঘাটতি পূরণ এবং আখেরাতে উচ্চ মর্যাদা লাভের জন্য নফলের গুরুত্ব অপরিসীম।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🌟 নফলের মর্যাদা ও গুরুত্ব</h4>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:linear-gradient(135deg,rgba(30,58,95,0.08),rgba(30,58,95,0.02));padding:16px;border-radius:12px;border-left:4px solid #1e3a5f;">
+              <strong>১. আল্লাহর ভালোবাসা লাভ:</strong>
+              <p style="font-size:14px;margin-top:6px;">হাদিসে কুদসিতে এসেছে, বান্দা নফল ইবাদতের মাধ্যমে আল্লাহর এতটাই কাছাকাছি চলে আসে যে আল্লাহ তাকে ভালোবাসতে শুরু করেন।</p>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(212,168,67,0.02));padding:16px;border-radius:12px;border-left:4px solid var(--gold);">
+              <strong>২. ফরজের ঘাটতি পূরণ:</strong>
+              <p style="font-size:14px;margin-top:6px;">কিয়ামতের দিন যদি কারো ফরজ নামাজে কোনো ঘাটতি থাকে, তবে আল্লাহ বলবেন: "দেখো তো, আমার বান্দার কোনো নফল নামাজ আছে কি না?" তখন নফল দিয়ে তা পূরণ করা হবে।</p>
+            </div>
+          </div>
+        `,
+        quiz: {
+          question: "কিয়ামতের দিন ফরজ নামাজের ঘাটতি কী দিয়ে পূরণ করা হবে?",
+          options: ["দান-সদকা দিয়ে", "নফল নামাজ দিয়ে", "রোজা দিয়ে", "হজ দিয়ে"],
+          correct: 1,
+          explanation: "হাদিস অনুযায়ী, কিয়ামতের দিন কারো ফরজ নামাজে কমতি বা ত্রুটি দেখা দিলে নফল নামাজ দিয়ে তা পূরণ করা হবে। (তিরমিযি: ৪১৩)"
+        }
+      },
+
+      // ── পার্ট ২ ──
+      {
+        title: "পার্ট ২ — তাহাজ্জুদ: রাতের অন্ধকারে আল্লাহর ডাক",
+        funFact: "তাহাজ্জুদ নামাজের সময় চাওয়া দুআ সরাসরি কবুল হয়। আলেমগণ বলেন — 'তাহাজ্জুদের দুআ হলো এমন তীরের মতো যা লক্ষ্যভ্রষ্ট হয় না!' 🏹",
+        teaser: "পরের পার্টে — সূর্যোদয়ের পর প্রথম সোনালি নামাজ যা পড়লে একটি পূর্ণ হজ ও উমরার সওয়াব মেলে — ইশরাক!",
+        content: `
+          <p><strong>তাহাজ্জুদ</strong> নামাজ হলো নফল নামাজগুলোর মধ্যে সবচেয়ে মর্যাদাপূর্ণ। এশার নামাজের পর রাতে ঘুমিয়ে উঠে শেষ রাতে এই নামাজ পড়তে হয়।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🌟 শেষ রাতের অলৌকিক মুহূর্ত</h4>
+          <p>রাসুলুল্লাহ (সা.) বলেছেন: <em>"আমাদের প্রতিপালক প্রতি রাতের শেষ তৃতীয়াংশে দুনিয়ার আকাশে নেমে আসেন এবং বলেন — কে আমাকে ডাকবে যে আমি সাড়া দেব? কে আমার কাছে চাইবে যে আমি তাকে দেব? কে ক্ষমা চাইবে যে আমি তাকে ক্ষমা করব?"</em> (সহিহ বুখারি: ১১৪৫)</p>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 তাহাজ্জুদ নামাজের নিয়ম</h4>
+          <ul style="list-style-type:none;padding-left:0;display:flex;flex-direction:column;gap:10px;">
+            <li style="background:var(--cream);padding:14px;border-radius:10px;">
+              <strong>রাকাত সংখ্যা:</strong> সাধারণত ২ থেকে ১২ রাকাত পর্যন্ত পড়া যায়। ২ রাকাত করে করে নামাজ শেষ করতে হয়।
+            </li>
+            <li style="background:var(--cream);padding:14px;border-radius:10px;">
+              <strong>সময়:</strong> রাতের শেষ তৃতীয়াংশ (সাহরির আগের সময়) সবচেয়ে উত্তম।
+            </li>
+          </ul>
+        `,
+        quiz: {
+          question: "তাহাজ্জুদ নামাজ পড়ার সবচেয়ে উত্তম সময় কোনটি?",
+          options: ["এশার নামাজের ঠিক পরপরই", "মধ্যরাতে ঘুমানোর আগে", "রাতের শেষ তৃতীয়াংশে", "ফজরের নামাজের পর"],
+          correct: 2,
+          explanation: "তাহাজ্জুদ নামাজ এশার পর ঘুমিয়ে উঠে রাতের শেষ তৃতীয়াংশে পড়া সবচেয়ে উত্তম ও ফজিলতপূর্ণ। (বুখারি: ১১৪৫)"
+        }
+      },
+
+      // ── পার্ট ৩ ──
+      {
+        title: "পার্ট ৩ — সালাতুল ইশরাক: সূর্যোদয়ের সোনালি নামাজ",
+        funFact: "মাত্র দুই রাকাত ইশরাক নামাজ পড়লে একটি সম্পূর্ণ কবুল হজ এবং উমরার সমান সওয়াব পাওয়া যায়! ঘরে বসেই এই বিশাল সওয়াবের সুযোগ! 🕋",
+        teaser: "পরের পার্টে — শরীরের ৩৬০টি জয়েন্টের জন্য সদকা করার সমতুল্য অলৌকিক নামাজ — চাশত বা সালাতুদ দুহা!",
+        content: `
+          <p><strong>ইশরাক</strong> হলো সূর্যোদয়ের পর পড়া প্রথম নফল নামাজ। এটি অত্যন্ত ফজিলতপূর্ণ ও বরকতময় একটি আমল।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🌟 হজ ও উমরার সমপরিমাণ সওয়াব</h4>
+          <blockquote style="background:rgba(16,185,129,0.05);border-left:4px solid #10b981;padding:16px;border-radius:0 10px 10px 0;">
+            "যে ব্যক্তি জামায়াতের সাথে ফজরের নামাজ আদায় করে সূর্যোদয় পর্যন্ত বসে আল্লাহর জিকির করে, এরপর ২ রাকাত নামাজ পড়ে — সে একটি পূর্ণ হজ ও উমরার সওয়াব পাবে।" — (সুনান তিরমিযি: ৫৮৬)
+          </blockquote>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 পড়ার নিয়ম ও সময়</h4>
+          <p>ফজরের নামাজের পর আর না ঘুমিয়ে সূর্য উদিত হওয়ার পর যখন তা একটু ওপরে ওঠে (সূর্যোদয়ের প্রায় ১৫-২০ মিনিট পর) তখন ২ বা ৪ রাকাত নামাজ পড়তে হয়।</p>
+        `,
+        quiz: {
+          question: "সূর্যোদয়ের ঠিক কতক্ষণ পর ইশরাকের নামাজ পড়তে হয়?",
+          options: ["সূর্য ওঠার সাথে সাথে", "সূর্যোদয়ের ১৫-২০ মিনিট পর", "দুপুর ১২টায়", "আসর নামাজের আগে"],
+          correct: 1,
+          explanation: "সূর্য ওঠার সাথে সাথে নামাজ পড়া হারাম। সূর্যোদয়ের প্রায় ১৫-২০ মিনিট পর যখন সূর্য কিছুটা উপরে ওঠে, তখন ইশরাক পড়ার ওয়াক্ত হয়।"
+        }
+      },
+
+      // ── পার্ট ৪ ──
+      {
+        title: "পার্ট ৪ — সালাতুদ দুহা/চাশত: রিজিকের দরজা খোলার চাবিকাঠি",
+        funFact: "আমাদের শরীরে ৩৬০টি জোড় (joints) আছে এবং প্রতিদিন প্রতিটির জন্য সদকা করা আবশ্যক। মাত্র ২ রাকাত চাশত নামাজ এই ৩৬০টি সদকার দায়িত্ব একাই পূর্ণ করে দেয়! ⚡",
+        teaser: "পরের পার্টে — মাগরিবের পর পড়া অত্যন্ত বরকতময় ও রহস্যময় নামাজ — সালাতুল আওয়াবিন!",
+        content: `
+          <p><strong>সালাতুদ দুহা</strong> বা চাশতের নামাজ হলো দিনের মধ্যভাগে পড়া নফল নামাজ। এটি রিজিকের প্রশস্ততা ও শারীরিক সুস্থতার জন্য অনন্য আমল।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🦴 ৩৬০টি জয়েন্টের সদকা</h4>
+          <p>রাসুলুল্লাহ (সা.) বলেছেন: <em>"তোমাদের প্রত্যেকটি জোড়ের জন্য প্রতিদিন সকালে সদকা করা আবশ্যক। অতঃপর ২ রাকাত চাশত নামাজ এই সবকিছুর পক্ষ থেকে যথেষ্ট হয়।"</em> (সহিহ মুসলিম: ৭২০)</p>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 চাশতের নিয়ম ও সময়</h4>
+          <p>বেলা যখন একটু গরম হতে শুরু করে (সূর্যোদয়ের প্রায় ২-৩ ঘণ্টা পর থেকে জোহরের আধ ঘণ্টা আগে পর্যন্ত) তখন ২, ৪, ৮ বা ১২ রাকাত চাশতের নামাজ আদায় করা যায়।</p>
+        `,
+        quiz: {
+          question: "মানুষের শরীরে মোট কতটি জোড় বা জয়েন্ট আছে যা হাদিসে উল্লেখ আছে?",
+          options: ["২০০টি", "৩০০টি", "৩৬০টি", "৪০০টি"],
+          correct: 2,
+          explanation: "সহিহ মুসলিমের হাদিস অনুযায়ী মানুষের শরীরে ৩৬০টি জোড় রয়েছে, এবং সালাতুদ দুহা পড়লে এই ৩৬০টি জোড়ের পক্ষ থেকে সদকা আদায় হয়ে যায়।"
+        }
+      },
+
+      // ── পার্ট ৫ ──
+      {
+        title: "পার্ট ৫ — সালাতুল আওয়াবিন: মাগরিবের পরের লুকানো ধন",
+        funFact: "মাগরিবের পর মাত্র ১০ মিনিটে ৬ রাকাত আওয়াবিন নামাজ পড়লে ১২ বছরের একটানা নফল ইবাদতের সওয়াব আমলনামায় যোগ হয়ে যায়! 💎",
+        teaser: "পরের পার্টে — জীবনের যেকোনো বিশেষ প্রয়োজনে সরাসরি আল্লাহর দরবারে চাওয়ার নামাজ — সালাতুল হাজত!",
+        content: `
+          <p><strong>সালাতুল আওয়াবিন</strong> হলো মাগরিবের নামাজের পর জিকির ও ইবাদতের অংশ হিসেবে পড়া নফল নামাজ। 'আওয়াবিন' শব্দের অর্থ হলো — যারা আল্লাহর দিকে বারবার ফিরে আসে।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">⏳ ১২ বছরের ইবাদতের সওয়াব</h4>
+          <blockquote style="background:rgba(245,158,11,0.05);border-left:4px solid #f59e0b;padding:16px;border-radius:0 10px 10px 0;">
+            "যে ব্যক্তি মাগরিবের পর কোনো মন্দ কথা না বলে ৬ রাকাত নামাজ আদায় করবে, তা তার জন্য ১২ বছরের ইবাদতের সমতুল্য হবে।" — (সুনান তিরমিযি: ৪৩৫)
+          </blockquote>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 পড়ার পদ্ধতি</h4>
+          <p>মাগরিবের ৩ রাকাত ফরজ ও ২ রাকাত সুন্নতের পর আরও ৬ রাকাত নামাজ ২ রাকাত করে করে আওয়াবিন নিয়তে পড়তে হয়।</p>
+        `,
+        quiz: {
+          question: "সালাতুল আওয়াবিন কোন নামাজের পর পড়তে হয়?",
+          options: ["জোহর", "আসর", "মাগরিব", "এশা"],
+          correct: 2,
+          explanation: "সালাতুল আওয়াবিন মাগরিবের নামাজের ফরজ ও সুন্নতের পর পড়তে হয়। (তিরমিযি: ৪৩৫)"
+        }
+      },
+
+      // ── পার্ট ৬ ──
+      {
+        title: "পার্ট ৬ — সালাতুল হাজত: যেকোনো সমস্যায় আল্লাহর দরবারে আবেদন",
+        funFact: "সাহাবায়ে কেরামের অভ্যাস ছিল — যেকোনো ছোট বা বড় পার্থিব ও আত্মিক সমস্যায় পড়লেই তারা সাথে সাথে ওজু করে নামাজে দাঁড়িয়ে যেতেন! 🔑",
+        teaser: "পরের পার্টে — দ্বিধাদ্বন্দ্ব বা কঠিন সিদ্ধান্তে আল্লাহর পরামর্শ ও কল্যাণ চাওয়ার নামাজ — ইস্তেখারা!",
+        content: `
+          <p><strong>সালাতুল হাজত</strong> হলো মানুষের যেকোনো জাগতিক বা আধ্যাত্মিক প্রয়োজন পূরণের জন্য আল্লাহর দরবারে বিশেষ নামাজ। হাজত মানে প্রয়োজন বা অভাব।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🌟 সরাসরি আল্লাহর দরবারে আবেদন</h4>
+          <p>রাসুলুল্লাহ (সা.) বলেছেন: <em>"যার কোনো প্রয়োজন থাকবে, সে যেন সুন্দর করে ওজু করে ২ রাকাত নামাজ পড়ে এবং আল্লাহর প্রশংসা ও রাসুলের ওপর দরুদ পাঠের পর দোয়ার মাধ্যমে আল্লাহর কাছে আবেদন করে।"</em> (তিরমিযি: ৪৭৯)</p>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 সালাতুল হাজতের নিয়ম</h4>
+          <p>যেকোনো সাধারণ নফল নামাজের মতো ২ রাকাত নামাজ পড়ে আল্লাহর মহিমা ঘোষণা করে নিজের প্রয়োজন পূরণের জন্য মন খুলে দুআ করতে হয়।</p>
+        `,
+        quiz: {
+          question: "সালাতুল হাজত সাধারণত কত রাকাত পড়তে হয়?",
+          options: ["১ রাকাত", "২ রাকাত", "৪ রাকাত", "৬ রাকাত"],
+          correct: 1,
+          explanation: "সালাতুল হাজত সাধারণত ২ রাকাত নামাজ পড়ে মন খুলে দুআ করার মাধ্যমে আদায় করতে হয়। (তিরমিযি: ৪৭৯)"
+        }
+      },
+
+      // ── পার্ট ৭ ──
+      {
+        title: "পার্ট ৭ — সালাতুল ইস্তেখারা: সিদ্ধান্ত নিন আল্লাহর পরামর্শে",
+        funFact: "অনেকে মনে করেন ইস্তেখারা করলে স্বপ্নে লাল-সবুজ আলো বা দিকনির্দেশনা দেখা যায়। এটি ভুল ধারণা! ইস্তেখারার মূল উদ্দেশ্য হলো মনকে সঠিক সিদ্ধান্তের দিকে ঝুঁকিয়ে দেওয়া। 🧭",
+        teaser: "পরের পার্টে — কোনো গুনাহ বা অন্যায় হয়ে যাওয়ার পর গুনাহ মাফ করিয়ে নেওয়ার নামাজ — সালাতুত তওবাহ!",
+        content: `
+          <p><strong>ইস্তেখারা</strong> শব্দের অর্থ হলো কোনো কাজের কল্যাণ ও মঙ্গল প্রার্থনা করা। বিয়ে, চাকরি, সফর বা যেকোনো গুরুত্বপূর্ণ সিদ্ধান্ত নেওয়ার ক্ষেত্রে আল্লাহর নির্দেশনা ও সাহায্য চাওয়ার নামাজ এটি।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🌟 ইস্তেখারার বিখ্যাত দোয়া</h4>
+          <p>২ রাকাত নামাজ শেষ করে সালাম ফেরানোর পর বিশেষ ইস্তেখারার দুআটি পড়তে হয়। এতে আল্লাহর কাছে প্রার্থনা করা হয় — <em>"হে আল্লাহ! যদি এই কাজটি আমার জন্য কল্যাণকর হয় তবে আমার জন্য এটি সহজ করে দিন, আর যদি অকল্যাণকর হয় তবে আমাকে এটি থেকে এবং এটিকে আমার থেকে দূরে সরিয়ে দিন।"</em></p>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 ইস্তেখারার প্রভাব</h4>
+          <p>ইস্তেখারা করার পর allah তাআলা বান্দার মনকে সেই কাজের দিকে ঘুরিয়ে দেন যা তার জন্য সবচেয়ে বেশি কল্যাণকর ও মঙ্গলজনক।</p>
+        `,
+        quiz: {
+          question: "ইস্তেখারা নামাজের মূল উদ্দেশ্য কী?",
+          options: ["ভবিষ্যতের বাণী জানা", "স্বপ্নে ভবিষ্যৎ দেখা", "গুরুত্বপূর্ণ সিদ্ধান্তে আল্লাহর কাছে কল্যাণ চাওয়া", "গুনাহ মাফ চাওয়া"],
+          correct: 2,
+          explanation: "ইস্তেখারার অর্থ হলো কল্যাণ চাওয়া। কোনো গুরুত্বপূর্ণ সিদ্ধান্তে কোনটা ভালো হবে তা আল্লাহর ওপর সোপর্দ করে কল্যাণ চাওয়াই এর মূল উদ্দেশ্য।"
+        }
+      },
+
+      // ── পার্ট ৮ ──
+      {
+        title: "পার্ট ৮ — সালাতুত তওবাহ: গুনাহের পর ফিরে আসার নামাজ",
+        funFact: "মানুষ মাত্রই ভুল করে। তবে পাপ করার সাথে সাথে লজ্জিত হয়ে ওজু করে ২ রাকাত নামাজ পড়লে আল্লাহ সেই পাপকে পুরোপুরি ক্ষমা করে দেন! 🧼",
+        teaser: "পরের পার্টে — প্রতি রাকাতে ৭৫ বার বিশেষ তাসবিহ পাঠের মাধ্যমে সারা জীবনের গুনাহ মাফের নামাজ — সালাতুত তাসবিহ!",
+        content: `
+          <p><strong>সালাতুত তওবাহ</strong> হলো কোনো অন্যায় বা গুনাহ সংঘটিত হয়ে যাওয়ার পর অত্যন্ত অনুতপ্ত হয়ে ক্ষমা পাওয়ার আশায় পড়া নামাজ।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🌟 ক্ষমার নিশ্চিত প্রতিশ্রুতি</h4>
+          <blockquote style="background:rgba(239,68,68,0.05);border-left:4px solid #ef4444;padding:16px;border-radius:0 10px 10px 0;">
+            "কোনো বান্দা গুনাহ করার পর যদি সুন্দর করে ওজু করে দাঁড়িয়ে ২ রাকাত নামাজ পড়ে এবং আল্লাহর কাছে ক্ষমা প্রার্থনা করে, তবে আল্লাহ তাকে অবশ্যই ক্ষমা করে দেন।" — (সুনান আবু দাউদ: ১৫২১)
+          </blockquote>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 সালাতুত তওবাহর শর্তসমূহ</h4>
+          <ul style="list-style-type:none;padding-left:0;display:flex;flex-direction:column;gap:10px;">
+            <li>১. গুনাহের জন্য অন্তরে গভীর অনুশোচনা থাকতে হবে।</li>
+            <li>২. অনতিবিলম্বে সেই গুনাহ থেকে সম্পূর্ণ দূরে সরে আসতে হবে।</li>
+            <li>৩. ভবিষ্যতে আর কখনো সেই গুনাহ না করার দৃঢ় প্রতিজ্ঞা করতে হবে।</li>
+          </ul>
+        `,
+        quiz: {
+          question: "গুনাহের পর ক্ষমা চাওয়ার নামাজটির নাম কী?",
+          options: ["সালাতুল হাজত", "সালাতুত তওবাহ", "সালাতুল ইশরাক", "সালাতুদ দুহা"],
+          correct: 1,
+          explanation: "গুনাহের পর আল্লাহর কাছে ফিরে এসে ক্ষমা চাওয়ার জন্য লজ্জিত অন্তরে যে নামাজ পড়া হয় তার নাম সালাতুত তওবাহ বা তাওবার নামাজ।"
+        }
+      },
+
+      // ── পার্ট ৯ ──
+      {
+        title: "পার্ট ৯ — সালাতুত তাসবিহ: ৩০০ তাসবিহতে সারাজীবনের গুনাহ মাফ",
+        funFact: "রাসুলুল্লাহ (সা.) তাঁর চাচা আব্বাস (রা.)-কে এই নামাজ শিক্ষা দিয়েছিলেন এবং বলেছিলেন — সম্ভব হলে প্রতিদিন, না পারলে সপ্তাহে, মাসে, বছরে বা জীবনে অন্তত একবার হলেও এই নামাজ পড়তে! 🌟",
+        teaser: "পরের পার্টে — নবীজি (সা.) যে নফল নামাজগুলো নিয়মিত পড়তেন এবং কখনো ছাড়তেন না — ১২ রাকাত সুন্নাতে মুয়াক্কাদা!",
+        content: `
+          <p><strong>সালাতুত তাসবিহ</strong> হলো একটি অত্যন্ত বিশেষ নফল নামাজ। এই নামাজে ৪ রাকাতে মোট ৩০০ বার একটি নির্দিষ্ট তাসবিহ পাঠ করা হয়।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">🌟 তাসবিহর বাক্য</h4>
+          <blockquote style="background:rgba(26,95,158,0.05);border-left:4px solid var(--gold);padding:20px;margin:16px 0;border-radius:0 12px 12px 0;text-align:center;">
+            <p style="font-family:var(--font-arabic);font-size:22px;color:var(--blue-dark);margin-bottom:10px;line-height:2;">سُبْحَانَ اللهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَهَ إِلَّا اللهُ وَاللهُ أَكْبَرُ</p>
+            <p style="font-weight:700;">সুবহানাল্লাহ — আলহামদুলিল্লাহ — লা ইলাহা ইল্লাল্লাহ — আল্লাহু আকবার</p>
+          </blockquote>
+          <br>
+          <h4 style="color:var(--blue-dark);margin-bottom:12px;">📋 পড়ার পদ্ধতি (প্রতি রাকাতে ৭৫ বার)</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+            <div style="background:var(--cream);padding:10px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>১. দাঁড়িয়ে প্রথম সূরার পর</span><strong>১৫ বার</strong>
+            </div>
+            <div style="background:var(--cream);padding:10px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>২. রুকুতে তাসবিহর পর</span><strong>১০ বার</strong>
+            </div>
+            <div style="background:var(--cream);padding:10px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>৩. রুকু থেকে দাঁড়িয়ে (রুকুত্তর কিয়াম)</span><strong>১০ বার</strong>
+            </div>
+            <div style="background:var(--cream);padding:10px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>৪. প্রথম সিজদায় সিজদার তাসবিহর পর</span><strong>১০ বার</strong>
+            </div>
+            <div style="background:var(--cream);padding:10px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>৫. প্রথম সিজদা থেকে বসে (জলসা)</span><strong>১০ বার</strong>
+            </div>
+            <div style="background:var(--cream);padding:10px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>৬. দ্বিতীয় সিজদায় সিজদার তাসবিহর পর</span><strong>১০ বার</strong>
+            </div>
+            <div style="background:var(--cream);padding:10px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>৭. দ্বিতীয় সিজদা থেকে মাথা তুলে বসে</span><strong>১০ বার</strong>
+            </div>
+          </div>
+          <br>
+          <p>এভাবে প্রতি রাকাতে ৭৫ বার করে ৪ রাকাতে মোট ৩০০ বার তাসবিহ পড়তে হয়। (আবু দাউদ: ১২৯৭)</p>
+        `,
+        quiz: {
+          question: "সালাতুত তাসবিহ নামাজে ৪ রাকাতে মোট কতবার তাসবিহ পড়তে হয়?",
+          options: ["১০০ বার", "২০০ বার", "৩০০ বার", "৪০০ বার"],
+          correct: 2,
+          explanation: "সালাতুত তাসবিহ নামাজে প্রতি রাকাতে ৭৫ বার করে ৪ রাকাতে মোট ৩০০ বার তাসবিহ পাঠ করতে হয়। (আবু দাউদ: ১২৯৭)"
+        }
+      },
+
+      // ── পার্ট ১০ ──
+      {
+        title: "পার্ট ১০ — সুন্নাতে মুয়াক্কাদা: নবীজির সবচেয়ে প্রিয় নফল",
+        funFact: "হাদিসে আছে — যে ব্যক্তি দিন ও রাতে নিয়মিত ১২ রাকাত সুন্নত আদায় করবে, তার জন্য জান্নাতে একটি বিশেষ রাজপ্রাসাদ তৈরি করা হবে! 🏡",
+        teaser: "🎉 অভিনন্দন! নফল নামাজের সম্পূর্ণ গাইড আপনি সফলভাবে শেষ করেছেন। আল্লাহ আপনার জ্ঞান বৃদ্ধি করুন ও আমল কবুল করুন!",
+        content: `
+          <p><strong>সুন্নাতে মুয়াক্কাদা</strong> হলো সেই সমস্ত নামাজ যা রাসুলুল্লাহ (সা.) ফরজ নামাজের পাশাপাশি নিয়মিত আদায় করতেন এবং বিনা ওজরে কখনো ছাড়তেন না। এগুলো নফল পর্যায়ের হলেও ওয়াজিবের কাছাকাছি গুরুত্বপূর্ণ।</p>
+          <br>
+          <h4 style="color:var(--gold);margin-bottom:12px;">📋 দৈনিক ১২ রাকাত সুন্নাত</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+            <div style="background:var(--cream);padding:12px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>ফজরের ফরজের আগে</span><strong>২ রাকাত</strong>
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>জোহরের ফরজের আগে ৪ রাকাত এবং পরে ২ রাকাত</span><strong>৬ রাকাত</strong>
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>মাগরিবের ফরজের পরে</span><strong>২ রাকাত</strong>
+            </div>
+            <div style="background:var(--cream);padding:12px;border-radius:8px;display:flex;justify-content:space-between;">
+              <span>এশার ফরজের পরে</span><strong>২ রাকাত</strong>
+            </div>
+          </div>
+          <br>
+          <p>রাসুলুল্লাহ (সা.) বলেছেন: <em>"যে ব্যক্তি দিন ও রাতে ১২ রাকাত সুন্নত সালাত আদায় করবে, তার জন্য জান্নাতে একটি ঘর নির্মাণ করা হবে।"</em> (সহিহ মুসলিম: ৭২৮)</p>
+        `,
+        quiz: {
+          question: "দৈনিক সুন্নাতে মুয়াক্কাদা নামাজের মোট রাকাত সংখ্যা কত?",
+          options: ["৮ রাকাত", "১০ রাকাত", "১২ রাকাত", "১৪ রাকাত"],
+          correct: 2,
+          explanation: "সহিহ মুসলিমের হাদিস (৭২৮) অনুযায়ী সুন্নাতে মুয়াক্কাদা দৈনিক ১২ রাকাত: ফজর ২, জোহর ৪+২=৬, মাগরিব ২ এবং এশা ২ রাকাত।"
+        }
+      }
+
+    ] // end chapters
+  },
 
 ]; // end miniCoursesData
