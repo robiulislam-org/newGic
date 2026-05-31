@@ -1760,8 +1760,8 @@ footer {
     </div>
   </a>
   <div class="nav-links" id="navLinks">
-    <a href="#" onclick="showPage('mini-courses');return false;"><span style="background:var(--gold);color:var(--dark);padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">free</span> কোর্স</a>
-    <a href="#" onclick="showPage('courses');return false;"><span style="background:var(--blue-light);color:#fff;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">paid</span> কোর্স</a>
+    <a href="#" onclick="showPage('free-courses');return false;"><span style="background:var(--gold);color:var(--dark);padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">ফ্রি</span> কোর্স</a>
+    <a href="#" onclick="showPage('courses');return false;"><span style="background:var(--blue-light);color:#fff;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">পেইড</span> কোর্স</a>
     <a href="#" onclick="showPage('teachers');return false;">শিক্ষকবৃন্দ</a>
     <a href="#" onclick="showPage('about');return false;">আমাদের সম্পর্কে</a>
     <a href="#" onclick="showPage('reviews');return false;">রিভিউ</a>
@@ -1952,7 +1952,7 @@ footer {
             <span>আপনাদের কোর্স ফি বা খরচ কেমন?</span>
             <div class="faq-icon">+</div>
           </button>
-          <div class="faq-a">আমাদের কোর্স ফি সম্পর্কে বিস্তারিত জানতে অনুগ্রহ করে আমাদের "paid কোর্স" পেজটি ভিজিট করুন অথবা সরাসরি WhatsApp-এ আমাদের সাথে যোগাযোগ করুন। একই পরিবারের একাধিক সদস্য একসাথে যুক্ত হলে বিশেষ সুবিধার ব্যবস্থা রয়েছে।</div>
+          <div class="faq-a">আমাদের কোর্স ফি সম্পর্কে বিস্তারিত জানতে অনুগ্রহ করে আমাদের "পেইড কোর্স" পেজটি ভিজিট করুন অথবা সরাসরি WhatsApp-এ আমাদের সাথে যোগাযোগ করুন। একই পরিবারের একাধিক সদস্য একসাথে যুক্ত হলে বিশেষ সুবিধার ব্যবস্থা রয়েছে।</div>
         </div>
         <div class="faq-item reveal">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -2000,8 +2000,8 @@ footer {
   </section>
 </div>
 
-<!-- ─────────── MINI COURSES PAGE ─────────── -->
-<div class="page" id="page-mini-courses">
+<!-- ─────────── FREE COURSES PAGE ─────────── -->
+<div class="page" id="page-free-courses">
 
   <!-- ── HERO SECTION REDESIGNED ── -->
   <div id="mc-hero" style="background: linear-gradient(160deg, #050e1f 0%, #0b2444 50%, #0a1e3d 100%); position: relative; overflow: hidden; padding: 90px 24px 75px; border-bottom: 2px solid rgba(212,168,67,0.3);">
@@ -2082,7 +2082,7 @@ footer {
         </div>
       </div>
 
-      <div class="courses-grid" id="mini-courses-grid">
+      <div class="courses-grid" id="free-courses-grid">
         <!-- Courses will be rendered here by JS -->
       </div>
 
@@ -2980,17 +2980,17 @@ const mcCta = document.getElementById('mcFloatingCTA');
 window.addEventListener('scroll', () => {
   btt.classList.toggle('show', window.scrollY > 400);
 
-  // Floating Mini-Course CTA visibility
-  const mcPage = document.getElementById('page-mini-courses');
+  // Floating Free-Course CTA visibility
+  const mcPage = document.getElementById('page-free-courses');
   if (mcPage && mcCta) {
-    const isMiniCoursesActive = mcPage.classList.contains('active');
-    const grid = document.getElementById('mini-courses-grid');
+    const isFreeCoursesActive = mcPage.classList.contains('active');
+    const grid = document.getElementById('free-courses-grid');
     let isBeforeGrid = true;
     if (grid) {
       const rect = grid.getBoundingClientRect();
       isBeforeGrid = rect.top > window.innerHeight / 2;
     }
-    if (isMiniCoursesActive && window.scrollY > 350 && isBeforeGrid) {
+    if (isFreeCoursesActive && window.scrollY > 350 && isBeforeGrid) {
       mcCta.classList.add('show');
     } else {
       mcCta.classList.remove('show');
@@ -3259,7 +3259,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script src="courses-data.js"></script>
-<script src="mini-courses.js"></script>
+<script src="free-courses.js"></script>
 <script type="module" src="analytics.js"></script>
 
 <style>

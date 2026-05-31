@@ -398,7 +398,7 @@ async function loadLeaderboard() {
 }
 
 function renderMiniCourses() {
-  const container = document.getElementById('mini-courses-grid');
+  const container = document.getElementById('free-courses-grid');
   const lbSection = document.getElementById('leaderboard-section');
   if (!container || !lbSection) return;
 
@@ -915,9 +915,9 @@ function renderXPBar() {
     </div>
   `;
 
-  const heroSection = document.querySelector('#page-mini-courses .policy-hero')
+  const heroSection = document.querySelector('#page-free-courses .policy-hero')
     || document.querySelector('#mc-hero')
-    || document.querySelector('#page-mini-courses > div:first-child');
+    || document.querySelector('#page-free-courses > div:first-child');
   if (heroSection) heroSection.insertAdjacentElement('afterend', bar);
 }
 
@@ -947,7 +947,7 @@ function openCourseViewer(courseId) {
 
 function closeCourseViewer() {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-mini-courses').classList.add('active');
+  document.getElementById('page-free-courses').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   renderMiniCourses();
 }
@@ -1738,13 +1738,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const course = miniCoursesData.find(c => c.id === courseId);
     if (!course) return;
 
-    // Navigate to the mini-courses page first (if not already active)
+    // Navigate to the free-courses page first (if not already active)
     if (typeof showPage === 'function') {
-      showPage('mini-courses');
+      showPage('free-courses');
     } else {
       // Fallback: manually activate the page
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      const mcPage = document.getElementById('page-mini-courses');
+      const mcPage = document.getElementById('page-free-courses');
       if (mcPage) mcPage.classList.add('active');
     }
 
