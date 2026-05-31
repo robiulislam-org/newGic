@@ -2707,6 +2707,32 @@ footer {
 
   <div style="max-width:760px;margin:0 auto;padding:40px 20px 80px;">
 
+    <!-- Share Review Page Card -->
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,0.03);margin-bottom:28px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:280px;text-align:left;">
+          <h3 style="color:var(--blue-dark);font-size:15px;font-weight:900;margin:0 0 4px;display:flex;align-items:center;gap:6px;">📢 রিভিউ পেজটি শেয়ার করুন</h3>
+          <p style="color:var(--text-muted);font-size:12.5px;margin:0;">সহজেই লিংকটি কপি করে বা সরাসরি সোশ্যাল মিডিয়ায় শেয়ার করে আমাদের পাশে দাঁড়ান।</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <!-- Copy Link -->
+          <button id="rvp-copy-share" onclick="copyReviewsShareLink()" style="background:var(--cream);color:var(--text);border:1.5px solid var(--border);padding:9px 14px;border-radius:10px;font-family:var(--font-body);font-weight:700;font-size:12.5px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='var(--cream)'">
+            <span>🔗 কপি করুন</span>
+          </button>
+          
+          <!-- WhatsApp Share -->
+          <a id="rvp-wa-share" href="#" target="_blank" style="background:#25d366;color:#fff;text-decoration:none;padding:9px 14px;border-radius:10px;font-family:var(--font-body);font-weight:700;font-size:12.5px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+            <span>💬 WhatsApp</span>
+          </a>
+
+          <!-- Facebook Share -->
+          <a id="rvp-fb-share" href="#" target="_blank" style="background:#1877f2;color:#fff;text-decoration:none;padding:9px 14px;border-radius:10px;font-family:var(--font-body);font-weight:700;font-size:12.5px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+            <span>📘 Facebook</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Stats bar -->
     <div id="rv-stats-bar" style="display:flex;gap:16px;margin-bottom:36px;flex-wrap:wrap;">
       <div style="flex:1;min-width:130px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 20px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.04);">
@@ -2886,6 +2912,9 @@ function showPage(id) {
   if (id === 'reviews') {
     if (typeof loadRvpReviews === 'function') {
       loadRvpReviews();
+    }
+    if (typeof initReviewsSharing === 'function') {
+      initReviewsSharing();
     }
   }
 }
@@ -3118,6 +3147,95 @@ async function submitRvpReview() {
     btn.textContent = 'রিভিউ পাঠান ✅';
   }
 }
+
+// ───── REVIEW PAGE SHARING LOGIC ─────
+function getCleanReviewsShareUrl() {
+  let origin = window.location.origin;
+  let pathname = window.location.pathname;
+
+  // Handle local file preview or relative protocol origins
+  if (!origin || origin === 'null' || window.location.protocol === 'file:') {
+    origin = '';
+    pathname = window.location.href.split('?')[0];
+  }
+
+  // Remove /index.html if it's there to keep it short and professional
+  if (pathname.endsWith('/index.html')) {
+    pathname = pathname.slice(0, -10);
+  }
+
+  return origin + pathname + '?page=reviews';
+}
+
+function initReviewsSharing() {
+  const shareUrl = getCleanReviewsShareUrl();
+  const text = encodeURIComponent('Global Islamic Care-এর শিক্ষার্থীদের মূল্যবান মতামত ও রিভিউসমূহ দেখুন। আপনিও চাইলে আপনার অভিজ্ঞতা শেয়ার করতে পারেন।\n\nলিংক: ');
+  
+  const waBtn = document.getElementById('rvp-wa-share');
+  if (waBtn) {
+    waBtn.href = `https://api.whatsapp.com/send?text=${text}${encodeURIComponent(shareUrl)}`;
+  }
+  
+  const fbBtn = document.getElementById('rvp-fb-share');
+  if (fbBtn) {
+    fbBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+  }
+}
+
+function copyReviewsShareLink() {
+  const shareUrl = getCleanReviewsShareUrl();
+  
+  // Use clipboard API with fallback
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(shareUrl).then(showSuccess, fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+
+  function fallbackCopy() {
+    const tempInput = document.createElement('input');
+    tempInput.value = shareUrl;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    try {
+      document.execCommand('copy');
+      showSuccess();
+    } catch (e) {
+      showToast('❌ কপি করা যায়নি। অনুগ্রহ করে লিংকটি নিজে কপি করুন।');
+    }
+    document.body.removeChild(tempInput);
+  }
+
+  function showSuccess() {
+    const btn = document.getElementById('rvp-copy-share');
+    if (btn) {
+      const origHtml = btn.innerHTML;
+      btn.style.borderColor = '#22c55e';
+      btn.style.background = 'rgba(34,197,94,0.06)';
+      btn.style.color = '#16a34a';
+      btn.innerHTML = '<span>✓ কপি হয়েছে!</span>';
+      setTimeout(() => {
+        btn.style.borderColor = '';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.innerHTML = origHtml;
+      }, 2000);
+    }
+    showToast('✅ রিভিউ পেজের লিংক কপি হয়েছে!');
+  }
+}
+
+// Auto-navigate to reviews page if "?page=reviews" is present in URL query params
+document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('page') === 'reviews') {
+    setTimeout(() => {
+      if (typeof showPage === 'function') {
+        showPage('reviews');
+      }
+    }, 150);
+  }
+});
 </script>
 
 <!-- Student Auth Modal -->
