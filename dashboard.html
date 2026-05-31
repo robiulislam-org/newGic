@@ -1855,12 +1855,24 @@ async function confirmDeleteReview() {
         headers: {
           'apikey': RV_SUPA_KEY,
           'Authorization': 'Bearer ' + RV_SUPA_KEY,
+          'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         }
       }
     );
 
-    if (!res.ok && res.status !== 204) throw new Error('HTTP ' + res.status);
+    if (!res.ok) {
+      let errBody = '';
+      try { errBody = await res.text(); } catch(e) {}
+      console.error('Supabase DELETE failed:', res.status, errBody);
+
+      if (res.status === 401 || res.status === 403) {
+        toast('❌ Permission নেই! Supabase SQL Editor-তে fix_reviews_delete.sql রান করুন', 'err');
+      } else {
+        toast(`❌ সমস্যা হয়েছে (${res.status})। আবার চেষ্টা করুন`, 'err');
+      }
+      return;
+    }
 
     // Remove from local array
     allAdminReviews = allAdminReviews.filter(r => r.id !== reviewToDelete);
@@ -1886,7 +1898,8 @@ async function confirmDeleteReview() {
     filterAdminReviews();
     toast('✅ রিভিউ সফলভাবে ডিলিট হয়েছে!', 'ok');
   } catch(err) {
-    toast('❌ ডিলিট করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।', 'err');
+    console.error('Delete exception:', err);
+    toast('❌ নেটওয়ার্ক সমস্যা। আবার চেষ্টা করুন।', 'err');
   } finally {
     delBtn.disabled = false;
     delBtn.textContent = '🗑️ হ্যাঁ, মুছে ফেলুন';
