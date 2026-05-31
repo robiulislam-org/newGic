@@ -1,5 +1,5 @@
 -- =====================================================================
--- 🛠️ GIC Database Upgrade: IP Tracking, Device Logging & Timezone Fix
+-- 🛠️ GIC Database Upgrade: Robust Server-Side IP & Device Tracking
 -- Copy and paste this into your Supabase SQL Editor and click RUN.
 -- =====================================================================
 
@@ -7,7 +7,7 @@
 alter table students add column if not exists last_ip text default '';
 alter table students add column if not exists last_ua text default '';
 
--- 2. Update login_or_create_student_by_email to accept and record IP & User Agent
+-- 2. Update login_or_create_student_by_email to detect IP & UA from HTTP headers
 create or replace function login_or_create_student_by_email(p_email text, p_ip text default '', p_ua text default '')
 returns json
 security definer
@@ -18,16 +18,35 @@ declare
   v_new_student_id text;
   v_count int;
   result json;
+  v_req_headers json;
+  v_detected_ip text;
+  v_detected_ua text;
 begin
+  -- Server-side detection using PostgREST HTTP headers
+  begin
+    v_req_headers := current_setting('request.headers', true)::json;
+    if v_req_headers is not null then
+      -- Get first IP in x-forwarded-for list
+      v_detected_ip := split_part(v_req_headers->>'x-forwarded-for', ',', 1);
+      v_detected_ua := v_req_headers->>'user-agent';
+    end if;
+  exception when others then
+    -- Fail-safe: ignore if request.headers is not available
+  end;
+
+  -- Use client-sent IP/UA, fallback to DB-detected HTTP headers, fallback to empty
+  p_ip := coalesce(nullif(trim(p_ip), ''), nullif(trim(v_detected_ip), ''), '');
+  p_ua := coalesce(nullif(trim(p_ua), ''), nullif(trim(v_detected_ua), ''), '');
+
   -- Check if student already exists by email (case-insensitive)
   select * into v_student from students where lower(email) = lower(p_email) limit 1;
   
   if found then
-    -- Update IP and User Agent on every sync/login
+    -- Update IP, User Agent, and timestamp
     update students 
     set 
-      last_ip = coalesce(nullif(p_ip, ''), last_ip),
-      last_ua = coalesce(nullif(p_ua, ''), last_ua),
+      last_ip = coalesce(nullif(p_ip, ''), nullif(last_ip, ''), ''),
+      last_ua = coalesce(nullif(p_ua, ''), nullif(last_ua, ''), ''),
       updated_at = timezone('Asia/Dhaka', now())
     where id = v_student.id
     returning * into v_student;
@@ -76,7 +95,7 @@ begin
 end;
 $$;
 
--- 3. Recreate get_students_list to return IP, User Agent, and timezone-adjusted join/active dates
+-- 3. Recreate get_students_list to return IP, User Agent, and timezone-adjusted dates
 create or replace function get_students_list(pass_code text)
 returns json
 security definer
@@ -102,7 +121,7 @@ begin
       xp,
       jsonb_array_length(completed_chapters) as chapters_completed_count,
       streak,
-      -- Append timezone offset (+06:00) so JS parses it as Dhaka timezone correctly
+      -- ISO format with Dhaka timezone offset (+06:00)
       to_char(created_at AT TIME ZONE 'Asia/Dhaka', 'YYYY-MM-DD"T"HH24:MI:SS+06:00') as join_date,
       to_char(updated_at AT TIME ZONE 'Asia/Dhaka', 'YYYY-MM-DD"T"HH24:MI:SS+06:00') as last_active
     from students
