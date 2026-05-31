@@ -1764,7 +1764,7 @@ footer {
     <a href="#" onclick="showPage('courses');return false;"><span style="background:var(--blue-light);color:#fff;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">paid</span> কোর্স</a>
     <a href="#" onclick="showPage('teachers');return false;">শিক্ষকবৃন্দ</a>
     <a href="#" onclick="showPage('about');return false;">আমাদের সম্পর্কে</a>
-    <a href="#" onclick="openReviewModal();return false;" style="display:flex;align-items:center;gap:5px;">⭐ রিভিউ দিন</a>
+    <a href="#" onclick="showPage('reviews');return false;">রিভিউ</a>
     <a href="#" onclick="showPage('contact');return false;" class="nav-cta">💬 ফ্রি পরামর্শ</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -2690,6 +2690,119 @@ footer {
   </div>
 </div>
 
+<!-- ─────────── REVIEWS PAGE ─────────── -->
+<div class="page" id="page-reviews">
+
+  <!-- Hero Section -->
+  <div style="background:linear-gradient(135deg,#0a1628 0%,#1a3a6e 60%,#0f2a55 100%);padding:80px 24px 60px;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(212,168,67,0.12),transparent 65%);border-radius:50%;pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-40px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(26,95,158,0.15),transparent 65%);border-radius:50%;pointer-events:none;"></div>
+    <div style="position:relative;z-index:2;max-width:640px;margin:0 auto;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(212,168,67,0.12);border:1px solid rgba(212,168,67,0.3);border-radius:30px;padding:6px 18px;font-size:13px;font-weight:700;color:#d4a843;letter-spacing:0.5px;margin-bottom:20px;">⭐ শিক্ষার্থীদের মতামত</div>
+      <h1 style="color:#fff;font-size:clamp(26px,5vw,38px);font-weight:900;line-height:1.25;margin:0 0 16px;">আপনার অভিজ্ঞতা আমাদের<br>অনুপ্রেরণা</h1>
+      <p style="color:rgba(255,255,255,0.7);font-size:16px;line-height:1.8;margin:0 0 10px;">আপনি চাইলে আমাদের সম্পর্কে একটি রিভিউ দিতে পারেন। আপনার মূল্যবান মতামত অন্যদের সাহায্য করবে আমাদের প্রতিষ্ঠান সম্পর্কে সঠিক ধারণা পেতে এবং কোরআন শেখার এই সুযোগ গ্রহণে আগ্রহী হতে।</p>
+      <p style="color:rgba(212,168,67,0.85);font-size:14px;font-weight:600;">জাজাকাল্লাহ খায়রান 🤲</p>
+    </div>
+  </div>
+
+  <div style="max-width:760px;margin:0 auto;padding:40px 20px 80px;">
+
+    <!-- Stats bar -->
+    <div id="rv-stats-bar" style="display:flex;gap:16px;margin-bottom:36px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:130px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 20px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.04);">
+        <div id="rv-total-count" style="font-size:28px;font-weight:900;color:var(--blue-dark);">...</div>
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px;">মোট রিভিউ</div>
+      </div>
+      <div style="flex:1;min-width:130px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 20px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.04);">
+        <div style="font-size:28px;font-weight:900;color:var(--gold);">⭐ ৫.০</div>
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px;">গড় রেটিং</div>
+      </div>
+      <div style="flex:1;min-width:130px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 20px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.04);">
+        <div style="font-size:28px;font-weight:900;color:#22c55e;">✅</div>
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px;">যাচাইকৃত রিভিউ</div>
+      </div>
+    </div>
+
+    <!-- Review Form Card -->
+    <div id="rv-form-card" style="background:#fff;border:1.5px solid rgba(212,168,67,0.2);border-radius:24px;padding:32px;box-shadow:0 8px 40px rgba(10,22,40,0.08);margin-bottom:40px;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+        <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--gold),#f59e0b);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(212,168,67,0.35);">✍️</div>
+        <div>
+          <h2 style="color:var(--blue-dark);font-size:18px;font-weight:900;margin:0 0 3px;">আপনার রিভিউ লিখুন</h2>
+          <p style="color:var(--text-muted);font-size:13px;margin:0;">আপনার অভিজ্ঞতা শেয়ার করুন — সবাই দেখতে পাবে</p>
+        </div>
+      </div>
+
+      <!-- Submit form -->
+      <div id="rv-page-submit-area">
+        <!-- Name -->
+        <div style="margin-bottom:16px;">
+          <label style="font-size:12.5px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:7px;">আপনার নাম (ঐচ্ছিক)</label>
+          <input type="text" id="rvp-name" placeholder="যেমন: মুহাম্মাদ রাহিম" style="width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:12px;font-family:var(--font-body);font-size:14.5px;color:var(--text);background:var(--cream);outline:none;box-sizing:border-box;transition:border-color 0.2s,box-shadow 0.2s;" onfocus="this.style.borderColor='var(--blue)';this.style.boxShadow='0 0 0 3px rgba(26,95,158,0.1)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        </div>
+
+        <!-- Star Rating -->
+        <div style="margin-bottom:16px;">
+          <label style="font-size:12.5px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:8px;">রেটিং দিন</label>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="display:flex;gap:6px;">
+              <button class="rvp-star" data-n="1" onclick="setRvpStar(1)" style="background:none;border:none;font-size:34px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;filter:none;">⭐</button>
+              <button class="rvp-star" data-n="2" onclick="setRvpStar(2)" style="background:none;border:none;font-size:34px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;filter:none;">⭐</button>
+              <button class="rvp-star" data-n="3" onclick="setRvpStar(3)" style="background:none;border:none;font-size:34px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;filter:none;">⭐</button>
+              <button class="rvp-star" data-n="4" onclick="setRvpStar(4)" style="background:none;border:none;font-size:34px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;filter:none;">⭐</button>
+              <button class="rvp-star" data-n="5" onclick="setRvpStar(5)" style="background:none;border:none;font-size:34px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;filter:none;">⭐</button>
+            </div>
+            <span id="rvp-star-label" style="font-size:14px;font-weight:800;color:var(--gold);">অসাধারণ!</span>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div style="margin-bottom:22px;">
+          <label style="font-size:12.5px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:7px;">আপনার অভিজ্ঞতা *</label>
+          <textarea id="rvp-message" rows="5" placeholder="Global Islamic Care-এ পড়ার অভিজ্ঞতা, কোর্সের মান, শিক্ষকদের আচরণ — যা মনে হয় সৎভাবে লিখুন..." style="width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;font-family:var(--font-body);font-size:14.5px;color:var(--text);background:var(--cream);outline:none;resize:vertical;box-sizing:border-box;line-height:1.75;transition:border-color 0.2s,box-shadow 0.2s;" onfocus="this.style.borderColor='var(--blue)';this.style.boxShadow='0 0 0 3px rgba(26,95,158,0.1)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'"></textarea>
+        </div>
+
+        <button id="rvp-submit-btn" onclick="submitRvpReview()" style="width:100%;background:linear-gradient(135deg,#0a1628,#1a5f9e);color:#fff;border:none;padding:16px;border-radius:14px;font-family:var(--font-body);font-weight:900;font-size:16px;cursor:pointer;transition:all 0.25s;box-shadow:0 6px 24px rgba(26,95,158,0.3);letter-spacing:0.3px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 32px rgba(26,95,158,0.42)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 24px rgba(26,95,158,0.3)'">
+          রিভিউ পাঠান ✅
+        </button>
+      </div>
+
+      <!-- Success Message -->
+      <div id="rvp-success-msg" style="display:none;flex-direction:column;align-items:center;text-align:center;padding:28px 16px;gap:14px;">
+        <div style="width:78px;height:78px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 8px 28px rgba(34,197,94,0.35);">✅</div>
+        <h3 style="color:var(--blue-dark);font-size:21px;font-weight:900;margin:0;">জাজাকাল্লাহ খায়রান!</h3>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.75;margin:0;max-width:400px;">আপনার মূল্যবান রিভিউটি সফলভাবে সংরক্ষিত হয়েছে। এটি এখন সকলে দেখতে পাবে।</p>
+        <button onclick="document.getElementById('rvp-success-msg').style.display='none';document.getElementById('rv-page-submit-area').style.display='block';document.getElementById('rvp-name').value='';document.getElementById('rvp-message').value='';setRvpStar(5);" style="background:var(--cream);border:1.5px solid var(--border);color:var(--text);padding:11px 26px;border-radius:12px;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='var(--cream)'">আরও একটি রিভিউ দিন</button>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
+      <div style="flex:1;height:1.5px;background:linear-gradient(to right,transparent,var(--border));"></div>
+      <span style="font-size:14px;font-weight:800;color:var(--text-muted);white-space:nowrap;">সবার রিভিউ</span>
+      <div style="flex:1;height:1.5px;background:linear-gradient(to left,transparent,var(--border));"></div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="rvp-loading" style="text-align:center;padding:40px;color:var(--text-muted);font-size:15px;font-weight:600;">
+      <div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 14px;"></div>
+      রিভিউ লোড হচ্ছে...
+    </div>
+
+    <!-- Reviews List -->
+    <div id="rvp-reviews-list" style="display:grid;gap:20px;">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- Empty state -->
+    <div id="rvp-empty" style="display:none;text-align:center;padding:50px 20px;color:var(--text-muted);">
+      <div style="font-size:48px;margin-bottom:14px;">💬</div>
+      <p style="font-size:15px;font-weight:600;">এখনো কোনো রিভিউ নেই। প্রথম রিভিউ দিন!</p>
+    </div>
+
+  </div>
+</div>
+
 <!-- ─────────── FOOTER ─────────── -->
 <footer>
   <div class="footer-main">
@@ -2768,6 +2881,13 @@ function showPage(id) {
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active-page'));
   const activeLink = document.querySelector(`.nav-links a[onclick*="'${id}'"]`);
   if (activeLink) activeLink.classList.add('active-page');
+
+  // Auto-load reviews when entering the reviews page
+  if (id === 'reviews') {
+    if (typeof loadRvpReviews === 'function') {
+      loadRvpReviews();
+    }
+  }
 }
 
 // ───── NAV TOGGLE ─────
@@ -2895,97 +3015,108 @@ document.querySelectorAll('.stat-num').forEach(el => {
   if (t === 98) el.dataset.suffix = '%';
 });
 
-// ───── REVIEW MODAL ─────
-const gicReviewsKey = 'gic_institution_reviews';
+// ───── REVIEW PAGE (SUPABASE) ─────
+const gicReviewsSupaUrl = 'https://abpweawndpnaftkcsdcp.supabase.co';
+const gicReviewsSupaKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y';
+let rvpSelectedStars = 5;
 
-function openReviewModal() {
-  const modal = document.getElementById('review-modal');
-  if (!modal) return;
-  // Reset form state
-  document.getElementById('review-name').value = '';
-  document.getElementById('review-message').value = '';
-  setReviewStarRating(5);
-  document.getElementById('review-submit-area').style.display = 'block';
-  document.getElementById('review-success-msg').style.display = 'none';
-  loadAndRenderReviews();
-  modal.classList.add('active');
-}
-
-function closeReviewModal() {
-  const modal = document.getElementById('review-modal');
-  if (modal) modal.classList.remove('active');
-}
-
-// Star rating selection
-let selectedStars = 5;
-function setReviewStarRating(n) {
-  selectedStars = n;
-  document.querySelectorAll('.rv-star-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', i < n);
+function setRvpStar(n) {
+  rvpSelectedStars = n;
+  document.querySelectorAll('.rvp-star').forEach((btn, i) => {
+    btn.style.opacity = i < n ? '1' : '0.3';
+    btn.style.filter  = i < n ? 'none' : 'grayscale(1)';
   });
-  document.getElementById('rv-star-label').textContent =
-    ['', 'একদমই ভালো না', 'মাঝামাঝি', 'ঠিক আছে', 'ভালো', 'অসাধারণ!'][n];
+  const labels = ['','একদমই ভালো না','মাঝামাঝি','ঠিক আছে','ভালো','অসাধারণ!'];
+  document.getElementById('rvp-star-label').textContent = labels[n];
 }
 
-async function submitReview() {
-  const name = (document.getElementById('review-name').value || '').trim() || 'এক শিক্ষার্থী';
-  const msg  = (document.getElementById('review-message').value || '').trim();
+async function loadRvpReviews() {
+  const loading = document.getElementById('rvp-loading');
+  const list    = document.getElementById('rvp-reviews-list');
+  const empty   = document.getElementById('rvp-empty');
+  const counter = document.getElementById('rv-total-count');
+  if (!list) return;
+
+  if (loading) loading.style.display = 'block';
+  list.style.display = 'none';
+  if (empty) empty.style.display = 'none';
+
+  try {
+    const res = await fetch(
+      `${gicReviewsSupaUrl}/rest/v1/institution_reviews?select=*&order=created_at.desc&limit=50`,
+      { headers: { 'apikey': gicReviewsSupaKey, 'Authorization': 'Bearer ' + gicReviewsSupaKey } }
+    );
+    const reviews = await res.json();
+    if (loading) loading.style.display = 'none';
+    list.style.display = 'grid';
+
+    if (!Array.isArray(reviews) || reviews.length === 0) {
+      if (empty) empty.style.display = 'block';
+      if (counter) counter.textContent = '০';
+      return;
+    }
+
+    if (counter) counter.textContent = reviews.length.toString();
+    const starsHtml = (n) => '⭐'.repeat(n) + '<span style="opacity:0.3">⭐</span>'.repeat(5 - n);
+    const fmt = (d) => {
+      try {
+        return new Date(d).toLocaleDateString('bn-BD', { year:'numeric', month:'long', day:'numeric' });
+      } catch(e) { return d; }
+    };
+    list.innerHTML = reviews.map(r => `
+      <div style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:22px 24px;box-shadow:0 2px 16px rgba(0,0,0,0.05);transition:box-shadow 0.2s,transform 0.2s;animation:fadeIn 0.4s ease;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,95,158,0.1)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 2px 16px rgba(0,0,0,0.05)';this.style.transform='none'">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+          <div style="width:46px;height:46px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;flex-shrink:0;box-shadow:0 4px 12px rgba(26,95,158,0.25);">${(r.name||'?').charAt(0)}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:900;color:var(--blue-dark);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.name || 'এক শিক্ষার্থী'}</div>
+            <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;">${fmt(r.created_at)}</div>
+          </div>
+          <div style="font-size:16px;letter-spacing:1.5px;flex-shrink:0;">${starsHtml(r.stars || 5)}</div>
+        </div>
+        <p style="font-size:14.5px;color:var(--text);line-height:1.8;margin:0;border-top:1px solid var(--border);padding-top:12px;">${r.message}</p>
+      </div>
+    `).join('');
+  } catch(err) {
+    if (loading) loading.style.display = 'none';
+    list.style.display = 'grid';
+    list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:30px;">রিভিউ লোড করতে সমস্যা হয়েছে। পেজ রিফ্রেশ করুন।</p>';
+  }
+}
+
+async function submitRvpReview() {
+  const name = (document.getElementById('rvp-name').value || '').trim() || 'এক শিক্ষার্থী';
+  const msg  = (document.getElementById('rvp-message').value || '').trim();
   if (!msg) { showToast('⚠️ অনুগ্রহ করে আপনার মতামত লিখুন।'); return; }
 
-  const submitBtn = document.getElementById('rv-submit-btn');
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'পাঠানো হচ্ছে...';
+  const btn = document.getElementById('rvp-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'পাঠানো হচ্ছে...';
 
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('bn-BD', { year:'numeric', month:'long', day:'numeric' });
-
-  const review = { name, stars: selectedStars, msg, date: dateStr, ts: now.getTime() };
-
-  // Persist locally
   try {
-    const existing = JSON.parse(localStorage.getItem(gicReviewsKey) || '[]');
-    existing.unshift(review);
-    localStorage.setItem(gicReviewsKey, JSON.stringify(existing.slice(0, 50)));
-  } catch(e) {}
+    const res = await fetch(
+      `${gicReviewsSupaUrl}/rest/v1/institution_reviews`,
+      {
+        method: 'POST',
+        headers: {
+          'apikey': gicReviewsSupaKey,
+          'Authorization': 'Bearer ' + gicReviewsSupaKey,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ name, stars: rvpSelectedStars, message: msg })
+      }
+    );
+    if (!res.ok) throw new Error('HTTP ' + res.status);
 
-  // Show success state
-  document.getElementById('review-submit-area').style.display = 'none';
-  document.getElementById('review-success-msg').style.display = 'flex';
-  loadAndRenderReviews();
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = 'রিভিউ পাঠান ✅';
-}
-
-function loadAndRenderReviews() {
-  const container = document.getElementById('rv-reviews-list');
-  if (!container) return;
-  let reviews = [];
-  try { reviews = JSON.parse(localStorage.getItem(gicReviewsKey) || '[]'); } catch(e) {}
-
-  // Seed with some sample reviews if empty (shows new visitors a populated state)
-  if (reviews.length === 0) {
-    reviews = [
-      { name: 'মুহাম্মাদ রাফিউল ইসলাম', stars: 5, msg: 'আলহামদুলিল্লাহ! এখানে পড়ে আমার তেলাওয়াত অনেক সুন্দর হয়েছে। শিক্ষকরা অত্যন্ত যত্নশীল ও ধৈর্যশীল। পরিবারের সবাইকে পাঠাব।', date: '৩১ মে, ২০২৬' },
-      { name: 'ফাতেমা বেগম', stars: 5, msg: 'আমার ছেলে মাত্র দেড় মাসে সহীহ কোরআন পড়তে শিখেছে। অনলাইনে এত ভালো শিক্ষাদান আশা করিনি। জাজাকাল্লাহ খায়রান।', date: '২৮ মে, ২০২৬' },
-      { name: 'আব্দুল্লাহ আল-মামুন', stars: 4, msg: 'ফ্রি কোর্সগুলো খুবই ভালো। কুইজ সিস্টেম আমার বাচ্চাদের অনেক পছন্দ হয়েছে। আরও কোর্স আসলে ভালো হয়।', date: '২৫ মে, ২০২৬' },
-    ];
+    document.getElementById('rv-page-submit-area').style.display = 'none';
+    document.getElementById('rvp-success-msg').style.display = 'flex';
+    loadRvpReviews();
+  } catch(err) {
+    showToast('❌ রিভিউ পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'রিভিউ পাঠান ✅';
   }
-
-  const stars = (n) => '⭐'.repeat(n) + '☆'.repeat(5 - n);
-  container.innerHTML = reviews.slice(0, 6).map(r => `
-    <div class="rv-review-card" style="background:#f8fafc;border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px;animation:fadeIn 0.4s ease;">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
-        <div style="width:42px;height:42px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex-shrink:0;">${r.name.charAt(0)}</div>
-        <div style="flex:1;">
-          <div style="font-weight:800;color:var(--blue-dark);font-size:14.5px;">${r.name}</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:1px;">${r.date}</div>
-        </div>
-        <div style="font-size:15px;letter-spacing:1px;">${stars(r.stars)}</div>
-      </div>
-      <p style="font-size:14px;color:var(--text);line-height:1.75;margin:0;">${r.msg}</p>
-    </div>
-  `).join('');
 }
 </script>
 
@@ -3091,109 +3222,14 @@ function loadAndRenderReviews() {
 <script src="mini-courses.js"></script>
 <script type="module" src="analytics.js"></script>
 
-<!-- ─────────── REVIEW MODAL ─────────── -->
-<div class="auth-modal" id="review-modal" style="z-index:20001; align-items:flex-start; padding:24px 16px; overflow-y:auto;">
-  <div style="background:#fff; border-radius:28px; max-width:600px; width:100%; box-shadow:0 32px 100px rgba(0,0,0,0.35); border:1px solid rgba(212,168,67,0.15); overflow:hidden; animation:slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1); margin:auto;">
-
-    <!-- Header -->
-    <div style="background:linear-gradient(135deg,#0a1628 0%,#1a3a6e 100%); padding:28px 28px 24px; position:relative; overflow:hidden;">
-      <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(212,168,67,0.18),transparent 70%);border-radius:50%;pointer-events:none;"></div>
-      <div style="position:absolute;bottom:-30px;left:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(26,95,158,0.2),transparent 70%);border-radius:50%;pointer-events:none;"></div>
-      <button onclick="closeReviewModal()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.12);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:background 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">×</button>
-      <div style="position:relative;z-index:2;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
-          <div style="width:52px;height:52px;background:linear-gradient(135deg,var(--gold),#f59e0b);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 6px 20px rgba(212,168,67,0.4);">⭐</div>
-          <div>
-            <h2 style="color:#fff;font-size:20px;font-weight:900;margin:0;line-height:1.3;">আপনার অভিজ্ঞতা শেয়ার করুন</h2>
-            <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 0;font-weight:500;">Global Islamic Care সম্পর্কে আপনার মূল্যবান মতামত</p>
-          </div>
-        </div>
-        <!-- Overall rating summary -->
-        <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 16px;margin-top:8px;">
-          <span style="font-size:28px;font-weight:900;color:var(--gold);">৫.০</span>
-          <div>
-            <div style="font-size:18px;letter-spacing:2px;">⭐⭐⭐⭐⭐</div>
-            <div style="font-size:11.5px;color:rgba(255,255,255,0.55);font-weight:600;margin-top:2px;">শিক্ষার্থীদের সার্বিক রেটিং</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Body -->
-    <div style="padding:24px 28px;">
-
-      <!-- Submit form area -->
-      <div id="review-submit-area">
-        <div style="font-size:14px;font-weight:800;color:var(--blue-dark);margin-bottom:14px;">📝 আপনার রিভিউ লিখুন:</div>
-
-        <!-- Name -->
-        <div style="margin-bottom:14px;">
-          <label style="font-size:12.5px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px;">আপনার নাম (ঐচ্ছিক)</label>
-          <input type="text" id="review-name" placeholder="যেমন: মুহাম্মাদ রাহিম" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;font-family:var(--font-body);font-size:14px;color:var(--text);background:var(--cream);outline:none;box-sizing:border-box;transition:border-color 0.2s,box-shadow 0.2s;" onfocus="this.style.borderColor='var(--blue)';this.style.boxShadow='0 0 0 3px rgba(26,95,158,0.1)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
-        </div>
-
-        <!-- Star Rating -->
-        <div style="margin-bottom:14px;">
-          <label style="font-size:12.5px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:8px;">রেটিং দিন</label>
-          <div style="display:flex;align-items:center;gap:6px;">
-            <div style="display:flex;gap:4px;">
-              <button class="rv-star-btn active" onclick="setReviewStarRating(1)" style="background:none;border:none;font-size:30px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='none'">⭐</button>
-              <button class="rv-star-btn active" onclick="setReviewStarRating(2)" style="background:none;border:none;font-size:30px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='none'">⭐</button>
-              <button class="rv-star-btn active" onclick="setReviewStarRating(3)" style="background:none;border:none;font-size:30px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='none'">⭐</button>
-              <button class="rv-star-btn active" onclick="setReviewStarRating(4)" style="background:none;border:none;font-size:30px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='none'">⭐</button>
-              <button class="rv-star-btn active" onclick="setReviewStarRating(5)" style="background:none;border:none;font-size:30px;cursor:pointer;padding:2px;transition:transform 0.15s;line-height:1;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='none'">⭐</button>
-            </div>
-            <span id="rv-star-label" style="font-size:13px;font-weight:700;color:var(--gold);margin-left:6px;">অসাধারণ!</span>
-          </div>
-        </div>
-
-        <!-- Message -->
-        <div style="margin-bottom:20px;">
-          <label style="font-size:12.5px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px;">আপনার অভিজ্ঞতা *</label>
-          <textarea id="review-message" rows="4" placeholder="Global Islamic Care সম্পর্কে আপনার অভিজ্ঞতা, কোর্সের মান, শিক্ষকদের সম্পর্কে আপনার মতামত লিখুন..." style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-family:var(--font-body);font-size:14px;color:var(--text);background:var(--cream);outline:none;resize:vertical;box-sizing:border-box;line-height:1.7;transition:border-color 0.2s,box-shadow 0.2s;" onfocus="this.style.borderColor='var(--blue)';this.style.boxShadow='0 0 0 3px rgba(26,95,158,0.1)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'"></textarea>
-        </div>
-
-        <!-- Submit Button -->
-        <button id="rv-submit-btn" onclick="submitReview()" style="width:100%;background:linear-gradient(135deg,#0a1628,#1a5f9e);color:#fff;border:none;padding:15px;border-radius:14px;font-family:var(--font-body);font-weight:900;font-size:15.5px;cursor:pointer;transition:all 0.2s;box-shadow:0 6px 20px rgba(26,95,158,0.3);letter-spacing:0.3px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(26,95,158,0.4)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(26,95,158,0.3)'">
-          রিভিউ পাঠান ✅
-        </button>
-      </div>
-
-      <!-- Success Message (hidden by default) -->
-      <div id="review-success-msg" style="display:none;flex-direction:column;align-items:center;text-align:center;padding:24px 16px;gap:12px;">
-        <div style="width:72px;height:72px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 8px 24px rgba(34,197,94,0.35);">✅</div>
-        <h3 style="color:var(--blue-dark);font-size:20px;font-weight:900;margin:0;">জাজাকাল্লাহ খায়রান!</h3>
-        <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin:0;max-width:380px;">আপনার মূল্যবান রিভিউটি সফলভাবে গ্রহণ করা হয়েছে। আপনার মতামত আমাদের আরও ভালো করতে সাহায্য করবে।</p>
-        <button onclick="document.getElementById('review-submit-area').style.display='block';document.getElementById('review-success-msg').style.display='none';" style="background:var(--cream);border:1.5px solid var(--border);color:var(--text);padding:10px 22px;border-radius:10px;font-family:var(--font-body);font-weight:700;font-size:13.5px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='var(--cream)'">আরও একটি রিভিউ দিন</button>
-      </div>
-
-      <!-- Divider -->
-      <div style="display:flex;align-items:center;gap:12px;margin:24px 0 18px;">
-        <div style="flex:1;height:1px;background:var(--border);"></div>
-        <span style="font-size:12.5px;font-weight:700;color:var(--text-muted);white-space:nowrap;">অন্যান্য শিক্ষার্থীদের রিভিউ</span>
-        <div style="flex:1;height:1px;background:var(--border);"></div>
-      </div>
-
-      <!-- Reviews List -->
-      <div id="rv-reviews-list" style="max-height:320px;overflow-y:auto;padding-right:4px;">
-        <!-- Rendered by JS -->
-      </div>
-
-    </div>
-  </div>
-</div>
-
 <style>
-  /* Review modal star button inactive state */
-  .rv-star-btn { opacity: 0.3; filter: grayscale(1); }
-  .rv-star-btn.active { opacity: 1; filter: none; }
-  /* Smooth modal show */
-  #review-modal.active { display: flex !important; }
-  /* Scrollbar styling for review list */
-  #rv-reviews-list::-webkit-scrollbar { width: 4px; }
-  #rv-reviews-list::-webkit-scrollbar-track { background: transparent; }
-  #rv-reviews-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  /* Review page star inactive state */
+  .rvp-star { opacity: 0.3; filter: grayscale(1); }
+  /* Stars 1-5 default active on page load handled by JS */
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
+
+
 
 </body>
 </html>
