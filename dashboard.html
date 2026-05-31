@@ -285,6 +285,11 @@
     <span class="nav-icon">🔔</span> অ্যালার্ট <span id="alert-badge" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
   </div>
 
+  <div class="nav-section">কন্টেন্ট</div>
+  <div class="nav-item" onclick="switchTab('reviews')" id="nav-reviews">
+    <span class="nav-icon">⭐</span> রিভিউ ম্যানেজার <span id="review-badge" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
+  </div>
+
   <div class="sidebar-bottom">
     <div class="live-pill"><div class="dot"></div> লাইভ: <span id="sb-live">0</span> জন সক্রিয়</div>
     <button class="btn-logout" onclick="doLogout()">🚪 লগআউট</button>
@@ -831,6 +836,87 @@
 
     <div id="alerts-container">
       <div class="center-text">ডেটা লোড হচ্ছে...</div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: REVIEWS ═══ -->
+  <div class="tab-page" id="tab-reviews">
+    <div class="page-hdr">
+      <div>
+        <h1>⭐ রিভিউ ম্যানেজার</h1>
+        <p>ওয়েবসাইটে জমা দেওয়া সকল রিভিউ দেখুন এবং প্রয়োজনে মুছে ফেলুন</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="loadAdminReviews()">🔄 রিফ্রেশ</button>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stat-row" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:20px;">
+      <div class="stat-card gd">
+        <div class="stat-label">⭐ মোট রিভিউ</div>
+        <div class="stat-val text-gold" id="rv-total">0</div>
+        <div class="stat-sub">সংরক্ষিত রিভিউ</div>
+      </div>
+      <div class="stat-card g">
+        <div class="stat-label">🌟 গড় রেটিং</div>
+        <div class="stat-val text-green" id="rv-avg">—</div>
+        <div class="stat-sub">৫ এর মধ্যে</div>
+      </div>
+      <div class="stat-card p">
+        <div class="stat-label">⭐⭐⭐⭐⭐ ৫ তারকা</div>
+        <div class="stat-val" id="rv-5star">0</div>
+        <div class="stat-sub">সর্বোচ্চ রেটিং</div>
+      </div>
+      <div class="stat-card r">
+        <div class="stat-label">🗑️ মুছে ফেলা হয়েছে</div>
+        <div class="stat-val text-red" id="rv-deleted-count">0</div>
+        <div class="stat-sub">এই সেশনে</div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:16px;">
+      <input type="text" id="rv-search" class="search-inp" placeholder="🔍 নাম বা রিভিউ টেক্সট দিয়ে খুঁজুন..." oninput="filterAdminReviews()">
+      <select class="filter-sel" id="rv-star-filter" onchange="filterAdminReviews()">
+        <option value="all">সব রেটিং</option>
+        <option value="5">⭐⭐⭐⭐⭐ (৫ তারকা)</option>
+        <option value="4">⭐⭐⭐⭐ (৪ তারকা)</option>
+        <option value="3">⭐⭐⭐ (৩ তারকা)</option>
+        <option value="2">⭐⭐ (২ তারকা)</option>
+        <option value="1">⭐ (১ তারকা)</option>
+      </select>
+      <select class="filter-sel" id="rv-sort" onchange="filterAdminReviews()">
+        <option value="newest">সর্বশেষ আগে</option>
+        <option value="oldest">পুরনো আগে</option>
+        <option value="highest">সর্বোচ্চ রেটিং</option>
+        <option value="lowest">সর্বনিম্ন রেটিং</option>
+      </select>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div id="admin-reviews-loading" class="center-text" style="padding:40px;display:none;">
+      <div style="font-size:32px;margin-bottom:12px;">⏳</div>
+      <div>রিভিউ লোড হচ্ছে...</div>
+    </div>
+    <div id="admin-reviews-empty" class="center-text" style="padding:40px;display:none;">
+      <div style="font-size:48px;margin-bottom:12px;">📭</div>
+      <div>কোনো রিভিউ পাওয়া যায়নি</div>
+    </div>
+    <div id="admin-reviews-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;"></div>
+
+    <!-- Delete Confirm Modal -->
+    <div id="rv-delete-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9990;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+      <div style="background:#0d1726;border:1px solid rgba(244,63,94,0.3);border-radius:20px;padding:36px;max-width:420px;width:90%;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">🗑️</div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:#fff;">রিভিউ মুছে ফেলবেন?</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;line-height:1.6;">এই রিভিউটি স্থায়ীভাবে মুছে যাবে এবং ওয়েবসাইট থেকেও সরিয়ে দেওয়া হবে।</p>
+        <div id="rv-modal-preview" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left;font-size:13px;color:var(--text-muted);"></div>
+        <div style="display:flex;gap:12px;justify-content:center;">
+          <button class="btn btn-red" style="padding:11px 28px;font-size:14px;font-weight:700;" onclick="confirmDeleteReview()">🗑️ হ্যাঁ, মুছে ফেলুন</button>
+          <button class="btn" style="padding:11px 28px;font-size:14px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);" onclick="closeDeleteModal()">বাতিল করুন</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1577,6 +1663,234 @@ function switchTab(id) {
   document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
   document.getElementById("tab-" + id)?.classList.add("active");
   document.querySelector(`.nav-item[onclick="switchTab('${id}')"]`)?.classList.add("active");
+  if (id === 'reviews') loadAdminReviews();
+}
+
+// ══════════════════════════════════════════════════════
+// REVIEW MANAGER
+// ══════════════════════════════════════════════════════
+let allAdminReviews = [];
+let reviewToDelete = null;
+let deletedCount = 0;
+
+const RV_SUPA_URL = 'https://abpweawndpnaftkcsdcp.supabase.co';
+const RV_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y';
+
+async function loadAdminReviews() {
+  const loading = document.getElementById('admin-reviews-loading');
+  const empty   = document.getElementById('admin-reviews-empty');
+  const grid    = document.getElementById('admin-reviews-grid');
+  if (!grid) return;
+
+  loading.style.display = 'block';
+  empty.style.display   = 'none';
+  grid.innerHTML        = '';
+
+  try {
+    const res = await fetch(
+      `${RV_SUPA_URL}/rest/v1/institution_reviews?select=*&order=created_at.desc&limit=200`,
+      { headers: { 'apikey': RV_SUPA_KEY, 'Authorization': 'Bearer ' + RV_SUPA_KEY } }
+    );
+    const data = await res.json();
+    loading.style.display = 'none';
+
+    if (!Array.isArray(data) || data.length === 0) {
+      empty.style.display = 'block';
+      document.getElementById('rv-total').textContent = '0';
+      document.getElementById('rv-avg').textContent = '—';
+      document.getElementById('rv-5star').textContent = '0';
+      // Update sidebar badge
+      const badge = document.getElementById('review-badge');
+      if (badge) { badge.style.display = 'none'; }
+      return;
+    }
+
+    allAdminReviews = data;
+
+    // Compute stats
+    const total   = data.length;
+    const avgRaw  = data.reduce((s, r) => s + (r.stars || 5), 0) / total;
+    const five    = data.filter(r => (r.stars || 5) === 5).length;
+    document.getElementById('rv-total').textContent   = total;
+    document.getElementById('rv-avg').textContent     = avgRaw.toFixed(1) + ' ⭐';
+    document.getElementById('rv-5star').textContent   = five;
+    document.getElementById('rv-deleted-count').textContent = deletedCount;
+
+    // Update sidebar badge
+    const badge = document.getElementById('review-badge');
+    if (badge) { badge.style.display = 'inline'; badge.textContent = total; }
+
+    filterAdminReviews();
+  } catch(err) {
+    loading.style.display = 'none';
+    grid.innerHTML = `<div class="center-text" style="grid-column:1/-1;padding:30px;color:var(--red);">❌ রিভিউ লোড করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।</div>`;
+  }
+}
+
+function filterAdminReviews() {
+  const query     = (document.getElementById('rv-search')?.value || '').toLowerCase().trim();
+  const starVal   = document.getElementById('rv-star-filter')?.value || 'all';
+  const sortVal   = document.getElementById('rv-sort')?.value || 'newest';
+
+  let filtered = [...allAdminReviews];
+
+  if (query) {
+    filtered = filtered.filter(r =>
+      (r.name || '').toLowerCase().includes(query) ||
+      (r.message || '').toLowerCase().includes(query)
+    );
+  }
+
+  if (starVal !== 'all') {
+    filtered = filtered.filter(r => (r.stars || 5) === parseInt(starVal));
+  }
+
+  if (sortVal === 'newest')  filtered.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+  if (sortVal === 'oldest')  filtered.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+  if (sortVal === 'highest') filtered.sort((a,b) => (b.stars||5) - (a.stars||5));
+  if (sortVal === 'lowest')  filtered.sort((a,b) => (a.stars||5) - (b.stars||5));
+
+  renderAdminReviews(filtered);
+}
+
+function renderAdminReviews(reviews) {
+  const grid  = document.getElementById('admin-reviews-grid');
+  const empty = document.getElementById('admin-reviews-empty');
+  if (!grid) return;
+
+  if (reviews.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const fmt = (d) => {
+    try { return new Date(d).toLocaleDateString('bn-BD', { year:'numeric', month:'long', day:'numeric' }); }
+    catch(e) { return d; }
+  };
+
+  const starsDisplay = (n) => {
+    const filled = '⭐'.repeat(n);
+    const empty  = '☆'.repeat(5 - n);
+    return `<span style="color:var(--gold-light);font-size:15px;">${filled}</span><span style="opacity:0.35;font-size:15px;">${empty}</span>`;
+  };
+
+  const starColor = (n) => {
+    if (n >= 5) return 'rgba(16,185,129,0.12)';
+    if (n >= 4) return 'rgba(200,151,42,0.12)';
+    if (n >= 3) return 'rgba(249,115,22,0.12)';
+    return 'rgba(244,63,94,0.12)';
+  };
+
+  grid.innerHTML = reviews.map(r => `
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;"
+         onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(0,0,0,0.3)'"
+         onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <!-- Colored top accent by rating -->
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${starColor(r.stars||5)};border-radius:18px 18px 0 0;"></div>
+
+      <!-- Header: Avatar + Name + Date -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--blue),#1a5f9e);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;flex-shrink:0;">
+          ${(r.name || '?').charAt(0).toUpperCase()}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;color:#fff;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.name || 'অজ্ঞাত'}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${fmt(r.created_at)}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          ${starsDisplay(r.stars || 5)}
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${r.stars || 5}/৫</div>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div style="font-size:13.5px;color:var(--text-muted);line-height:1.75;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;margin-bottom:16px;">
+        "${r.message || ''}"
+      </div>
+
+      <!-- Footer: ID + Delete button -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <span style="font-size:11px;color:rgba(148,163,184,0.5);font-family:monospace;">ID: ${r.id}</span>
+        <button onclick="openDeleteModal(${r.id}, '${(r.name||'অজ্ঞাত').replace(/'/g,"\\'")}', '${(r.message||'').replace(/'/g,"\\'").replace(/\n/g,' ').substring(0,80)}...')"
+          style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:rgba(244,63,94,0.1);color:var(--red);border:1px solid rgba(244,63,94,0.25);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:inherit;"
+          onmouseover="this.style.background='var(--red)';this.style.color='#fff'"
+          onmouseout="this.style.background='rgba(244,63,94,0.1)';this.style.color='var(--red)'">
+          🗑️ ডিলিট করুন
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openDeleteModal(id, name, msgPreview) {
+  reviewToDelete = id;
+  const modal = document.getElementById('rv-delete-modal');
+  const preview = document.getElementById('rv-modal-preview');
+  if (preview) {
+    preview.innerHTML = `<strong style="color:#fff;">👤 ${name}</strong><br><span style="margin-top:6px;display:block;">${msgPreview}</span>`;
+  }
+  modal.style.display = 'flex';
+}
+
+function closeDeleteModal() {
+  document.getElementById('rv-delete-modal').style.display = 'none';
+  reviewToDelete = null;
+}
+
+async function confirmDeleteReview() {
+  if (!reviewToDelete) return;
+
+  const modal  = document.getElementById('rv-delete-modal');
+  const delBtn = modal.querySelector('button.btn-red');
+  delBtn.disabled = true;
+  delBtn.textContent = 'মুছছে...';
+
+  try {
+    const res = await fetch(
+      `${RV_SUPA_URL}/rest/v1/institution_reviews?id=eq.${reviewToDelete}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'apikey': RV_SUPA_KEY,
+          'Authorization': 'Bearer ' + RV_SUPA_KEY,
+          'Prefer': 'return=minimal'
+        }
+      }
+    );
+
+    if (!res.ok && res.status !== 204) throw new Error('HTTP ' + res.status);
+
+    // Remove from local array
+    allAdminReviews = allAdminReviews.filter(r => r.id !== reviewToDelete);
+    deletedCount++;
+
+    // Update stats
+    const total = allAdminReviews.length;
+    const avgRaw = total > 0 ? allAdminReviews.reduce((s, r) => s + (r.stars||5), 0) / total : 0;
+    const five   = allAdminReviews.filter(r => (r.stars||5) === 5).length;
+    document.getElementById('rv-total').textContent         = total;
+    document.getElementById('rv-avg').textContent           = total > 0 ? avgRaw.toFixed(1) + ' ⭐' : '—';
+    document.getElementById('rv-5star').textContent         = five;
+    document.getElementById('rv-deleted-count').textContent = deletedCount;
+
+    // Update sidebar badge
+    const badge = document.getElementById('review-badge');
+    if (badge) {
+      if (total > 0) { badge.style.display = 'inline'; badge.textContent = total; }
+      else badge.style.display = 'none';
+    }
+
+    closeDeleteModal();
+    filterAdminReviews();
+    toast('✅ রিভিউ সফলভাবে ডিলিট হয়েছে!', 'ok');
+  } catch(err) {
+    toast('❌ ডিলিট করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।', 'err');
+  } finally {
+    delBtn.disabled = false;
+    delBtn.textContent = '🗑️ হ্যাঁ, মুছে ফেলুন';
+  }
 }
 
 // ══════════════════════════════════════════════════════
