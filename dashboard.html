@@ -181,6 +181,8 @@
     /* ── PHONE LIST ── */
     .phone-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);padding:4px 10px;border-radius:20px;font-size:12px;cursor:pointer;transition:.2s;}
     .phone-chip:hover{background:var(--green);color:#fff;}
+    .email-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.2);padding:4px 10px;border-radius:20px;font-size:12px;cursor:pointer;transition:.2s;margin-bottom:4px;}
+    .email-chip:hover{background:#2563eb;color:#fff;}
 
     /* ── SCROLLABLE CONTAINER ── */
     .scroll-box{max-height:420px;overflow-y:auto;}
@@ -425,12 +427,13 @@
   <div class="tab-page" id="tab-leads">
     <div class="page-hdr">
       <div>
-        <h1>📱 লিডস ও ফোন নম্বর</h1>
-        <p>যারা রেজিস্ট্রেশন করেছে তাদের ফোন নম্বর — সংরক্ষণ ও ব্যবহার করুন</p>
+        <h1>👥 লিডস ও শিক্ষার্থী তথ্য</h1>
+        <p>যারা রেজিস্ট্রেশন করেছে তাদের ইমেইল ও ফোন নম্বর — সংরক্ষণ ও ব্যবহার করুন</p>
       </div>
       <div class="hdr-actions">
         <button class="btn btn-green" onclick="exportPhonesCSV()">📥 CSV ডাউনলোড</button>
         <button class="btn btn-gold" onclick="copyAllPhones()">📋 সব নম্বর কপি</button>
+        <button class="btn btn-blue" onclick="copyAllEmails()" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">📧 সব ইমেইল কপি</button>
         <button class="btn btn-purple" onclick="switchTab('whatsapp')">💬 WhatsApp টুল</button>
       </div>
     </div>
@@ -762,17 +765,17 @@
 
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">📱 ফোন নম্বর এক্সপোর্ট</div>
-        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">সব রেজিস্ট্রেশন করা স্টুডেন্টের ফোন নম্বর বিভিন্ন ফরম্যাটে ডাউনলোড করুন</p>
+        <div class="card-title">👥 যোগাযোগ তথ্য এক্সপোর্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">সব রেজিস্ট্রেশন করা স্টুডেন্টের ইমেইল ও ফোন নম্বর এক্সপোর্ট বা কপি করুন</p>
         <div style="display:flex;flex-direction:column;gap:10px;">
           <button class="btn btn-green" onclick="exportPhonesCSV()" style="justify-content:flex-start;">
-            📊 CSV ফরম্যাট — Excel-এ খুলতে পারবেন
-          </button>
-          <button class="btn btn-blue" onclick="exportPhonesExcel()" style="justify-content:flex-start;">
-            📋 টেক্সট ফরম্যাট — WhatsApp ব্রডকাস্টের জন্য
+            📊 CSV ফরম্যাট — Excel-এ খুলতে পারবেন (ফোন ও ইমেইল)
           </button>
           <button class="btn btn-gold" onclick="copyAllPhones()" style="justify-content:flex-start;">
-            📑 ক্লিপবোর্ডে কপি — সরাসরি পেস্ট করুন
+            📑 ক্লিপবোর্ডে সব ফোন নম্বর কপি
+          </button>
+          <button class="btn btn-blue" onclick="copyAllEmails()" style="justify-content:flex-start; background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">
+            📧 ক্লিপবোর্ডে সব ইমেইল কপি
           </button>
         </div>
       </div>
@@ -1243,9 +1246,11 @@ function renderLeads(filtered) {
       <td class="text-muted">${i+1}</td>
       <td><strong class="text-blue">${s.student_id||"—"}</strong></td>
       <td>
-        <span class="phone-chip" onclick="copyPhone('${s.phone||""}')" title="কপি করুন">
-          📱 ${s.phone||"নেই"}
-        </span>
+        <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">
+          ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করতে ক্লিক করুন">📱 ${s.phone}</span>` : ""}
+          ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>` : ""}
+          ${!s.phone && !s.email ? '<span style="color:var(--text-muted);">নেই</span>' : ""}
+        </div>
       </td>
       <td><span class="text-gold">⚡ ${s.xp||0} XP</span></td>
       <td>${s.chapters_completed_count||0} টি</td>
@@ -1262,7 +1267,7 @@ function filterLeads() {
   const q = document.getElementById("leads-search").value.toLowerCase();
   const f = document.getElementById("leads-filter").value;
   let list = allStudents.filter(s => {
-    const match = !q || (s.student_id||"").toLowerCase().includes(q) || (s.phone||"").includes(q);
+    const match = !q || (s.student_id||"").toLowerCase().includes(q) || (s.phone||"").includes(q) || (s.email||"").toLowerCase().includes(q);
     let statusOk = true;
     if (f === "active") statusOk = isActive(s);
     else if (f === "inactive") statusOk = !isActive(s);
@@ -1286,7 +1291,13 @@ function renderStudents(filtered) {
     <tr>
       <td class="text-muted">${i+1}</td>
       <td><strong class="text-blue">${s.student_id||"—"}</strong></td>
-      <td><span class="phone-chip" onclick="copyPhone('${s.phone||""}')" title="ক্লিক করে কপি করুন">📱 ${s.phone||"নেই"}</span></td>
+      <td>
+        <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">
+          ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করতে ক্লিক করুন">📱 ${s.phone}</span>` : ""}
+          ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>` : ""}
+          ${!s.phone && !s.email ? '<span style="color:var(--text-muted);">নেই</span>' : ""}
+        </div>
+      </td>
       <td><span class="text-gold">⚡ ${s.xp||0}</span></td>
       <td>${s.chapters_completed_count||0} টি চ্যাপ্টার</td>
       <td style="font-size:12px;">${formatDate(s.last_active)}</td>
@@ -1298,7 +1309,7 @@ function renderStudents(filtered) {
 function filterStudents() {
   const q = document.getElementById("stu-search").value.toLowerCase();
   const list = allStudents.filter(s =>
-    !q || (s.student_id||"").toLowerCase().includes(q) || (s.phone||"").includes(q)
+    !q || (s.student_id||"").toLowerCase().includes(q) || (s.phone||"").includes(q) || (s.email||"").toLowerCase().includes(q)
   );
   renderStudents(list);
 }
@@ -1518,19 +1529,19 @@ function quickWa() {
 // ══════════════════════════════════════════════════════
 function exportPhonesCSV() {
   if (!allStudents.length) { toast("কোনো ডেটা নেই", "err"); return; }
-  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,XP পয়েন্ট,চ্যাপ্টার,সর্বশেষ লগইন,স্ট্যাটাস"];
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,ইমেইল,XP পয়েন্ট,চ্যাপ্টার,সর্বশেষ লগইন,স্ট্যাটাস"];
   allStudents.forEach(s => {
-    rows.push(`${s.student_id||""},${s.phone||""},${s.xp||0},${s.chapters_completed_count||0},${s.last_active||""},${isActive(s)?"সক্রিয়":"নিষ্ক্রিয়"}`);
+    rows.push(`${s.student_id||""},${s.phone||""},${s.email||""},${s.xp||0},${s.chapters_completed_count||0},${s.last_active||""},${isActive(s)?"সক্রিয়":"নিষ্ক্রিয়"}`);
   });
   downloadCSV("GIC-Phone-Numbers.csv", rows.join("\n"));
-  previewReport("📱 ফোন নম্বর তালিকা", allStudents.map(s=>`${s.student_id}: ${s.phone}`));
+  previewReport("📱 শিক্ষার্থী যোগাযোগের তালিকা", allStudents.map(s=>`${s.student_id}: ${s.phone || s.email || "নেই"}`));
   toast("✅ CSV ডাউনলোড শুরু হয়েছে", "ok");
 }
 
 function exportStudentsCSV() {
   if (!allStudents.length) { toast("কোনো ডেটা নেই", "err"); return; }
-  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,XP,চ্যাপ্টার,সর্বশেষ লগইন"];
-  allStudents.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.xp||0},${s.chapters_completed_count||0},${s.last_active||""}`));
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,ইমেইল,XP,চ্যাপ্টার,সর্বশেষ লগইন"];
+  allStudents.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.email||""},${s.xp||0},${s.chapters_completed_count||0},${s.last_active||""}`));
   downloadCSV("GIC-Students.csv", rows.join("\n"));
   toast("✅ স্টুডেন্ট CSV ডাউনলোড হচ্ছে", "ok");
 }
@@ -1538,8 +1549,8 @@ function exportStudentsCSV() {
 function exportInactiveCSV() {
   const inactive = allStudents.filter(s=>!isActive(s)&&s.last_active);
   if (!inactive.length) { toast("কোনো নিষ্ক্রিয় স্টুডেন্ট নেই", "err"); return; }
-  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,সর্বশেষ লগইন"];
-  inactive.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.last_active||""}`));
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,ইমেইল,সর্বশেষ লগইন"];
+  inactive.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.email||""},${s.last_active||""}`));
   downloadCSV("GIC-Inactive-Students.csv", rows.join("\n"));
   toast(`✅ ${inactive.length} জন নিষ্ক্রিয় — CSV ডাউনলোড হচ্ছে`, "ok");
 }
@@ -1547,8 +1558,8 @@ function exportInactiveCSV() {
 function exportCompletedCSV() {
   const comp = allStudents.filter(hasCompleted);
   if (!comp.length) { toast("কোনো কমপ্লিট করা স্টুডেন্ট নেই", "err"); return; }
-  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,XP,চ্যাপ্টার"];
-  comp.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.xp||0},${s.chapters_completed_count||0}`));
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,ইমেইল,XP,চ্যাপ্টার"];
+  comp.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.email||""},${s.xp||0},${s.chapters_completed_count||0}`));
   downloadCSV("GIC-Completed-Students.csv", rows.join("\n"));
   toast(`✅ ${comp.length} জন কমপ্লিটেড স্টুডেন্ট CSV`, "ok");
 }
@@ -1583,12 +1594,23 @@ function exportSourceCSV() {
 function copyAllPhones() {
   const phones = allStudents.map(s=>s.phone||"").filter(Boolean).join("\n");
   if (!phones) { toast("কোনো ফোন নম্বর নেই", "err"); return; }
-  navigator.clipboard.writeText(phones).then(() => toast(`✅ ${allStudents.length}টি নম্বর কপি হয়েছে!`, "ok"));
+  navigator.clipboard.writeText(phones).then(() => toast(`✅ ${allStudents.filter(s=>s.phone).length}টি নম্বর কপি হয়েছে!`, "ok"));
+}
+
+function copyAllEmails() {
+  const emails = allStudents.map(s=>s.email||"").filter(Boolean).join("\n");
+  if (!emails) { toast("কোনো ইমেইল অ্যাড্রেস নেই", "err"); return; }
+  navigator.clipboard.writeText(emails).then(() => toast(`✅ ${allStudents.filter(s=>s.email).length}টি ইমেইল কপি হয়েছে!`, "ok"));
 }
 
 function copyPhone(ph) {
   if (!ph) return;
   navigator.clipboard.writeText(ph).then(() => toast("📱 " + ph + " কপি হয়েছে", "ok"));
+}
+
+function copyEmail(email) {
+  if (!email) return;
+  navigator.clipboard.writeText(email).then(() => toast("📧 " + email + " কপি হয়েছে", "ok"));
 }
 
 function downloadCSV(filename, content) {

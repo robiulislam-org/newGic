@@ -3162,20 +3162,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- Student Auth Modal -->
 <div class="auth-modal" id="student-auth-modal">
-  <div class="auth-modal-content">
+  <div class="auth-modal-content" style="max-width:420px;">
     <div class="auth-modal-header">
       <button class="auth-close" onclick="closeStudentAuth()">×</button>
       <h3>স্টুডেন্ট লগইন / নতুন আইডি</h3>
-      <p>আপনার মোবাইল নাম্বার দিয়ে লগইন করুন বা নতুন অ্যাকাউন্ট খুলুন।</p>
+      <p id="auth-modal-desc">আপনার ইমেইল বা মোবাইল নাম্বার দিয়ে লগইন করুন।</p>
     </div>
-    <div class="auth-modal-body">
-      <div class="auth-input-group">
-        <label>মোবাইল নাম্বার (ইংরেজিতে)</label>
-        <input type="tel" class="auth-input" id="auth-phone" placeholder="যেমন: 017XXXXX..." pattern="[0-9]*" maxlength="11">
+    <div class="auth-modal-body" style="padding: 24px;">
+      <!-- Auth Tabs -->
+      <div class="auth-tabs" style="display:flex; border-bottom:2px solid #e2e8f0; margin-bottom:20px;">
+        <button type="button" class="auth-tab-btn active" onclick="switchAuthTab('email')" id="tab-btn-email" style="flex:1; padding:12px; border:none; background:none; font-weight:700; color:var(--blue); border-bottom:3px solid var(--blue); cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; gap:6px; font-family:inherit;">📧 জিমেইল</button>
+        <button type="button" class="auth-tab-btn" onclick="switchAuthTab('phone')" id="tab-btn-phone" style="flex:1; padding:12px; border:none; background:none; font-weight:600; color:#64748b; border-bottom:3px solid transparent; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; gap:6px; font-family:inherit;">📱 মোবাইল</button>
       </div>
-      <div class="auth-loading" id="auth-loading"><div class="spinner"></div></div>
-      <button class="btn btn-blue btn-full" id="btn-submit-auth" onclick="submitStudentAuth()">কন্টিনিউ করুন</button>
-      <div class="auth-status" id="auth-status"></div>
+
+      <!-- Email Auth Form -->
+      <div id="auth-email-section">
+        <!-- Step 1: Request OTP -->
+        <div id="email-otp-step-1">
+          <div class="auth-input-group" style="margin-bottom:16px;">
+            <label style="display:block; margin-bottom:8px; font-weight:600; color:var(--text-color); font-size:14px;">জিমেইল/ইমেইল অ্যাড্রেস</label>
+            <input type="email" class="auth-input" id="auth-email" placeholder="যেমন: example@gmail.com">
+          </div>
+          <button class="btn btn-blue btn-full" id="btn-send-otp" onclick="sendEmailOTP()" style="width:100%;">ভেরিফিকেশন কোড পাঠান</button>
+        </div>
+        
+        <!-- Step 2: Verify OTP -->
+        <div id="email-otp-step-2" style="display:none;">
+          <p style="font-size:13px; color:#475569; margin-bottom:12px; line-height:1.5;">আপনার ইমেইলে একটি ৬-সংখ্যার ওটিপি কোড পাঠানো হয়েছে। কোডটি ভেরিফাই করুন।</p>
+          <div class="auth-input-group" style="margin-bottom:16px;">
+            <label style="display:block; margin-bottom:8px; font-weight:600; color:var(--text-color); font-size:14px;">৬-সংখ্যার ওটিপি (OTP) কোড</label>
+            <input type="text" class="auth-input" id="auth-otp" placeholder="যেমন: 123456" maxlength="6" style="text-align:center; font-family:monospace; letter-spacing:4px; font-weight:700; font-size:20px;">
+          </div>
+          <div style="display:flex; gap:10px; margin-bottom:15px;">
+            <button class="btn" onclick="resendEmailOTP()" style="flex:1; background:#e2e8f0; color:#475569; font-size:13px; font-weight:600; border-radius:10px; border:none; cursor:pointer; padding:12px;">আবার পাঠান</button>
+            <button class="btn btn-blue" id="btn-verify-otp" onclick="verifyEmailOTP()" style="flex:2; padding:12px; border-radius:10px; border:none; cursor:pointer;">ভেরিফাই করুন</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Auth Form (Old Method) -->
+      <div id="auth-phone-section" style="display:none;">
+        <div class="auth-input-group" style="margin-bottom:16px;">
+          <label style="display:block; margin-bottom:8px; font-weight:600; color:var(--text-color); font-size:14px;">মোবাইল নাম্বার (ইংরেজিতে)</label>
+          <input type="tel" class="auth-input" id="auth-phone" placeholder="যেমন: 017XXXXX..." pattern="[0-9]*" maxlength="11">
+        </div>
+        <button class="btn btn-blue btn-full" id="btn-submit-auth" onclick="submitStudentAuth()" style="width:100%;">কন্টিনিউ করুন</button>
+      </div>
+
+      <div class="auth-loading" id="auth-loading" style="display:none; text-align:center; margin-top:15px;"><div class="spinner"></div></div>
+      <div class="auth-status" id="auth-status" style="text-align:center; margin-top:12px; font-size:13px; font-weight:600; min-height:20px;"></div>
     </div>
   </div>
 </div>

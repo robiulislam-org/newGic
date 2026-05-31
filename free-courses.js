@@ -38,12 +38,15 @@ function updateAuthUI() {
   if (!authBar) return;
 
   if (studentSession && studentSession.student_id) {
+    const contactInfo = studentSession.email 
+      ? `জিমেইল: ${studentSession.email}` 
+      : `নম্বর: ${studentSession.phone || 'নেই'}`;
     authBar.innerHTML = `
       <div class="student-auth-info">
         <div class="student-avatar">${studentSession.student_id.slice(-2)}</div>
         <div class="student-details">
           <h4>স্টুডেন্ট আইডি: <span style="color:var(--gold);font-family:monospace;">${studentSession.student_id}</span></h4>
-          <p>নম্বর: ${studentSession.phone}</p>
+          <p>${contactInfo}</p>
         </div>
       </div>
       <button class="btn" style="background: transparent; border: 2px solid #ef4444; color: #ef4444; font-size: 13px; padding: 10px 20px; font-weight: 700; border-radius: 10px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ef4444';" onclick="logoutStudent()">লগআউট</button>
@@ -62,14 +65,221 @@ function updateAuthUI() {
   }
 }
 
+function switchAuthTab(type) {
+  const emailTab = document.getElementById('tab-btn-email');
+  const phoneTab = document.getElementById('tab-btn-phone');
+  const emailSection = document.getElementById('auth-email-section');
+  const phoneSection = document.getElementById('auth-phone-section');
+  
+  if (type === 'email') {
+    if (emailTab) {
+      emailTab.classList.add('active');
+      emailTab.style.color = 'var(--blue)';
+      emailTab.style.borderBottomColor = 'var(--blue)';
+      emailTab.style.fontWeight = '700';
+    }
+    if (phoneTab) {
+      phoneTab.classList.remove('active');
+      phoneTab.style.color = '#64748b';
+      phoneTab.style.borderBottomColor = 'transparent';
+      phoneTab.style.fontWeight = '600';
+    }
+    if (emailSection) emailSection.style.display = 'block';
+    if (phoneSection) phoneSection.style.display = 'none';
+  } else {
+    if (phoneTab) {
+      phoneTab.classList.add('active');
+      phoneTab.style.color = 'var(--blue)';
+      phoneTab.style.borderBottomColor = 'var(--blue)';
+      phoneTab.style.fontWeight = '700';
+    }
+    if (emailTab) {
+      emailTab.classList.remove('active');
+      emailTab.style.color = '#64748b';
+      emailTab.style.borderBottomColor = 'transparent';
+      emailTab.style.fontWeight = '600';
+    }
+    if (phoneSection) phoneSection.style.display = 'block';
+    if (emailSection) emailSection.style.display = 'none';
+  }
+  document.getElementById('auth-status').innerText = '';
+}
+
 function openStudentAuth() {
   document.getElementById('student-auth-modal').classList.add('active');
   document.getElementById('auth-status').innerText = '';
   document.getElementById('auth-phone').value = '';
+  document.getElementById('auth-email').value = '';
+  document.getElementById('auth-otp').value = '';
+  document.getElementById('email-otp-step-1').style.display = 'block';
+  document.getElementById('email-otp-step-2').style.display = 'none';
+  switchAuthTab('email');
 }
 
 function closeStudentAuth() {
   document.getElementById('student-auth-modal').classList.remove('active');
+}
+
+async function sendEmailOTP() {
+  const email = document.getElementById('auth-email').value.trim();
+  const statusEl = document.getElementById('auth-status');
+  const loader = document.getElementById('auth-loading');
+  const sendBtn = document.getElementById('btn-send-otp');
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    statusEl.className = 'auth-status error';
+    statusEl.innerText = 'দয়া করে সঠিক ইমেইল এড্রেস দিন।';
+    return;
+  }
+
+  statusEl.innerText = '';
+  if (loader) loader.style.display = 'block';
+  if (sendBtn) sendBtn.style.display = 'none';
+
+  try {
+    const response = await fetch(`${gicSupabaseUrl}/auth/v1/otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': gicSupabaseKey
+      },
+      body: JSON.stringify({
+        email: email,
+        create_user: true
+      })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.msg || errData.message || 'OTP sending failed');
+    }
+
+    statusEl.className = 'auth-status success';
+    statusEl.innerText = '✅ ইমেইলে ওটিপি কোড পাঠানো হয়েছে!';
+    
+    // Switch to step 2
+    document.getElementById('email-otp-step-1').style.display = 'none';
+    document.getElementById('email-otp-step-2').style.display = 'block';
+  } catch (error) {
+    statusEl.className = 'auth-status error';
+    statusEl.innerText = 'কোড পাঠাতে ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
+    console.error('OTP send error:', error);
+  } finally {
+    if (loader) loader.style.display = 'none';
+    if (sendBtn) sendBtn.style.display = 'block';
+  }
+}
+
+function resendEmailOTP() {
+  document.getElementById('email-otp-step-1').style.display = 'block';
+  document.getElementById('email-otp-step-2').style.display = 'none';
+  document.getElementById('auth-status').innerText = '';
+  sendEmailOTP();
+}
+
+async function verifyEmailOTP() {
+  const email = document.getElementById('auth-email').value.trim();
+  const token = document.getElementById('auth-otp').value.trim();
+  const statusEl = document.getElementById('auth-status');
+  const loader = document.getElementById('auth-loading');
+  const verifyBtn = document.getElementById('btn-verify-otp');
+
+  if (!token || token.length !== 6) {
+    statusEl.className = 'auth-status error';
+    statusEl.innerText = 'দয়া করে ৬-সংখ্যার ভেরিফিকেশন কোডটি দিন।';
+    return;
+  }
+
+  statusEl.innerText = '';
+  if (loader) loader.style.display = 'block';
+  if (verifyBtn) verifyBtn.style.display = 'none';
+
+  try {
+    // 1. Verify OTP with Supabase Auth
+    const response = await fetch(`${gicSupabaseUrl}/auth/v1/verify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': gicSupabaseKey
+      },
+      body: JSON.stringify({
+        email: email,
+        token: token,
+        type: 'email'
+      })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.msg || errData.message || 'ভেরিফিকেশন কোডটি সঠিক নয়।');
+    }
+
+    // 2. Call RPC to get/create student profile in GIC database
+    const dbResponse = await fetch(`${gicSupabaseUrl}/rest/v1/rpc/login_or_create_student_by_email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': gicSupabaseKey,
+        'Authorization': `Bearer ${gicSupabaseKey}`
+      },
+      body: JSON.stringify({ p_email: email })
+    });
+
+    if (!dbResponse.ok) throw new Error('ডাটাবেজ সার্ভার সমস্যা, আবার চেষ্টা করুন।');
+
+    const data = await dbResponse.json();
+
+    if (data.status === 'success') {
+      studentSession = {
+        student_id: data.student_id,
+        email: data.email,
+        phone: data.phone || ''
+      };
+      localStorage.setItem('gic_student_session', JSON.stringify(studentSession));
+
+      if (!data.is_new) {
+        totalXP = data.xp || 0;
+        completedChapters = data.completed_chapters || [];
+        streakCount = data.streak || 0;
+        localStorage.setItem('gic_xp', totalXP);
+        localStorage.setItem('gic_completed', JSON.stringify(completedChapters));
+        localStorage.setItem('gic_streak', streakCount);
+      }
+
+      // Handle referral bonus
+      const urlParams = new URLSearchParams(window.location.search);
+      const refId = urlParams.get('ref');
+      if (data.is_new && refId && refId !== data.student_id) {
+        addXP(50);
+        showToast('🎉 রেফারেল বোনাস! আপনি +50 XP পেয়েছেন!');
+        awardReferrer(refId);
+      }
+
+      statusEl.className = 'auth-status success';
+      statusEl.innerText = data.is_new
+        ? `✅ নতুন আইডি তৈরি হয়েছে! আপনার আইডি: ${data.student_id}`
+        : '✅ লগইন সফল হয়েছে! আপনার অগ্রগতি লোড হচ্ছে...';
+
+      updateAuthUI();
+      renderMiniCourses();
+
+      setTimeout(() => {
+        closeStudentAuth();
+        if (loader) loader.style.display = 'none';
+        if (verifyBtn) verifyBtn.style.display = 'block';
+        if (data.is_new) {
+          showIdReminderModal(data.student_id);
+        }
+      }, 2000);
+    } else {
+      throw new Error(data.message || 'Error');
+    }
+  } catch (error) {
+    statusEl.className = 'auth-status error';
+    statusEl.innerText = error.message || 'ভেরিফিকেশন সম্পন্ন করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।';
+    if (loader) loader.style.display = 'none';
+    if (verifyBtn) verifyBtn.style.display = 'block';
+  }
 }
 
 async function submitStudentAuth() {
@@ -85,8 +295,8 @@ async function submitStudentAuth() {
   }
 
   statusEl.innerText = '';
-  loader.style.display = 'block';
-  submitBtn.style.display = 'none';
+  if (loader) loader.style.display = 'block';
+  if (submitBtn) submitBtn.style.display = 'none';
 
   // Check referral from URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -141,8 +351,8 @@ async function submitStudentAuth() {
 
       setTimeout(() => {
         closeStudentAuth();
-        loader.style.display = 'none';
-        submitBtn.style.display = 'block';
+        if (loader) loader.style.display = 'none';
+        if (submitBtn) submitBtn.style.display = 'block';
         if (data.is_new) {
           showIdReminderModal(data.student_id);
         }
@@ -153,8 +363,8 @@ async function submitStudentAuth() {
   } catch (error) {
     statusEl.className = 'auth-status error';
     statusEl.innerText = 'সার্ভার সমস্যা, একটু পর আবার চেষ্টা করুন।';
-    loader.style.display = 'none';
-    submitBtn.style.display = 'block';
+    if (loader) loader.style.display = 'none';
+    if (submitBtn) submitBtn.style.display = 'block';
   }
 }
 
@@ -169,7 +379,7 @@ function showIdReminderModal(studentId) {
         <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:6px;">আপনার আইডি নম্বর</div>
         <div style="font-size:32px;font-weight:900;color:var(--gold);font-family:monospace;letter-spacing:4px;">${studentId}</div>
       </div>
-      <p style="color:rgba(255,255,255,0.8);font-size:14px;line-height:1.7;margin-bottom:20px;">⚠️ এই আইডি নম্বরটি <strong style="color:#f97316;">অবশ্যই মনে রাখুন বা লিখে রাখুন।</strong> পরের বার লগইন করতে আপনার ফোন নম্বর ব্যবহার করুন।</p>
+      <p style="color:rgba(255,255,255,0.8);font-size:14px;line-height:1.7;margin-bottom:20px;">⚠️ এই আইডি নম্বরটি <strong style="color:#f97316;">অবশ্যই মনে রাখুন বা লিখে রাখুন।</strong> পরের বার লগইন করতে আপনার ইমেইল বা ফোন নম্বর ব্যবহার করুন।</p>
       <button onclick="this.closest('[style*=fixed]').remove();" style="background:linear-gradient(135deg,var(--gold),#f59e0b);color:#000;padding:14px 32px;border-radius:10px;border:none;font-size:16px;font-weight:700;cursor:pointer;width:100%;">✅ বুঝেছি, শুরু করি!</button>
     </div>
   `;
