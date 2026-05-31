@@ -1,5 +1,5 @@
 /**
- * GIC HUB — COMPLETE COURSE DATABASE
+ * GLOBAL ISLAMIC CARE — COMPLETE COURSE DATABASE
  * -------------------------------------------------------------
  * Categories:
  * - 'pillars' (ইসলামের মূল ভিত্তি)
