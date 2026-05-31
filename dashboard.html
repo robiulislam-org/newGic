@@ -1235,7 +1235,16 @@ function renderTodayAnalytics() {
           <td><span class="${badgeClass}" style="font-size:11px;">${badgeLabel}</span></td>
           <td><span class="${e.page === "home" ? "pg-tag home" : "pg-tag"}">${e.page}</span></td>
           <td><span class="src-badge ${e.source}">${m.icon} ${m.label}</span></td>
-          <td>📍 ${e.city}, ${e.country}</td>
+          <td>
+            <div>📍 ${e.city}, ${e.country}</div>
+            ${e.ip_address ? `
+              <div style="font-size:10px; color:#64748b; margin-top:2.5px; display:flex; align-items:center; gap:4px;" title="${e.user_agent || ''}">
+                <span>📡 ${e.ip_address}</span>
+                <span>•</span>
+                <span>💻 ${getCleanDeviceName(e.user_agent)}</span>
+              </div>
+            ` : ""}
+          </td>
         </tr>`;
       }).join("");
     }
