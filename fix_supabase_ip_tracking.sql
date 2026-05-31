@@ -1,18 +1,14 @@
 -- =====================================================================
--- 🛠️ GIC Supabase Database Setup & Schema Fix Script
+-- 🛠️ GIC Database Upgrade: IP Tracking, Device Logging & Timezone Fix
 -- Copy and paste this into your Supabase SQL Editor and click RUN.
 -- =====================================================================
 
--- 1. Alter students table to ensure columns exist and phone is nullable
-alter table students alter column phone drop not null;
-alter table students add column if not exists email text;
-alter table students add column if not exists nid_number text default '';
+-- 1. Ensure last_ip and last_ua columns exist in students table
+alter table students add column if not exists last_ip text default '';
+alter table students add column if not exists last_ua text default '';
 
--- 2. Add unique index on email
-create unique index if not exists students_email_idx on students (email) where email is not null;
-
--- 3. Recreate login_or_create_student_by_email function with nid_number coalesce
-create or replace function login_or_create_student_by_email(p_email text)
+-- 2. Update login_or_create_student_by_email to accept and record IP & User Agent
+create or replace function login_or_create_student_by_email(p_email text, p_ip text default '', p_ua text default '')
 returns json
 security definer
 language plpgsql
@@ -27,6 +23,15 @@ begin
   select * into v_student from students where lower(email) = lower(p_email) limit 1;
   
   if found then
+    -- Update IP and User Agent on every sync/login
+    update students 
+    set 
+      last_ip = coalesce(nullif(p_ip, ''), last_ip),
+      last_ua = coalesce(nullif(p_ua, ''), last_ua),
+      updated_at = timezone('Asia/Dhaka', now())
+    where id = v_student.id
+    returning * into v_student;
+
     -- Existing student: return their data
     select json_build_object(
       'status', 'success',
@@ -48,9 +53,9 @@ begin
       exit when v_count = 0; -- ID is unique
     end loop;
     
-    -- Insert new student
-    insert into students (email, student_id)
-    values (lower(p_email), v_new_student_id)
+    -- Insert new student with email, IP, and User Agent
+    insert into students (email, student_id, last_ip, last_ua)
+    values (lower(p_email), v_new_student_id, p_ip, p_ua)
     returning * into v_student;
     
     select json_build_object(
@@ -71,7 +76,7 @@ begin
 end;
 $$;
 
--- 4. Recreate get_students_list function with email, phone, nid_number, and ISO dates
+-- 3. Recreate get_students_list to return IP, User Agent, and timezone-adjusted join/active dates
 create or replace function get_students_list(pass_code text)
 returns json
 security definer
@@ -92,12 +97,14 @@ begin
       coalesce(phone, '') as phone,
       coalesce(email, '') as email,
       coalesce(nid_number, '') as nid_number,
+      coalesce(last_ip, '') as last_ip,
+      coalesce(last_ua, '') as last_ua,
       xp,
       jsonb_array_length(completed_chapters) as chapters_completed_count,
       streak,
-      -- ISO format for reliable JS date comparison (today's logins detection)
-      to_char(created_at AT TIME ZONE 'Asia/Dhaka', 'YYYY-MM-DD"T"HH24:MI:SS') as join_date,
-      to_char(updated_at AT TIME ZONE 'Asia/Dhaka', 'YYYY-MM-DD"T"HH24:MI:SS') as last_active
+      -- Append timezone offset (+06:00) so JS parses it as Dhaka timezone correctly
+      to_char(created_at AT TIME ZONE 'Asia/Dhaka', 'YYYY-MM-DD"T"HH24:MI:SS+06:00') as join_date,
+      to_char(updated_at AT TIME ZONE 'Asia/Dhaka', 'YYYY-MM-DD"T"HH24:MI:SS+06:00') as last_active
     from students
     where phone is null or phone != 'global_mini_courses_data' -- Exclude global analytics storage row
     order by updated_at desc

@@ -1045,6 +1045,25 @@ const SUPA_URL = "https://abpweawndpnaftkcsdcp.supabase.co";
 const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y";
 const INACTIVE_DAYS = 7;
 
+function getCleanDeviceName(ua) {
+  if (!ua) return 'Unknown Device';
+  const uaLower = ua.toLowerCase();
+  let os = 'Device';
+  if (uaLower.includes('windows')) os = 'Windows';
+  else if (uaLower.includes('android')) os = 'Android';
+  else if (uaLower.includes('iphone') || uaLower.includes('ipad')) os = 'iOS';
+  else if (uaLower.includes('macintosh') || uaLower.includes('mac os')) os = 'macOS';
+  else if (uaLower.includes('linux')) os = 'Linux';
+
+  let browser = '';
+  if (uaLower.includes('chrome') || uaLower.includes('crios')) browser = 'Chrome';
+  else if (uaLower.includes('safari') && !uaLower.includes('chrome')) browser = 'Safari';
+  else if (uaLower.includes('firefox') || uaLower.includes('fxios')) browser = 'Firefox';
+  else if (uaLower.includes('edge') || uaLower.includes('edg')) browser = 'Edge';
+
+  return browser ? `${os} (${browser})` : os;
+}
+
 const SOURCE_META = {
   facebook:  { icon:'📘', color:'#4e9af7',  label:'Facebook' },
   youtube:   { icon:'▶️', color:'#ff5252',  label:'YouTube' },
@@ -1399,13 +1418,9 @@ function renderTodayLogins() {
   if (!tbody) return;
 
   // Today's date in Bangladesh timezone (UTC+6)
-  const now = new Date();
-  const bdOffset = 6 * 60; // minutes
-  const bdNow = new Date(now.getTime() + (bdOffset - now.getTimezoneOffset()) * 60000);
-  const todayStr = bdNow.toISOString().slice(0, 10); // YYYY-MM-DD
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dhaka' });
 
   // Filter students who registered/joined today
-  // join_date now comes as ISO format: '2026-05-31T17:05:00'
   const todayLogins = allStudents.filter(s => {
     const jd = s.join_date || '';
     if (!jd) return false;
@@ -1415,36 +1430,44 @@ function renderTodayLogins() {
   setText("today-new-logins", todayLogins.length);
 
   if (!todayLogins.length) {
-    tbody.innerHTML = `<tr class="empty-row"><td colspan="3">\u0986\u099c \u0995\u09c7\u0989 \u09b2\u0997\u0987\u09a8 \u0995\u09b0\u09c7\u09a8\u09bf</td></tr>`;
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="3">আজ কেউ লগইন করেননি</td></tr>`;
     return;
   }
 
   tbody.innerHTML = todayLogins.map(s => {
-    const contact = s.email
-      ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="\u0995\u09aa\u09bf \u0995\u09b0\u09c1\u09a8">\ud83d\udce7 ${s.email}</span>`
-      : s.phone
-        ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="\u0995\u09aa\u09bf \u0995\u09b0\u09c1\u09a8">\ud83d\udcf1 ${s.phone}</span>`
-        : `<span style="color:var(--text-muted)">\u2014</span>`;
-    // Format time from join_date ISO string
-    let timeStr = '\u2014';
+    const contact = `
+      <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">
+        ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করুন">📧 ${s.email}</span>` : ""}
+        ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করুন">📱 ${s.phone}</span>` : ""}
+        ${!s.email && !s.phone ? `<span style="color:var(--text-muted)">—</span>` : ""}
+        ${s.last_ip ? `
+          <div style="font-size:10px; color:#64748b; margin-top:2px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
+            <span>📡 ${s.last_ip}</span>
+            <span>•</span>
+            <span>💻 ${getCleanDeviceName(s.last_ua)}</span>
+          </div>
+        ` : ""}
+      </div>
+    `;
+    // Format time from join_date ISO string (always show exact BD time)
+    let timeStr = '—';
     if (s.join_date) {
       try {
         const d = new Date(s.join_date);
-        timeStr = d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+        timeStr = d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Dhaka' });
       } catch(e) { timeStr = s.join_date.slice(11, 16); }
     }
-    const badge = `<span class="status-badge active">\ud83c\udd95 \u09a8\u09a4\u09c1\u09a8</span>`;
+    const badge = `<span class="status-badge active">🆕 নতুন</span>`;
     return `<tr>
       <td>
         ${contact}
-        <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${s.student_id||'\u2014'}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${s.student_id||'—'}</div>
       </td>
-      <td style="font-size:12px;">\u0986\u099c ${timeStr}</td>
+      <td style="font-size:12px;">আজ ${timeStr}</td>
       <td>${badge}</td>
     </tr>`;
   }).join("");
 }
-
 
 function isActive(s) {
   if (!s.last_active) return false;
@@ -1496,6 +1519,13 @@ function renderLeads(filtered) {
           ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করতে ক্লিক করুন">📱 ${s.phone}</span>` : ""}
           ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>` : ""}
           ${!s.phone && !s.email ? '<span style="color:var(--text-muted);">নেই</span>' : ""}
+          ${s.last_ip ? `
+            <div style="font-size:10.5px; color:#64748b; margin-top:2px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
+              <span>📡 IP: <strong>${s.last_ip}</strong></span>
+              <span>•</span>
+              <span>💻 ${getCleanDeviceName(s.last_ua)}</span>
+            </div>
+          ` : ""}
         </div>
       </td>
       <td><span class="text-gold">⚡ ${s.xp||0} XP</span></td>
@@ -1542,6 +1572,13 @@ function renderStudents(filtered) {
           ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করতে ক্লিক করুন">📱 ${s.phone}</span>` : ""}
           ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>` : ""}
           ${!s.phone && !s.email ? '<span style="color:var(--text-muted);">নেই</span>' : ""}
+          ${s.last_ip ? `
+            <div style="font-size:10.5px; color:#64748b; margin-top:2px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
+              <span>📡 IP: <strong>${s.last_ip}</strong></span>
+              <span>•</span>
+              <span>💻 ${getCleanDeviceName(s.last_ua)}</span>
+            </div>
+          ` : ""}
         </div>
       </td>
       <td><span class="text-gold">⚡ ${s.xp||0}</span></td>

@@ -45,6 +45,21 @@ function getAuthClient() {
   return _gicAuthClient;
 }
 
+// Client IP tracker for security and device monitoring
+let clientIP = '';
+async function fetchClientIP() {
+  try {
+    const res = await fetch('https://api.ipify.org?format=json');
+    if (res.ok) {
+      const data = await res.json();
+      clientIP = data.ip || '';
+    }
+  } catch (e) {
+    console.warn('IP fetch failed:', e);
+  }
+}
+fetchClientIP();
+
 // ============================================================
 //  STUDENT AUTHENTICATION (SUPABASE)
 // ============================================================
@@ -157,6 +172,11 @@ async function _syncStudentSession(email) {
     return;
   }
 
+  // Ensure IP is fetched
+  if (!clientIP) {
+    await fetchClientIP().catch(() => {});
+  }
+
   showToast('🔄 গুগল লগইন সম্পন্ন হচ্ছে...');
   try {
     const dbResponse = await fetch(`${gicSupabaseUrl}/rest/v1/rpc/login_or_create_student_by_email`, {
@@ -166,7 +186,11 @@ async function _syncStudentSession(email) {
         'apikey': gicSupabaseKey,
         'Authorization': `Bearer ${gicSupabaseKey}`
       },
-      body: JSON.stringify({ p_email: email })
+      body: JSON.stringify({ 
+        p_email: email,
+        p_ip: clientIP,
+        p_ua: navigator.userAgent
+      })
     });
 
     if (!dbResponse.ok) throw new Error('ডাটাবেজ কানেকশন সমস্যা, আবার চেষ্টা করুন।');
