@@ -757,14 +757,35 @@ async function submitComment(courseId) {
 // ============================================================
 //  SHARE SYSTEM (Stunning Emojis & Formatted Ad Layout)
 // ============================================================
+function getCleanCourseShareUrl(courseId) {
+  let origin = window.location.origin;
+  let pathname = window.location.pathname;
+
+  // Handle local file preview or relative protocol origins
+  if (!origin || origin === 'null' || window.location.protocol === 'file:') {
+    origin = '';
+    pathname = window.location.href.split('?')[0];
+  }
+
+  // Remove /index.html if it's there to keep it short and professional
+  if (pathname.endsWith('/index.html')) {
+    pathname = pathname.slice(0, -10);
+  }
+
+  let shareUrl = origin + pathname + '?course=' + courseId;
+  if (studentSession && studentSession.student_id) {
+    shareUrl += '&ref=' + studentSession.student_id;
+  }
+  return shareUrl;
+}
+
 function openShareModal(courseId) {
   const cId = courseId || currentCourseId;
   const course = miniCoursesData.find(c => c.id === cId);
   const modal = document.getElementById('share-modal');
   if (!modal) return;
 
-  const shareUrl = window.location.origin + window.location.pathname + '?course=' + cId +
-    (studentSession ? '&ref=' + studentSession.student_id : '');
+  const shareUrl = getCleanCourseShareUrl(cId);
     
   const shareText = `📖 *${course.title}* — সম্পূর্ণ ফ্রি কোর্স (Global Islamic Care)!
 
@@ -776,15 +797,69 @@ function openShareModal(courseId) {
 ✨ নিজেকে ও পরিবারকে আলোকিত করতে আজই ফ্রিতে কোর্সটি শুরু করুন!
 👇 সরাসরি নিচে দেওয়া লিংকে ক্লিক করে যুক্ত হোন:`;
 
-  modal.querySelector('#share-wa').href = `https://wa.me/?text=${encodeURIComponent(shareText + '\n' + shareUrl)}`;
-  modal.querySelector('#share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
-  modal.querySelector('#share-tw').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
-  modal.querySelector('#share-copy').onclick = () => {
-    navigator.clipboard.writeText(shareText + '\n' + shareUrl).then(() => {
-      showToast('🔗 লিংক ও বিজ্ঞাপন কপি হয়েছে!');
-      addXP(3);
-    });
-  };
+  // Update modal preview details
+  const previewEmoji = modal.querySelector('#share-course-emoji');
+  if (previewEmoji) previewEmoji.textContent = course.icon || '📖';
+
+  const previewTitle = modal.querySelector('#share-course-title');
+  if (previewTitle) previewTitle.textContent = course.title;
+
+  const previewTagline = modal.querySelector('#share-course-tagline');
+  if (previewTagline) previewTagline.textContent = course.tagline;
+
+  // Update text field value
+  const urlInput = modal.querySelector('#share-url-input');
+  if (urlInput) {
+    urlInput.value = shareUrl;
+  }
+
+  // Configure social share links
+  const waBtn = modal.querySelector('#share-wa');
+  if (waBtn) waBtn.href = `https://wa.me/?text=${encodeURIComponent(shareText + '\n' + shareUrl)}`;
+
+  const fbBtn = modal.querySelector('#share-fb');
+  if (fbBtn) fbBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+
+  const twBtn = modal.querySelector('#share-tw');
+  if (twBtn) twBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+
+  // Set up copy link button behavior
+  const copyBtn = modal.querySelector('#share-copy');
+  if (copyBtn) {
+    // Reset copy button state styles
+    copyBtn.style.background = 'var(--blue)';
+    copyBtn.style.color = '#fff';
+    copyBtn.innerHTML = '<span>কপি করুন</span>';
+    
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        showToast('🔗 লিংক কপি হয়েছে!');
+        addXP(3);
+        
+        // Animate success state
+        copyBtn.style.background = '#22c55e';
+        copyBtn.innerHTML = '<span>কপি হয়েছে! ✓</span>';
+        
+        setTimeout(() => {
+          copyBtn.style.background = 'var(--blue)';
+          copyBtn.innerHTML = '<span>কপি করুন</span>';
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        // Fallback: manually select and copy from input field if clipboard API fails
+        if (urlInput) {
+          urlInput.select();
+          try {
+            document.execCommand('copy');
+            showToast('🔗 লিংক কপি হয়েছে!');
+            addXP(3);
+          } catch (e) {
+            showToast('⚠️ কপি করা সম্ভব হয়নি', 'error');
+          }
+        }
+      });
+    };
+  }
 
   modal.classList.add('active');
 }
@@ -1392,8 +1467,7 @@ function completeCourse() {
   spawnConfetti();
   spawnConfetti();
 
-  const shareUrl = window.location.origin + window.location.pathname + '?course=' + currentCourseId +
-    (studentSession ? '&ref=' + studentSession.student_id : '');
+  const shareUrl = getCleanCourseShareUrl(currentCourseId);
   const shareText = `🏆 আমি Global Islamic Care-এর ফ্রি "${course.title}" কোর্স সম্পন্ন করেছি! তুমিও শুরু করো — সম্পূর্ণ বিনামূল্যে! 🕌`;
 
   const modal = document.createElement('div');
@@ -1651,4 +1725,32 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateStreakCount();
   await fetchGlobalLikesAndComments();
   renderMiniCourses();
+
+  // ── Auto-open course from shared link ──
+  (function handleSharedCourseLink() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseParam = urlParams.get('course');
+    if (!courseParam) return;
+
+    const courseId = parseInt(courseParam, 10);
+    if (isNaN(courseId)) return;
+
+    const course = miniCoursesData.find(c => c.id === courseId);
+    if (!course) return;
+
+    // Navigate to the mini-courses page first (if not already active)
+    if (typeof showPage === 'function') {
+      showPage('mini-courses');
+    } else {
+      // Fallback: manually activate the page
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const mcPage = document.getElementById('page-mini-courses');
+      if (mcPage) mcPage.classList.add('active');
+    }
+
+    // Short delay so page renders before viewer opens
+    setTimeout(() => {
+      openCourseViewer(courseId);
+    }, 150);
+  })();
 });
