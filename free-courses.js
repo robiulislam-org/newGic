@@ -30,6 +30,21 @@ const gicSupabaseUrl = "https://abpweawndpnaftkcsdcp.supabase.co";
 const gicSupabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y";
 let studentSession = JSON.parse(localStorage.getItem('gic_student_session') || 'null');
 
+// Supabase auth client for PKCE session detection
+let _gicAuthClient = null;
+function getAuthClient() {
+  if (!_gicAuthClient && window.supabase) {
+    _gicAuthClient = window.supabase.createClient(gicSupabaseUrl, gicSupabaseKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    });
+  }
+  return _gicAuthClient;
+}
+
 // ============================================================
 //  STUDENT AUTHENTICATION (SUPABASE)
 // ============================================================
@@ -75,7 +90,7 @@ function closeStudentAuth() {
   document.getElementById('student-auth-modal').classList.remove('active');
 }
 
-function loginWithGoogle() {
+async function loginWithGoogle() {
   const loader = document.getElementById('auth-loading');
   if (loader) loader.style.display = 'block';
   
@@ -85,12 +100,122 @@ function loginWithGoogle() {
     statusEl.innerText = 'গুগল লগইন উইন্ডো খোলা হচ্ছে...';
   }
   
-  const redirectUrl = window.location.origin + window.location.pathname + window.location.search;
-  const authUrl = `${gicSupabaseUrl}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectUrl)}`;
-  window.location.href = authUrl;
+  const authClient = getAuthClient();
+  if (authClient) {
+    try {
+      const redirectUrl = window.location.origin + window.location.pathname + window.location.search;
+      const { error } = await authClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl
+        }
+      });
+      if (error) throw error;
+    } catch (err) {
+      console.error('Google Sign-In Error:', err);
+      showToast('❌ গুগল লগইন উইন্ডো খুলতে সমস্যা হয়েছে।');
+      if (loader) loader.style.display = 'none';
+    }
+  } else {
+    // Fallback to direct redirect
+    const redirectUrl = window.location.origin + window.location.pathname + window.location.search;
+    const authUrl = `${gicSupabaseUrl}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectUrl)}`;
+    window.location.href = authUrl;
+  }
 }
 
 async function checkOAuthCallback() {
+  const authClient = getAuthClient();
+  if (!authClient) {
+    await _checkLegacyHashCallback();
+    return;
+  }
+
+  // Handle PKCE code exchange or implicit session
+  try {
+    const { data: { session }, error } = await authClient.auth.getSession();
+    if (error) throw error;
+    if (session && session.user && session.user.email) {
+      await _syncStudentSession(session.user.email);
+    }
+  } catch (err) {
+    console.error('Supabase session fetch error:', err);
+  }
+
+  // Add auth state listener for dynamic updates/callbacks
+  authClient.auth.onAuthStateChange(async (event, session) => {
+    if (session && session.user && session.user.email) {
+      await _syncStudentSession(session.user.email);
+    }
+  });
+}
+
+// Helper: sync session email with local GIC student session
+async function _syncStudentSession(email) {
+  // Prevent duplicate syncing if we already have a session for the same email
+  if (studentSession && studentSession.email === email) {
+    return;
+  }
+
+  showToast('🔄 গুগল লগইন সম্পন্ন হচ্ছে...');
+  try {
+    const dbResponse = await fetch(`${gicSupabaseUrl}/rest/v1/rpc/login_or_create_student_by_email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': gicSupabaseKey,
+        'Authorization': `Bearer ${gicSupabaseKey}`
+      },
+      body: JSON.stringify({ p_email: email })
+    });
+
+    if (!dbResponse.ok) throw new Error('ডাটাবেজ কানেকশন সমস্যা, আবার চেষ্টা করুন।');
+    const data = await dbResponse.json();
+
+    if (data.status === 'success') {
+      studentSession = {
+        student_id: data.student_id,
+        email: data.email,
+        phone: data.phone || ''
+      };
+      localStorage.setItem('gic_student_session', JSON.stringify(studentSession));
+
+      if (!data.is_new) {
+        totalXP = data.xp || 0;
+        completedChapters = data.completed_chapters || [];
+        streakCount = data.streak || 0;
+        localStorage.setItem('gic_xp', totalXP);
+        localStorage.setItem('gic_completed', JSON.stringify(completedChapters));
+        localStorage.setItem('gic_streak', streakCount);
+      }
+
+      const refId = localStorage.getItem('gic_pending_referral');
+      if (data.is_new && refId && refId !== data.student_id) {
+        addXP(50);
+        showToast('🎉 রেফারেল বোনাস! আপনি +50 XP পেয়েছেন!');
+        awardReferrer(refId);
+        localStorage.removeItem('gic_pending_referral');
+      }
+
+      showToast(data.is_new ? `✅ নতুন আইডি তৈরি হয়েছে: ${data.student_id}` : '✅ লগইন সফল হয়েছে!');
+      
+      updateAuthUI();
+      renderMiniCourses();
+      
+      if (data.is_new) {
+        showIdReminderModal(data.student_id);
+      }
+    } else {
+      throw new Error(data.message || 'Error login');
+    }
+  } catch (error) {
+    console.error('Google Auth sync error:', error);
+    showToast('❌ গুগল লগইন ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+  }
+}
+
+// Fallback method for hash token parsing if Supabase script is absent
+async function _checkLegacyHashCallback() {
   const hash = window.location.hash;
   if (!hash || !hash.includes('access_token=')) return;
 
@@ -118,58 +243,9 @@ async function checkOAuthCallback() {
       const email = userData.email;
 
       if (!email) throw new Error('গুগল অ্যাকাউন্ট থেকে কোনো ইমেইল পাওয়া যায়নি।');
-
-      const dbResponse = await fetch(`${gicSupabaseUrl}/rest/v1/rpc/login_or_create_student_by_email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': gicSupabaseKey,
-          'Authorization': `Bearer ${gicSupabaseKey}`
-        },
-        body: JSON.stringify({ p_email: email })
-      });
-
-      if (!dbResponse.ok) throw new Error('ডাটাবেজ কানেকশন সমস্যা, আবার চেষ্টা করুন।');
-      const data = await dbResponse.json();
-
-      if (data.status === 'success') {
-        studentSession = {
-          student_id: data.student_id,
-          email: data.email,
-          phone: data.phone || ''
-        };
-        localStorage.setItem('gic_student_session', JSON.stringify(studentSession));
-
-        if (!data.is_new) {
-          totalXP = data.xp || 0;
-          completedChapters = data.completed_chapters || [];
-          streakCount = data.streak || 0;
-          localStorage.setItem('gic_xp', totalXP);
-          localStorage.setItem('gic_completed', JSON.stringify(completedChapters));
-          localStorage.setItem('gic_streak', streakCount);
-        }
-
-        const refId = localStorage.getItem('gic_pending_referral');
-        if (data.is_new && refId && refId !== data.student_id) {
-          addXP(50);
-          showToast('🎉 রেফারেল বোনাস! আপনি +50 XP পেয়েছেন!');
-          awardReferrer(refId);
-          localStorage.removeItem('gic_pending_referral');
-        }
-
-        showToast(data.is_new ? `✅ নতুন আইডি তৈরি হয়েছে: ${data.student_id}` : '✅ লগইন সফল হয়েছে!');
-        
-        updateAuthUI();
-        renderMiniCourses();
-        
-        if (data.is_new) {
-          showIdReminderModal(data.student_id);
-        }
-      } else {
-        throw new Error(data.message || 'Error login');
-      }
+      await _syncStudentSession(email);
     } catch (error) {
-      console.error('Google Auth callback error:', error);
+      console.error('Google Auth legacy callback error:', error);
       showToast('❌ গুগল লগইন ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
     }
   }
@@ -223,6 +299,12 @@ function logoutStudent() {
   localStorage.removeItem('gic_likes');
   localStorage.removeItem('gic_comments');
   localStorage.removeItem('gic_last_visit');
+
+  // Sign out from Supabase Auth client to clear cookies/session
+  const authClient = getAuthClient();
+  if (authClient) {
+    authClient.auth.signOut().catch(err => console.error('Supabase signOut error:', err));
+  }
 
   updateAuthUI();
   renderMiniCourses();
