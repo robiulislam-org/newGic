@@ -258,8 +258,11 @@
   </div>
 
   <div class="nav-section">মূল মেনু</div>
-  <div class="nav-item active" onclick="switchTab('analytics')">
-    <span class="nav-icon">📊</span> অ্যানালিটিক্স
+  <div class="nav-item active" onclick="switchTab('today')">
+    <span class="nav-icon">📅</span> আজকের অ্যানালিটিক্স
+  </div>
+  <div class="nav-item" onclick="switchTab('analytics')">
+    <span class="nav-icon">📊</span> সামগ্রিক অ্যানালিটিক্স
   </div>
   <div class="nav-item" onclick="switchTab('leads')">
     <span class="nav-icon">📱</span> লিডস ও ফোন নম্বর
@@ -301,8 +304,114 @@
 <!-- ══════════════ MAIN CONTENT ══════════════ -->
 <div id="main-content">
 
+  <!-- ═══ TAB: TODAY ANALYTICS ═══ -->
+  <div class="tab-page active" id="tab-today">
+    <div class="page-hdr">
+      <div>
+        <h1>📅 আজকের অ্যানালিটিক্স</h1>
+        <p>আজকের দিনের পেজ ভিউ, কনভার্সন এবং লাইভ অ্যাক্টিভিটি টাইমলাইন</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="refreshAll()">🔄 রিফ্রেশ</button>
+      </div>
+    </div>
+
+    <!-- Stat Cards Row -->
+    <div class="stat-row">
+      <div class="stat-card g">
+        <div class="stat-label">🟢 এখন সক্রিয় ভিজিটর</div>
+        <div class="stat-val live" id="today-live">0</div>
+        <div class="stat-sub">রিয়েল-টাইম প্রেজেন্স</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">👁️ আজকের পেজ ভিউ</div>
+        <div class="stat-val" id="today-views">0</div>
+        <div class="stat-sub">আজকের মোট ভিজিট সংখ্যা</div>
+      </div>
+      <div class="stat-card gd">
+        <div class="stat-label">💬 আজকের WhatsApp ক্লিক</div>
+        <div class="stat-val" id="today-wa">0</div>
+        <div class="stat-sub">কনভার্সন হার: <span id="today-cvr">0%</span></div>
+      </div>
+      <div class="stat-card p">
+        <div class="stat-label">🆕 আজকের নতুন লগইন</div>
+        <div class="stat-val" id="today-new-logins">0</div>
+        <div class="stat-sub">গুগল দিয়ে যোগ দিয়েছে</div>
+      </div>
+      <div class="stat-card t">
+        <div class="stat-label">⏱️ সর্বোচ্চ সময় পেজ</div>
+        <div class="stat-val" id="today-top-time" style="font-size:16px;">—</div>
+        <div class="stat-sub">গড় সময় অনুযায়ী</div>
+      </div>
+    </div>
+
+    <!-- Live Visitors + Today New Logins -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">
+          <span>🟢 এখন সাইটে আছেন</span>
+          <span class="sub" id="live-count-lbl">০ জন সক্রিয়</span>
+        </div>
+        <div class="scroll-box">
+          <table>
+            <thead><tr><th>অঞ্চল</th><th>পেজ</th><th>সোর্স</th></tr></thead>
+            <tbody id="today-live-tbl"><tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span>🆕 আজকের নতুন জিমেইল লগইন</span>
+          <span class="sub">যারা আজ প্রথমবার লগইন করেছে</span>
+        </div>
+        <div class="scroll-box">
+          <table>
+            <thead><tr><th>জিমেইল / আইডি</th><th>যোগদান</th><th>স্ট্যাটাস</th></tr></thead>
+            <tbody id="today-logins-tbl"><tr class="empty-row"><td colspan="3">আজ কেউ লগইন করেনি</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's Details: Source and Top Pages -->
+    <div class="grid-2 mt20">
+      <div class="card">
+        <div class="card-title">🌐 আজকের ট্রাফিক সোর্স</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>সোর্স</th><th>ভিজিট</th><th>শেয়ার</th></tr></thead>
+            <tbody id="today-sources-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📄 আজকের সর্বাধিক দেখা পেজসমূহ</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>পেজ</th><th>ভিউ</th><th>গড় সময়</th></tr></thead>
+            <tbody id="today-pages-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's Events Timeline -->
+    <div class="card mt20">
+      <div class="card-title">
+        <span>📜 আজকের অ্যাক্টিভিটি লগ (সর্বশেষ ৫০টি কাজ)</span>
+        <span class="sub">রিয়েল-টাইমে ভিজিটরদের দ্বারা হওয়া কাজগুলোর তালিকা</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>সময়</th><th>কাজের ধরণ</th><th>পেজ</th><th>সোর্স/উৎস</th><th>অঞ্চল/লোকেশন</th></tr></thead>
+          <tbody id="today-events-tbl"><tr class="empty-row"><td colspan="5">আজকের কোনো অ্যাক্টিভিটি নেই</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ TAB: ANALYTICS ═══ -->
-  <div class="tab-page active" id="tab-analytics">
+  <div class="tab-page" id="tab-analytics">
     <div class="page-hdr">
       <div>
         <h1>📊 ভিজিটর অ্যানালিটিক্স</h1>
@@ -486,7 +595,7 @@
             <tr>
               <th>#</th>
               <th>স্টুডেন্ট আইডি</th>
-              <th>ফোন নম্বর</th>
+              <th>জিমেইল / ফোন</th>
               <th>XP পয়েন্ট</th>
               <th>চ্যাপ্টার</th>
               <th>সর্বশেষ লগইন</th>
@@ -536,7 +645,7 @@
             <tr>
               <th>#</th>
               <th>স্টুডেন্ট আইডি</th>
-              <th>মোবাইল নম্বর</th>
+              <th>জিমেইল / ফোন</th>
               <th>XP পয়েন্ট</th>
               <th>সম্পন্ন চ্যাপ্টার</th>
               <th>সর্বশেষ লগইন</th>
@@ -1021,14 +1130,97 @@ function processData(stats) {
     sourceToday: stats.traffic_sources_today || [],
     timeToday: stats.page_time_today || [],
     topPages: stats.top_pages || [],
+    topPagesToday: stats.top_pages_today || [],
+    todayEvents: stats.today_events || [],
   };
 
+  renderTodayAnalytics();
   renderAnalytics();
   renderFunnel();
   renderCampaigns();
   buildAlerts();
   updateWaStats();
   updateWaBtnLabel();
+}
+
+function renderTodayAnalytics() {
+  const { todayViews, todayWa, sourceToday, timeToday, topPagesToday, todayEvents } = allTraffic;
+  const cvr = todayViews > 0 ? ((todayWa / todayViews) * 100).toFixed(1) : "0.0";
+
+  setText("today-views", todayViews.toLocaleString("bn-BD"));
+  setText("today-wa", todayWa.toLocaleString("bn-BD"));
+  setText("today-cvr", cvr + "%");
+
+  if (timeToday.length > 0) {
+    const t = timeToday[0];
+    const mn = Math.floor(t.avg_seconds / 60), sc = t.avg_seconds % 60;
+    setText("today-top-time", t.page + " (" + (mn > 0 ? mn + "m " : "") + sc + "s)");
+  } else {
+    setText("today-top-time", "—");
+  }
+
+  // 1. Today's Sources Table
+  const tbodySrc = document.getElementById("today-sources-tbl");
+  if (tbodySrc) {
+    if (!sourceToday || !sourceToday.length) {
+      tbodySrc.innerHTML = emptyRow(3);
+    } else {
+      const total = sourceToday.reduce((s, r) => s + Number(r.count), 0);
+      tbodySrc.innerHTML = sourceToday.map(s => {
+        const m = SOURCE_META[s.source] || SOURCE_META.other;
+        const pct = total > 0 ? ((Number(s.count) / total) * 100).toFixed(1) : 0;
+        return `<tr>
+          <td><span class="src-badge ${s.source}">${m.icon} ${m.label}</span></td>
+          <td class="fw700">${Number(s.count).toLocaleString("bn-BD")}</td>
+          <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${m.color};"></div></div><span class="bar-lbl" style="color:${m.color};">${pct}%</span></div></td>
+        </tr>`;
+      }).join("");
+    }
+  }
+
+  // 2. Today's Top Pages Table
+  const tbodyPages = document.getElementById("today-pages-tbl");
+  if (tbodyPages) {
+    if (!topPagesToday || !topPagesToday.length) {
+      tbodyPages.innerHTML = emptyRow(3);
+    } else {
+      tbodyPages.innerHTML = topPagesToday.map(p => {
+        const ptStat = allPageTimes.find(x => x.page === p.page);
+        let timeStr = "—";
+        if (ptStat) {
+          const s = Number(ptStat.avg_seconds), m = Math.floor(s / 60);
+          timeStr = m > 0 ? `${m}m ${s % 60}s` : `${s}s`;
+        }
+        const cls = p.page === "home" ? "pg-tag home" : "pg-tag";
+        return `<tr>
+          <td><span class="${cls}">${p.page}</span></td>
+          <td class="fw700">${Number(p.count).toLocaleString("bn-BD")}</td>
+          <td class="text-gold">${timeStr}</td>
+        </tr>`;
+      }).join("");
+    }
+  }
+
+  // 3. Today's Events Timeline
+  const tbodyEvts = document.getElementById("today-events-tbl");
+  if (tbodyEvts) {
+    if (!todayEvents || !todayEvents.length) {
+      tbodyEvts.innerHTML = emptyRow(5);
+    } else {
+      tbodyEvts.innerHTML = todayEvents.map(e => {
+        const m = SOURCE_META[e.source] || SOURCE_META.direct;
+        const badgeClass = e.event_type === "whatsapp_click" ? "status-badge active" : "status-badge warn";
+        const badgeLabel = e.event_type === "whatsapp_click" ? "💬 WhatsApp" : "👁️ পেজ ভিউ";
+        return `<tr>
+          <td class="text-muted" style="font-family:monospace;">${e.time}</td>
+          <td><span class="${badgeClass}" style="font-size:11px;">${badgeLabel}</span></td>
+          <td><span class="${e.page === "home" ? "pg-tag home" : "pg-tag"}">${e.page}</span></td>
+          <td><span class="src-badge ${e.source}">${m.icon} ${m.label}</span></td>
+          <td>📍 ${e.city}, ${e.country}</td>
+        </tr>`;
+      }).join("");
+    }
+  }
 }
 
 function renderAnalytics() {
@@ -1197,8 +1389,62 @@ async function loadStudents() {
     updateWaStats();
     updateWaBtnLabel();
     buildAlerts();
+    renderTodayLogins(); // show today's new logins in today tab
   } catch(e) { console.error("Students load failed", e); }
 }
+
+// Render today's new logins in the today tab
+function renderTodayLogins() {
+  const tbody = document.getElementById("today-logins-tbl");
+  if (!tbody) return;
+
+  // Today's date in Bangladesh timezone (UTC+6)
+  const now = new Date();
+  const bdOffset = 6 * 60; // minutes
+  const bdNow = new Date(now.getTime() + (bdOffset - now.getTimezoneOffset()) * 60000);
+  const todayStr = bdNow.toISOString().slice(0, 10); // YYYY-MM-DD
+
+  // Filter students who registered/joined today
+  // join_date now comes as ISO format: '2026-05-31T17:05:00'
+  const todayLogins = allStudents.filter(s => {
+    const jd = s.join_date || '';
+    if (!jd) return false;
+    return jd.startsWith(todayStr);
+  });
+
+  setText("today-new-logins", todayLogins.length);
+
+  if (!todayLogins.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="3">\u0986\u099c \u0995\u09c7\u0989 \u09b2\u0997\u0987\u09a8 \u0995\u09b0\u09c7\u09a8\u09bf</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = todayLogins.map(s => {
+    const contact = s.email
+      ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="\u0995\u09aa\u09bf \u0995\u09b0\u09c1\u09a8">\ud83d\udce7 ${s.email}</span>`
+      : s.phone
+        ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="\u0995\u09aa\u09bf \u0995\u09b0\u09c1\u09a8">\ud83d\udcf1 ${s.phone}</span>`
+        : `<span style="color:var(--text-muted)">\u2014</span>`;
+    // Format time from join_date ISO string
+    let timeStr = '\u2014';
+    if (s.join_date) {
+      try {
+        const d = new Date(s.join_date);
+        timeStr = d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+      } catch(e) { timeStr = s.join_date.slice(11, 16); }
+    }
+    const badge = `<span class="status-badge active">\ud83c\udd95 \u09a8\u09a4\u09c1\u09a8</span>`;
+    return `<tr>
+      <td>
+        ${contact}
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${s.student_id||'\u2014'}</div>
+      </td>
+      <td style="font-size:12px;">\u0986\u099c ${timeStr}</td>
+      <td>${badge}</td>
+    </tr>`;
+  }).join("");
+}
+
 
 function isActive(s) {
   if (!s.last_active) return false;
@@ -1642,11 +1888,24 @@ function startLiveTracking() {
     const count = list.length;
     setText("m-live", count);
     setText("sb-live", count);
+    setText("today-live", count);
 
+    // Update live-count-lbl
+    const lbl = document.getElementById("live-count-lbl");
+    if (lbl) lbl.textContent = count + " জন সক্রিয়";
+
+    // Update analytics tab live table
     const tbody = document.getElementById("live-tbl");
-    if (!list.length) { tbody.innerHTML = `<tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr>`; return; }
+    // Update today tab live table
+    const todayLiveTbl = document.getElementById("today-live-tbl");
+
+    if (!list.length) {
+      if (tbody) tbody.innerHTML = `<tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr>`;
+      if (todayLiveTbl) todayLiveTbl.innerHTML = `<tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr>`;
+      return;
+    }
     list.sort((a,b) => new Date(b.joined_at)-new Date(a.joined_at));
-    tbody.innerHTML = list.map(u => {
+    const rows = list.map(u => {
       const m = SOURCE_META[u.referrer_source]||SOURCE_META.direct;
       return `<tr>
         <td>📍 ${u.city||"Unknown"}, ${u.country||"?"}</td>
@@ -1654,6 +1913,8 @@ function startLiveTracking() {
         <td><span class="src-badge ${u.referrer_source||"direct"}">${m.icon} ${m.label}</span></td>
       </tr>`;
     }).join("");
+    if (tbody) tbody.innerHTML = rows;
+    if (todayLiveTbl) todayLiveTbl.innerHTML = rows;
   }).subscribe();
 }
 

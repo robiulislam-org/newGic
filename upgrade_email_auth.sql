@@ -68,7 +68,7 @@ begin
 end;
 $$;
 
--- 4. Recreate get_students_list function to include email and handle null phone numbers (removed non-existent nid_number column)
+-- 4. Recreate get_students_list function (with ISO created_at for today's login detection)
 create or replace function get_students_list(pass_code text)
 returns json
 security definer
@@ -76,7 +76,7 @@ language plpgsql
 as $$
 declare
   result json;
-  expected_password text := 'gicadmin786'; -- Should match admin password in config
+  expected_password text := 'gicadmin786';
 begin
   -- Validate password
   if pass_code != expected_password then
@@ -91,11 +91,12 @@ begin
       xp,
       jsonb_array_length(completed_chapters) as chapters_completed_count,
       streak,
-      to_char(created_at, 'DD Mon YYYY, HH:MI AM') as join_date,
-      to_char(updated_at, 'DD Mon YYYY, HH:MI AM') as last_active
+      -- ISO format for reliable JS date comparison (today's logins detection)
+      to_char(created_at AT TIME ZONE 'Asia/Dhaka', 'YYYY-MM-DD"T"HH24:MI:SS') as join_date,
+      to_char(updated_at AT TIME ZONE 'Asia/Dhaka', 'YYYY-MM-DD"T"HH24:MI:SS') as last_active
     from students
     where phone is null or phone != 'global_mini_courses_data' -- Exclude global analytics storage row
-    order by updated_at desc
+    order by created_at desc
   ) t into result;
 
   return coalesce(result, '[]'::json);
