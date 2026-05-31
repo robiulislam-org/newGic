@@ -68,7 +68,7 @@ begin
 end;
 $$;
 
--- 4. Recreate get_students_list function to include email and handle null phone numbers
+-- 4. Recreate get_students_list function to include email and handle null phone numbers (removed non-existent nid_number column)
 create or replace function get_students_list(pass_code text)
 returns json
 security definer
@@ -88,7 +88,6 @@ begin
       student_id,
       coalesce(phone, '') as phone,
       coalesce(email, '') as email,
-      coalesce(nid_number, '') as nid_number,
       xp,
       jsonb_array_length(completed_chapters) as chapters_completed_count,
       streak,
