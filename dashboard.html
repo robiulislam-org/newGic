@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -1187,18 +1187,48 @@ document.getElementById("login-form").addEventListener("submit", async e => {
 });
 
 async function attemptLogin(pwd) {
+  const btn   = document.querySelector('#login-form button[type=submit]');
+  const errEl = document.getElementById('login-err');
+  const resetBtn  = () => { if (btn)   { btn.textContent = '🔐 প্রবেশ করুন'; btn.disabled = false; } };
+  const showErr   = (m) => { if (errEl){ errEl.textContent = m; errEl.style.display = 'block'; setTimeout(() => errEl.style.display = 'none', 5000); } };
+  if (btn) { btn.textContent = '⏳ যাচাই করছি...'; btn.disabled = true; }
+
   try {
-    const { data, error } = await db.rpc("get_analytics_summary", { pass_code: pwd });
-    if (error) throw error;
-    if (data) {
-      authPwd = pwd;
-      sessionStorage.setItem("gic_admin_pwd", pwd);
-      showDashboard(data);
-      return true;
+    // ── Step 1: Fast password-only check ──────────────────────────────
+    const { data: ok, error: authErr } = await db.rpc('get_admin_auth', { pass_code: pwd });
+
+    if (authErr) {
+      // get_admin_auth not yet added to Supabase — fallback directly to analytics
+      console.warn('get_admin_auth not available, using analytics fallback');
+      const { data: fbData, error: fbErr } = await db.rpc('get_analytics_summary', { pass_code: pwd });
+      if (fbErr) {
+        showErr(fbErr.message?.includes('Unauthorized') ? '❌ ভুল পাসওয়ার্ড!' : '⚠️ সংযোগ সমস্যা। ইন্টারনেট চেক করুন।');
+        resetBtn(); sessionStorage.removeItem('gic_admin_pwd'); return false;
+      }
+      authPwd = pwd; sessionStorage.setItem('gic_admin_pwd', pwd);
+      showDashboard(fbData || {}); if (fbData) { processData(fbData); initLivePresence(); }
+      resetBtn(); return true;
     }
+
+    if (!ok) {
+      showErr('❌ ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।');
+      resetBtn(); sessionStorage.removeItem('gic_admin_pwd'); return false;
+    }
+
+    // ── Step 2: Password OK — show dashboard, load data in background ──
+    authPwd = pwd; sessionStorage.setItem('gic_admin_pwd', pwd);
+    showDashboard({});
+
+    const { data: aData, error: aErr } = await db.rpc('get_analytics_summary', { pass_code: pwd });
+    if (!aErr && aData) { processData(aData); initLivePresence(); }
+    else { console.warn('Analytics load issue (non-fatal):', aErr); }
+
+    resetBtn(); return true;
+
   } catch(e) {
-    console.error("Login failed:", e);
-    sessionStorage.removeItem("gic_admin_pwd");
+    console.error('Login error:', e);
+    showErr(e.message?.includes('Unauthorized') ? '❌ ভুল পাসওয়ার্ড!' : '⚠️ সংযোগ সমস্যা। ইন্টারনেট চেক করুন।');
+    resetBtn(); sessionStorage.removeItem('gic_admin_pwd');
   }
   return false;
 }

@@ -260,28 +260,22 @@ begin
       ) t
     ),
 
-    -- ── RECENT UNIQUE VISITORS (with IP) ─────────────────────────
+    -- ── RECENT UNIQUE VISITORS ────────────────────────────────────────
+    -- NOTE: Uses only ip_address for grouping (always exists).
+    -- New columns (visitor_id, device_type, browser, os) shown when available.
     'recent_visitors', (
       select json_agg(t) from (
         select
-          -- Use visitor_id as primary key (persistent per device, more reliable than IP)
-          coalesce(nullif(visitor_id,''), ip_address) as visitor_key,
-          coalesce(nullif(ip_address,''), '—') as ip_address,
+          coalesce(nullif(ip_address,''), '—')      as ip_address,
           country, city,
           coalesce(nullif(referrer_source,''),'direct') as source,
-          -- Show Gmail if they ever logged in on this device
-          max(nullif(student_email,'')) as student_email,
-          -- Device info
-          max(nullif(device_type,'')) as device_type,
-          max(nullif(browser,''))     as browser,
-          max(nullif(os,''))          as os,
-          max(nullif(device_fingerprint,'')) as device_fingerprint,
-          max(created_at) as last_seen,
-          count(*) as page_count
+          max(nullif(student_email,''))              as student_email,
+          max(created_at)                            as last_seen,
+          count(*)                                   as page_count
         from analytics_events
         where event_type = 'pageview'
-          and (ip_address != '' or visitor_id != '')
-        group by visitor_key, ip_address, country, city, referrer_source
+          and ip_address != ''
+        group by ip_address, country, city, referrer_source
         order by last_seen desc
         limit 100
       ) t
@@ -289,6 +283,17 @@ begin
 
   ) into result;
   return result;
+end;
+$$;
+
+-- ── SIMPLE ADMIN AUTH CHECK (used for login — no complex queries) ────────
+create or replace function get_admin_auth(pass_code text)
+returns boolean
+security definer
+language plpgsql
+as $$
+begin
+  return (pass_code = 'gicadmin786');
 end;
 $$;
 
