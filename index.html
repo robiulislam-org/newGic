@@ -736,7 +736,7 @@ h1, h2, h3 { font-family: var(--font-body); font-weight: 700; line-height: 1.3; 
 .auth-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 18px; }
 .auth-modal-body { padding: 30px 24px; }
 .auth-input-group { margin-bottom: 20px; }
-.auth-input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-color); font-size: 14px; }
+.auth-input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text); font-size: 14px; }
 .auth-input { width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; font-family: inherit; transition: 0.2s; }
 .auth-input:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px rgba(26,95,158,0.1); }
 .auth-status { text-align: center; margin-top: 12px; font-size: 13px; font-weight: 600; min-height: 20px; }
@@ -1080,6 +1080,7 @@ h1, h2, h3 { font-family: var(--font-body); font-weight: 700; line-height: 1.3; 
 .cc-wa { background: rgba(37,211,102,0.12); }
 .cc-fb { background: rgba(24,119,242,0.12); }
 .cc-yt { background: rgba(255,0,0,0.1); }
+.cc-li { background: rgba(10,102,194,0.12); }
 .cc-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
 .cc-val { font-size: 13px; color: var(--text-muted); }
 
@@ -1614,6 +1615,7 @@ footer {
   font-weight: 600;
   transition: all 0.25s ease;
   box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  flex-shrink: 0;
 }
 .category-tab-btn:hover {
   background: rgba(26,95,158,0.04);
@@ -1651,12 +1653,7 @@ footer {
 .mc-gamify-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.8); font-size: 13px; font-weight: 600; }
 .mc-gi-val { color: var(--gold-light); font-weight: 900; font-size: 15px; }
 .mc-divider { width: 1px; height: 26px; background: rgba(255,255,255,0.12); flex-shrink:0; }
-.category-tabs-container {
-  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px;
-  margin-bottom: 28px; -ms-overflow-style: none; scrollbar-width: none;
-}
-.category-tabs-container::-webkit-scrollbar { display: none; }
-.category-tab-btn { flex-shrink: 0; }
+
 .student-auth-bar {
   background: linear-gradient(135deg, #fffef9, #fff8ea) !important;
   border: 1.5px solid rgba(212,168,67,0.3) !important;
@@ -2455,7 +2452,7 @@ footer {
           <div class="cc-val" style="margin-top:4px;font-size:12px;color:var(--blue);">এখনই মেসেজ করুন →</div>
         </div>
       </a>
-      <a href="https://facebook.com" target="_blank" class="contact-card">
+      <a href="https://web.facebook.com/globalislamiccare1" target="_blank" class="contact-card">
         <div class="cc-icon cc-fb">📘</div>
         <div>
           <div class="cc-title">Facebook পেজ</div>
@@ -2463,12 +2460,20 @@ footer {
           <div class="cc-val" style="margin-top:4px;font-size:12px;color:var(--blue);">ফলো করুন →</div>
         </div>
       </a>
-      <a href="https://youtube.com" target="_blank" class="contact-card">
+      <a href="https://www.youtube.com/@Globalislamiccare" target="_blank" class="contact-card">
         <div class="cc-icon cc-yt">▶️</div>
         <div>
           <div class="cc-title">YouTube চ্যানেল</div>
           <div class="cc-val">Global Islamic Care</div>
           <div class="cc-val" style="margin-top:4px;font-size:12px;color:var(--blue);">Subscribe করুন →</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/company/global-islamic-care" target="_blank" class="contact-card">
+        <div class="cc-icon cc-li">💼</div>
+        <div>
+          <div class="cc-title">LinkedIn</div>
+          <div class="cc-val">Global Islamic Care</div>
+          <div class="cc-val" style="margin-top:4px;font-size:12px;color:var(--blue);">কানেক্ট করুন →</div>
         </div>
       </a>
       <div class="contact-card" style="background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-color:var(--blue);">
@@ -2816,8 +2821,9 @@ footer {
       </a>
       <p>বিশ্বের যেকোনো প্রান্তে কোরআনের আলো পৌঁছে দেওয়াই আমাদের লক্ষ্য।</p>
       <div class="social-row">
-        <a class="social-btn" href="https://facebook.com" target="_blank" title="Facebook">f</a>
-        <a class="social-btn" href="https://youtube.com" target="_blank" title="YouTube">▶</a>
+        <a class="social-btn" href="https://web.facebook.com/globalislamiccare1" target="_blank" title="Facebook">f</a>
+        <a class="social-btn" href="https://www.youtube.com/@Globalislamiccare" target="_blank" title="YouTube">▶</a>
+        <a class="social-btn" href="https://www.linkedin.com/company/global-islamic-care" target="_blank" title="LinkedIn">in</a>
         <a class="social-btn wa" href="https://wa.me/8801733017521" target="_blank" title="WhatsApp">✆</a>
       </div>
     </div>
@@ -2942,6 +2948,9 @@ function bookTrial() {
   const course = document.getElementById('hCourse').value;
   if (!name) { showToast('❌ অনুগ্রহ করে আপনার নাম লিখুন'); return; }
   if (!phone) { showToast('❌ অনুগ্রহ করে WhatsApp নম্বর দিন'); return; }
+  // Phone validation: must contain at least 7 digits
+  const cleanPhone = phone.replace(/[\s\-+()]/g, '');
+  if (!/^\d{7,15}$/.test(cleanPhone)) { showToast('❌ সঠিক WhatsApp নম্বর দিন (যেমন: 01733017521)'); return; }
   let msg = 'আসসালামু আলাইকুম! আমি ফ্রি পরামর্শ নিতে চাই।';
   msg += '\nনাম: ' + name;
   msg += '\nনম্বর: ' + phone;
@@ -2956,6 +2965,11 @@ function sendContactWA() {
   const country = document.getElementById('cCountry').value.trim();
   const course = document.getElementById('cCourse').value;
   const msg_text = document.getElementById('cMsg').value.trim();
+  if (!name) { showToast('❌ অনুগ্রহ করে আপনার নাম লিখুন'); return; }
+  if (!phone) { showToast('❌ অনুগ্রহ করে WhatsApp নম্বর দিন'); return; }
+  // Phone validation
+  const cleanPhone = phone.replace(/[\s\-+()]/g, '');
+  if (!/^\d{7,15}$/.test(cleanPhone)) { showToast('❌ সঠিক WhatsApp নম্বর দিন (যেমন: 01733017521)'); return; }
   let msg = 'আসসালামু আলাইকুম! আমি যোগাযোগ করতে চাই।';
   if (name) msg += '\nনাম: ' + name;
   if (phone) msg += '\nWhatsApp: ' + phone;
@@ -3105,6 +3119,16 @@ async function submitRvpReview() {
   const name = (document.getElementById('rvp-name').value || '').trim() || 'এক শিক্ষার্থী';
   const msg  = (document.getElementById('rvp-message').value || '').trim();
   if (!msg) { showToast('⚠️ অনুগ্রহ করে আপনার মতামত লিখুন।'); return; }
+  // Spam protection: max 1 review per 24 hours
+  const lastReview = localStorage.getItem('gic_last_review');
+  if (lastReview) {
+    const elapsed = Date.now() - parseInt(lastReview);
+    if (elapsed < 24 * 60 * 60 * 1000) {
+      const hoursLeft = Math.ceil((24 * 60 * 60 * 1000 - elapsed) / 3600000);
+      showToast(`⏳ আপনি ইতিমধ্যে আজকে রিভিউ দিয়েছেন। ${hoursLeft} ঘণ্টা পরে আবার দিতে পারবেন।`);
+      return;
+    }
+  }
 
   const btn = document.getElementById('rvp-submit-btn');
   btn.disabled = true;
@@ -3126,6 +3150,7 @@ async function submitRvpReview() {
     );
     if (!res.ok) throw new Error('HTTP ' + res.status);
 
+    localStorage.setItem('gic_last_review', Date.now().toString());
     document.getElementById('rv-page-submit-area').style.display = 'none';
     document.getElementById('rvp-success-msg').style.display = 'flex';
     loadRvpReviews();
@@ -3139,10 +3164,12 @@ async function submitRvpReview() {
 // ───── URL ROUTING & SPA HISTORY NAVIGATION ─────
 // Handle popstate (Back/Forward browser buttons)
 window.addEventListener('popstate', (e) => {
+  const validPages = ['home', 'free-courses', 'courses', 'teachers', 'about', 'reviews', 'contact', 'privacy-policy', 'payment-policy'];
   const urlParams = new URLSearchParams(window.location.search);
   const pageId = urlParams.get('page') || 'home';
+  const safePage = validPages.includes(pageId) ? pageId : 'home';
   if (typeof showPage === 'function') {
-    showPage(pageId, false);
+    showPage(safePage, false);
   }
 });
 

@@ -33,7 +33,7 @@ language plpgsql
 as $$
 declare
   result json;
-  expected_password text := 'gicadmin786'; -- Replace with your desired dashboard password
+  expected_password text := 'GIC@Secure#2026'; -- Admin dashboard password
 begin
   -- Validate password
   if pass_code != expected_password then
@@ -41,19 +41,19 @@ begin
   end if;
 
   select json_build_object(
-    -- Today's views (Bangladesh Time Zone: Asia/Dhaka)
+    -- Today's views (Bangladesh Time Zone: Asia/Dhaka) — FIXED timezone query
     'today_views', (
       select count(*) 
       from analytics_events 
       where event_type = 'pageview' 
-        and created_at >= (timezone('Asia/Dhaka', now()))::date
+        and (created_at AT TIME ZONE 'Asia/Dhaka')::date = (now() AT TIME ZONE 'Asia/Dhaka')::date
     ),
-    -- Today's whatsapp clicks (Bangladesh Time Zone)
+    -- Today's whatsapp clicks (Bangladesh Time Zone) — FIXED timezone query
     'today_wa_clicks', (
       select count(*) 
       from analytics_events 
       where event_type = 'whatsapp_click' 
-        and created_at >= (timezone('Asia/Dhaka', now()))::date
+        and (created_at AT TIME ZONE 'Asia/Dhaka')::date = (now() AT TIME ZONE 'Asia/Dhaka')::date
     ),
     -- Top Visited Pages (All time)
     'top_pages', (
