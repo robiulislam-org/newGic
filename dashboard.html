@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="dashboard-enhance.js" defer></script>
   <style>
     :root {
       --bg: #060b13;
@@ -232,7 +233,45 @@
     .mt16{margin-top:16px;}
     .mt20{margin-top:20px;}
     .mb16{margin-bottom:16px;}
-  </style>
+  
+/* === DASHBOARD ENHANCEMENTS === */
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse  { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.6} }
+.stat-val { animation: fadeUp .5s ease forwards; }
+
+/* Trend badges */
+.trend-up   {display:inline-flex;align-items:center;gap:3px;color:#22c55e;font-size:11px;font-weight:700;background:rgba(34,197,94,.12);padding:2px 8px;border-radius:20px;}
+.trend-down {display:inline-flex;align-items:center;gap:3px;color:#f43f5e;font-size:11px;font-weight:700;background:rgba(244,63,94,.12);padding:2px 8px;border-radius:20px;}
+.trend-same {display:inline-flex;align-items:center;gap:3px;color:#94a3b8;font-size:11px;font-weight:700;background:rgba(148,163,184,.12);padding:2px 8px;border-radius:20px;}
+
+/* Sparkline */
+.sparkline-wrap {display:flex;align-items:flex-end;gap:3px;height:28px;}
+.sparkline-bar  {flex:1;border-radius:3px 3px 0 0;min-width:5px;opacity:.7;transition:opacity .2s;}
+.sparkline-bar:hover {opacity:1;}
+
+/* Smart Insight Cards */
+.insight-card {
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:16px 18px;
+  display:flex;align-items:flex-start;gap:14px;
+  transition:transform .2s,box-shadow .2s;
+  animation:fadeUp .5s ease forwards;
+}
+.insight-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.25);}
+.insight-card.green{border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.05);}
+.insight-card.gold {border-color:rgba(229,185,92,.25);background:rgba(229,185,92,.05);}
+.insight-card.blue {border-color:rgba(58,134,200,.25);background:rgba(58,134,200,.05);}
+.insight-card.red  {border-color:rgba(244,63,94,.25);background:rgba(244,63,94,.05);}
+.insight-icon{font-size:26px;flex-shrink:0;line-height:1;margin-top:2px;}
+.insight-title{font-size:13px;font-weight:800;color:#e2e8f0;margin-bottom:4px;}
+.insight-desc {font-size:12px;color:#94a3b8;line-height:1.55;}
+
+/* Progress bars */
+.prog-row  {display:flex;flex-direction:column;gap:12px;padding:4px 0;}
+.prog-item {display:flex;flex-direction:column;gap:6px;}
+.prog-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;}
+.prog-track{height:9px;background:rgba(255,255,255,.06);border-radius:10px;overflow:hidden;}
+.prog-fill {height:100%;border-radius:10px;transition:width .75s cubic-bezier(.4,0,.2,1);min-width:4px;}</style>
 </head>
 <body>
 
@@ -319,27 +358,38 @@
       </div>
     </div>
 
-    <!-- Stat Cards Row -->
+    <!-- Smart Insights -->
+    <div style="font-size:13px;font-weight:800;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px;display:flex;align-items:center;gap:10px;">💡 স্মার্ট পরামর্শ <span style="flex:1;height:1px;background:rgba(255,255,255,0.07);display:block;"></span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:24px;" id="smart-insights">
+      <div style="background:rgba(58,134,200,0.06);border:1px solid rgba(58,134,200,0.2);border-radius:16px;padding:16px 18px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="font-size:26px;">⏳</div>
+        <div><div style="font-size:13px;font-weight:800;color:#e2e8f0;">ডেটা লোড হচ্ছে...</div><div style="font-size:12px;color:#94a3b8;margin-top:3px;">একটু অপেক্ষা করুন</div></div>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div style="font-size:13px;font-weight:800;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px;display:flex;align-items:center;gap:10px;">📊 আজকের সংখ্যা <span style="flex:1;height:1px;background:rgba(255,255,255,0.07);display:block;"></span></div>
     <div class="stat-row">
       <div class="stat-card g">
-        <div class="stat-label">🟢 এখন সক্রিয় ভিজিটর</div>
+        <div class="stat-label"><span style="width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;margin-right:5px;"></span> এখন সক্রিয়</div>
         <div class="stat-val live" id="today-live">0</div>
-        <div class="stat-sub">রিয়েল-টাইম প্রেজেন্স</div>
+        <div class="stat-sub">রিয়েল-টাইম ভিজিটর</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">👁️ আজকের পেজ ভিউ</div>
         <div class="stat-val" id="today-views">0</div>
-        <div class="stat-sub">আজকের মোট ভিজিট সংখ্যা</div>
+        <div style="margin-top:6px;" id="today-views-trend"></div>
+        <div style="display:flex;align-items:center;gap:2px;height:28px;margin-top:6px;" id="today-sparkline"></div>
       </div>
       <div class="stat-card gd">
-        <div class="stat-label">💬 আজকের WhatsApp ক্লিক</div>
+        <div class="stat-label">💬 WhatsApp ক্লিক</div>
         <div class="stat-val" id="today-wa">0</div>
-        <div class="stat-sub">কনভার্সন হার: <span id="today-cvr">0%</span></div>
+        <div class="stat-sub">কনভার্সন: <span id="today-cvr" style="color:var(--gold-light);font-weight:800;">0%</span></div>
       </div>
       <div class="stat-card p">
-        <div class="stat-label">🆕 আজকের নতুন লগইন</div>
+        <div class="stat-label">📧 নতুন Gmail লগইন</div>
         <div class="stat-val" id="today-new-logins">0</div>
-        <div class="stat-sub">গুগল দিয়ে যোগ দিয়েছে</div>
+        <div class="stat-sub">আজকে প্রথমবার</div>
       </div>
       <div class="stat-card t">
         <div class="stat-label">⏱️ সর্বোচ্চ সময় পেজ</div>
@@ -509,28 +559,26 @@
           </table>
         </div>
       </div>
+      <!-- Top Pages — visual progress bars -->
       <div class="card">
-        <div class="card-title">📄 সর্বাধিক দেখা পেজসমূহ</div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>পেজ</th><th>ভিউ</th><th>গড় সময়</th></tr></thead>
-            <tbody id="pages-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
-          </table>
+        <div class="card-title">
+          <span>📄 সর্বাধিক দেখা পেজসমূহ</span>
+          <span class="sub">ভিউ ও গড় সময় সহ</span>
+        </div>
+        <div id="pages-prog-container" style="padding:6px 0 4px;">
+          <div style="text-align:center;padding:24px;color:#64748b;">⏳ লোড হচ্ছে...</div>
         </div>
       </div>
     </div>
 
-    <!-- Source Detail Table -->
-    <div class="card">
+    <!-- Platform Source — visual progress bars -->
+    <div class="card" style="margin-top:20px;">
       <div class="card-title">
-        <span>📊 সোর্স ডিটেইলস (সর্বকালীন)</span>
-        <span class="sub">প্রতিটি প্ল্যাটফর্ম থেকে মোট ভিজিট</span>
+        <span>🚀 প্ল্যাটফর্ম সোর্স বিশ্লেষণ</span>
+        <span class="sub">কোন জায়গা থেকে কতজন আসছে</span>
       </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>প্ল্যাটফর্ম / সোর্স</th><th>মোট ভিজিট</th><th>শেয়ার</th></tr></thead>
-          <tbody id="source-detail-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
-        </table>
+      <div id="source-prog-container" style="padding:6px 0 4px;">
+        <div style="text-align:center;padding:24px;color:#64748b;">⏳ লোড হচ্ছে...</div>
       </div>
     </div>
   </div>
@@ -1193,10 +1241,11 @@ function processData(stats) {
   renderTodayAnalytics();
   renderAnalytics();
   renderFunnel();
-  renderCampaigns();
   buildAlerts();
   updateWaStats();
   updateWaBtnLabel();
+  // Enhanced visuals (animated counters, smart insights, progress bars)
+  if (typeof enhanceDashboard === 'function') enhanceDashboard(stats);
 }
 
 function renderTodayAnalytics() {

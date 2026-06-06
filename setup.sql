@@ -100,25 +100,26 @@ alter table analytics_events  enable row level security;
 alter table course_comments   enable row level security;
 alter table institution_reviews enable row level security;
 
--- Drop and recreate all policies cleanly
+-- Drop and recreate ALL policies (handles both old and new names — safe to run multiple times)
 drop policy if exists "Allow public inserts"          on analytics_events;
 drop policy if exists "Disable public reads"          on analytics_events;
 drop policy if exists "Allow public comment inserts"  on course_comments;
 drop policy if exists "Disable direct comment reads"  on course_comments;
+drop policy if exists "Allow course comment reads"    on course_comments;
 drop policy if exists "Allow public review inserts"   on institution_reviews;
 drop policy if exists "Allow review reads"            on institution_reviews;
 
--- analytics_events: public can insert, not read
-create policy "Allow public inserts"   on analytics_events for insert with check (true);
-create policy "Disable public reads"   on analytics_events for select using (false);
+-- analytics_events: public insert only, no direct read
+create policy "Allow public inserts"  on analytics_events for insert with check (true);
+create policy "Disable public reads"  on analytics_events for select  using  (false);
 
--- course_comments: public can insert, can read (to show on site)
+-- course_comments: public insert + read (needed to display on site)
 create policy "Allow public comment inserts" on course_comments for insert with check (true);
-create policy "Allow course comment reads"   on course_comments for select using (true);
+create policy "Allow course comment reads"   on course_comments for select  using  (true);
 
 -- institution_reviews: public insert + read
-create policy "Allow public review inserts"  on institution_reviews for insert with check (true);
-create policy "Allow review reads"           on institution_reviews for select using (true);
+create policy "Allow public review inserts" on institution_reviews for insert with check (true);
+create policy "Allow review reads"          on institution_reviews for select  using  (true);
 
 -- ── 5. MAIN ANALYTICS SUMMARY FUNCTION ──────────────────────────────
 create or replace function get_analytics_summary(pass_code text)
