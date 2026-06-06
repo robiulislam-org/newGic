@@ -7,4 +7,4 @@ export const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ
 
 // Enter the password you want to use to access your dashboard.html
 // Make sure this matches the password in your setup.sql script
-export const adminPassword = "GIC@Secure#2026";
+export const adminPassword = "gicadmin786";
