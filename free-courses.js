@@ -1,4 +1,4 @@
-
+﻿
 // ============================================================
 //  GIC MINI COURSES — GAMIFIED INTERACTIVE LEARNING ENGINE v3
 // ============================================================
@@ -808,74 +808,84 @@ function closeCommentModal() {
 }
 
 function renderCommentsList(courseId) {
-  const comments = globalComments[courseId] || [];
   const list = document.getElementById('comments-list');
   if (!list) return;
 
-  if (comments.length === 0) {
-    list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-muted);">
-      <div style="font-size:40px;margin-bottom:12px;">💭</div>
-      <p>এখনো কোনো মন্তব্য নেই। প্রথম মন্তব্য করুন!</p>
-    </div>`;
-    return;
-  }
+  list.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ মন্তব্য লোড হচ্ছে...</div>`;
 
-  list.innerHTML = comments.map((c, i) => `
-    <div class="comment-item" style="background:var(--cream);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--border);">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;">${c.name.charAt(0).toUpperCase()}</div>
-        <div>
-          <div style="font-weight:700;font-size:14px;color:var(--text);">${escapeHtml(c.name)}</div>
-          <div style="font-size:11px;color:var(--text-muted);">${c.time}</div>
+  fetch(`${gicSupabaseUrl}/rest/v1/course_comments?course_id=eq.${courseId}&order=created_at.desc&limit=50`, {
+    headers: { 'apikey': gicSupabaseKey, 'Authorization': 'Bearer ' + gicSupabaseKey }
+  })
+  .then(r => r.json())
+  .then(comments => {
+    if (!Array.isArray(comments) || comments.length === 0) {
+      list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-muted);">
+        <div style="font-size:40px;margin-bottom:12px;">💭</div>
+        <p>এখনো কোনো মন্তব্য নেই। প্রথম মন্তব্য করুন!</p>
+      </div>`;
+      return;
+    }
+    list.innerHTML = comments.map(c => `
+      <div class="comment-item" style="background:var(--cream);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;">${(c.name||'?').charAt(0).toUpperCase()}</div>
+          <div>
+            <div style="font-weight:700;font-size:14px;color:var(--text);">${escapeHtml(c.name||'পাঠক')}</div>
+            <div style="font-size:11px;color:var(--text-muted);">${new Date(c.created_at).toLocaleDateString('bn-BD')}</div>
+          </div>
+          <div style="margin-left:auto;">${'⭐'.repeat(c.rating||5)}</div>
         </div>
-        <div style="margin-left:auto;display:flex;gap:4px;">
-          ${'⭐'.repeat(c.rating || 5)}
-        </div>
+        <p style="font-size:14px;color:var(--text);line-height:1.7;margin:0;">${escapeHtml(c.message||'')}</p>
       </div>
-      <p style="font-size:14px;color:var(--text);line-height:1.7;margin:0;">${escapeHtml(c.text)}</p>
-    </div>
-  `).reverse().join('');
+    `).join('');
+  })
+  .catch(() => {
+    list.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);">মন্তব্য লোড করা যায়নি।</div>`;
+  });
 }
 
 async function submitComment(courseId) {
-  const nameEl = document.getElementById('comment-name');
-  const textEl = document.getElementById('comment-text');
+  const nameEl   = document.getElementById('comment-name');
+  const textEl   = document.getElementById('comment-text');
   const ratingEl = document.getElementById('comment-rating');
 
-  const name = (nameEl && nameEl.value.trim()) || 'পাঠক';
-  const text = textEl && textEl.value.trim();
+  const name   = (nameEl   && nameEl.value.trim())      || 'পাঠক';
+  const text   = textEl   && textEl.value.trim();
   const rating = (ratingEl && parseInt(ratingEl.value)) || 5;
 
-  if (!text) {
-    showToast('⚠️ মন্তব্য লিখুন!', 'warning');
-    return;
+  if (!text) { showToast('⚠️ মন্তব্য লিখুন!', 'warning'); return; }
+
+  try {
+    const studentSess = JSON.parse(localStorage.getItem('gic_student_session') || 'null');
+    const res = await fetch(${gicSupabaseUrl}/rest/v1/course_comments, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': gicSupabaseKey,
+        'Authorization': 'Bearer ' + gicSupabaseKey,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        course_id:     parseInt(courseId),
+        name:          name,
+        message:       text,
+        rating:        rating,
+        student_id:    (studentSess && studentSess.student_id) || '',
+        student_email: (studentSess && studentSess.email)      || ''
+      })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    if (textEl) textEl.value = '';
+    if (nameEl) nameEl.value = '';
+    addXP(5);
+    showToast('✅ মন্তব্য সফলভাবে পোস্ট হয়েছে! +5 XP');
+    renderCommentsList(courseId);
+    renderMiniCourses();
+  } catch (err) {
+    console.error('Comment submit error:', err);
+    showToast('❌ মন্তব্য পাঠাতে সমস্যা হয়েছে।');
   }
-
-  if (!globalComments[courseId]) globalComments[courseId] = [];
-
-  const now = new Date();
-  const timeStr = now.toLocaleDateString('bn-BD') + ' ' + now.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
-
-  globalComments[courseId].push({
-    name: name,
-    text: text,
-    rating: rating,
-    time: timeStr,
-    id: Date.now()
-  });
-
-  if (textEl) textEl.value = '';
-  if (nameEl) nameEl.value = '';
-
-  renderCommentsList(courseId);
-  addXP(5);
-  showToast('✅ মন্তব্য সফলভাবে পোস্ট হয়েছে! +5 XP');
-
-  // Sync to database
-  await updateGlobalDataInSupabase();
-
-  // Update comments count on course cards
-  renderMiniCourses();
+}
 }
 
 // ============================================================
