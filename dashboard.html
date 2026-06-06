@@ -282,8 +282,15 @@
     <h2>গ্লোবাল ইসলামিক কেয়ার</h2>
     <p>অ্যাডমিন ড্যাশবোর্ড — পাসওয়ার্ড দিয়ে প্রবেশ করুন</p>
     <form id="login-form">
-      <input type="password" id="pw-inp" class="inp" placeholder="পাসওয়ার্ড লিখুন..." required autocomplete="current-password">
-      <button type="submit" class="btn-primary">✅ প্রবেশ করুন</button>
+      <div style="position:relative;margin-bottom:14px;">
+        <input type="password" id="pw-inp" class="inp" placeholder="পাসওয়ার্ড লিখুন..." required autocomplete="current-password" style="margin-bottom:0;padding-right:44px;">
+        <button type="button" id="pw-toggle" onclick="togglePwVisibility()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:#94a3b8;cursor:pointer;font-size:16px;line-height:1;">👁</button>
+      </div>
+      <label style="display:flex;align-items:center;gap:10px;margin-bottom:16px;cursor:pointer;font-size:13px;color:#94a3b8;">
+        <input type="checkbox" id="remember-me" style="width:16px;height:16px;accent-color:#3a86c8;cursor:pointer;">
+        <span>মনে রাখো (লগআউট না করা পর্যন্ত লগইন থাকবে)</span>
+      </label>
+      <button type="submit" class="btn-primary">🔐 প্রবেশ করুন</button>
     </form>
     <div id="login-err">❌ ভুল পাসওয়ার্ড বা সংযোগ ত্রুটি</div>
   </div>
@@ -335,6 +342,11 @@
   </div>
   <div class="nav-item" onclick="switchTab('course-comments')">
     <span class="nav-icon">💬</span> কোর্স মন্তব্য <span id="comment-badge" style="display:none;background:var(--blue);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
+  </div>
+
+  <div class="nav-section">সেটিংস</div>
+  <div class="nav-item" onclick="switchTab('settings')">
+    <span class="nav-icon">⚙️</span> পাসওয়ার্ড ও সেটিংস
   </div>
 
   <div class="sidebar-bottom">
@@ -1117,6 +1129,79 @@
     </div>
   </div>
 
+  <!-- ═══ TAB: SETTINGS ═══ -->
+  <div class="tab-page" id="tab-settings">
+    <div class="page-hdr">
+      <div>
+        <h1>⚙️ পাসওয়ার্ড ও সেটিংস</h1>
+        <p>অ্যাডমিন পাসওয়ার্ড পরিবর্তন এবং ড্যাশবোর্ড সেটিংস</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 24px;">
+      <!-- Change Password Card -->
+      <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 28px;">
+        <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 8px;">
+          🔐 অ্যাডমিন পাসওয়ার্ড পরিবর্তন করুন
+        </h3>
+        
+        <form id="change-pwd-form" onsubmit="changeAdminPasswordSubmit(event)">
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">বর্তমান পাসওয়ার্ড</label>
+            <input type="password" id="settings-old-pwd" class="inp" placeholder="বর্তমান পাসওয়ার্ড দিন" required style="margin-bottom:0;">
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">নতুন পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label>
+            <input type="password" id="settings-new-pwd" class="inp" placeholder="নতুন পাসওয়ার্ড দিন" required style="margin-bottom:0;">
+          </div>
+          
+          <div style="margin-bottom: 24px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">নতুন পাসওয়ার্ডটি নিশ্চিত করুন</label>
+            <input type="password" id="settings-confirm-pwd" class="inp" placeholder="পাসওয়ার্ডটি পুনরায় লিখুন" required style="margin-bottom:0;">
+          </div>
+          
+          <div id="settings-pwd-err" style="color: var(--red); font-size: 13px; margin-bottom: 16px; display: none;"></div>
+          <div id="settings-pwd-success" style="color: var(--green); font-size: 13px; margin-bottom: 16px; display: none;"></div>
+          
+          <button type="submit" id="settings-pwd-submit-btn" class="btn btn-blue" style="width: 100%; justify-content: center; padding: 12px; font-size: 14px;">
+            💾 পাসওয়ার্ড পরিবর্তন করুন
+          </button>
+        </form>
+      </div>
+
+      <!-- System Info Card -->
+      <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 20px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;">
+          🖥️ সেটিংস ও সিস্টেম তথ্য
+        </h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+            <span style="color: var(--text-muted);">সিস্টেম স্ট্যাটাস</span>
+            <span style="color: var(--green); font-weight: 600;">● Active</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+            <span style="color: var(--text-muted);">ডাটাবেজ সংযোগ</span>
+            <span style="color: var(--blue-light); font-weight: 600;">Supabase API</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+            <span style="color: var(--text-muted);">ড্যাশবোর্ড ভার্সন</span>
+            <span style="color: var(--gold-light); font-weight: 600;">v2.0-dynamic</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+            <span style="color: var(--text-muted);">সেশন মোড</span>
+            <span id="settings-session-mode" style="font-weight: 600; color: #fff;">-</span>
+          </div>
+        </div>
+        
+        <div style="margin-top: auto; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; font-size: 12px; line-height: 1.6; color: var(--text-muted);">
+          💡 <strong>নিরাপত্তা টিপস:</strong> ড্যাশবোর্ড ব্যবহার শেষে সর্বদাই 🚪 লগআউট বাটন ব্যবহার করে সেশনটি বন্ধ করে দিন। পাসওয়ার্ড পরিবর্তনের পর স্বয়ংক্রিয়ভাবে নতুন পাসওয়ার্ড দিয়ে পুনরায় লগইন করতে হবে।
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /main-content -->
 
 <!-- Toast -->
@@ -1173,7 +1258,8 @@ let liveChannel = null;
 // ══════════════════════════════════════════════════════
 db = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-const savedPwd = sessionStorage.getItem("gic_admin_pwd");
+// ── Session persistence: check both localStorage (remember me) and sessionStorage ──
+const savedPwd = localStorage.getItem("gic_admin_pwd_persist") || sessionStorage.getItem("gic_admin_pwd");
 if (savedPwd) { authPwd = savedPwd; attemptLogin(savedPwd); }
 
 document.getElementById("login-form").addEventListener("submit", async e => {
@@ -1186,49 +1272,71 @@ document.getElementById("login-form").addEventListener("submit", async e => {
   }
 });
 
+function togglePwVisibility() {
+  const inp = document.getElementById('pw-inp');
+  const btn = document.getElementById('pw-toggle');
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
 async function attemptLogin(pwd) {
-  const btn   = document.querySelector('#login-form button[type=submit]');
-  const errEl = document.getElementById('login-err');
-  const resetBtn  = () => { if (btn)   { btn.textContent = '🔐 প্রবেশ করুন'; btn.disabled = false; } };
-  const showErr   = (m) => { if (errEl){ errEl.textContent = m; errEl.style.display = 'block'; setTimeout(() => errEl.style.display = 'none', 5000); } };
+  const btn        = document.querySelector('#login-form button[type=submit]');
+  const errEl      = document.getElementById('login-err');
+  const rememberMe = document.getElementById('remember-me')?.checked || false;
+
+  const resetBtn = () => { if (btn) { btn.textContent = '🔐 প্রবেশ করুন'; btn.disabled = false; } };
+  const showErr  = (m) => { if (errEl) { errEl.textContent = m; errEl.style.display = 'block'; setTimeout(() => errEl.style.display = 'none', 6000); } };
+
+  const savePwd  = (p) => {
+    sessionStorage.setItem('gic_admin_pwd', p);
+    if (rememberMe) localStorage.setItem('gic_admin_pwd_persist', p);
+  };
+  const clearPwd = () => {
+    sessionStorage.removeItem('gic_admin_pwd');
+    localStorage.removeItem('gic_admin_pwd_persist');
+  };
+
   if (btn) { btn.textContent = '⏳ যাচাই করছি...'; btn.disabled = true; }
 
   try {
-    // ── Step 1: Fast password-only check ──────────────────────────────
+    // ── Step 1: Fast password-only check (get_admin_auth) ─────────────────
     const { data: ok, error: authErr } = await db.rpc('get_admin_auth', { pass_code: pwd });
 
     if (authErr) {
-      // get_admin_auth not yet added to Supabase — fallback directly to analytics
-      console.warn('get_admin_auth not available, using analytics fallback');
+      // Fallback: get_admin_auth not yet deployed — use analytics RPC directly
+      console.warn('get_admin_auth fallback triggered:', authErr.message);
       const { data: fbData, error: fbErr } = await db.rpc('get_analytics_summary', { pass_code: pwd });
       if (fbErr) {
-        showErr(fbErr.message?.includes('Unauthorized') ? '❌ ভুল পাসওয়ার্ড!' : '⚠️ সংযোগ সমস্যা। ইন্টারনেট চেক করুন।');
-        resetBtn(); sessionStorage.removeItem('gic_admin_pwd'); return false;
+        const isWrong = fbErr.message?.includes('Unauthorized') || fbErr.code === 'P0001';
+        showErr(isWrong ? '❌ ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।' : '⚠️ সংযোগ সমস্যা। ইন্টারনেট চেক করুন।');
+        resetBtn(); clearPwd(); return false;
       }
-      authPwd = pwd; sessionStorage.setItem('gic_admin_pwd', pwd);
-      showDashboard(fbData || {}); if (fbData) { processData(fbData); initLivePresence(); }
+      authPwd = pwd; savePwd(pwd);
+      showDashboard(fbData || {});
+      if (fbData) { processData(fbData); }
       resetBtn(); return true;
     }
 
     if (!ok) {
       showErr('❌ ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।');
-      resetBtn(); sessionStorage.removeItem('gic_admin_pwd'); return false;
+      resetBtn(); clearPwd(); return false;
     }
 
-    // ── Step 2: Password OK — show dashboard, load data in background ──
-    authPwd = pwd; sessionStorage.setItem('gic_admin_pwd', pwd);
+    // ── Step 2: Password correct — show dashboard, load data in background ──
+    authPwd = pwd; savePwd(pwd);
     showDashboard({});
 
     const { data: aData, error: aErr } = await db.rpc('get_analytics_summary', { pass_code: pwd });
-    if (!aErr && aData) { processData(aData); initLivePresence(); }
+    if (!aErr && aData) { processData(aData); }
     else { console.warn('Analytics load issue (non-fatal):', aErr); }
 
     resetBtn(); return true;
 
   } catch(e) {
     console.error('Login error:', e);
-    showErr(e.message?.includes('Unauthorized') ? '❌ ভুল পাসওয়ার্ড!' : '⚠️ সংযোগ সমস্যা। ইন্টারনেট চেক করুন।');
-    resetBtn(); sessionStorage.removeItem('gic_admin_pwd');
+    const isWrong = e.message?.includes('Unauthorized');
+    showErr(isWrong ? '❌ ভুল পাসওয়ার্ড!' : '⚠️ সংযোগ সমস্যা। ইন্টারনেট চেক করুন।');
+    resetBtn(); clearPwd();
   }
   return false;
 }
@@ -1244,7 +1352,10 @@ function showDashboard(data) {
 }
 
 function doLogout() {
-  sessionStorage.removeItem("gic_admin_pwd");
+  // Clear both storages (sessionStorage & localStorage remember-me)
+  sessionStorage.removeItem('gic_admin_pwd');
+  localStorage.removeItem('gic_admin_pwd_persist');
+  authPwd = null;
   location.reload();
 }
 
@@ -2111,6 +2222,7 @@ function switchTab(id) {
   if (id === 'reviews')         loadAdminReviews();
   if (id === 'visitor-log')     loadVisitorLog();
   if (id === 'course-comments') loadCourseComments();
+  if (id === 'settings')        loadSettingsInfo();
 }
 
 // ══════════════════════════════════════════════════════
@@ -2459,28 +2571,27 @@ function renderVisitorLog(visitors) {
   var ytCt    = allVisitors.filter(function(v){return v.source==='youtube';}).length;
   setText('vl-total', total); setText('vl-gmail-count', gmailCt);
   setText('vl-fb-count', fbCt); setText('vl-yt-count', ytCt);
-  if (shown) shown.textContent = '('+visitors.length+'&#2463;&#2495; &#2470;&#2503;&#2454;&#2494;&#2458;&#2509;&#2459;&#2503;)';
-  if (!visitors.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="8">&#2453;&#2507;&#2472;&#2507; &#2477;&#2495;&#2460;&#2495;&#2463;&#2480; &#2465;&#2503;&#2463;&#2494; &#2472;&#2503;&#2439;</td></tr>'; return; }
+  if (shown) shown.textContent = '('+visitors.length+'টি দেখাচ্ছে)';
+  if (!visitors.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="8">কোনো ভিজিটর ডেটা নেই</td></tr>'; return; }
   tbody.innerHTML = visitors.map(function(v, i) {
     var gmail = v.student_email
-      ? '<span style="color:var(--green);font-weight:700;font-size:12px;cursor:pointer;" onclick="openStudentActivityModal(\\'' + v.student_email + '\\')" title="&#2474;&#2497;&#2480;&#2507; activity &#2470;&#2503;&#2454;&#2497;&#2472;">&#128231; ' + v.student_email + '</span>'
-      : '<span style="color:var(--text-muted);font-size:11px;">&#8212;</span>';
+      ? '<span style="color:var(--green);font-weight:700;font-size:12px;cursor:pointer;" onclick="openStudentActivityModal(\'' + v.student_email + '\')" title="পুরো activity দেখুন">📧 ' + v.student_email + '</span>'
+      : '<span style="color:var(--text-muted);font-size:11px;">—</span>';
     return '<tr>'+
       '<td style="font-size:11px;color:var(--text-muted);">'+(i+1)+'</td>'+
-      '<td><div style="font-weight:700;font-size:12px;font-family:monospace;color:var(--blue-light);">'+( v.ip_address||'&#8212;')+'</div>'+
-           '<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">&#128205; '+(v.city||'?')+', '+(v.country||'?')+'</div></td>'+
+      '<td><div style="font-weight:700;font-size:12px;font-family:monospace;color:var(--blue-light);">'+( v.ip_address||'—')+'</div>'+
+           '<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">📍 '+(v.city||'?')+', '+(v.country||'?')+'</div></td>'+
       '<td>'+platformBadge(v.source||'direct')+'</td>'+
       '<td>'+deviceBadge(v)+'</td>'+
       '<td>'+gmail+'</td>'+
       '<td style="font-weight:700;text-align:center;">'+( v.page_count||0)+'</td>'+
       '<td style="font-size:11px;">'+fmtDateTime(v.last_seen)+'</td>'+
       '<td>'+(v.student_email
-        ? '<button onclick="openStudentActivityModal(\\''+ v.student_email +'\\'')" style="padding:5px 10px;font-size:11px;border-radius:6px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-weight:700;">&#128269; &#2476;&#2495;&#2488;&#2509;&#2468;&#2494;&#2480;&#2495;&#2468;</button>'
-        : '<span style="color:var(--text-muted);font-size:11px;">&#8212;</span>')+'</td>'+
+        ? '<button onclick="openStudentActivityModal(\''+ v.student_email +'\')" style="padding:5px 10px;font-size:11px;border-radius:6px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-weight:700;">🔍 বিস্তারিত</button>'
+        : '<span style="color:var(--text-muted);font-size:11px;">—</span>')+'</td>'+
     '</tr>';
   }).join('');
 }
-
 
 function renderEventTimeline(events) {
   const tbody = document.getElementById('vl-events-tbl');
@@ -2697,6 +2808,101 @@ async function deleteCourseComment(id, name) {
   } catch(err) {
     console.error('Delete comment error:', err);
     toast('❌ মুছতে সমস্যা হয়েছে। আবার চেষ্টা করুন।', 'err');
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// SETTINGS & PASSWORD MANAGEMENT
+// ══════════════════════════════════════════════════════
+function loadSettingsInfo() {
+  const isPersisted = localStorage.getItem("gic_admin_pwd_persist") ? true : false;
+  const modeEl = document.getElementById("settings-session-mode");
+  if (modeEl) {
+    modeEl.textContent = isPersisted ? "Remembered (Persistent)" : "Session Only (Temporary)";
+    modeEl.style.color = isPersisted ? "var(--green)" : "var(--gold-light)";
+  }
+}
+
+async function changeAdminPasswordSubmit(event) {
+  event.preventDefault();
+  const oldPwdInput = document.getElementById("settings-old-pwd");
+  const newPwdInput = document.getElementById("settings-new-pwd");
+  const confirmPwdInput = document.getElementById("settings-confirm-pwd");
+  const errEl = document.getElementById("settings-pwd-err");
+  const successEl = document.getElementById("settings-pwd-success");
+  const btn = document.getElementById("settings-pwd-submit-btn");
+
+  if (!oldPwdInput || !newPwdInput || !confirmPwdInput || !errEl || !successEl || !btn) return;
+
+  const oldPwd = oldPwdInput.value;
+  const newPwd = newPwdInput.value;
+  const confirmPwd = confirmPwdInput.value;
+
+  // Clear messages
+  errEl.style.display = "none";
+  successEl.style.display = "none";
+
+  // Front-end validations
+  if (newPwd !== confirmPwd) {
+    errEl.textContent = "❌ নতুন পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড মেলেনি!";
+    errEl.style.display = "block";
+    return;
+  }
+
+  if (newPwd.length < 6) {
+    errEl.textContent = "❌ নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে!";
+    errEl.style.display = "block";
+    return;
+  }
+
+  if (oldPwd === newPwd) {
+    errEl.textContent = "❌ নতুন পাসওয়ার্ড এবং বর্তমান পাসওয়ার্ড একই হতে পারবে না!";
+    errEl.style.display = "block";
+    return;
+  }
+
+  // Set loading state
+  btn.disabled = true;
+  btn.textContent = "⏳ পাসওয়ার্ড পরিবর্তন করা হচ্ছে...";
+
+  try {
+    const { data, error } = await db.rpc('change_admin_password', {
+      old_pass_code: oldPwd,
+      new_pass_code: newPwd
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    if (data && data.success) {
+      successEl.textContent = data.message;
+      successEl.style.display = "block";
+      
+      // Update our memory and sessionStorage/localStorage with the new password
+      authPwd = newPwd;
+      sessionStorage.setItem('gic_admin_pwd', newPwd);
+      if (localStorage.getItem('gic_admin_pwd_persist')) {
+        localStorage.setItem('gic_admin_pwd_persist', newPwd);
+      }
+      
+      // Reset form
+      oldPwdInput.value = "";
+      newPwdInput.value = "";
+      confirmPwdInput.value = "";
+
+      toast("✅ পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!", "ok");
+    } else {
+      errEl.textContent = data ? data.message : "❌ পাসওয়ার্ড পরিবর্তন ব্যর্থ হয়েছে।";
+      errEl.style.display = "block";
+    }
+  } catch (e) {
+    console.error("Change password error:", e);
+    errEl.textContent = "❌ ত্রুটি: " + e.message;
+    errEl.style.display = "block";
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "💾 পাসওয়ার্ড পরিবর্তন করুন";
   }
 }
 </script>
