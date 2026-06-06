@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -764,7 +764,7 @@
       <div class="card-title">&#128203; &#2477;&#2495;&#2460;&#2495;&#2463;&#2480; &#2468;&#2494;&#2482;&#2495;&#2453;&#2494; <span id="vl-shown" style="font-size:12px;font-weight:400;color:var(--text-muted);"></span></div>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th>#</th><th>&#127760; IP &#2451; &#2482;&#2507;&#2453;&#2503;&#2486;&#2472;</th><th>&#128640; &#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478;</th><th>&#128231; Gmail</th><th>&#128196; &#2474;&#2503;&#2460; &#2477;&#2495;&#2441;</th><th>&#128336; &#2486;&#2503;&#2487; &#2488;&#2453;&#2509;&#2480;&#2495;&#2479;&#2492;</th><th>&#128269; &#2476;&#2495;&#2488;&#2509;&#2468;&#2494;&#2480;&#2495;&#2468;</th></tr></thead>
+          <thead><tr><th>#</th><th>&#127760; IP &#2451; &#2482;&#2507;&#2453;&#2503;&#2486;&#2472;</th><th>&#128640; &#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478;</th><th>&#128241; &#2465;&#2495;&#2477;&#2494;&#2439;&#2488;</th><th>&#128231; Gmail</th><th>&#128196; &#2474;&#2503;&#2460;</th><th>&#128336; &#2486;&#2503;&#2487; &#2488;&#2453;&#2509;&#2480;&#2495;&#2479;&#2492;</th><th>&#128269;</th></tr></thead>
           <tbody id="vl-tbl"><tr class="empty-row"><td colspan="7">&#2482;&#2507;&#2465; &#2489;&#2458;&#2509;&#2459;&#2503;...</td></tr></tbody>
         </table>
       </div>
@@ -2363,46 +2363,45 @@ function filterVisitorLog() {
   renderVisitorLog(list);
 }
 
+function deviceBadge(v) {
+  var dt = v.device_type || ''; var br = v.browser || ''; var os = v.os || '';
+  var dtIcon = dt === 'Mobile' ? '&#128241;' : dt === 'Tablet' ? '&#128242;' : '&#128421;&#65039;';
+  var brIcon = br === 'Chrome' ? '&#127937;' : br === 'Firefox' ? '&#129418;' : br === 'Safari' ? '&#128309;' : br === 'Edge' ? '&#128311;' : '&#127760;';
+  if (!dt && !br) return '<span style="color:var(--text-muted);font-size:11px;">&#8212;</span>';
+  return '<div style="line-height:1.5;"><div style="font-size:11px;font-weight:700;">'+dtIcon+' '+dt+'</div><div style="font-size:10px;color:var(--text-muted);">'+brIcon+' '+br+' &bull; '+os+'</div></div>';
+}
+
 function renderVisitorLog(visitors) {
-  const tbody = document.getElementById('vl-tbl');
-  const shown = document.getElementById('vl-shown');
-
-  // Update stats
-  const total    = allVisitors.length;
-  const gmailCt  = allVisitors.filter(v => v.student_email).length;
-  const fbCt     = allVisitors.filter(v => v.source === 'facebook').length;
-  const ytCt     = allVisitors.filter(v => v.source === 'youtube').length;
-  setText('vl-total',       total);
-  setText('vl-gmail-count', gmailCt);
-  setText('vl-fb-count',    fbCt);
-  setText('vl-yt-count',    ytCt);
-  if (shown) shown.textContent = `(${visitors.length}টি দেখাচ্ছে)`;
-
-  if (!visitors.length) {
-    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">কোনো ভিজিটর ডেটা নেই</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = visitors.map((v, i) => {
-    const gmail   = v.student_email ? `<span style="color:var(--green);font-weight:700;">${v.student_email}</span>` : '<span style="color:var(--text-muted);">—</span>';
-    const gmailAct= v.student_email ? `onclick="openStudentActivityModal('${v.student_email}')" style="cursor:pointer;"` : '';
-    return `<tr>
-      <td style="font-size:11px;color:var(--text-muted);">${i+1}</td>
-      <td>
-        <div style="font-weight:700;font-size:12px;font-family:monospace;color:var(--blue-light);">${v.ip_address||'—'}</div>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">📍 ${v.city||'?'}, ${v.country||'?'}</div>
-      </td>
-      <td>${platformBadge(v.source||'direct')}</td>
-      <td ${gmailAct}>${gmail}</td>
-      <td style="font-weight:700;">${v.page_count||0}</td>
-      <td style="font-size:11px;">${fmtDateTime(v.last_seen)}</td>
-      <td>${v.student_email
-        ? `<button onclick="openStudentActivityModal('${v.student_email}')" style="padding:5px 10px;font-size:11px;border-radius:6px;background:var(--blue);color:#fff;border:none;cursor:pointer;">🔍 Gmail</button>`
-        : '<span style="color:var(--text-muted);font-size:11px;">—</span>'}
-      </td>
-    </tr>`;
+  var tbody = document.getElementById('vl-tbl');
+  var shown = document.getElementById('vl-shown');
+  var total   = allVisitors.length;
+  var gmailCt = allVisitors.filter(function(v){return v.student_email;}).length;
+  var fbCt    = allVisitors.filter(function(v){return v.source==='facebook';}).length;
+  var ytCt    = allVisitors.filter(function(v){return v.source==='youtube';}).length;
+  setText('vl-total', total); setText('vl-gmail-count', gmailCt);
+  setText('vl-fb-count', fbCt); setText('vl-yt-count', ytCt);
+  if (shown) shown.textContent = '('+visitors.length+'&#2463;&#2495; &#2470;&#2503;&#2454;&#2494;&#2458;&#2509;&#2459;&#2503;)';
+  if (!visitors.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="8">&#2453;&#2507;&#2472;&#2507; &#2477;&#2495;&#2460;&#2495;&#2463;&#2480; &#2465;&#2503;&#2463;&#2494; &#2472;&#2503;&#2439;</td></tr>'; return; }
+  tbody.innerHTML = visitors.map(function(v, i) {
+    var gmail = v.student_email
+      ? '<span style="color:var(--green);font-weight:700;font-size:12px;cursor:pointer;" onclick="openStudentActivityModal(\\'' + v.student_email + '\\')" title="&#2474;&#2497;&#2480;&#2507; activity &#2470;&#2503;&#2454;&#2497;&#2472;">&#128231; ' + v.student_email + '</span>'
+      : '<span style="color:var(--text-muted);font-size:11px;">&#8212;</span>';
+    return '<tr>'+
+      '<td style="font-size:11px;color:var(--text-muted);">'+(i+1)+'</td>'+
+      '<td><div style="font-weight:700;font-size:12px;font-family:monospace;color:var(--blue-light);">'+( v.ip_address||'&#8212;')+'</div>'+
+           '<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">&#128205; '+(v.city||'?')+', '+(v.country||'?')+'</div></td>'+
+      '<td>'+platformBadge(v.source||'direct')+'</td>'+
+      '<td>'+deviceBadge(v)+'</td>'+
+      '<td>'+gmail+'</td>'+
+      '<td style="font-weight:700;text-align:center;">'+( v.page_count||0)+'</td>'+
+      '<td style="font-size:11px;">'+fmtDateTime(v.last_seen)+'</td>'+
+      '<td>'+(v.student_email
+        ? '<button onclick="openStudentActivityModal(\\''+ v.student_email +'\\'')" style="padding:5px 10px;font-size:11px;border-radius:6px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-weight:700;">&#128269; &#2476;&#2495;&#2488;&#2509;&#2468;&#2494;&#2480;&#2495;&#2468;</button>'
+        : '<span style="color:var(--text-muted);font-size:11px;">&#8212;</span>')+'</td>'+
+    '</tr>';
   }).join('');
 }
+
 
 function renderEventTimeline(events) {
   const tbody = document.getElementById('vl-events-tbl');
