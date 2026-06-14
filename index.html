@@ -2898,6 +2898,13 @@ function showPage(id, push = true) {
     }
   }
 
+  // Auto-render free courses when navigating to free-courses page
+  if (id === 'free-courses') {
+    if (typeof renderMiniCourses === 'function') {
+      renderMiniCourses();
+    }
+  }
+
   // Update browser address bar URL
   if (push) {
     try {

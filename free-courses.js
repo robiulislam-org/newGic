@@ -1,4 +1,4 @@
-﻿
+
 // ============================================================
 //  GIC MINI COURSES — GAMIFIED INTERACTIVE LEARNING ENGINE v3
 // ============================================================
@@ -857,7 +857,7 @@ async function submitComment(courseId) {
 
   try {
     const studentSess = JSON.parse(localStorage.getItem('gic_student_session') || 'null');
-    const res = await fetch(${gicSupabaseUrl}/rest/v1/course_comments, {
+    const res = await fetch(`${gicSupabaseUrl}/rest/v1/course_comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -885,7 +885,6 @@ async function submitComment(courseId) {
     console.error('Comment submit error:', err);
     showToast('❌ মন্তব্য পাঠাতে সমস্যা হয়েছে।');
   }
-}
 }
 
 // ============================================================
