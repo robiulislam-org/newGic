@@ -1743,6 +1743,311 @@ footer {
     transform: translateX(-50%) translateY(0);
   }
 }
+/* ───── PHASE 1 INTERACTIVE AUDIO & RETENTION WIDGETS CSS ───── */
+.ayah-section {
+  background: linear-gradient(135deg, #0A1628 0%, #0F2A4A 100%);
+  padding: 60px 24px;
+  color: #fff;
+}
+.ayah-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(200,151,42,0.3);
+  border-radius: 24px;
+  padding: 36px;
+  max-width: 900px;
+  margin: 0 auto;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  text-align: center;
+}
+.ayah-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ayah-badge {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #0A1628;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 50px;
+}
+.ayah-surah {
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+}
+.ayah-arabic {
+  font-family: var(--font-arabic);
+  font-size: clamp(26px, 4vw, 38px);
+  color: var(--gold-light);
+  direction: rtl;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.ayah-bengali {
+  font-size: 17px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.ayah-tajweed {
+  background: rgba(26,95,158,0.25);
+  border-left: 4px solid var(--blue-mid);
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #E2E8F0;
+  text-align: left;
+  margin-bottom: 24px;
+}
+.ayah-audio-controls {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-ayah-audio {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #0A1628;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+.btn-ayah-audio:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,151,42,0.4); }
+.btn-next-ayah {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-next-ayah:hover { background: rgba(255,255,255,0.2); }
+
+/* MAKHRAJ BOARD STYLES */
+.makhraj-section {
+  background: var(--cream);
+  padding: 70px 24px;
+}
+.makhraj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 16px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+.makhraj-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.makhraj-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: 0 12px 30px rgba(200,151,42,0.2);
+}
+.makhraj-card.playing {
+  border-color: var(--blue-mid);
+  background: rgba(26,95,158,0.08);
+  transform: scale(1.05);
+}
+.makhraj-arabic {
+  font-family: var(--font-arabic);
+  font-size: 38px;
+  color: var(--blue-dark);
+  line-height: 1;
+}
+.makhraj-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+}
+.makhraj-tag {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+.makhraj-speaker-icon {
+  font-size: 12px;
+  opacity: 0.6;
+}
+.makhraj-toast {
+  max-width: 500px;
+  margin: 24px auto 0;
+  background: var(--dark);
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: none;
+  box-shadow: var(--shadow);
+}
+.makhraj-toast-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.makhraj-toast-char {
+  font-family: var(--font-arabic);
+  font-size: 40px;
+  color: var(--gold-light);
+}
+
+/* DAILY QUIZ STYLES */
+.quiz-section {
+  background: var(--white);
+  padding: 70px 24px;
+}
+.quiz-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px;
+  max-width: 750px;
+  margin: 0 auto;
+  box-shadow: var(--shadow);
+}
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.quiz-step-tag {
+  background: rgba(26,95,158,0.1);
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 50px;
+}
+.quiz-streak-tag {
+  color: #E65100;
+  font-weight: 700;
+  font-size: 13px;
+}
+.quiz-question {
+  font-size: 18px;
+  color: var(--dark);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.quiz-opt-btn {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 15px;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+.quiz-opt-btn:hover:not(:disabled) {
+  border-color: var(--blue);
+  background: rgba(26,95,158,0.05);
+}
+.quiz-opt-btn.correct {
+  background: #E8F5E9;
+  border-color: #2E7D32;
+  color: #1B5E20;
+  font-weight: 700;
+}
+.quiz-opt-btn.wrong {
+  background: #FFEBEE;
+  border-color: #C62828;
+  color: #B71C1C;
+}
+.fb-success { color: #2E7D32; font-weight: 600; font-size: 14px; }
+.fb-error { color: #C62828; font-weight: 600; font-size: 14px; }
+
+/* COURSE SEARCH & CATEGORY PILLS */
+.course-filter-bar {
+  max-width: 900px;
+  margin: 0 auto 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.course-search-wrapper {
+  position: relative;
+  width: 100%;
+}
+.course-search-input {
+  width: 100%;
+  padding: 16px 20px 16px 48px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: var(--white);
+  font-size: 15px;
+  font-family: var(--font-body);
+  transition: all 0.3s;
+}
+.course-search-input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(26,95,158,0.15);
+}
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--text-muted);
+}
+.cat-pills-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.cat-pill {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.cat-pill.active, .cat-pill:hover {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
 </style>
 </head>
 <body>
@@ -1759,6 +2064,7 @@ footer {
   <div class="nav-links" id="navLinks">
     <a href="#" onclick="showPage('free-courses');return false;"><span style="background:var(--gold);color:var(--dark);padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">FREE</span> কোর্স</a>
     <a href="#" onclick="showPage('courses');return false;"><span style="background:var(--blue-light);color:#fff;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">PAID</span> কোর্স</a>
+    <a href="quran.html"><span style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">📖</span> আল-কুরআন</a>
     <a href="#" onclick="showPage('teachers');return false;">শিক্ষকবৃন্দ</a>
     <a href="#" onclick="showPage('about');return false;">আমাদের সম্পর্কে</a>
     <a href="#" onclick="showPage('reviews');return false;">রিভিউ</a>
@@ -1835,7 +2141,20 @@ footer {
             <option>পরামর্শ দরকার</option>
           </select>
         </div>
-        <button class="btn btn-primary btn-full" onclick="bookTrial()">
+        <div class="form-field">
+          <select id="hCurrency" onchange="updateCurrencyRates(this.value)" style="background:rgba(200,151,42,0.15);border:1px solid rgba(200,151,42,0.4);color:var(--gold-light);font-weight:700;">
+            <option value="BDT">🇧🇩 বাংলাদেশ (BDT)</option>
+            <option value="SAR">🇸🇦 সৌদি আরব (SAR)</option>
+            <option value="AED">🇦🇪 দুবাই / ইউএই (AED)</option>
+            <option value="QAR">🇶🇦 কাতার (QAR)</option>
+            <option value="USD">🇺🇸 ইউএসএ / ইউরোপ ($)</option>
+            <option value="GBP">🇬🇧 ইউকে (£)</option>
+          </select>
+        </div>
+        <div id="hero-fee-display" style="text-align:center;color:rgba(255,255,255,0.8);font-size:13px;margin-bottom:14px;">
+          <strong>৳ ৫০০</strong> <small>(বাংলাদেশী টাকায় ভর্তি ফি)</small>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="bookTrial()" id="consult-wa-btn">
           💬 WhatsApp-এ পরামর্শ নিন
         </button>
         <p class="form-note">✓ সম্পূর্ণ বিনামূল্যে &nbsp;·&nbsp; <span>✓ কোনো বাধ্যবাধকতা নেই</span></p>
@@ -1866,6 +2185,13 @@ footer {
     </div>
   </div>
 
+  <!-- AYAH OF THE DAY & AUDIO RECITATIONS -->
+  <section class="section ayah-section">
+    <div class="container" id="ayah-of-the-day-container">
+      <!-- Loaded dynamically by JS -->
+    </div>
+  </section>
+
   <!-- WHY US -->
   <section class="section why-section">
     <div class="container">
@@ -1882,6 +2208,21 @@ footer {
         <div class="why-card reveal" style="transition-delay:0.2s"><div class="why-icon">❤️</div><div class="why-title">কোরআনের প্রতি ভালোবাসা</div><p class="why-desc">আমরা চেষ্টা করি যেন আপনার সন্তানের মনে কুরআনের প্রতি ভালোবাসা সৃষ্টি হয় এবং সে নিজে থেকেই কুরআন ও সুন্নাহকে নিজের জীবনে ধারণ করার চেষ্টা করে।</p></div>
         <div class="why-card reveal" style="transition-delay:0.3s"><div class="why-icon">📅</div><div class="why-title">নিয়মিত সময়সূচি</div><p class="why-desc">শনিবার থেকে বুধবার, প্রতিটি ক্লাস ৫০ মিনিট। নিয়মিত পড়ায় দ্রুত উন্নতি নিশ্চিত।</p></div>
       </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE MAKHRAJ SOUND BOARD -->
+  <section class="section makhraj-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">ইন্টারেক্টিভ মাখরাজ বোর্ড</div>
+        <h2 class="section-title">সহীহ আরবি হরফের <span>মাখরাজ ও উচ্চারণ</span></h2>
+        <p class="section-sub">যেকোনো আরবি হরফে ক্লিক করে তার সঠিক উচ্চারণ শুনুন এবং কন্ঠনালীর মাখরাজস্থান জানুন।</p>
+      </div>
+      <div class="makhraj-grid" id="makhraj-letters-grid">
+        <!-- Loaded dynamically by JS -->
+      </div>
+      <div class="makhraj-toast" id="makhraj-active-info"></div>
     </div>
   </section>
 
@@ -1925,6 +2266,20 @@ footer {
           <p class="t-text">বয়স ৪৫ হলেও এখন মাশাআল্লাহ সহি কোরআন পড়তে পারছি। মাত্র এক মাসেই এত উন্নতি হয়েছে।</p>
           <div class="t-author"><div class="t-avatar">স</div><div><div class="t-name">সালমা খানম</div><div class="t-loc">কুয়ালালামপুর, মালয়েশিয়া</div></div></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMIFIED DAILY TAJWEED QUIZ CHALLENGE -->
+  <section class="section quiz-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">ডেইলি লার্নিং কুইজ</div>
+        <h2 class="section-title">আজকের <span>মাখরাজ ও তাজউইদ কুইজ</span></h2>
+        <p class="section-sub">প্রতিদিন ৩টি প্রশ্নের উত্তর দিন, লার্নিং স্ট্রিক বজায় রাখুন এবং ডিজিটাল ব্যাজ অর্জন করুন!</p>
+      </div>
+      <div class="quiz-card" id="daily-quiz-card">
+        <!-- Loaded dynamically by JS -->
       </div>
     </div>
   </section>
@@ -2058,7 +2413,15 @@ footer {
       </div>
 
       <!-- Category Filter Tabs -->
-      <div class="category-tabs-container" id="category-tabs-container"></div>
+      <div class="category-tabs-container" id="category-tabs-container">
+        <div class="cat-pills-container">
+          <button type="button" class="cat-pill active" data-cat="all" onclick="setCourseCategory('all', this)">✨ সকল কোর্স</button>
+          <button type="button" class="cat-pill" data-cat="noorani" onclick="setCourseCategory('noorani', this)">📖 নূরানী কোরআন</button>
+          <button type="button" class="cat-pill" data-cat="tajweed" onclick="setCourseCategory('tajweed', this)">🎙️ তাজউইদ ও কেরাত</button>
+          <button type="button" class="cat-pill" data-cat="ampara" onclick="setCourseCategory('ampara', this)">📗 আমপারা ও সূরা</button>
+          <button type="button" class="cat-pill" data-cat="dua" onclick="setCourseCategory('dua', this)">🤲 মাসনুন দোয়া ও নামাজ</button>
+        </div>
+      </div>
 
       <!-- Global Leaderboard Section (hidden by default, toggled via JS) -->
       <div id="leaderboard-section" style="display:none; margin-top:20px; background:#fff; border-radius:20px; padding:32px; border:1.5px solid var(--border); box-shadow:var(--shadow);">
