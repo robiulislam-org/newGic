@@ -1,0 +1,2913 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIC Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="dashboard-enhance.js" defer></script>
+  <style>
+    :root {
+      --bg: #060b13;
+      --sidebar-bg: #0a1220;
+      --card-bg: rgba(13,22,38,0.85);
+      --card-border: rgba(255,255,255,0.07);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --blue: #1e6091;
+      --blue-light: #3a86c8;
+      --gold: #c8972a;
+      --gold-light: #e5b95c;
+      --green: #10b981;
+      --red: #f43f5e;
+      --purple: #8b5cf6;
+      --teal: #14b8a6;
+      --orange: #f97316;
+      --font: 'Outfit','Hind Siliguri',sans-serif;
+      --sidebar-w: 240px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;display:flex;overflow-x:hidden;}
+
+    /* ── LOGIN ── */
+    #login-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;}
+    .login-box{background:var(--card-bg);border:1px solid var(--card-border);backdrop-filter:blur(20px);border-radius:20px;padding:44px 36px;width:100%;max-width:400px;text-align:center;}
+    .login-logo{width:64px;height:64px;background:linear-gradient(135deg,var(--blue),var(--gold));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 20px;}
+    .login-box h2{font-size:22px;font-weight:700;margin-bottom:6px;}
+    .login-box p{color:var(--text-muted);font-size:13px;margin-bottom:28px;}
+    .inp{width:100%;padding:13px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-size:15px;outline:none;transition:.3s;margin-bottom:14px;}
+    .inp:focus{border-color:var(--blue-light);box-shadow:0 0 12px rgba(58,134,200,.2);}
+    .btn-primary{width:100%;padding:13px;background:linear-gradient(135deg,var(--blue),var(--blue-light));border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:.3s;}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(30,96,145,.4);}
+    #login-err{color:var(--red);font-size:13px;margin-top:12px;display:none;}
+
+    /* ── SIDEBAR ── */
+    #sidebar{width:var(--sidebar-w);background:var(--sidebar-bg);border-right:1px solid var(--card-border);display:none;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;}
+    .sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--card-border);margin-bottom:16px;}
+    .sidebar-logo span{font-size:18px;font-weight:800;background:linear-gradient(90deg,var(--blue-light),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .sidebar-logo small{display:block;font-size:11px;color:var(--text-muted);margin-top:2px;}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;cursor:pointer;border-radius:0;transition:.2s;font-size:14px;font-weight:500;color:var(--text-muted);border-left:3px solid transparent;}
+    .nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+    .nav-item.active{color:var(--blue-light);background:rgba(58,134,200,.1);border-left-color:var(--blue-light);}
+    .nav-icon{font-size:18px;width:22px;text-align:center;}
+    .nav-section{padding:16px 20px 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(148,163,184,.5);}
+    .sidebar-bottom{margin-top:auto;padding:16px 20px;border-top:1px solid var(--card-border);}
+    .live-pill{display:flex;align-items:center;gap:7px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);padding:7px 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--green);margin-bottom:12px;}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;}
+    @keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
+    .btn-logout{width:100%;padding:9px;background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);border-radius:8px;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;transition:.2s;}
+    .btn-logout:hover{background:var(--red);color:#fff;}
+
+    /* ── MAIN CONTENT ── */
+    #main-content{display:none;flex:1;margin-left:var(--sidebar-w);padding:28px 28px 60px;overflow-x:hidden;animation:fadeIn .5s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── PAGE HEADER ── */
+    .page-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+    .page-hdr h1{font-size:24px;font-weight:800;letter-spacing:-.02em;}
+    .page-hdr p{color:var(--text-muted);font-size:13px;margin-top:4px;}
+    .hdr-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+    /* ── TAB PAGES ── */
+    .tab-page{display:none;}
+    .tab-page.active{display:block;}
+
+    /* ── STAT CARDS ── */
+    .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+    .stat-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;transition:transform .25s;}
+    .stat-card:hover{transform:translateY(-3px);}
+    .stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--blue-light));}
+    .stat-card.g::after{background:var(--green);}
+    .stat-card.gd::after{background:var(--gold);}
+    .stat-card.p::after{background:var(--purple);}
+    .stat-card.t::after{background:var(--teal);}
+    .stat-card.o::after{background:var(--orange);}
+    .stat-card.r::after{background:var(--red);}
+    .stat-label{font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+    .stat-val{font-size:30px;font-weight:800;line-height:1;}
+    .stat-val.live{color:var(--green);}
+    .stat-sub{font-size:12px;color:var(--text-muted);margin-top:8px;}
+    .stat-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;}
+    .stat-badge.up{background:rgba(16,185,129,.15);color:var(--green);}
+    .stat-badge.dn{background:rgba(244,63,94,.15);color:var(--red);}
+
+    /* ── CARDS ── */
+    .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:22px;backdrop-filter:blur(12px);}
+    .card+.card{margin-top:20px;}
+    .card-title{font-size:16px;font-weight:700;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+    .card-title .sub{font-size:12px;color:var(--text-muted);font-weight:400;}
+
+    /* ── GRID LAYOUTS ── */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px;}
+    .grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;}
+    @media(max-width:1100px){.grid-2,.grid-3,.grid-2-1{grid-template-columns:1fr;}}
+
+    /* ── TABLES ── */
+    .tbl-wrap{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;}
+    th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07);font-weight:600;white-space:nowrap;}
+    td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;}
+    tr:last-child td{border:none;}
+    tr:hover td{background:rgba(255,255,255,.02);}
+    .empty-row td{text-align:center;color:var(--text-muted);padding:24px;}
+
+    /* ── BADGES ── */
+    .src-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+    .src-badge.facebook{background:rgba(24,119,242,.15);color:#4e9af7;}
+    .src-badge.youtube{background:rgba(255,0,0,.12);color:#ff5252;}
+    .src-badge.instagram{background:rgba(225,48,108,.15);color:#f472b6;}
+    .src-badge.twitter,.src-badge.x{background:rgba(29,161,242,.12);color:#60d0f5;}
+    .src-badge.google{background:rgba(66,133,244,.15);color:#7bb5fb;}
+    .src-badge.tiktok{background:rgba(105,201,208,.15);color:#6dd5d2;}
+    .src-badge.direct{background:rgba(148,163,184,.15);color:#94a3b8;}
+    .src-badge.other{background:rgba(200,151,42,.15);color:var(--gold-light);}
+    .src-badge.linkedin{background:rgba(10,102,194,.15);color:#4dabef;}
+    .src-badge.bing{background:rgba(0,168,232,.15);color:#48b5e8;}
+    .pg-tag{background:rgba(58,134,200,.15);color:var(--blue-light);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600;}
+    .pg-tag.home{background:rgba(200,151,42,.15);color:var(--gold-light);}
+    .status-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+    .status-badge.active{background:rgba(16,185,129,.15);color:var(--green);}
+    .status-badge.inactive{background:rgba(244,63,94,.15);color:var(--red);}
+    .status-badge.warn{background:rgba(249,115,22,.15);color:var(--orange);}
+
+    /* ── PROGRESS BAR ── */
+    .bar-wrap{display:flex;align-items:center;gap:8px;}
+    .bar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue-light),var(--gold));transition:width .8s cubic-bezier(.4,0,.2,1);}
+    .bar-lbl{font-size:12px;font-weight:700;color:var(--gold-light);white-space:nowrap;min-width:48px;text-align:right;}
+
+    /* ── SEARCH & FILTER BAR ── */
+    .filter-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+    .search-inp{flex:1;min-width:200px;padding:9px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:9px;color:#fff;font-size:13px;outline:none;transition:.2s;}
+    .search-inp:focus{border-color:var(--blue-light);}
+    .filter-sel{padding:9px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:9px;color:var(--text);font-size:13px;outline:none;cursor:pointer;}
+
+    /* ── BUTTONS ── */
+    .btn{padding:9px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.2s;display:inline-flex;align-items:center;gap:6px;}
+    .btn:hover{transform:translateY(-1px);}
+    .btn-green{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3);}
+    .btn-green:hover{background:var(--green);color:#fff;}
+    .btn-gold{background:rgba(200,151,42,.15);color:var(--gold-light);border:1px solid rgba(200,151,42,.3);}
+    .btn-gold:hover{background:var(--gold);color:#fff;}
+    .btn-blue{background:rgba(58,134,200,.15);color:var(--blue-light);border:1px solid rgba(58,134,200,.3);}
+    .btn-blue:hover{background:var(--blue-light);color:#fff;}
+    .btn-red{background:rgba(244,63,94,.1);color:var(--red);border:1px solid rgba(244,63,94,.2);}
+    .btn-purple{background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3);}
+    .btn-teal{background:rgba(20,184,166,.15);color:var(--teal);border:1px solid rgba(20,184,166,.3);}
+    .btn-teal:hover{background:var(--teal);color:#fff;}
+    .btn-sm{padding:5px 10px;font-size:11px;}
+
+    /* ── FUNNEL ── */
+    .funnel-wrap{padding:8px 0;}
+    .funnel-step{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+    .funnel-bar-outer{flex:1;height:36px;background:rgba(255,255,255,.05);border-radius:8px;overflow:hidden;position:relative;}
+    .funnel-bar-inner{height:100%;border-radius:8px;display:flex;align-items:center;padding-left:12px;font-size:13px;font-weight:700;transition:width 1s ease;}
+    .funnel-label{min-width:130px;font-size:13px;font-weight:600;}
+    .funnel-num{min-width:60px;text-align:right;font-size:14px;font-weight:800;}
+    .funnel-pct{min-width:45px;text-align:right;font-size:12px;color:var(--text-muted);}
+    .funnel-arrow{font-size:16px;color:var(--text-muted);}
+
+    /* ── ALERT CARDS ── */
+    .alert-box{border-radius:12px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:flex-start;gap:12px;font-size:13px;}
+    .alert-box.warn{background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);}
+    .alert-box.info{background:rgba(58,134,200,.08);border:1px solid rgba(58,134,200,.2);}
+    .alert-box.success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);}
+    .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+    .alert-title{font-weight:700;margin-bottom:4px;}
+    .alert-desc{color:var(--text-muted);}
+
+    /* ── PHONE LIST ── */
+    .phone-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);padding:4px 10px;border-radius:20px;font-size:12px;cursor:pointer;transition:.2s;}
+    .phone-chip:hover{background:var(--green);color:#fff;}
+    .email-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.2);padding:4px 10px;border-radius:20px;font-size:12px;cursor:pointer;transition:.2s;margin-bottom:4px;}
+    .email-chip:hover{background:#2563eb;color:#fff;}
+
+    /* ── SCROLLABLE CONTAINER ── */
+    .scroll-box{max-height:420px;overflow-y:auto;}
+    .scroll-box::-webkit-scrollbar{width:5px;}
+    .scroll-box::-webkit-scrollbar-track{background:transparent;}
+    .scroll-box::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
+
+    /* ── TOAST ── */
+    #toast{position:fixed;bottom:30px;right:30px;background:#1e293b;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 18px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:.3s;pointer-events:none;max-width:320px;}
+    #toast.show{opacity:1;transform:translateY(0);}
+    #toast.ok{border-color:rgba(16,185,129,.4);color:var(--green);}
+    #toast.err{border-color:rgba(244,63,94,.4);color:var(--red);}
+
+    /* ── INFO TOOLTIP ── */
+    .info-tip{position:relative;display:inline-flex;}
+    .info-tip .tip-text{display:none;position:absolute;bottom:calc(100%+8px);left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid var(--card-border);border-radius:8px;padding:8px 12px;font-size:12px;width:200px;z-index:50;color:var(--text-muted);}
+    .info-tip:hover .tip-text{display:block;}
+
+    /* ── WAM GENERATOR ── */
+    .wa-preview{background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2);border-radius:10px;padding:12px;font-size:13px;word-break:break-all;color:#4caf82;margin-top:10px;display:none;}
+
+    /* ── SECTION DIVIDER ── */
+    .sec-div{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(148,163,184,.5);padding:8px 0;margin:4px 0 14px;border-bottom:1px solid rgba(255,255,255,.05);}
+
+    /* ── CHART HEIGHTS ── */
+    .chart-h350{position:relative;height:350px;}
+    .chart-h260{position:relative;height:260px;}
+    .chart-h300{position:relative;height:300px;}
+
+    /* ── MISC ── */
+    ::-webkit-scrollbar{width:5px;height:5px;}
+    ::-webkit-scrollbar-track{background:rgba(255,255,255,.02);}
+    ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2);}
+    .center-text{text-align:center;color:var(--text-muted);padding:30px;}
+    .fw700{font-weight:700;}
+    .text-green{color:var(--green);}
+    .text-red{color:var(--red);}
+    .text-gold{color:var(--gold-light);}
+    .text-blue{color:var(--blue-light);}
+    .text-muted{color:var(--text-muted);}
+    .text-purple{color:#a78bfa;}
+    .text-teal{color:var(--teal);}
+    .text-orange{color:var(--orange);}
+    small{font-size:12px;}
+    .mt8{margin-top:8px;}
+    .mt16{margin-top:16px;}
+    .mt20{margin-top:20px;}
+    .mb16{margin-bottom:16px;}
+  
+/* === DASHBOARD ENHANCEMENTS === */
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse  { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.6} }
+.stat-val { animation: fadeUp .5s ease forwards; }
+
+/* Trend badges */
+.trend-up   {display:inline-flex;align-items:center;gap:3px;color:#22c55e;font-size:11px;font-weight:700;background:rgba(34,197,94,.12);padding:2px 8px;border-radius:20px;}
+.trend-down {display:inline-flex;align-items:center;gap:3px;color:#f43f5e;font-size:11px;font-weight:700;background:rgba(244,63,94,.12);padding:2px 8px;border-radius:20px;}
+.trend-same {display:inline-flex;align-items:center;gap:3px;color:#94a3b8;font-size:11px;font-weight:700;background:rgba(148,163,184,.12);padding:2px 8px;border-radius:20px;}
+
+/* Sparkline */
+.sparkline-wrap {display:flex;align-items:flex-end;gap:3px;height:28px;}
+.sparkline-bar  {flex:1;border-radius:3px 3px 0 0;min-width:5px;opacity:.7;transition:opacity .2s;}
+.sparkline-bar:hover {opacity:1;}
+
+/* Smart Insight Cards */
+.insight-card {
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:16px 18px;
+  display:flex;align-items:flex-start;gap:14px;
+  transition:transform .2s,box-shadow .2s;
+  animation:fadeUp .5s ease forwards;
+}
+.insight-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.25);}
+.insight-card.green{border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.05);}
+.insight-card.gold {border-color:rgba(229,185,92,.25);background:rgba(229,185,92,.05);}
+.insight-card.blue {border-color:rgba(58,134,200,.25);background:rgba(58,134,200,.05);}
+.insight-card.red  {border-color:rgba(244,63,94,.25);background:rgba(244,63,94,.05);}
+.insight-icon{font-size:26px;flex-shrink:0;line-height:1;margin-top:2px;}
+.insight-title{font-size:13px;font-weight:800;color:#e2e8f0;margin-bottom:4px;}
+.insight-desc {font-size:12px;color:#94a3b8;line-height:1.55;}
+
+/* Progress bars */
+.prog-row  {display:flex;flex-direction:column;gap:12px;padding:4px 0;}
+.prog-item {display:flex;flex-direction:column;gap:6px;}
+.prog-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;}
+.prog-track{height:9px;background:rgba(255,255,255,.06);border-radius:10px;overflow:hidden;}
+.prog-fill {height:100%;border-radius:10px;transition:width .75s cubic-bezier(.4,0,.2,1);min-width:4px;}</style>
+</head>
+<body>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="login-wrap">
+  <div class="login-box">
+    <div class="login-logo">🕌</div>
+    <h2>গ্লোবাল ইসলামিক কেয়ার</h2>
+    <p>অ্যাডমিন ড্যাশবোর্ড — পাসওয়ার্ড দিয়ে প্রবেশ করুন</p>
+    <form id="login-form">
+      <div style="position:relative;margin-bottom:14px;">
+        <input type="password" id="pw-inp" class="inp" placeholder="পাসওয়ার্ড লিখুন..." required autocomplete="current-password" style="margin-bottom:0;padding-right:44px;">
+        <button type="button" id="pw-toggle" onclick="togglePwVisibility()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:#94a3b8;cursor:pointer;font-size:16px;line-height:1;">👁</button>
+      </div>
+      <label style="display:flex;align-items:center;gap:10px;margin-bottom:16px;cursor:pointer;font-size:13px;color:#94a3b8;">
+        <input type="checkbox" id="remember-me" style="width:16px;height:16px;accent-color:#3a86c8;cursor:pointer;">
+        <span>মনে রাখো (লগআউট না করা পর্যন্ত লগইন থাকবে)</span>
+      </label>
+      <button type="submit" class="btn-primary">🔐 প্রবেশ করুন</button>
+    </form>
+    <div id="login-err">❌ ভুল পাসওয়ার্ড বা সংযোগ ত্রুটি</div>
+  </div>
+</div>
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <span>GIC Dashboard</span>
+    <small>Global Islamic Care</small>
+  </div>
+
+  <div class="nav-section">মূল মেনু</div>
+  <div class="nav-item active" onclick="switchTab('today')">
+    <span class="nav-icon">📅</span> আজকের অ্যানালিটিক্স
+  </div>
+  <div class="nav-item" onclick="switchTab('analytics')">
+    <span class="nav-icon">📊</span> সামগ্রিক অ্যানালিটিক্স
+  </div>
+  <div class="nav-item" onclick="switchTab('leads')">
+    <span class="nav-icon">📱</span> লিডস ও ফোন নম্বর
+  </div>
+  <div class="nav-item" onclick="switchTab('students')">
+    <span class="nav-icon">👨‍🎓</span> স্টুডেন্ট ডিরেক্টরি
+  </div>
+  <div class="nav-item" onclick="switchTab('funnel')">
+    <span class="nav-icon">🔽</span> কনভার্সন ফানেল
+  </div>
+
+  <div class="nav-section">ভিজিটর তথ্য</div>
+  <div class="nav-item" onclick="switchTab('visitor-log')">
+    <span class="nav-icon">🌐</span> ভিজিটর লগ (IP + প্ল্যাটফর্ম)
+  </div>
+  <div class="nav-item" onclick="switchTab('whatsapp')">
+    <span class="nav-icon">💬</span> WhatsApp টুলস
+  </div>
+
+  <div class="nav-section">রিপোর্ট</div>
+  <div class="nav-item" onclick="switchTab('reports')">
+    <span class="nav-icon">📥</span> এক্সপোর্ট ও রিপোর্ট
+  </div>
+  <div class="nav-item" onclick="switchTab('alerts')">
+    <span class="nav-icon">🔔</span> অ্যালার্ট <span id="alert-badge" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
+  </div>
+
+  <div class="nav-section">কন্টেন্ট</div>
+  <a href="quran.html" target="_blank" class="nav-item" style="text-decoration:none;">
+    <span class="nav-icon">📖</span> আল-কুরআন ডিজিটাল পোর্টাল ↗
+  </a>
+  <div class="nav-item" onclick="switchTab('reviews')" id="nav-reviews">
+    <span class="nav-icon">⭐</span> রিভিউ ম্যানেজার <span id="review-badge" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
+  </div>
+  <div class="nav-item" onclick="switchTab('course-comments')">
+    <span class="nav-icon">💬</span> কোর্স মন্তব্য <span id="comment-badge" style="display:none;background:var(--blue);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
+  </div>
+
+  <div class="nav-section">সেটিংস</div>
+  <div class="nav-item" onclick="switchTab('settings')">
+    <span class="nav-icon">⚙️</span> পাসওয়ার্ড ও সেটিংস
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="live-pill"><div class="dot"></div> লাইভ: <span id="sb-live">0</span> জন সক্রিয়</div>
+    <button class="btn-logout" onclick="doLogout()">🚪 লগআউট</button>
+  </div>
+</nav>
+
+<!-- ══════════════ MAIN CONTENT ══════════════ -->
+<div id="main-content">
+
+  <!-- ═══ TAB: TODAY ANALYTICS ═══ -->
+  <div class="tab-page active" id="tab-today">
+    <div class="page-hdr">
+      <div>
+        <h1>📅 আজকের অ্যানালিটিক্স</h1>
+        <p>আজকের দিনের পেজ ভিউ, কনভার্সন এবং লাইভ অ্যাক্টিভিটি টাইমলাইন</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="refreshAll()">🔄 রিফ্রেশ</button>
+      </div>
+    </div>
+
+    <!-- Smart Insights -->
+    <div style="font-size:13px;font-weight:800;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px;display:flex;align-items:center;gap:10px;">💡 স্মার্ট পরামর্শ <span style="flex:1;height:1px;background:rgba(255,255,255,0.07);display:block;"></span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:24px;" id="smart-insights">
+      <div style="background:rgba(58,134,200,0.06);border:1px solid rgba(58,134,200,0.2);border-radius:16px;padding:16px 18px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="font-size:26px;">⏳</div>
+        <div><div style="font-size:13px;font-weight:800;color:#e2e8f0;">ডেটা লোড হচ্ছে...</div><div style="font-size:12px;color:#94a3b8;margin-top:3px;">একটু অপেক্ষা করুন</div></div>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div style="font-size:13px;font-weight:800;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px;display:flex;align-items:center;gap:10px;">📊 আজকের সংখ্যা <span style="flex:1;height:1px;background:rgba(255,255,255,0.07);display:block;"></span></div>
+    <div class="stat-row">
+      <div class="stat-card g">
+        <div class="stat-label"><span style="width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;margin-right:5px;"></span> এখন সক্রিয়</div>
+        <div class="stat-val live" id="today-live">0</div>
+        <div class="stat-sub">রিয়েল-টাইম ভিজিটর</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">👁️ আজকের পেজ ভিউ</div>
+        <div class="stat-val" id="today-views">0</div>
+        <div style="margin-top:6px;" id="today-views-trend"></div>
+        <div style="display:flex;align-items:center;gap:2px;height:28px;margin-top:6px;" id="today-sparkline"></div>
+      </div>
+      <div class="stat-card gd">
+        <div class="stat-label">💬 WhatsApp ক্লিক</div>
+        <div class="stat-val" id="today-wa">0</div>
+        <div class="stat-sub">কনভার্সন: <span id="today-cvr" style="color:var(--gold-light);font-weight:800;">0%</span></div>
+      </div>
+      <div class="stat-card p">
+        <div class="stat-label">📧 নতুন Gmail লগইন</div>
+        <div class="stat-val" id="today-new-logins">0</div>
+        <div class="stat-sub">আজকে প্রথমবার</div>
+      </div>
+      <div class="stat-card t">
+        <div class="stat-label">⏱️ সর্বোচ্চ সময় পেজ</div>
+        <div class="stat-val" id="today-top-time" style="font-size:16px;">—</div>
+        <div class="stat-sub">গড় সময় অনুযায়ী</div>
+      </div>
+    </div>
+
+    <!-- Live Visitors + Today New Logins -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">
+          <span>🟢 এখন সাইটে আছেন</span>
+          <span class="sub" id="live-count-lbl">০ জন সক্রিয়</span>
+        </div>
+        <div class="scroll-box">
+          <table>
+            <thead><tr><th>অঞ্চল</th><th>পেজ</th><th>সোর্স</th></tr></thead>
+            <tbody id="today-live-tbl"><tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span>🆕 আজকের নতুন জিমেইল লগইন</span>
+          <span class="sub">যারা আজ প্রথমবার লগইন করেছে</span>
+        </div>
+        <div class="scroll-box">
+          <table>
+            <thead><tr><th>জিমেইল / আইডি</th><th>যোগদান</th><th>স্ট্যাটাস</th></tr></thead>
+            <tbody id="today-logins-tbl"><tr class="empty-row"><td colspan="3">আজ কেউ লগইন করেনি</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's Details: Source and Top Pages -->
+    <div class="grid-2 mt20">
+      <div class="card">
+        <div class="card-title">🌐 আজকের ট্রাফিক সোর্স</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>সোর্স</th><th>ভিজিট</th><th>শেয়ার</th></tr></thead>
+            <tbody id="today-sources-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📄 আজকের সর্বাধিক দেখা পেজসমূহ</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>পেজ</th><th>ভিউ</th><th>গড় সময়</th></tr></thead>
+            <tbody id="today-pages-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's Events Timeline -->
+    <div class="card mt20">
+      <div class="card-title">
+        <span>📜 আজকের অ্যাক্টিভিটি লগ (সর্বশেষ ৫০টি কাজ)</span>
+        <span class="sub">রিয়েল-টাইমে ভিজিটরদের দ্বারা হওয়া কাজগুলোর তালিকা</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>সময়</th><th>কাজের ধরণ</th><th>পেজ</th><th>সোর্স/উৎস</th><th>অঞ্চল/লোকেশন</th></tr></thead>
+          <tbody id="today-events-tbl"><tr class="empty-row"><td colspan="5">আজকের কোনো অ্যাক্টিভিটি নেই</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: ANALYTICS ═══ -->
+  <div class="tab-page" id="tab-analytics">
+    <div class="page-hdr">
+      <div>
+        <h1>📊 ভিজিটর অ্যানালিটিক্স</h1>
+        <p>কোথা থেকে, কোন প্ল্যাটফর্ম থেকে, কতজন আসছে — সব তথ্য এখানে</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="refreshAll()">🔄 রিফ্রেশ</button>
+      </div>
+    </div>
+
+    <!-- Stat Cards Row 1 -->
+    <div class="stat-row">
+      <div class="stat-card g">
+        <div class="stat-label">🟢 এখন সক্রিয় ভিজিটর</div>
+        <div class="stat-val live" id="m-live">0</div>
+        <div class="stat-sub">রিয়েল-টাইম প্রেজেন্স</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">👁️ আজকের ভিজিটর</div>
+        <div class="stat-val" id="m-today">0</div>
+        <div class="stat-sub" id="m-today-sub">পেজ ভিউ সংখ্যা</div>
+      </div>
+      <div class="stat-card gd">
+        <div class="stat-label">💬 আজকের WhatsApp ক্লিক</div>
+        <div class="stat-val" id="m-wa">0</div>
+        <div class="stat-sub" id="m-wa-sub">কনভার্সন হার: <span id="m-cvr">0%</span></div>
+      </div>
+      <div class="stat-card p">
+        <div class="stat-label">📡 শীর্ষ ট্রাফিক সোর্স</div>
+        <div class="stat-val" id="m-src" style="font-size:18px;">—</div>
+        <div class="stat-sub">আজকের সর্বোচ্চ উৎস</div>
+      </div>
+      <div class="stat-card t">
+        <div class="stat-label">⏱️ সর্বোচ্চ সময় পেজ</div>
+        <div class="stat-val" id="m-time" style="font-size:16px;">—</div>
+        <div class="stat-sub">গড় সময় অনুযায়ী</div>
+      </div>
+      <div class="stat-card o">
+        <div class="stat-label">🌍 শীর্ষ অঞ্চল</div>
+        <div class="stat-val" id="m-region" style="font-size:16px;">—</div>
+        <div class="stat-sub">সবচেয়ে বেশি ভিজিটর</div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid-2-1">
+      <div class="card">
+        <div class="card-title">
+          <span>📈 ৭ দিনের ট্রাফিক ট্রেন্ড</span>
+          <span class="sub">পেজ ভিউ বনাম WhatsApp ক্লিক</span>
+        </div>
+        <div class="chart-h350"><canvas id="ch-traffic"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🟢 এখন সক্রিয় ভিজিটর</div>
+        <div class="scroll-box">
+          <table>
+            <thead><tr><th>অঞ্চল</th><th>পেজ</th><th>সোর্স</th></tr></thead>
+            <tbody id="live-tbl"><tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Source & Page Time -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">
+          <span>🌐 ট্রাফিক সোর্স বিশ্লেষণ</span>
+          <span class="sub">কোথা থেকে ভিজিটর আসছে</span>
+        </div>
+        <div class="chart-h260"><canvas id="ch-source"></canvas></div>
+        <div id="source-legend" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span>⏳ পেজ টাইম বিশ্লেষণ</span>
+          <span class="sub">প্রতিটি পেজে গড় সময় (সেকেন্ড)</span>
+        </div>
+        <div class="chart-h260"><canvas id="ch-pagetime"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Location Table & Page Views -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📍 শীর্ষ ভিজিটর অঞ্চলসমূহ</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>দেশ ও শহর</th><th>ভিজিট</th><th>শেয়ার</th></tr></thead>
+            <tbody id="regions-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Top Pages — visual progress bars -->
+      <div class="card">
+        <div class="card-title">
+          <span>📄 সর্বাধিক দেখা পেজসমূহ</span>
+          <span class="sub">ভিউ ও গড় সময় সহ</span>
+        </div>
+        <div id="pages-prog-container" style="padding:6px 0 4px;">
+          <div style="text-align:center;padding:24px;color:#64748b;">⏳ লোড হচ্ছে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Source — visual progress bars -->
+    <div class="card" style="margin-top:20px;">
+      <div class="card-title">
+        <span>🚀 প্ল্যাটফর্ম সোর্স বিশ্লেষণ</span>
+        <span class="sub">কোন জায়গা থেকে কতজন আসছে</span>
+      </div>
+      <div id="source-prog-container" style="padding:6px 0 4px;">
+        <div style="text-align:center;padding:24px;color:#64748b;">⏳ লোড হচ্ছে...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: LEADS ═══ -->
+  <div class="tab-page" id="tab-leads">
+    <div class="page-hdr">
+      <div>
+        <h1>👥 লিডস ও শিক্ষার্থী তথ্য</h1>
+        <p>যারা রেজিস্ট্রেশন করেছে তাদের ইমেইল ও ফোন নম্বর — সংরক্ষণ ও ব্যবহার করুন</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-green" onclick="exportPhonesCSV()">📥 CSV ডাউনলোড</button>
+        <button class="btn btn-gold" onclick="copyAllPhones()">📋 সব নম্বর কপি</button>
+        <button class="btn btn-blue" onclick="copyAllEmails()" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">📧 সব ইমেইল কপি</button>
+        <button class="btn btn-purple" onclick="switchTab('whatsapp')">💬 WhatsApp টুল</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stat-row" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+      <div class="stat-card g">
+        <div class="stat-label">📱 মোট ফোন নম্বর</div>
+        <div class="stat-val" id="lead-total">0</div>
+        <div class="stat-sub">রেজিস্ট্রেশনে সংরক্ষিত</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">✅ সক্রিয় স্টুডেন্ট</div>
+        <div class="stat-val text-green" id="lead-active">0</div>
+        <div class="stat-sub">৭ দিনের মধ্যে লগইন</div>
+      </div>
+      <div class="stat-card r">
+        <div class="stat-label">⚠️ নিষ্ক্রিয় স্টুডেন্ট</div>
+        <div class="stat-val text-red" id="lead-inactive">0</div>
+        <div class="stat-sub">৭+ দিন লগইন নেই</div>
+      </div>
+      <div class="stat-card gd">
+        <div class="stat-label">🏆 কোর্স কমপ্লিট</div>
+        <div class="stat-val text-gold" id="lead-completed">0</div>
+        <div class="stat-sub">সম্পূর্ণ করেছে</div>
+      </div>
+    </div>
+
+    <!-- Phone list with search -->
+    <div class="card">
+      <div class="card-title">
+        <span>📋 সম্পূর্ণ ফোন নম্বর তালিকা</span>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sm btn-green" onclick="exportPhonesCSV()">⬇️ CSV</button>
+          <button class="btn btn-sm btn-blue" onclick="exportPhonesExcel()">📊 Excel টেক্সট</button>
+        </div>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="leads-search" class="search-inp" placeholder="🔍 নাম, নম্বর বা স্টুডেন্ট আইডি দিয়ে খুঁজুন..." oninput="filterLeads()">
+        <select class="filter-sel" id="leads-filter" onchange="filterLeads()">
+          <option value="all">সব স্টুডেন্ট</option>
+          <option value="active">সক্রিয় (৭ দিনের মধ্যে)</option>
+          <option value="inactive">নিষ্ক্রিয় (৭+ দিন)</option>
+          <option value="completed">কোর্স শেষ করেছে</option>
+        </select>
+      </div>
+      <div class="scroll-box">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>স্টুডেন্ট আইডি</th>
+              <th>জিমেইল / ফোন</th>
+              <th>XP পয়েন্ট</th>
+              <th>চ্যাপ্টার</th>
+              <th>সর্বশেষ লগইন</th>
+              <th>স্ট্যাটাস</th>
+              <th>অ্যাকশন</th>
+            </tr>
+          </thead>
+          <tbody id="leads-tbl">
+            <tr class="empty-row"><td colspan="8">ডেটা লোড হচ্ছে...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-muted);">
+        মোট দেখানো হচ্ছে: <span id="leads-shown">0</span> জন | মোট: <span id="leads-total-count">0</span> জন
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: STUDENTS ═══ -->
+  <div class="tab-page" id="tab-students">
+    <div class="page-hdr">
+      <div>
+        <h1>👨‍🎓 স্টুডেন্ট ডিরেক্টরি</h1>
+        <p>নিবন্ধিত সকল স্টুডেন্টের বিস্তারিত তথ্য</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-green" onclick="exportStudentsCSV()">📥 CSV এক্সপোর্ট</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>📋 স্টুডেন্ট তালিকা</span>
+        <span class="sub" id="stu-count-lbl">০ জন নিবন্ধিত</span>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="stu-search" class="search-inp" placeholder="🔍 খুঁজুন..." oninput="filterStudents()">
+        <select class="filter-sel" id="stu-sort" onchange="filterStudents()">
+          <option value="recent">সাম্প্রতিক লগইন</option>
+          <option value="xp">সর্বোচ্চ XP</option>
+          <option value="chapters">সর্বোচ্চ চ্যাপ্টার</option>
+        </select>
+      </div>
+      <div class="scroll-box">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>স্টুডেন্ট আইডি</th>
+              <th>জিমেইল / ফোন</th>
+              <th>XP পয়েন্ট</th>
+              <th>সম্পন্ন চ্যাপ্টার</th>
+              <th>সর্বশেষ লগইন</th>
+              <th>স্ট্যাটাস</th>
+            </tr>
+          </thead>
+          <tbody id="stu-tbl">
+            <tr class="empty-row"><td colspan="7">ডেটা লোড হচ্ছে...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: FUNNEL ═══ -->
+  <div class="tab-page" id="tab-funnel">
+    <div class="page-hdr">
+      <div>
+        <h1>🔽 কনভার্সন ফানেল</h1>
+        <p>কতজন ভিজিটর থেকে কতজন স্টুডেন্ট হচ্ছে — পুরো পথ দেখুন</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📊 ভিজিটর → স্টুডেন্ট ফানেল</div>
+        <div class="funnel-wrap" id="funnel-steps">
+          <div class="center-text">ডেটা লোড হচ্ছে...</div>
+        </div>
+        <div style="margin-top:16px;padding:14px;background:rgba(255,255,255,.03);border-radius:10px;">
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">🎯 মূল পারফরম্যান্স সংখ্যা</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);">ভিজিটর → রেজিস্ট্রেশন</div>
+              <div style="font-size:22px;font-weight:800;" id="f-v2r">—</div>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);">রেজিস্ট্রেশন → কোর্স সক্রিয়</div>
+              <div style="font-size:22px;font-weight:800;" id="f-r2c">—</div>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);">WhatsApp কনভার্সন</div>
+              <div style="font-size:22px;font-weight:800;" id="f-wa">—</div>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);">কোর্স কমপ্লিশন রেট</div>
+              <div style="font-size:22px;font-weight:800;" id="f-comp">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💡 পরামর্শ ও অ্যাকশন আইটেম</div>
+        <div id="funnel-advice">
+          <div class="center-text">ডেটা লোড হলে পরামর্শ দেখাবে</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WhatsApp Click Source -->
+    <div class="card">
+      <div class="card-title">
+        <span>💬 WhatsApp ক্লিক উৎস পেজ</span>
+        <span class="sub">কোন পেজ থেকে সবচেয়ে বেশি মানুষ WhatsApp-এ যাচ্ছে</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>পেজ</th><th>ক্লিক সংখ্যা</th><th>কার্যকারিতা</th></tr></thead>
+          <tbody id="wa-src-tbl"><tr class="empty-row"><td colspan="3">কোনো ডেটা নেই</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: CAMPAIGNS ═══ -->
+  <!-- === TAB: VISITOR LOG === -->
+  <div class="tab-page" id="tab-visitor-log">
+    <div class="page-hdr">
+      <div><h1>&#127760; &#2477;&#2495;&#2460;&#2495;&#2463;&#2480; &#2482;&#2455;</h1><p>&#2453;&#2503; &#2453;&#2507;&#2469;&#2494; &#2469;&#2503;&#2453;&#2503; &#2447;&#2488;&#2503;&#2459;&#2503; &#2478;&#2503; IP, &#2482;&#2507;&#2453;&#2503;&#2486;&#2472;, &#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478; &#2451; Gmail &#2447;&#2453;&#2488;&#2494;&#2469;&#2503;</p></div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="loadVisitorLog()">&#128260; &#2480;&#2495;&#2475;&#2509;&#2480;&#2503;&#2486;</button>
+        <button class="btn btn-green" onclick="exportVisitorCSV()">&#128229; CSV &#2465;&#2494;&#2441;&#2472;&#2482;&#2507;&#2465;</button>
+      </div>
+    </div>
+    <div class="stat-row" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:20px;">
+      <div class="stat-card g"><div class="stat-label">&#128101; &#2478;&#2507;&#2463; &#2477;&#2495;&#2460;&#2495;&#2463;&#2480;</div><div class="stat-val text-green" id="vl-total">&#8212;</div><div class="stat-sub">Unique IP</div></div>
+      <div class="stat-card p"><div class="stat-label">&#128231; Gmail &#2488;&#2434;&#2479;&#2497;&#2453;&#2509;&#2468;</div><div class="stat-val" id="vl-gmail-count">&#8212;</div><div class="stat-sub">&#2482;&#2455;&#2439;&#2472; &#2453;&#2480;&#2503;&#2459;&#2503;&#2472;</div></div>
+      <div class="stat-card gd"><div class="stat-label">&#128216; Facebook</div><div class="stat-val text-gold" id="vl-fb-count">&#8212;</div><div class="stat-sub">&#2469;&#2503;&#2453;&#2503; &#2447;&#2488;&#2503;&#2459;&#2503;&#2472;</div></div>
+      <div class="stat-card r"><div class="stat-label">&#9654;&#65039; YouTube</div><div class="stat-val text-red" id="vl-yt-count">&#8212;</div><div class="stat-sub">&#2469;&#2503;&#2453;&#2503; &#2447;&#2488;&#2503;&#2459;&#2503;&#2472;</div></div>
+    </div>
+    <div class="filter-bar" style="margin-bottom:16px;">
+      <input type="text" id="vl-search" class="search-inp" placeholder="&#128269; IP, &#2470;&#2503;&#2486;, Gmail &#2476;&#2494; &#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478; &#2470;&#2495;&#2479;&#2492;&#2503; &#2454;&#2497;&#2434;&#2460;&#2497;&#2472;..." oninput="filterVisitorLog()">
+      <select class="filter-sel" id="vl-platform-filter" onchange="filterVisitorLog()">
+        <option value="all">&#2488;&#2476; &#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478;</option>
+        <option value="facebook">&#128216; Facebook</option>
+        <option value="youtube">&#9654;&#65039; YouTube</option>
+        <option value="google">&#128269; Google</option>
+        <option value="linkedin">&#128188; LinkedIn</option>
+        <option value="instagram">&#128248; Instagram</option>
+        <option value="twitter">&#128038; Twitter/X</option>
+        <option value="tiktok">&#127925; TikTok</option>
+        <option value="direct">&#128279; Direct</option>
+        <option value="other">&#127760; &#2437;&#2472;&#2509;&#2479;&#2494;&#2472;&#2509;&#2479;</option>
+      </select>
+      <select class="filter-sel" id="vl-gmail-filter" onchange="filterVisitorLog()">
+        <option value="all">&#2488;&#2476; &#2477;&#2495;&#2460;&#2495;&#2463;&#2480;</option>
+        <option value="gmail">&#128231; Gmail &#2486;&#2494;&#2459;&#2503;</option>
+        <option value="no-gmail">&#10060; Gmail &#2472;&#2503;&#2439;</option>
+      </select>
+    </div>
+    <div class="card">
+      <div class="card-title">&#128203; &#2477;&#2495;&#2460;&#2495;&#2463;&#2480; &#2468;&#2494;&#2482;&#2495;&#2453;&#2494; <span id="vl-shown" style="font-size:12px;font-weight:400;color:var(--text-muted);"></span></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>&#127760; IP &#2451; &#2482;&#2507;&#2453;&#2503;&#2486;&#2472;</th><th>&#128640; &#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478;</th><th>&#128241; &#2465;&#2495;&#2477;&#2494;&#2439;&#2488;</th><th>&#128231; Gmail</th><th>&#128196; &#2474;&#2503;&#2460;</th><th>&#128336; &#2486;&#2503;&#2487; &#2488;&#2453;&#2509;&#2480;&#2495;&#2479;&#2492;</th><th>&#128269;</th></tr></thead>
+          <tbody id="vl-tbl"><tr class="empty-row"><td colspan="7">&#2482;&#2507;&#2465; &#2489;&#2458;&#2509;&#2459;&#2503;...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card mt20">
+      <div class="card-title">&#9200;&#65039; &#2486;&#2503;&#2487; ১০০টি &#2470;&#2494;&#2440;&#2472;&#2509;&#2470;&#2494;&#2480;&#2495;&#2453; &#2439;&#2476;&#2503;&#2472;&#2509;&#2463;</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>&#2439;&#2476;&#2503;&#2472;&#2509;&#2463;</th><th>&#2474;&#2503;&#2460;</th><th>&#127760; IP / &#2482;&#2507;&#2453;&#2503;&#2486;&#2472;</th><th>&#128640; &#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478;</th><th>&#128231; Gmail</th><th>&#2488;&#2478;&#2479;&#2492;</th></tr></thead>
+          <tbody id="vl-events-tbl"><tr class="empty-row"><td colspan="6">&#2453;&#2507;&#2472;&#2507; &#2439;&#2476;&#2503;&#2472;&#2509;&#2463; &#2472;&#2503;&#2439;</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- === TAB: COURSE COMMENTS === -->
+  <div class="tab-page" id="tab-course-comments">
+    <div class="page-hdr">
+      <div><h1>&#128172; &#2453;&#2507;&#2480;&#2509;&#2488; &#2478;&#2472;&#2509;&#2468;&#2476;&#2509;&#2479; &#2478;&#2509;&#2479;&#2494;&#2472;&#2503;&#2460;&#2494;&#2480;</h1><p>&#2453;&#2507;&#2480;&#2509;&#2488;&#2503; &#2470;&#2503;&#2451;&#2479;&#2492;&#2494; &#2488;&#2453;&#2482; &#2478;&#2472;&#2509;&#2468;&#2476;&#2509;&#2479; &#2470;&#2503;&#2454;&#2497;&#2472; &#2451; &#2474;&#2509;&#2480;&#2479;&#2492;&#2507;&#2460;&#2472;&#2503; &#2478;&#2497;&#2459;&#2497;&#2472;</p></div>
+      <div class="hdr-actions"><button class="btn btn-blue" onclick="loadCourseComments()">&#128260; &#2480;&#2495;&#2475;&#2509;&#2480;&#2503;&#2486;</button></div>
+    </div>
+    <div class="stat-row" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:20px;">
+      <div class="stat-card g"><div class="stat-label">&#128172; &#2478;&#2507;&#2463; &#2478;&#2472;&#2509;&#2468;&#2476;&#2509;&#2479;</div><div class="stat-val text-green" id="cc-total">0</div><div class="stat-sub">&#2488;&#2434;&#2480;&#2453;&#2509;&#2487;&#2495;&#2468;</div></div>
+      <div class="stat-card p"><div class="stat-label">&#11088; &#2455;&#2465; &#2480;&#2503;&#2463;&#2495;&#2434;</div><div class="stat-val" id="cc-avg">&#8212;</div><div class="stat-sub">&#2492; &#2447;&#2480; &#2478;&#2471;&#2509;&#2479;&#2503;</div></div>
+      <div class="stat-card r"><div class="stat-label">&#128465;&#65039; &#2478;&#2497;&#2459;&#2503; &#2475;&#2503;&#2482;&#2494;</div><div class="stat-val text-red" id="cc-deleted">0</div><div class="stat-sub">&#2447;&#2439; &#2488;&#2503;&#2486;&#2472;&#2503;</div></div>
+    </div>
+    <div class="filter-bar" style="margin-bottom:16px;">
+      <input type="text" id="cc-search" class="search-inp" placeholder="&#128269; &#2472;&#2494;&#2478; &#2476;&#2494; &#2478;&#2472;&#2509;&#2468;&#2476;&#2509;&#2479; &#2470;&#2495;&#2479;&#2492;&#2503; &#2454;&#2497;&#2434;&#2460;&#2497;&#2472;..." oninput="filterCourseComments()">
+      <select class="filter-sel" id="cc-course-filter" onchange="filterCourseComments()"><option value="all">&#2488;&#2476; &#2453;&#2507;&#2480;&#2509;&#2488;</option></select>
+      <select class="filter-sel" id="cc-sort" onchange="filterCourseComments()">
+        <option value="newest">&#2488;&#2480;&#2509;&#2476;&#2486;&#2503;&#2487; &#2486;&#2497;&#2480;&#2497;</option>
+        <option value="oldest">&#2474;&#2497;&#2480;&#2472;&#2507; &#2486;&#2497;&#2480;&#2497;</option>
+        <option value="highest">&#2488;&#2480;&#2509;&#2476;&#2507;&#2458;&#2509;&#2458; &#2480;&#2503;&#2463;&#2495;&#2434;</option>
+        <option value="lowest">&#2488;&#2480;&#2509;&#2476;&#2472;&#2495;&#2478;&#2509;&#2472; &#2480;&#2503;&#2463;&#2495;&#2434;</option>
+      </select>
+    </div>
+    <div id="cc-loading" class="center-text" style="padding:40px;display:none;"><div style="font-size:32px;margin-bottom:12px;">&#9203;</div><div>&#2478;&#2472;&#2509;&#2468;&#2476;&#2509;&#2479; &#2482;&#2507;&#2465; &#2489;&#2458;&#2509;&#2459;&#2503;...</div></div>
+    <div id="cc-empty" class="center-text" style="padding:40px;display:none;"><div style="font-size:48px;margin-bottom:12px;">&#128205;</div><div>&#2453;&#2507;&#2472;&#2507; &#2478;&#2472;&#2509;&#2468;&#2476;&#2509;&#2479; &#2474;&#2494;&#2451;&#2527;&#2494; &#2479;&#2494;&#2479;&#2492;&#2472;&#2495;</div></div>
+    <div id="cc-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;"></div>
+  </div>
+
+  <!-- Student Activity Modal -->
+  <div id="student-activity-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+    <div style="background:#0d1726;border:1px solid rgba(58,134,200,0.3);border-radius:20px;max-width:820px;width:95%;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="background:linear-gradient(135deg,#0a1628,#1a5f9e);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:18px;font-weight:800;color:#fff;" id="sam-email-title">&#8212;</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:4px;" id="sam-summary">&#2482;&#2507;&#2465; &#2489;&#2458;&#2509;&#2459;&#2503;...</div>
+        </div>
+        <button onclick="closeStudentActivityModal()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;">&#10005;</button>
+      </div>
+      <div style="padding:20px;overflow-y:auto;flex:1;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--green);" id="sam-total-views">&#8212;</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">&#2474;&#2503;&#2460; &#2477;&#2495;&#2441;</div></div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--gold-light);" id="sam-total-wa">&#8212;</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">WA &#2453;&#2509;&#2482;&#2495;&#2453;</div></div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--blue-light);" id="sam-unique-ips">&#8212;</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Unique IP</div></div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>&#2439;&#2476;&#2503;&#2472;&#2509;&#2463;</th><th>&#2474;&#2503;&#2460;</th><th>IP</th><th>&#2482;&#2507;&#2453;&#2503;&#2486;&#2472;</th><th>&#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478;</th><th>&#2488;&#2478;&#2479;&#2492;</th></tr></thead>
+            <tbody id="sam-events-tbl"><tr class="empty-row"><td colspan="6">&#2482;&#2507;&#2465; &#2489;&#2458;&#2509;&#2459;&#2503;...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: WHATSAPP ═══ -->
+  <div class="tab-page" id="tab-whatsapp">
+    <div class="page-hdr">
+      <div>
+        <h1>💬 WhatsApp টুলস</h1>
+        <p>স্টুডেন্টদের সাথে যোগাযোগ করুন — বাল্ক মেসেজ ও ব্যক্তিগত যোগাযোগ</p>
+      </div>
+    </div>
+
+    <!-- Bulk Message Generator -->
+    <div class="card">
+      <div class="card-title">📢 WhatsApp বাল্ক মেসেজ জেনারেটর</div>
+      <div class="alert-box info">
+        <div class="alert-icon">💡</div>
+        <div>
+          <div class="alert-title">কীভাবে কাজ করে?</div>
+          <div class="alert-desc">একটি মেসেজ লিখুন। সিস্টেম আপনার সব স্টুডেন্টের জন্য আলাদা WhatsApp লিংক তৈরি করবে। একে একে ক্লিক করে মেসেজ পাঠাতে পারবেন।</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">মেসেজ লিখুন (বাংলায় লিখতে পারবেন):</div>
+        <textarea id="wa-msg" style="width:100%;min-height:120px;padding:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:14px;font-family:inherit;outline:none;resize:vertical;" placeholder="আস-সালামু আলাইকুম! আমাদের নতুন কোর্স শুরু হতে যাচ্ছে..."></textarea>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-green" onclick="generateWaLinks('all')">💬 সকলকে মেসেজ ({{count}} জন)</button>
+        <button class="btn btn-red" onclick="generateWaLinks('inactive')">⚠️ শুধু নিষ্ক্রিয়দের</button>
+        <button class="btn btn-gold" onclick="generateWaLinks('active')">✅ শুধু সক্রিয়দের</button>
+      </div>
+
+      <div id="wa-links-wrap" style="display:none;margin-top:16px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px;">📱 WhatsApp লিংকসমূহ (<span id="wa-link-count">0</span> জন):</div>
+        <div id="wa-links-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-height:300px;overflow-y:auto;"></div>
+      </div>
+    </div>
+
+    <!-- Individual Quick Contact -->
+    <div class="card mt20">
+      <div class="card-title">📞 দ্রুত যোগাযোগ</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">যেকোনো নম্বরে সরাসরি WhatsApp মেসেজ পাঠান:</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <input type="tel" id="quick-phone" class="search-inp" placeholder="ফোন নম্বর (01XXXXXXXXX)" style="flex:1;min-width:200px;">
+        <input type="text" id="quick-msg" class="search-inp" placeholder="মেসেজ লিখুন..." style="flex:2;min-width:200px;">
+        <button class="btn btn-green" onclick="quickWa()">💬 পাঠান</button>
+      </div>
+    </div>
+
+    <!-- Number Stats -->
+    <div class="card mt20">
+      <div class="card-title">📊 ফোন নম্বর পরিসংখ্যান</div>
+      <div id="wa-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;">
+        <div style="text-align:center;padding:16px;background:rgba(255,255,255,.03);border-radius:10px;">
+          <div style="font-size:28px;font-weight:800;" id="ws-total">—</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">মোট নম্বর</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:rgba(255,255,255,.03);border-radius:10px;">
+          <div style="font-size:28px;font-weight:800;color:var(--green);" id="ws-active">—</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">সক্রিয় (৭ দিন)</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:rgba(255,255,255,.03);border-radius:10px;">
+          <div style="font-size:28px;font-weight:800;color:var(--red);" id="ws-inactive">—</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">নিষ্ক্রিয় (৭+ দিন)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: REPORTS ═══ -->
+  <div class="tab-page" id="tab-reports">
+    <div class="page-hdr">
+      <div>
+        <h1>📥 এক্সপোর্ট ও রিপোর্ট</h1>
+        <p>যেকোনো ডেটা ডাউনলোড করুন বা প্রিন্ট করুন</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">👥 যোগাযোগ তথ্য এক্সপোর্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">সব রেজিস্ট্রেশন করা স্টুডেন্টের ইমেইল ও ফোন নম্বর এক্সপোর্ট বা কপি করুন</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-green" onclick="exportPhonesCSV()" style="justify-content:flex-start;">
+            📊 CSV ফরম্যাট — Excel-এ খুলতে পারবেন (ফোন ও ইমেইল)
+          </button>
+          <button class="btn btn-gold" onclick="copyAllPhones()" style="justify-content:flex-start;">
+            📑 ক্লিপবোর্ডে সব ফোন নম্বর কপি
+          </button>
+          <button class="btn btn-blue" onclick="copyAllEmails()" style="justify-content:flex-start; background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">
+            📧 ক্লিপবোর্ডে সব ইমেইল কপি
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">👨‍🎓 স্টুডেন্ট ডেটা এক্সপোর্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">আইডি, ফোন, XP, চ্যাপ্টার — সম্পূর্ণ রেকর্ড</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-green" onclick="exportStudentsCSV()" style="justify-content:flex-start;">
+            📊 পূর্ণ স্টুডেন্ট ডেটা CSV
+          </button>
+          <button class="btn btn-red" onclick="exportInactiveCSV()" style="justify-content:flex-start;">
+            ⚠️ শুধু নিষ্ক্রিয় স্টুডেন্ট CSV
+          </button>
+          <button class="btn btn-purple" onclick="exportCompletedCSV()" style="justify-content:flex-start;">
+            🏆 কোর্স কমপ্লিট করা স্টুডেন্ট
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📊 অ্যানালিটিক্স রিপোর্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">ট্রাফিক ও সোর্স ডেটা ডাউনলোড করুন</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-blue" onclick="exportTrafficCSV()" style="justify-content:flex-start;">
+            📈 ৭ দিনের ট্রাফিক ডেটা
+          </button>
+          <button class="btn btn-teal" onclick="exportSourceCSV()" style="justify-content:flex-start;">
+            🌐 সোর্স বিশ্লেষণ CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🖨️ রিপোর্ট প্রিন্ট</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">ড্যাশবোর্ডের সারসংক্ষেপ প্রিন্ট করুন বা PDF সেভ করুন</p>
+        <button class="btn btn-blue" onclick="window.print()" style="justify-content:flex-start;width:100%;">
+          🖨️ প্রিন্ট / PDF সেভ করুন
+        </button>
+      </div>
+    </div>
+
+    <!-- Data Preview -->
+    <div class="card">
+      <div class="card-title">👁️ রিপোর্ট প্রিভিউ</div>
+      <div id="report-preview" class="center-text">উপরে যেকোনো এক্সপোর্ট বাটনে ক্লিক করলে এখানে প্রিভিউ দেখাবে</div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: ALERTS ═══ -->
+  <div class="tab-page" id="tab-alerts">
+    <div class="page-hdr">
+      <div>
+        <h1>🔔 অ্যালার্ট ও নোটিফিকেশন</h1>
+        <p>গুরুত্বপূর্ণ আপডেট ও অ্যাকশন আইটেম</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="refreshAll()">🔄 আপডেট করুন</button>
+      </div>
+    </div>
+
+    <div id="alerts-container">
+      <div class="center-text">ডেটা লোড হচ্ছে...</div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: REVIEWS ═══ -->
+  <div class="tab-page" id="tab-reviews">
+    <div class="page-hdr">
+      <div>
+        <h1>⭐ রিভিউ ম্যানেজার</h1>
+        <p>ওয়েবসাইটে জমা দেওয়া সকল রিভিউ দেখুন এবং প্রয়োজনে মুছে ফেলুন</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-blue" onclick="loadAdminReviews()">🔄 রিফ্রেশ</button>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stat-row" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:20px;">
+      <div class="stat-card gd">
+        <div class="stat-label">⭐ মোট রিভিউ</div>
+        <div class="stat-val text-gold" id="rv-total">0</div>
+        <div class="stat-sub">সংরক্ষিত রিভিউ</div>
+      </div>
+      <div class="stat-card g">
+        <div class="stat-label">🌟 গড় রেটিং</div>
+        <div class="stat-val text-green" id="rv-avg">—</div>
+        <div class="stat-sub">৫ এর মধ্যে</div>
+      </div>
+      <div class="stat-card p">
+        <div class="stat-label">⭐⭐⭐⭐⭐ ৫ তারকা</div>
+        <div class="stat-val" id="rv-5star">0</div>
+        <div class="stat-sub">সর্বোচ্চ রেটিং</div>
+      </div>
+      <div class="stat-card r">
+        <div class="stat-label">🗑️ মুছে ফেলা হয়েছে</div>
+        <div class="stat-val text-red" id="rv-deleted-count">0</div>
+        <div class="stat-sub">এই সেশনে</div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:16px;">
+      <input type="text" id="rv-search" class="search-inp" placeholder="🔍 নাম বা রিভিউ টেক্সট দিয়ে খুঁজুন..." oninput="filterAdminReviews()">
+      <select class="filter-sel" id="rv-star-filter" onchange="filterAdminReviews()">
+        <option value="all">সব রেটিং</option>
+        <option value="5">⭐⭐⭐⭐⭐ (৫ তারকা)</option>
+        <option value="4">⭐⭐⭐⭐ (৪ তারকা)</option>
+        <option value="3">⭐⭐⭐ (৩ তারকা)</option>
+        <option value="2">⭐⭐ (২ তারকা)</option>
+        <option value="1">⭐ (১ তারকা)</option>
+      </select>
+      <select class="filter-sel" id="rv-sort" onchange="filterAdminReviews()">
+        <option value="newest">সর্বশেষ আগে</option>
+        <option value="oldest">পুরনো আগে</option>
+        <option value="highest">সর্বোচ্চ রেটিং</option>
+        <option value="lowest">সর্বনিম্ন রেটিং</option>
+      </select>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div id="admin-reviews-loading" class="center-text" style="padding:40px;display:none;">
+      <div style="font-size:32px;margin-bottom:12px;">⏳</div>
+      <div>রিভিউ লোড হচ্ছে...</div>
+    </div>
+    <div id="admin-reviews-empty" class="center-text" style="padding:40px;display:none;">
+      <div style="font-size:48px;margin-bottom:12px;">📭</div>
+      <div>কোনো রিভিউ পাওয়া যায়নি</div>
+    </div>
+    <div id="admin-reviews-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;"></div>
+
+    <!-- Delete Confirm Modal -->
+    <div id="rv-delete-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9990;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+      <div style="background:#0d1726;border:1px solid rgba(244,63,94,0.3);border-radius:20px;padding:36px;max-width:420px;width:90%;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">🗑️</div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:#fff;">রিভিউ মুছে ফেলবেন?</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;line-height:1.6;">এই রিভিউটি স্থায়ীভাবে মুছে যাবে এবং ওয়েবসাইট থেকেও সরিয়ে দেওয়া হবে।</p>
+        <div id="rv-modal-preview" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left;font-size:13px;color:var(--text-muted);"></div>
+        <div style="display:flex;gap:12px;justify-content:center;">
+          <button class="btn btn-red" style="padding:11px 28px;font-size:14px;font-weight:700;" onclick="confirmDeleteReview()">🗑️ হ্যাঁ, মুছে ফেলুন</button>
+          <button class="btn" style="padding:11px 28px;font-size:14px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);" onclick="closeDeleteModal()">বাতিল করুন</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: SETTINGS ═══ -->
+  <div class="tab-page" id="tab-settings">
+    <div class="page-hdr">
+      <div>
+        <h1>⚙️ পাসওয়ার্ড ও সেটিংস</h1>
+        <p>অ্যাডমিন পাসওয়ার্ড পরিবর্তন এবং ড্যাশবোর্ড সেটিংস</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 24px;">
+      <!-- Change Password Card -->
+      <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 28px;">
+        <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 8px;">
+          🔐 অ্যাডমিন পাসওয়ার্ড পরিবর্তন করুন
+        </h3>
+        
+        <form id="change-pwd-form" onsubmit="changeAdminPasswordSubmit(event)">
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">বর্তমান পাসওয়ার্ড</label>
+            <input type="password" id="settings-old-pwd" class="inp" placeholder="বর্তমান পাসওয়ার্ড দিন" required style="margin-bottom:0;">
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">নতুন পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label>
+            <input type="password" id="settings-new-pwd" class="inp" placeholder="নতুন পাসওয়ার্ড দিন" required style="margin-bottom:0;">
+          </div>
+          
+          <div style="margin-bottom: 24px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">নতুন পাসওয়ার্ডটি নিশ্চিত করুন</label>
+            <input type="password" id="settings-confirm-pwd" class="inp" placeholder="পাসওয়ার্ডটি পুনরায় লিখুন" required style="margin-bottom:0;">
+          </div>
+          
+          <div id="settings-pwd-err" style="color: var(--red); font-size: 13px; margin-bottom: 16px; display: none;"></div>
+          <div id="settings-pwd-success" style="color: var(--green); font-size: 13px; margin-bottom: 16px; display: none;"></div>
+          
+          <button type="submit" id="settings-pwd-submit-btn" class="btn btn-blue" style="width: 100%; justify-content: center; padding: 12px; font-size: 14px;">
+            💾 পাসওয়ার্ড পরিবর্তন করুন
+          </button>
+        </form>
+      </div>
+
+      <!-- System Info Card -->
+      <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 20px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;">
+          🖥️ সেটিংস ও সিস্টেম তথ্য
+        </h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+            <span style="color: var(--text-muted);">সিস্টেম স্ট্যাটাস</span>
+            <span style="color: var(--green); font-weight: 600;">● Active</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+            <span style="color: var(--text-muted);">ডাটাবেজ সংযোগ</span>
+            <span style="color: var(--blue-light); font-weight: 600;">Supabase API</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+            <span style="color: var(--text-muted);">ড্যাশবোর্ড ভার্সন</span>
+            <span style="color: var(--gold-light); font-weight: 600;">v2.0-dynamic</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+            <span style="color: var(--text-muted);">সেশন মোড</span>
+            <span id="settings-session-mode" style="font-weight: 600; color: #fff;">-</span>
+          </div>
+        </div>
+        
+        <div style="margin-top: auto; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; font-size: 12px; line-height: 1.6; color: var(--text-muted);">
+          💡 <strong>নিরাপত্তা টিপস:</strong> ড্যাশবোর্ড ব্যবহার শেষে সর্বদাই 🚪 লগআউট বাটন ব্যবহার করে সেশনটি বন্ধ করে দিন। পাসওয়ার্ড পরিবর্তনের পর স্বয়ংক্রিয়ভাবে নতুন পাসওয়ার্ড দিয়ে পুনরায় লগইন করতে হবে।
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-content -->
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════
+const SUPA_URL = "https://abpweawndpnaftkcsdcp.supabase.co";
+const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y";
+const INACTIVE_DAYS = 7;
+
+function getCleanDeviceName(ua) {
+  if (!ua) return 'Unknown Device';
+  const uaLower = ua.toLowerCase();
+  let os = 'Device';
+  if (uaLower.includes('windows')) os = 'Windows';
+  else if (uaLower.includes('android')) os = 'Android';
+  else if (uaLower.includes('iphone') || uaLower.includes('ipad')) os = 'iOS';
+  else if (uaLower.includes('macintosh') || uaLower.includes('mac os')) os = 'macOS';
+  else if (uaLower.includes('linux')) os = 'Linux';
+
+  let browser = '';
+  if (uaLower.includes('chrome') || uaLower.includes('crios')) browser = 'Chrome';
+  else if (uaLower.includes('safari') && !uaLower.includes('chrome')) browser = 'Safari';
+  else if (uaLower.includes('firefox') || uaLower.includes('fxios')) browser = 'Firefox';
+  else if (uaLower.includes('edge') || uaLower.includes('edg')) browser = 'Edge';
+
+  return browser ? `${os} (${browser})` : os;
+}
+
+const SOURCE_META = {
+  facebook:  { icon:'📘', color:'#4e9af7',  label:'Facebook' },
+  youtube:   { icon:'▶️', color:'#ff5252',  label:'YouTube' },
+  linkedin:  { icon:'💼', color:'#4dabef',  label:'LinkedIn' },
+  instagram: { icon:'📸', color:'#f472b6',  label:'Instagram' },
+  twitter:   { icon:'🐦', color:'#60d0f5',  label:'Twitter/X' },
+  x:         { icon:'✖️', color:'#60d0f5',  label:'X (Twitter)' },
+  google:    { icon:'🔍', color:'#7bb5fb',  label:'Google' },
+  tiktok:    { icon:'🎵', color:'#6dd5d2',  label:'TikTok' },
+  direct:    { icon:'🔗', color:'#94a3b8',  label:'Direct' },
+  bing:      { icon:'🔎', color:'#48b5e8',  label:'Bing' },
+  other:     { icon:'🌐', color:'#e5b95c',  label:'অন্যান্য' },
+};
+
+let db = null, authPwd = null;
+let allStudents = [], allTraffic = {}, allSources = [], allPageTimes = [], allRegions = [], allWaPages = [], allUtm = [], allDailyTraffic = [];
+let chartTraffic = null, chartSource = null, chartPagetime = null;
+let liveChannel = null;
+
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+db = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// ── Session persistence: check both localStorage (remember me) and sessionStorage ──
+const savedPwd = localStorage.getItem("gic_admin_pwd_persist") || sessionStorage.getItem("gic_admin_pwd");
+if (savedPwd) { authPwd = savedPwd; attemptLogin(savedPwd); }
+
+document.getElementById("login-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const ok = await attemptLogin(document.getElementById("pw-inp").value);
+  if (!ok) {
+    const err = document.getElementById("login-err");
+    err.style.display = "block";
+    setTimeout(() => err.style.display = "none", 3000);
+  }
+});
+
+function togglePwVisibility() {
+  const inp = document.getElementById('pw-inp');
+  const btn = document.getElementById('pw-toggle');
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+async function attemptLogin(pwd) {
+  const btn        = document.querySelector('#login-form button[type=submit]');
+  const errEl      = document.getElementById('login-err');
+  const rememberMe = document.getElementById('remember-me')?.checked || false;
+
+  const resetBtn = () => { if (btn) { btn.textContent = '🔐 প্রবেশ করুন'; btn.disabled = false; } };
+  const showErr  = (m) => { if (errEl) { errEl.textContent = m; errEl.style.display = 'block'; setTimeout(() => errEl.style.display = 'none', 6000); } };
+
+  const savePwd  = (p) => {
+    sessionStorage.setItem('gic_admin_pwd', p);
+    if (rememberMe) localStorage.setItem('gic_admin_pwd_persist', p);
+  };
+  const clearPwd = () => {
+    sessionStorage.removeItem('gic_admin_pwd');
+    localStorage.removeItem('gic_admin_pwd_persist');
+  };
+
+  if (btn) { btn.textContent = '⏳ যাচাই করছি...'; btn.disabled = true; }
+
+  try {
+    // ── Step 1: Fast password-only check (get_admin_auth) ─────────────────
+    const { data: ok, error: authErr } = await db.rpc('get_admin_auth', { pass_code: pwd });
+
+    if (authErr) {
+      // Fallback: get_admin_auth not yet deployed — use analytics RPC directly
+      console.warn('get_admin_auth fallback triggered:', authErr.message);
+      const { data: fbData, error: fbErr } = await db.rpc('get_analytics_summary', { pass_code: pwd });
+      if (fbErr) {
+        const isWrong = fbErr.message?.includes('Unauthorized') || fbErr.code === 'P0001';
+        showErr(isWrong ? '❌ ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।' : '⚠️ সংযোগ সমস্যা। ইন্টারনেট চেক করুন।');
+        resetBtn(); clearPwd(); return false;
+      }
+      authPwd = pwd; savePwd(pwd);
+      showDashboard(fbData || {});
+      if (fbData) { processData(fbData); }
+      resetBtn(); return true;
+    }
+
+    if (!ok) {
+      showErr('❌ ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।');
+      resetBtn(); clearPwd(); return false;
+    }
+
+    // ── Step 2: Password correct — show dashboard, load data in background ──
+    authPwd = pwd; savePwd(pwd);
+    showDashboard({});
+
+    const { data: aData, error: aErr } = await db.rpc('get_analytics_summary', { pass_code: pwd });
+    if (!aErr && aData) { processData(aData); }
+    else { console.warn('Analytics load issue (non-fatal):', aErr); }
+
+    resetBtn(); return true;
+
+  } catch(e) {
+    console.error('Login error:', e);
+    const isWrong = e.message?.includes('Unauthorized');
+    showErr(isWrong ? '❌ ভুল পাসওয়ার্ড!' : '⚠️ সংযোগ সমস্যা। ইন্টারনেট চেক করুন।');
+    resetBtn(); clearPwd();
+  }
+  return false;
+}
+
+function showDashboard(data) {
+  document.getElementById("login-wrap").style.display = "none";
+  document.getElementById("sidebar").style.display = "flex";
+  document.getElementById("main-content").style.display = "block";
+  processData(data);
+  loadStudents();
+  startLiveTracking();
+  startAutoRefresh();
+}
+
+function doLogout() {
+  // Clear both storages (sessionStorage & localStorage remember-me)
+  sessionStorage.removeItem('gic_admin_pwd');
+  localStorage.removeItem('gic_admin_pwd_persist');
+  authPwd = null;
+  location.reload();
+}
+
+// ══════════════════════════════════════════════════════
+// DATA PROCESSING
+// ══════════════════════════════════════════════════════
+function processData(stats) {
+  allDailyTraffic = stats.daily_traffic || [];
+  allSources = stats.traffic_sources || [];
+  allPageTimes = stats.page_time_stats || [];
+  allRegions = stats.top_regions || [];
+  allWaPages = stats.top_wa_pages || [];
+  allUtm = stats.utm_campaigns || [];
+  allTraffic = {
+    todayViews: stats.today_views || 0,
+    todayWa: stats.today_wa_clicks || 0,
+    sourceToday: stats.traffic_sources_today || [],
+    timeToday: stats.page_time_today || [],
+    topPages: stats.top_pages || [],
+    topPagesToday: stats.top_pages_today || [],
+    todayEvents: stats.today_events || [],
+  };
+
+  renderTodayAnalytics();
+  renderAnalytics();
+  renderFunnel();
+  buildAlerts();
+  updateWaStats();
+  updateWaBtnLabel();
+  // Enhanced visuals (animated counters, smart insights, progress bars)
+  if (typeof enhanceDashboard === 'function') enhanceDashboard(stats);
+}
+
+function renderTodayAnalytics() {
+  const { todayViews, todayWa, sourceToday, timeToday, topPagesToday, todayEvents } = allTraffic;
+  const cvr = todayViews > 0 ? ((todayWa / todayViews) * 100).toFixed(1) : "0.0";
+
+  setText("today-views", todayViews.toLocaleString("bn-BD"));
+  setText("today-wa", todayWa.toLocaleString("bn-BD"));
+  setText("today-cvr", cvr + "%");
+
+  if (timeToday.length > 0) {
+    const t = timeToday[0];
+    const mn = Math.floor(t.avg_seconds / 60), sc = t.avg_seconds % 60;
+    setText("today-top-time", t.page + " (" + (mn > 0 ? mn + "m " : "") + sc + "s)");
+  } else {
+    setText("today-top-time", "—");
+  }
+
+  // 1. Today's Sources Table
+  const tbodySrc = document.getElementById("today-sources-tbl");
+  if (tbodySrc) {
+    if (!sourceToday || !sourceToday.length) {
+      tbodySrc.innerHTML = emptyRow(3);
+    } else {
+      const total = sourceToday.reduce((s, r) => s + Number(r.count), 0);
+      tbodySrc.innerHTML = sourceToday.map(s => {
+        const m = SOURCE_META[s.source] || SOURCE_META.other;
+        const pct = total > 0 ? ((Number(s.count) / total) * 100).toFixed(1) : 0;
+        return `<tr>
+          <td><span class="src-badge ${s.source}">${m.icon} ${m.label}</span></td>
+          <td class="fw700">${Number(s.count).toLocaleString("bn-BD")}</td>
+          <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${m.color};"></div></div><span class="bar-lbl" style="color:${m.color};">${pct}%</span></div></td>
+        </tr>`;
+      }).join("");
+    }
+  }
+
+  // 2. Today's Top Pages Table
+  const tbodyPages = document.getElementById("today-pages-tbl");
+  if (tbodyPages) {
+    if (!topPagesToday || !topPagesToday.length) {
+      tbodyPages.innerHTML = emptyRow(3);
+    } else {
+      tbodyPages.innerHTML = topPagesToday.map(p => {
+        const ptStat = allPageTimes.find(x => x.page === p.page);
+        let timeStr = "—";
+        if (ptStat) {
+          const s = Number(ptStat.avg_seconds), m = Math.floor(s / 60);
+          timeStr = m > 0 ? `${m}m ${s % 60}s` : `${s}s`;
+        }
+        const cls = p.page === "home" ? "pg-tag home" : "pg-tag";
+        return `<tr>
+          <td><span class="${cls}">${p.page}</span></td>
+          <td class="fw700">${Number(p.count).toLocaleString("bn-BD")}</td>
+          <td class="text-gold">${timeStr}</td>
+        </tr>`;
+      }).join("");
+    }
+  }
+
+  // 3. Today's Events Timeline
+  const tbodyEvts = document.getElementById("today-events-tbl");
+  if (tbodyEvts) {
+    if (!todayEvents || !todayEvents.length) {
+      tbodyEvts.innerHTML = emptyRow(5);
+    } else {
+      tbodyEvts.innerHTML = todayEvents.map(e => {
+        const m = SOURCE_META[e.source] || SOURCE_META.direct;
+        const badgeClass = e.event_type === "whatsapp_click" ? "status-badge active" : "status-badge warn";
+        const badgeLabel = e.event_type === "whatsapp_click" ? "💬 WhatsApp" : "👁️ পেজ ভিউ";
+        return `<tr>
+          <td class="text-muted" style="font-family:monospace;">${e.time}</td>
+          <td><span class="${badgeClass}" style="font-size:11px;">${badgeLabel}</span></td>
+          <td><span class="${e.page === "home" ? "pg-tag home" : "pg-tag"}">${e.page}</span></td>
+          <td><span class="src-badge ${e.source}">${m.icon} ${m.label}</span></td>
+          <td>
+            <div>📍 ${e.city}, ${e.country}</div>
+            ${e.ip_address ? `
+              <div style="font-size:10px; color:#64748b; margin-top:2.5px; display:flex; align-items:center; gap:4px;" title="${e.user_agent || ''}">
+                <span>📡 ${e.ip_address}</span>
+                <span>•</span>
+                <span>💻 ${getCleanDeviceName(e.user_agent)}</span>
+              </div>
+            ` : ""}
+          </td>
+        </tr>`;
+      }).join("");
+    }
+  }
+}
+
+function renderAnalytics() {
+  const { todayViews, todayWa, sourceToday, timeToday, topPages } = allTraffic;
+  const cvr = todayViews > 0 ? ((todayWa / todayViews) * 100).toFixed(1) : "0.0";
+
+  setText("m-today", todayViews.toLocaleString("bn-BD"));
+  setText("m-wa", todayWa.toLocaleString("bn-BD"));
+  setText("m-cvr", cvr + "%");
+
+  if (sourceToday.length > 0) {
+    const m = SOURCE_META[sourceToday[0].source] || SOURCE_META.other;
+    setText("m-src", m.icon + " " + m.label);
+  }
+  if (timeToday.length > 0) {
+    const t = timeToday[0];
+    const mn = Math.floor(t.avg_seconds / 60), sc = t.avg_seconds % 60;
+    setText("m-time", t.page + " (" + (mn > 0 ? mn + "m " : "") + sc + "s)");
+  }
+  if (allRegions.length > 0) {
+    const r = allRegions[0];
+    setText("m-region", "📍 " + r.city + ", " + (r.country || ""));
+  }
+
+  renderTrafficChart(allDailyTraffic);
+  renderSourceChart(allSources);
+  renderPageTimeChart(allPageTimes);
+  renderRegionsTable();
+  renderPagesTable(topPages);
+  renderSourceDetailTable(allSources);
+}
+
+// ── CHARTS ──────────────────────────────────────────
+function renderTrafficChart(daily) {
+  const ctx = document.getElementById("ch-traffic").getContext("2d");
+  const sorted = [...daily].sort((a,b) => new Date(a.date)-new Date(b.date));
+  const labels = sorted.map(d => new Date(d.date).toLocaleDateString("bn-BD", { month:"short", day:"numeric" }));
+  const views = sorted.map(d => d.views || 0);
+  const wa = sorted.map(d => d.wa_clicks || 0);
+
+  if (!labels.length) {
+    for(let i=6;i>=0;i--){
+      const dt = new Date(); dt.setDate(dt.getDate()-i);
+      labels.push(dt.toLocaleDateString("bn-BD",{month:"short",day:"numeric"}));
+      views.push(0); wa.push(0);
+    }
+  }
+
+  if (chartTraffic) { chartTraffic.data.labels=labels; chartTraffic.data.datasets[0].data=views; chartTraffic.data.datasets[1].data=wa; chartTraffic.update(); return; }
+  chartTraffic = new Chart(ctx, {
+    type:"line", data:{labels, datasets:[
+      {label:"পেজ ভিউ", data:views, borderColor:"#3a86c8", backgroundColor:"rgba(58,134,200,.1)", borderWidth:2.5, tension:.35, fill:true, pointBackgroundColor:"#3a86c8", pointRadius:4},
+      {label:"WhatsApp ক্লিক", data:wa, borderColor:"#e5b95c", backgroundColor:"rgba(229,185,92,.1)", borderWidth:2.5, tension:.35, fill:true, pointBackgroundColor:"#e5b95c", pointRadius:4}
+    ]},
+    options:{responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:"#94a3b8",font:{family:"Outfit"}}}},
+      scales:{x:{grid:{color:"rgba(255,255,255,.05)"},ticks:{color:"#94a3b8"}},
+              y:{grid:{color:"rgba(255,255,255,.05)"},ticks:{color:"#94a3b8"},beginAtZero:true}}}
+  });
+}
+
+function renderSourceChart(sources) {
+  const ctx = document.getElementById("ch-source").getContext("2d");
+  if (!sources.length) sources = [{source:"direct",count:1}];
+  const labels = [], vals = [], colors = [];
+  sources.forEach(s => {
+    const m = SOURCE_META[s.source] || SOURCE_META.other;
+    labels.push(m.label); vals.push(Number(s.count)); colors.push(m.color);
+  });
+  const total = vals.reduce((a,b)=>a+b,0);
+  const legend = document.getElementById("source-legend");
+  legend.innerHTML = labels.map((l,i) => {
+    const pct = total > 0 ? ((vals[i]/total)*100).toFixed(1) : 0;
+    const src = (sources[i]||{}).source||"other";
+    const m = SOURCE_META[src]||SOURCE_META.other;
+    return `<div style="display:flex;align-items:center;gap:5px;font-size:12px;">
+      <div style="width:9px;height:9px;border-radius:50%;background:${colors[i]};"></div>
+      <span class="src-badge ${src}">${m.icon} ${l}</span>
+      <span style="color:var(--text-muted);">${vals[i]} (${pct}%)</span>
+    </div>`;
+  }).join("");
+
+  if (chartSource) { chartSource.data.labels=labels; chartSource.data.datasets[0].data=vals; chartSource.data.datasets[0].backgroundColor=colors; chartSource.update(); return; }
+  chartSource = new Chart(ctx, {
+    type:"doughnut",
+    data:{labels, datasets:[{data:vals, backgroundColor:colors, borderColor:"rgba(6,11,19,.8)", borderWidth:3, hoverOffset:8}]},
+    options:{responsive:true, maintainAspectRatio:false, cutout:"65%",
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0); return ` ${c.label}: ${c.raw} (${((c.raw/t)*100).toFixed(1)}%)`;}}}}}
+  });
+}
+
+function renderPageTimeChart(ps) {
+  const ctx = document.getElementById("ch-pagetime").getContext("2d");
+  if (!ps.length) return;
+  const labels = ps.map(p=>p.page);
+  const vals = ps.map(p=>Number(p.avg_seconds)||0);
+  const colors = labels.map((_,i)=>`hsla(${(i*53+200)%360},65%,58%,.85)`);
+  if (chartPagetime) { chartPagetime.data.labels=labels; chartPagetime.data.datasets[0].data=vals; chartPagetime.data.datasets[0].backgroundColor=colors; chartPagetime.update(); return; }
+  chartPagetime = new Chart(ctx, {
+    type:"bar",
+    data:{labels, datasets:[{label:"গড় সময়", data:vals, backgroundColor:colors, borderRadius:8, borderSkipped:false}]},
+    options:{responsive:true, maintainAspectRatio:false, indexAxis:"y",
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>{const s=c.raw,m=Math.floor(s/60); return m>0?` ${m}m ${s%60}s`:` ${s}s`;}}}},
+      scales:{x:{grid:{color:"rgba(255,255,255,.04)"},ticks:{color:"#94a3b8",callback:v=>`${v}s`}},
+              y:{grid:{display:false},ticks:{color:"#e2e8f0"}}}}
+  });
+}
+
+// ── TABLES ──────────────────────────────────────────
+function renderRegionsTable() {
+  const tbody = document.getElementById("regions-tbl");
+  if (!allRegions.length) { tbody.innerHTML = emptyRow(3); return; }
+  const total = allRegions.reduce((s,r)=>s+Number(r.count),0);
+  tbody.innerHTML = allRegions.map(r => {
+    const pct = total > 0 ? ((Number(r.count)/total)*100).toFixed(1) : 0;
+    return `<tr>
+      <td>📍 ${r.city||"Unknown"}, ${r.country||"Unknown"}</td>
+      <td class="fw700">${Number(r.count).toLocaleString("bn-BD")}</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;"></div></div><span class="bar-lbl">${pct}%</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+function renderPagesTable(pages) {
+  const tbody = document.getElementById("pages-tbl");
+  if (!pages.length) { tbody.innerHTML = emptyRow(3); return; }
+  tbody.innerHTML = pages.map(p => {
+    const ptStat = allPageTimes.find(x=>x.page===p.page);
+    let timeStr = "—";
+    if (ptStat) { const s=Number(ptStat.avg_seconds),m=Math.floor(s/60); timeStr = m>0?`${m}m ${s%60}s`:`${s}s`; }
+    const cls = p.page==="home"?"pg-tag home":"pg-tag";
+    return `<tr>
+      <td><span class="${cls}">${p.page}</span></td>
+      <td class="fw700">${Number(p.count).toLocaleString("bn-BD")}</td>
+      <td class="text-gold">${timeStr}</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderSourceDetailTable(sources) {
+  const tbody = document.getElementById("source-detail-tbl");
+  if (!sources.length) { tbody.innerHTML = emptyRow(3); return; }
+  const total = sources.reduce((s,r)=>s+Number(r.count),0);
+  tbody.innerHTML = sources.map(s => {
+    const m = SOURCE_META[s.source]||SOURCE_META.other;
+    const pct = total > 0 ? ((Number(s.count)/total)*100).toFixed(1) : 0;
+    return `<tr>
+      <td><span class="src-badge ${s.source}">${m.icon} ${m.label}</span></td>
+      <td class="fw700">${Number(s.count).toLocaleString("bn-BD")}</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${m.color};"></div></div><span class="bar-lbl" style="color:${m.color};">${pct}%</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+// ══════════════════════════════════════════════════════
+// STUDENTS / LEADS
+// ══════════════════════════════════════════════════════
+async function loadStudents() {
+  try {
+    const { data, error } = await db.rpc("get_students_list", { pass_code: authPwd });
+    if (error || !data) return;
+    allStudents = data;
+    renderLeads();
+    renderStudents();
+    updateLeadStats();
+    updateWaStats();
+    updateWaBtnLabel();
+    buildAlerts();
+    renderTodayLogins(); // show today's new logins in today tab
+  } catch(e) { console.error("Students load failed", e); }
+}
+
+// Render today's new logins in the today tab
+function renderTodayLogins() {
+  const tbody = document.getElementById("today-logins-tbl");
+  if (!tbody) return;
+
+  // Today's date in Bangladesh timezone (UTC+6)
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dhaka' });
+
+  // Filter students who registered/joined today
+  const todayLogins = allStudents.filter(s => {
+    const jd = s.join_date || '';
+    if (!jd) return false;
+    return jd.startsWith(todayStr);
+  });
+
+  setText("today-new-logins", todayLogins.length);
+
+  if (!todayLogins.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="3">আজ কেউ লগইন করেননি</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = todayLogins.map(s => {
+    const contact = `
+      <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">
+        ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করুন">📧 ${s.email}</span>` : ""}
+        ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করুন">📱 ${s.phone}</span>` : ""}
+        ${!s.email && !s.phone ? `<span style="color:var(--text-muted)">—</span>` : ""}
+        ${s.last_ip ? `
+          <div style="font-size:10px; color:#64748b; margin-top:2px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
+            <span>📡 ${s.last_ip}</span>
+            <span>•</span>
+            <span>💻 ${getCleanDeviceName(s.last_ua)}</span>
+          </div>
+        ` : ""}
+      </div>
+    `;
+    // Format time from join_date ISO string (always show exact BD time)
+    let timeStr = '—';
+    if (s.join_date) {
+      try {
+        const d = new Date(s.join_date);
+        timeStr = d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Dhaka' });
+      } catch(e) { timeStr = s.join_date.slice(11, 16); }
+    }
+    const badge = `<span class="status-badge active">🆕 নতুন</span>`;
+    return `<tr>
+      <td>
+        ${contact}
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${s.student_id||'—'}</div>
+      </td>
+      <td style="font-size:12px;">আজ ${timeStr}</td>
+      <td>${badge}</td>
+    </tr>`;
+  }).join("");
+}
+
+function isActive(s) {
+  if (!s.last_active) return false;
+  const diff = (Date.now() - new Date(s.last_active).getTime()) / 86400000;
+  return diff <= INACTIVE_DAYS;
+}
+
+function hasCompleted(s) {
+  return s.chapters_completed_count >= 1; // adjust threshold as needed
+}
+
+function formatDate(d) {
+  if (!d) return "কখনো না";
+  try {
+    return new Date(d).toLocaleDateString("bn-BD", { year:"numeric", month:"short", day:"numeric" });
+  } catch(e) { return d; }
+}
+
+function statusBadge(s) {
+  if (isActive(s)) return `<span class="status-badge active">✅ সক্রিয়</span>`;
+  if (!s.last_active) return `<span class="status-badge warn">🆕 নতুন</span>`;
+  return `<span class="status-badge inactive">💤 নিষ্ক্রিয়</span>`;
+}
+
+function updateLeadStats() {
+  const active = allStudents.filter(isActive).length;
+  const inactive = allStudents.filter(s => !isActive(s)).length;
+  const completed = allStudents.filter(hasCompleted).length;
+  setText("lead-total", allStudents.length);
+  setText("lead-active", active);
+  setText("lead-inactive", inactive);
+  setText("lead-completed", completed);
+}
+
+function renderLeads(filtered) {
+  const list = filtered || allStudents;
+  const tbody = document.getElementById("leads-tbl");
+  setText("leads-shown", list.length);
+  setText("leads-total-count", allStudents.length);
+  setText("lead-total", allStudents.length);
+
+  if (!list.length) { tbody.innerHTML = emptyRow(8); return; }
+  tbody.innerHTML = list.map((s, i) => `
+    <tr>
+      <td class="text-muted">${i+1}</td>
+      <td><strong class="text-blue">${s.student_id||"—"}</strong></td>
+      <td>
+        <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">
+          ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করতে ক্লিক করুন">📱 ${s.phone}</span>` : ""}
+          ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>` : ""}
+          ${!s.phone && !s.email ? '<span style="color:var(--text-muted);">নেই</span>' : ""}
+          ${s.last_ip ? `
+            <div style="font-size:10.5px; color:#64748b; margin-top:2px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
+              <span>📡 IP: <strong>${s.last_ip}</strong></span>
+              <span>•</span>
+              <span>💻 ${getCleanDeviceName(s.last_ua)}</span>
+            </div>
+          ` : ""}
+        </div>
+      </td>
+      <td><span class="text-gold">⚡ ${s.xp||0} XP</span></td>
+      <td>${s.chapters_completed_count||0} টি</td>
+      <td style="font-size:12px;">${formatDate(s.last_active)}</td>
+      <td>${statusBadge(s)}</td>
+      <td>
+        ${s.phone ? `<a href="https://wa.me/880${String(s.phone).replace(/^0/,"")}?text=আস-সালামু+আলাইকুম" target="_blank" class="btn btn-sm btn-green">💬</a>` : "—"}
+      </td>
+    </tr>
+  `).join("");
+}
+
+function filterLeads() {
+  const q = document.getElementById("leads-search").value.toLowerCase();
+  const f = document.getElementById("leads-filter").value;
+  let list = allStudents.filter(s => {
+    const match = !q || (s.student_id||"").toLowerCase().includes(q) || (s.phone||"").includes(q) || (s.email||"").toLowerCase().includes(q);
+    let statusOk = true;
+    if (f === "active") statusOk = isActive(s);
+    else if (f === "inactive") statusOk = !isActive(s);
+    else if (f === "completed") statusOk = hasCompleted(s);
+    return match && statusOk;
+  });
+  renderLeads(list);
+}
+
+function renderStudents(filtered) {
+  const sort = document.getElementById("stu-sort")?.value || "recent";
+  const list = (filtered || allStudents).slice().sort((a,b) => {
+    if (sort === "xp") return (b.xp||0)-(a.xp||0);
+    if (sort === "chapters") return (b.chapters_completed_count||0)-(a.chapters_completed_count||0);
+    return new Date(b.last_active||0)-new Date(a.last_active||0);
+  });
+  setText("stu-count-lbl", list.length + " জন নিবন্ধিত");
+  const tbody = document.getElementById("stu-tbl");
+  if (!list.length) { tbody.innerHTML = emptyRow(7); return; }
+  tbody.innerHTML = list.map((s,i) => `
+    <tr>
+      <td class="text-muted">${i+1}</td>
+      <td><strong class="text-blue">${s.student_id||"—"}</strong></td>
+      <td>
+        <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">
+          ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করতে ক্লিক করুন">📱 ${s.phone}</span>` : ""}
+          ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>` : ""}
+          ${!s.phone && !s.email ? '<span style="color:var(--text-muted);">নেই</span>' : ""}
+          ${s.last_ip ? `
+            <div style="font-size:10.5px; color:#64748b; margin-top:2px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
+              <span>📡 IP: <strong>${s.last_ip}</strong></span>
+              <span>•</span>
+              <span>💻 ${getCleanDeviceName(s.last_ua)}</span>
+            </div>
+          ` : ""}
+        </div>
+      </td>
+      <td><span class="text-gold">⚡ ${s.xp||0}</span></td>
+      <td>${s.chapters_completed_count||0} টি চ্যাপ্টার</td>
+      <td style="font-size:12px;">${formatDate(s.last_active)}</td>
+      <td>${statusBadge(s)}</td>
+    </tr>
+  `).join("");
+}
+
+function filterStudents() {
+  const q = document.getElementById("stu-search").value.toLowerCase();
+  const list = allStudents.filter(s =>
+    !q || (s.student_id||"").toLowerCase().includes(q) || (s.phone||"").includes(q) || (s.email||"").toLowerCase().includes(q)
+  );
+  renderStudents(list);
+}
+
+// ══════════════════════════════════════════════════════
+// CONVERSION FUNNEL
+// ══════════════════════════════════════════════════════
+function renderFunnel() {
+  const totalVisits = allDailyTraffic.reduce((s,d)=>s+(d.views||0),0) || allTraffic.todayViews * 7;
+  const totalStudents = allStudents.length;
+  const activeStudents = allStudents.filter(isActive).length;
+  const completedStudents = allStudents.filter(hasCompleted).length;
+  const totalWa = allDailyTraffic.reduce((s,d)=>s+(d.wa_clicks||0),0) || allTraffic.todayWa * 7;
+
+  const steps = [
+    { label:"🌐 মোট ভিজিটর", val:totalVisits, color:"#3a86c8" },
+    { label:"💬 WhatsApp ক্লিক", val:totalWa, color:"#e5b95c" },
+    { label:"📝 নিবন্ধন (রেজিস্ট্রেশন)", val:totalStudents, color:"#8b5cf6" },
+    { label:"✅ সক্রিয় স্টুডেন্ট", val:activeStudents, color:"#10b981" },
+    { label:"🏆 কোর্স সম্পন্ন", val:completedStudents, color:"#f97316" },
+  ];
+
+  const max = steps[0].val || 1;
+  const el = document.getElementById("funnel-steps");
+  el.innerHTML = steps.map(step => {
+    const pct = Math.max(((step.val / max) * 100).toFixed(0), 2);
+    return `<div class="funnel-step">
+      <div class="funnel-label">${step.label}</div>
+      <div class="funnel-bar-outer">
+        <div class="funnel-bar-inner" style="width:${pct}%;background:${step.color}22;border-left:3px solid ${step.color};">
+          <span style="color:${step.color};">${step.val.toLocaleString("bn-BD")}</span>
+        </div>
+      </div>
+      <div class="funnel-num" style="color:${step.color};">${step.val.toLocaleString("bn-BD")}</div>
+    </div>`;
+  }).join(`<div style="text-align:center;font-size:18px;color:rgba(148,163,184,.4);margin:-6px 0 8px 130px;">↓</div>`);
+
+  const v2r = totalVisits > 0 ? ((totalStudents/totalVisits)*100).toFixed(2) : "0.00";
+  const r2c = totalStudents > 0 ? ((activeStudents/totalStudents)*100).toFixed(1) : "0.0";
+  const waRate = totalVisits > 0 ? ((totalWa/totalVisits)*100).toFixed(1) : "0.0";
+  const compRate = totalStudents > 0 ? ((completedStudents/totalStudents)*100).toFixed(1) : "0.0";
+
+  setText("f-v2r", v2r + "%");
+  setText("f-r2c", r2c + "%");
+  setText("f-wa", waRate + "%");
+  setText("f-comp", compRate + "%");
+
+  // Advice
+  const advice = document.getElementById("funnel-advice");
+  let tips = [];
+  if (parseFloat(v2r) < 1) tips.push({ type:"warn", title:"রেজিস্ট্রেশন রেট কম", desc:`প্রতি ১০০ জন ভিজিটরে মাত্র ${v2r}% রেজিস্ট্রেশন করছে। ল্যান্ডিং পেজে আরো আকর্ষণীয় CTA যোগ করুন।` });
+  if (parseFloat(waRate) < 5) tips.push({ type:"info", title:"WhatsApp ক্লিক বাড়ান", desc:"WhatsApp বাটন আরো দৃশ্যমান করুন এবং প্রতিটি পেজে যোগ করুন।" });
+  if (parseFloat(r2c) < 50) tips.push({ type:"warn", title:"স্টুডেন্ট রিটেনশন উন্নত করুন", desc:`${100-parseFloat(r2c)}% স্টুডেন্ট সক্রিয় নয়। তাদের WhatsApp রিমাইন্ডার পাঠান।` });
+  if (parseFloat(compRate) > 50) tips.push({ type:"success", title:"কোর্স কমপ্লিশন ভালো!", desc:`${compRate}% স্টুডেন্ট কোর্স সম্পন্ন করেছে — এটি একটি ভালো হার।` });
+  if (!tips.length) tips.push({ type:"success", title:"ড্যাশবোর্ড কার্যকর", desc:"সব মেট্রিক্স ট্র্যাক করা হচ্ছে। আরো ডেটা জমলে পরামর্শ দেখাবে।" });
+
+  advice.innerHTML = tips.map(t => `
+    <div class="alert-box ${t.type}">
+      <div class="alert-icon">${t.type==="warn"?"⚠️":t.type==="success"?"✅":"💡"}</div>
+      <div><div class="alert-title">${t.title}</div><div class="alert-desc">${t.desc}</div></div>
+    </div>`).join("");
+
+  // WA pages table
+  const tbody = document.getElementById("wa-src-tbl");
+  if (!allWaPages.length) { tbody.innerHTML = emptyRow(3); return; }
+  const maxWa = Math.max(...allWaPages.map(p=>Number(p.count)),1);
+  tbody.innerHTML = allWaPages.map(p => {
+    const eff = ((Number(p.count)/maxWa)*100).toFixed(0);
+    return `<tr>
+      <td><span class="${p.page==="home"?"pg-tag home":"pg-tag"}">${p.page}</span></td>
+      <td class="fw700">${Number(p.count).toLocaleString("bn-BD")}</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${eff}%;background:var(--green);"></div></div><span class="bar-lbl text-green">${eff}%</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+// ══════════════════════════════════════════════════════
+// CAMPAIGNS
+// ══════════════════════════════════════════════════════
+function renderCampaigns() {
+  const tbody = document.getElementById("utm-tbl");
+  if (!allUtm.length) { tbody.innerHTML = emptyRow(5); return; }
+  const maxV = Math.max(...allUtm.map(c=>Number(c.visits)),1);
+  tbody.innerHTML = allUtm.map(c => {
+    const m = SOURCE_META[c.utm_source]||SOURCE_META.other;
+    const pct = ((Number(c.visits)/maxV)*100).toFixed(0);
+    return `<tr>
+      <td class="fw700">${c.utm_campaign||"—"}</td>
+      <td><span class="src-badge ${c.utm_source||"other"}">${m.icon} ${m.label}</span></td>
+      <td>${c.utm_medium||"—"}</td>
+      <td class="fw700 text-blue">${Number(c.visits).toLocaleString("bn-BD")}</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${m.color};"></div></div><span class="bar-lbl" style="color:${m.color};">${pct}%</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+function buildUtmLink() {
+  const base = document.getElementById("utm-url").value.trim() || "https://globalislamiccare.com";
+  const src = document.getElementById("utm-src").value;
+  const med = document.getElementById("utm-med").value;
+  const camp = encodeURIComponent(document.getElementById("utm-camp").value.trim() || "campaign");
+  const link = `${base}?utm_source=${src}&utm_medium=${med}&utm_campaign=${camp}`;
+  document.getElementById("utm-link-text").textContent = link;
+  document.getElementById("utm-result").style.display = "block";
+}
+
+function copyUtmLink() {
+  const txt = document.getElementById("utm-link-text").textContent;
+  navigator.clipboard.writeText(txt).then(() => toast("✅ UTM লিংক কপি হয়েছে!", "ok"));
+}
+
+// ══════════════════════════════════════════════════════
+// ALERTS
+// ══════════════════════════════════════════════════════
+function buildAlerts() {
+  const container = document.getElementById("alerts-container");
+  const alerts = [];
+  const inactive = allStudents.filter(s => !isActive(s) && s.last_active);
+  if (inactive.length > 0) {
+    alerts.push({
+      type:"warn",
+      title:`⚠️ ${inactive.length} জন স্টুডেন্ট ${INACTIVE_DAYS}+ দিন ধরে নিষ্ক্রিয়`,
+      desc:`এদের WhatsApp রিমাইন্ডার পাঠান যাতে তারা কোর্সে ফিরে আসে।`,
+      action:{ label:"💬 WhatsApp মেসেজ পাঠান", fn:"switchTab('whatsapp')" }
+    });
+  }
+  const newStudents = allStudents.filter(s => !s.last_active);
+  if (newStudents.length > 0) {
+    alerts.push({
+      type:"info",
+      title:`🆕 ${newStudents.length} জন নতুন রেজিস্ট্রেশন — এখনো লগইন করেনি`,
+      desc:`এরা রেজিস্ট্রেশন করেছে কিন্তু এখনো কোনো কার্যক্রম করেনি। স্বাগত মেসেজ পাঠান!`,
+      action:{ label:"📋 তালিকা দেখুন", fn:"switchTab('leads')" }
+    });
+  }
+  const totalVisits = allDailyTraffic.reduce((s,d)=>s+(d.views||0),0);
+  const conversion = totalVisits > 0 ? ((allStudents.length/totalVisits)*100) : 0;
+  if (conversion < 0.5 && totalVisits > 50) {
+    alerts.push({
+      type:"warn",
+      title:"📉 রেজিস্ট্রেশন কনভার্সন রেট মাত্র " + conversion.toFixed(2) + "%",
+      desc:"ফানেল অপ্টিমাইজ করুন। ল্যান্ডিং পেজে রেজিস্ট্রেশন ফর্ম আরো সহজ করুন।",
+      action:{ label:"🔽 ফানেল দেখুন", fn:"switchTab('funnel')" }
+    });
+  }
+  if (!allUtm.length) {
+    alerts.push({
+      type:"info",
+      title:"🎯 UTM ক্যাম্পেইন শুরু করুন",
+      desc:"আপনার সোশ্যাল মিডিয়া পোস্টে UTM লিংক যোগ করলে কোন পোস্ট থেকে বেশি ভিজিটর আসছে তা জানতে পারবেন।",
+      action:{ label:"🛠️ UTM লিংক তৈরি করুন", fn:"switchTab('campaigns')" }
+    });
+  }
+  if (!alerts.length) {
+    alerts.push({ type:"success", title:"✅ সব ঠিকঠাক আছে!", desc:"কোনো সমস্যা নেই। ড্যাশবোর্ড সচল আছে।" });
+  }
+  const badge = document.getElementById("alert-badge");
+  const warnCount = alerts.filter(a=>a.type==="warn").length;
+  if (warnCount > 0) { badge.textContent = warnCount; badge.style.display = "inline"; }
+  container.innerHTML = alerts.map(a => `
+    <div class="alert-box ${a.type}" style="margin-bottom:14px;">
+      <div class="alert-icon">${a.type==="warn"?"⚠️":a.type==="success"?"✅":"ℹ️"}</div>
+      <div style="flex:1;">
+        <div class="alert-title">${a.title}</div>
+        <div class="alert-desc">${a.desc}</div>
+        ${a.action ? `<button class="btn btn-sm btn-blue" style="margin-top:10px;" onclick="${a.action.fn}">${a.action.label}</button>` : ""}
+      </div>
+    </div>`).join("");
+}
+
+// ══════════════════════════════════════════════════════
+// WHATSAPP TOOLS
+// ══════════════════════════════════════════════════════
+function updateWaStats() {
+  const active = allStudents.filter(isActive).length;
+  const inactive = allStudents.filter(s=>!isActive(s)).length;
+  setText("ws-total", allStudents.length);
+  setText("ws-active", active);
+  setText("ws-inactive", inactive);
+}
+
+function updateWaBtnLabel() {
+  const btn = document.querySelector("button[onclick=\"generateWaLinks('all')\"]");
+  if (btn) btn.innerHTML = `💬 সকলকে মেসেজ (${allStudents.length} জন)`;
+}
+
+function generateWaLinks(filter) {
+  const msg = encodeURIComponent(document.getElementById("wa-msg").value.trim() || "আস-সালামু আলাইকুম!");
+  let list = allStudents;
+  if (filter === "active") list = allStudents.filter(isActive);
+  if (filter === "inactive") list = allStudents.filter(s=>!isActive(s));
+
+  const phones = list.map(s=>s.phone).filter(Boolean);
+  if (!phones.length) { toast("কোনো ফোন নম্বর পাওয়া যায়নি", "err"); return; }
+
+  const container = document.getElementById("wa-links-container");
+  setText("wa-link-count", phones.length);
+  container.innerHTML = phones.map(p => {
+    const num = "880" + String(p).replace(/^0/,"");
+    return `<a href="https://wa.me/${num}?text=${msg}" target="_blank" class="btn btn-green" style="text-decoration:none;font-size:12px;">
+      💬 ${p}
+    </a>`;
+  }).join("");
+  document.getElementById("wa-links-wrap").style.display = "block";
+  toast(`✅ ${phones.length}টি WhatsApp লিংক তৈরি হয়েছে!`, "ok");
+}
+
+function quickWa() {
+  const ph = document.getElementById("quick-phone").value.trim().replace(/^0/,"");
+  const msg = encodeURIComponent(document.getElementById("quick-msg").value.trim() || "আস-সালামু আলাইকুম!");
+  if (!ph) { toast("ফোন নম্বর দিন", "err"); return; }
+  window.open(`https://wa.me/880${ph}?text=${msg}`, "_blank");
+}
+
+// ══════════════════════════════════════════════════════
+// EXPORT FUNCTIONS
+// ══════════════════════════════════════════════════════
+function exportPhonesCSV() {
+  if (!allStudents.length) { toast("কোনো ডেটা নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,ইমেইল,XP পয়েন্ট,চ্যাপ্টার,সর্বশেষ লগইন,স্ট্যাটাস"];
+  allStudents.forEach(s => {
+    rows.push(`${s.student_id||""},${s.phone||""},${s.email||""},${s.xp||0},${s.chapters_completed_count||0},${s.last_active||""},${isActive(s)?"সক্রিয়":"নিষ্ক্রিয়"}`);
+  });
+  downloadCSV("GIC-Phone-Numbers.csv", rows.join("\n"));
+  previewReport("📱 শিক্ষার্থী যোগাযোগের তালিকা", allStudents.map(s=>`${s.student_id}: ${s.phone || s.email || "নেই"}`));
+  toast("✅ CSV ডাউনলোড শুরু হয়েছে", "ok");
+}
+
+function exportStudentsCSV() {
+  if (!allStudents.length) { toast("কোনো ডেটা নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,ইমেইল,XP,চ্যাপ্টার,সর্বশেষ লগইন"];
+  allStudents.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.email||""},${s.xp||0},${s.chapters_completed_count||0},${s.last_active||""}`));
+  downloadCSV("GIC-Students.csv", rows.join("\n"));
+  toast("✅ স্টুডেন্ট CSV ডাউনলোড হচ্ছে", "ok");
+}
+
+function exportInactiveCSV() {
+  const inactive = allStudents.filter(s=>!isActive(s)&&s.last_active);
+  if (!inactive.length) { toast("কোনো নিষ্ক্রিয় স্টুডেন্ট নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,ইমেইল,সর্বশেষ লগইন"];
+  inactive.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.email||""},${s.last_active||""}`));
+  downloadCSV("GIC-Inactive-Students.csv", rows.join("\n"));
+  toast(`✅ ${inactive.length} জন নিষ্ক্রিয় — CSV ডাউনলোড হচ্ছে`, "ok");
+}
+
+function exportCompletedCSV() {
+  const comp = allStudents.filter(hasCompleted);
+  if (!comp.length) { toast("কোনো কমপ্লিট করা স্টুডেন্ট নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ফোন নম্বর,ইমেইল,XP,চ্যাপ্টার"];
+  comp.forEach(s => rows.push(`${s.student_id||""},${s.phone||""},${s.email||""},${s.xp||0},${s.chapters_completed_count||0}`));
+  downloadCSV("GIC-Completed-Students.csv", rows.join("\n"));
+  toast(`✅ ${comp.length} জন কমপ্লিটেড স্টুডেন্ট CSV`, "ok");
+}
+
+function exportPhonesExcel() {
+  if (!allStudents.length) { toast("কোনো ডেটা নেই", "err"); return; }
+  const phones = allStudents.map(s=>s.phone||"").filter(Boolean).join("\n");
+  const blob = new Blob([phones], { type:"text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "GIC-Phone-List.txt";
+  a.click();
+  toast("✅ ফোন নম্বর টেক্সট ফাইল ডাউনলোড হচ্ছে", "ok");
+}
+
+function exportTrafficCSV() {
+  if (!allDailyTraffic.length) { toast("কোনো ট্রাফিক ডেটা নেই", "err"); return; }
+  const rows = ["তারিখ,পেজ ভিউ,WhatsApp ক্লিক"];
+  allDailyTraffic.forEach(d => rows.push(`${d.date},${d.views||0},${d.wa_clicks||0}`));
+  downloadCSV("GIC-Traffic.csv", rows.join("\n"));
+  toast("✅ ট্রাফিক CSV ডাউনলোড হচ্ছে", "ok");
+}
+
+function exportSourceCSV() {
+  if (!allSources.length) { toast("কোনো সোর্স ডেটা নেই", "err"); return; }
+  const rows = ["সোর্স/প্ল্যাটফর্ম,মোট ভিজিট"];
+  allSources.forEach(s => rows.push(`${s.source},${s.count}`));
+  downloadCSV("GIC-Sources.csv", rows.join("\n"));
+  toast("✅ সোর্স CSV ডাউনলোড হচ্ছে", "ok");
+}
+
+function copyAllPhones() {
+  const phones = allStudents.map(s=>s.phone||"").filter(Boolean).join("\n");
+  if (!phones) { toast("কোনো ফোন নম্বর নেই", "err"); return; }
+  navigator.clipboard.writeText(phones).then(() => toast(`✅ ${allStudents.filter(s=>s.phone).length}টি নম্বর কপি হয়েছে!`, "ok"));
+}
+
+function copyAllEmails() {
+  const emails = allStudents.map(s=>s.email||"").filter(Boolean).join("\n");
+  if (!emails) { toast("কোনো ইমেইল অ্যাড্রেস নেই", "err"); return; }
+  navigator.clipboard.writeText(emails).then(() => toast(`✅ ${allStudents.filter(s=>s.email).length}টি ইমেইল কপি হয়েছে!`, "ok"));
+}
+
+function copyPhone(ph) {
+  if (!ph) return;
+  navigator.clipboard.writeText(ph).then(() => toast("📱 " + ph + " কপি হয়েছে", "ok"));
+}
+
+function copyEmail(email) {
+  if (!email) return;
+  navigator.clipboard.writeText(email).then(() => toast("📧 " + email + " কপি হয়েছে", "ok"));
+}
+
+function downloadCSV(filename, content) {
+  const BOM = "\uFEFF"; // UTF-8 BOM for Excel compatibility
+  const blob = new Blob([BOM + content], { type:"text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+
+function previewReport(title, lines) {
+  const el = document.getElementById("report-preview");
+  if (!el) return;
+  el.innerHTML = `<div style="font-weight:700;margin-bottom:10px;">${title}</div>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.8;">${lines.slice(0,20).join("<br>")}</div>
+    ${lines.length > 20 ? `<div style="font-size:12px;color:var(--text-muted);margin-top:8px;">...এবং আরো ${lines.length-20}টি</div>` : ""}`;
+}
+
+// ══════════════════════════════════════════════════════
+// LIVE TRACKING
+// ══════════════════════════════════════════════════════
+function startLiveTracking() {
+  liveChannel = db.channel("gic-live-room");
+  liveChannel.on("presence", { event:"sync" }, () => {
+    const state = liveChannel.presenceState();
+    const list = [];
+    Object.values(state).forEach(presences => presences.forEach(p => list.push(p)));
+    const count = list.length;
+    setText("m-live", count);
+    setText("sb-live", count);
+    setText("today-live", count);
+
+    // Update live-count-lbl
+    const lbl = document.getElementById("live-count-lbl");
+    if (lbl) lbl.textContent = count + " জন সক্রিয়";
+
+    // Update analytics tab live table
+    const tbody = document.getElementById("live-tbl");
+    // Update today tab live table
+    const todayLiveTbl = document.getElementById("today-live-tbl");
+
+    if (!list.length) {
+      if (tbody) tbody.innerHTML = `<tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr>`;
+      if (todayLiveTbl) todayLiveTbl.innerHTML = `<tr class="empty-row"><td colspan="3">কেউ সক্রিয় নেই</td></tr>`;
+      return;
+    }
+    list.sort((a,b) => new Date(b.joined_at)-new Date(a.joined_at));
+    const rows = list.map(u => {
+      const m = SOURCE_META[u.referrer_source]||SOURCE_META.direct;
+      return `<tr>
+        <td>📍 ${u.city||"Unknown"}, ${u.country||"?"}</td>
+        <td><span class="${u.page==="home"?"pg-tag home":"pg-tag"}">◉ ${u.page||"home"}</span></td>
+        <td><span class="src-badge ${u.referrer_source||"direct"}">${m.icon} ${m.label}</span></td>
+      </tr>`;
+    }).join("");
+    if (tbody) tbody.innerHTML = rows;
+    if (todayLiveTbl) todayLiveTbl.innerHTML = rows;
+  }).subscribe();
+}
+
+function startAutoRefresh() {
+  setInterval(async () => {
+    if (!db || !authPwd) return;
+    try {
+      const { data } = await db.rpc("get_analytics_summary", { pass_code: authPwd });
+      if (data) processData(data);
+    } catch(e) {}
+  }, 20000);
+}
+
+async function refreshAll() {
+  toast("🔄 রিফ্রেশ হচ্ছে...", "ok");
+  try {
+    const { data } = await db.rpc("get_analytics_summary", { pass_code: authPwd });
+    if (data) processData(data);
+    await loadStudents();
+    toast("✅ ডেটা আপডেট হয়েছে!", "ok");
+  } catch(e) { toast("❌ রিফ্রেশ ব্যর্থ হয়েছে", "err"); }
+}
+
+// ══════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════
+function switchTab(id) {
+  document.querySelectorAll(".tab-page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.getElementById("tab-" + id)?.classList.add("active");
+  document.querySelector(`.nav-item[onclick="switchTab('${id}')"]`)?.classList.add("active");
+  if (id === 'reviews')         loadAdminReviews();
+  if (id === 'visitor-log')     loadVisitorLog();
+  if (id === 'course-comments') loadCourseComments();
+  if (id === 'settings')        loadSettingsInfo();
+}
+
+// ══════════════════════════════════════════════════════
+// REVIEW MANAGER
+// ══════════════════════════════════════════════════════
+let allAdminReviews = [];
+let reviewToDelete = null;
+let deletedCount = 0;
+
+const RV_SUPA_URL = 'https://abpweawndpnaftkcsdcp.supabase.co';
+const RV_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y';
+
+async function loadAdminReviews() {
+  const loading = document.getElementById('admin-reviews-loading');
+  const empty   = document.getElementById('admin-reviews-empty');
+  const grid    = document.getElementById('admin-reviews-grid');
+  if (!grid) return;
+
+  loading.style.display = 'block';
+  empty.style.display   = 'none';
+  grid.innerHTML        = '';
+
+  try {
+    const res = await fetch(
+      `${RV_SUPA_URL}/rest/v1/institution_reviews?select=*&order=created_at.desc&limit=200`,
+      { headers: { 'apikey': RV_SUPA_KEY, 'Authorization': 'Bearer ' + RV_SUPA_KEY } }
+    );
+    const data = await res.json();
+    loading.style.display = 'none';
+
+    if (!Array.isArray(data) || data.length === 0) {
+      empty.style.display = 'block';
+      document.getElementById('rv-total').textContent = '0';
+      document.getElementById('rv-avg').textContent = '—';
+      document.getElementById('rv-5star').textContent = '0';
+      // Update sidebar badge
+      const badge = document.getElementById('review-badge');
+      if (badge) { badge.style.display = 'none'; }
+      return;
+    }
+
+    allAdminReviews = data;
+
+    // Compute stats
+    const total   = data.length;
+    const avgRaw  = data.reduce((s, r) => s + (r.stars || 5), 0) / total;
+    const five    = data.filter(r => (r.stars || 5) === 5).length;
+    document.getElementById('rv-total').textContent   = total;
+    document.getElementById('rv-avg').textContent     = avgRaw.toFixed(1) + ' ⭐';
+    document.getElementById('rv-5star').textContent   = five;
+    document.getElementById('rv-deleted-count').textContent = deletedCount;
+
+    // Update sidebar badge
+    const badge = document.getElementById('review-badge');
+    if (badge) { badge.style.display = 'inline'; badge.textContent = total; }
+
+    filterAdminReviews();
+  } catch(err) {
+    loading.style.display = 'none';
+    grid.innerHTML = `<div class="center-text" style="grid-column:1/-1;padding:30px;color:var(--red);">❌ রিভিউ লোড করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।</div>`;
+  }
+}
+
+function filterAdminReviews() {
+  const query     = (document.getElementById('rv-search')?.value || '').toLowerCase().trim();
+  const starVal   = document.getElementById('rv-star-filter')?.value || 'all';
+  const sortVal   = document.getElementById('rv-sort')?.value || 'newest';
+
+  let filtered = [...allAdminReviews];
+
+  if (query) {
+    filtered = filtered.filter(r =>
+      (r.name || '').toLowerCase().includes(query) ||
+      (r.message || '').toLowerCase().includes(query)
+    );
+  }
+
+  if (starVal !== 'all') {
+    filtered = filtered.filter(r => (r.stars || 5) === parseInt(starVal));
+  }
+
+  if (sortVal === 'newest')  filtered.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+  if (sortVal === 'oldest')  filtered.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+  if (sortVal === 'highest') filtered.sort((a,b) => (b.stars||5) - (a.stars||5));
+  if (sortVal === 'lowest')  filtered.sort((a,b) => (a.stars||5) - (b.stars||5));
+
+  renderAdminReviews(filtered);
+}
+
+function renderAdminReviews(reviews) {
+  const grid  = document.getElementById('admin-reviews-grid');
+  const empty = document.getElementById('admin-reviews-empty');
+  if (!grid) return;
+
+  if (reviews.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const fmt = (d) => {
+    try { return new Date(d).toLocaleDateString('bn-BD', { year:'numeric', month:'long', day:'numeric' }); }
+    catch(e) { return d; }
+  };
+
+  const starsDisplay = (n) => {
+    const filled = '⭐'.repeat(n);
+    const empty  = '☆'.repeat(5 - n);
+    return `<span style="color:var(--gold-light);font-size:15px;">${filled}</span><span style="opacity:0.35;font-size:15px;">${empty}</span>`;
+  };
+
+  const starColor = (n) => {
+    if (n >= 5) return 'rgba(16,185,129,0.12)';
+    if (n >= 4) return 'rgba(200,151,42,0.12)';
+    if (n >= 3) return 'rgba(249,115,22,0.12)';
+    return 'rgba(244,63,94,0.12)';
+  };
+
+  grid.innerHTML = reviews.map(r => `
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;"
+         onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(0,0,0,0.3)'"
+         onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <!-- Colored top accent by rating -->
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${starColor(r.stars||5)};border-radius:18px 18px 0 0;"></div>
+
+      <!-- Header: Avatar + Name + Date -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--blue),#1a5f9e);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;flex-shrink:0;">
+          ${(r.name || '?').charAt(0).toUpperCase()}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;color:#fff;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.name || 'অজ্ঞাত'}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${fmt(r.created_at)}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          ${starsDisplay(r.stars || 5)}
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${r.stars || 5}/৫</div>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div style="font-size:13.5px;color:var(--text-muted);line-height:1.75;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;margin-bottom:16px;">
+        "${r.message || ''}"
+      </div>
+
+      <!-- Footer: ID + Delete button -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <span style="font-size:11px;color:rgba(148,163,184,0.5);font-family:monospace;">ID: ${r.id}</span>
+        <button onclick="openDeleteModal(${r.id}, '${(r.name||'অজ্ঞাত').replace(/'/g,"\\'")}', '${(r.message||'').replace(/'/g,"\\'").replace(/\n/g,' ').substring(0,80)}...')"
+          style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:rgba(244,63,94,0.1);color:var(--red);border:1px solid rgba(244,63,94,0.25);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:inherit;"
+          onmouseover="this.style.background='var(--red)';this.style.color='#fff'"
+          onmouseout="this.style.background='rgba(244,63,94,0.1)';this.style.color='var(--red)'">
+          🗑️ ডিলিট করুন
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openDeleteModal(id, name, msgPreview) {
+  reviewToDelete = id;
+  const modal = document.getElementById('rv-delete-modal');
+  const preview = document.getElementById('rv-modal-preview');
+  if (preview) {
+    preview.innerHTML = `<strong style="color:#fff;">👤 ${name}</strong><br><span style="margin-top:6px;display:block;">${msgPreview}</span>`;
+  }
+  modal.style.display = 'flex';
+}
+
+function closeDeleteModal() {
+  document.getElementById('rv-delete-modal').style.display = 'none';
+  reviewToDelete = null;
+}
+
+async function confirmDeleteReview() {
+  if (!reviewToDelete) return;
+
+  const modal  = document.getElementById('rv-delete-modal');
+  const delBtn = modal.querySelector('button.btn-red');
+  delBtn.disabled = true;
+  delBtn.textContent = 'মুছছে...';
+
+  try {
+    const res = await fetch(
+      `${RV_SUPA_URL}/rest/v1/institution_reviews?id=eq.${reviewToDelete}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'apikey': RV_SUPA_KEY,
+          'Authorization': 'Bearer ' + RV_SUPA_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        }
+      }
+    );
+
+    if (!res.ok) {
+      let errBody = '';
+      try { errBody = await res.text(); } catch(e) {}
+      console.error('Supabase DELETE failed:', res.status, errBody);
+
+      if (res.status === 401 || res.status === 403) {
+        toast('❌ Permission নেই! Supabase SQL Editor-তে fix_reviews_delete.sql রান করুন', 'err');
+      } else {
+        toast(`❌ সমস্যা হয়েছে (${res.status})। আবার চেষ্টা করুন`, 'err');
+      }
+      return;
+    }
+
+    // Remove from local array
+    allAdminReviews = allAdminReviews.filter(r => r.id !== reviewToDelete);
+    deletedCount++;
+
+    // Update stats
+    const total = allAdminReviews.length;
+    const avgRaw = total > 0 ? allAdminReviews.reduce((s, r) => s + (r.stars||5), 0) / total : 0;
+    const five   = allAdminReviews.filter(r => (r.stars||5) === 5).length;
+    document.getElementById('rv-total').textContent         = total;
+    document.getElementById('rv-avg').textContent           = total > 0 ? avgRaw.toFixed(1) + ' ⭐' : '—';
+    document.getElementById('rv-5star').textContent         = five;
+    document.getElementById('rv-deleted-count').textContent = deletedCount;
+
+    // Update sidebar badge
+    const badge = document.getElementById('review-badge');
+    if (badge) {
+      if (total > 0) { badge.style.display = 'inline'; badge.textContent = total; }
+      else badge.style.display = 'none';
+    }
+
+    closeDeleteModal();
+    filterAdminReviews();
+    toast('✅ রিভিউ সফলভাবে ডিলিট হয়েছে!', 'ok');
+  } catch(err) {
+    console.error('Delete exception:', err);
+    toast('❌ নেটওয়ার্ক সমস্যা। আবার চেষ্টা করুন।', 'err');
+  } finally {
+    delBtn.disabled = false;
+    delBtn.textContent = '🗑️ হ্যাঁ, মুছে ফেলুন';
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// UTILITIES
+// ══════════════════════════════════════════════════════
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function emptyRow(cols) {
+  return `<tr class="empty-row"><td colspan="${cols}">কোনো ডেটা পাওয়া যায়নি</td></tr>`;
+}
+
+let toastTimer;
+function toast(msg, type="ok") {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.className = "show " + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.className = "", 3000);
+}
+// ══════════════════════════════════════════════════════
+// VISITOR LOG
+// ══════════════════════════════════════════════════════
+let allVisitors  = [];
+let allVlEvents  = [];
+
+const PLATFORM_META = {
+  facebook:  { icon:'📘', label:'Facebook',  color:'#4e9af7' },
+  youtube:   { icon:'▶️', label:'YouTube',   color:'#ff5252' },
+  linkedin:  { icon:'💼', label:'LinkedIn',  color:'#4dabef' },
+  instagram: { icon:'📸', label:'Instagram', color:'#f472b6' },
+  twitter:   { icon:'🐦', label:'Twitter/X', color:'#60d0f5' },
+  x:         { icon:'🐦', label:'Twitter/X', color:'#60d0f5' },
+  google:    { icon:'🔍', label:'Google',    color:'#7bb5fb' },
+  tiktok:    { icon:'🎵', label:'TikTok',    color:'#6dd5d2' },
+  bing:      { icon:'🔎', label:'Bing',      color:'#48b5e8' },
+  direct:    { icon:'🔗', label:'Direct',    color:'#94a3b8' },
+  other:     { icon:'🌐', label:'অন্যান্য',  color:'#e5b95c' },
+};
+
+function platformBadge(src) {
+  const m = PLATFORM_META[src] || PLATFORM_META.direct;
+  return `<span class="src-badge ${src}" style="background:${m.color}22;color:${m.color};border:1px solid ${m.color}44;padding:3px 8px;border-radius:8px;font-size:11px;font-weight:700;">${m.icon} ${m.label}</span>`;
+}
+
+function fmtDateTime(d) {
+  if (!d) return '—';
+  try {
+    return new Date(d).toLocaleString('bn-BD', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+  } catch(e) { return d; }
+}
+
+async function loadVisitorLog() {
+  if (!db || !authPwd) return;
+  document.getElementById('vl-tbl').innerHTML = '<tr class="empty-row"><td colspan="7">⏳ লোড হচ্ছে...</td></tr>';
+  document.getElementById('vl-events-tbl').innerHTML = '<tr class="empty-row"><td colspan="6">⏳ লোড হচ্ছে...</td></tr>';
+  try {
+    const { data, error } = await db.rpc('get_analytics_summary', { pass_code: authPwd });
+    if (error) throw error;
+    allVisitors = data.recent_visitors  || [];
+    allVlEvents = data.today_events     || [];
+    renderVisitorLog(allVisitors);
+    renderEventTimeline(allVlEvents);
+  } catch(e) {
+    console.error('loadVisitorLog error:', e);
+    document.getElementById('vl-tbl').innerHTML = '<tr class="empty-row"><td colspan="7">❌ লোড করতে সমস্যা হয়েছে</td></tr>';
+  }
+}
+
+function filterVisitorLog() {
+  const q        = (document.getElementById('vl-search')?.value || '').toLowerCase();
+  const platform = document.getElementById('vl-platform-filter')?.value || 'all';
+  const gmailF   = document.getElementById('vl-gmail-filter')?.value   || 'all';
+
+  let list = [...allVisitors];
+  if (q) list = list.filter(v =>
+    (v.ip_address||'').includes(q) ||
+    (v.country||'').toLowerCase().includes(q) ||
+    (v.city||'').toLowerCase().includes(q) ||
+    (v.student_email||'').toLowerCase().includes(q) ||
+    (v.source||'').toLowerCase().includes(q)
+  );
+  if (platform !== 'all') list = list.filter(v => (v.source||'direct') === platform);
+  if (gmailF === 'gmail')    list = list.filter(v => v.student_email);
+  if (gmailF === 'no-gmail') list = list.filter(v => !v.student_email);
+
+  renderVisitorLog(list);
+}
+
+function deviceBadge(v) {
+  var dt = v.device_type || ''; var br = v.browser || ''; var os = v.os || '';
+  var dtIcon = dt === 'Mobile' ? '&#128241;' : dt === 'Tablet' ? '&#128242;' : '&#128421;&#65039;';
+  var brIcon = br === 'Chrome' ? '&#127937;' : br === 'Firefox' ? '&#129418;' : br === 'Safari' ? '&#128309;' : br === 'Edge' ? '&#128311;' : '&#127760;';
+  if (!dt && !br) return '<span style="color:var(--text-muted);font-size:11px;">&#8212;</span>';
+  return '<div style="line-height:1.5;"><div style="font-size:11px;font-weight:700;">'+dtIcon+' '+dt+'</div><div style="font-size:10px;color:var(--text-muted);">'+brIcon+' '+br+' &bull; '+os+'</div></div>';
+}
+
+function renderVisitorLog(visitors) {
+  var tbody = document.getElementById('vl-tbl');
+  var shown = document.getElementById('vl-shown');
+  var total   = allVisitors.length;
+  var gmailCt = allVisitors.filter(function(v){return v.student_email;}).length;
+  var fbCt    = allVisitors.filter(function(v){return v.source==='facebook';}).length;
+  var ytCt    = allVisitors.filter(function(v){return v.source==='youtube';}).length;
+  setText('vl-total', total); setText('vl-gmail-count', gmailCt);
+  setText('vl-fb-count', fbCt); setText('vl-yt-count', ytCt);
+  if (shown) shown.textContent = '('+visitors.length+'টি দেখাচ্ছে)';
+  if (!visitors.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="8">কোনো ভিজিটর ডেটা নেই</td></tr>'; return; }
+  tbody.innerHTML = visitors.map(function(v, i) {
+    var gmail = v.student_email
+      ? '<span style="color:var(--green);font-weight:700;font-size:12px;cursor:pointer;" onclick="openStudentActivityModal(\'' + v.student_email + '\')" title="পুরো activity দেখুন">📧 ' + v.student_email + '</span>'
+      : '<span style="color:var(--text-muted);font-size:11px;">—</span>';
+    return '<tr>'+
+      '<td style="font-size:11px;color:var(--text-muted);">'+(i+1)+'</td>'+
+      '<td><div style="font-weight:700;font-size:12px;font-family:monospace;color:var(--blue-light);">'+( v.ip_address||'—')+'</div>'+
+           '<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">📍 '+(v.city||'?')+', '+(v.country||'?')+'</div></td>'+
+      '<td>'+platformBadge(v.source||'direct')+'</td>'+
+      '<td>'+deviceBadge(v)+'</td>'+
+      '<td>'+gmail+'</td>'+
+      '<td style="font-weight:700;text-align:center;">'+( v.page_count||0)+'</td>'+
+      '<td style="font-size:11px;">'+fmtDateTime(v.last_seen)+'</td>'+
+      '<td>'+(v.student_email
+        ? '<button onclick="openStudentActivityModal(\''+ v.student_email +'\')" style="padding:5px 10px;font-size:11px;border-radius:6px;background:var(--blue);color:#fff;border:none;cursor:pointer;font-weight:700;">🔍 বিস্তারিত</button>'
+        : '<span style="color:var(--text-muted);font-size:11px;">—</span>')+'</td>'+
+    '</tr>';
+  }).join('');
+}
+
+function renderEventTimeline(events) {
+  const tbody = document.getElementById('vl-events-tbl');
+  if (!events || !events.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="6">আজ কোনো ইভেন্ট নেই</td></tr>';
+    return;
+  }
+  const icons = { pageview:'👁️', whatsapp_click:'💬', page_time:'⏱️' };
+  tbody.innerHTML = events.map(e => {
+    const src = e.source || 'direct';
+    return `<tr>
+      <td><span style="font-size:13px;">${icons[e.event_type]||'📌'}</span> <span style="font-size:11px;font-weight:700;">${e.event_type}</span></td>
+      <td style="font-weight:700;">${e.page||'—'}</td>
+      <td><span style="font-family:monospace;font-size:11px;color:var(--blue-light);">${e.ip_address||'—'}</span><br><span style="font-size:10px;color:var(--text-muted);">📍 ${e.city||'?'}, ${e.country||'?'}</span></td>
+      <td>${platformBadge(src)}</td>
+      <td style="font-size:11px;">${e.student_email
+        ? `<span style="color:var(--green);font-weight:700;" onclick="openStudentActivityModal('${e.student_email}')" style="cursor:pointer;">${e.student_email}</span>`
+        : '<span style="color:var(--text-muted);">—</span>'}</td>
+      <td style="font-size:11px;">${fmtDateTime(e.created_at)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function exportVisitorCSV() {
+  if (!allVisitors.length) { toast('কোনো ডেটা নেই', 'err'); return; }
+  const rows = ['#,IP ঠিকানা,দেশ,শহর,প্ল্যাটফর্ম,Gmail,পেজ ভিউ,শেষ সক্রিয়'];
+  allVisitors.forEach((v, i) => {
+    rows.push(`${i+1},"${v.ip_address||''}","${v.country||''}","${v.city||''}","${v.source||'direct'}","${v.student_email||''}",${v.page_count||0},"${v.last_seen||''}"`);
+  });
+  const BOM  = '\uFEFF';
+  const blob = new Blob([BOM + rows.join('\n')], { type:'text/csv;charset=utf-8' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'GIC-Visitor-Log.csv';
+  a.click();
+  toast('✅ Visitor Log CSV ডাউনলোড হচ্ছে', 'ok');
+}
+
+// ══════════════════════════════════════════════════════
+// STUDENT ACTIVITY MODAL
+// ══════════════════════════════════════════════════════
+async function openStudentActivityModal(email) {
+  const modal = document.getElementById('student-activity-modal');
+  modal.style.display = 'flex';
+  setText('sam-email-title', '📧 ' + email);
+  setText('sam-summary',     '⏳ Gmail-এর সব activity লোড হচ্ছে...');
+  setText('sam-total-views', '...');
+  setText('sam-total-wa',    '...');
+  setText('sam-unique-ips',  '...');
+  document.getElementById('sam-events-tbl').innerHTML = '<tr class="empty-row"><td colspan="6">⏳ লোড হচ্ছে...</td></tr>';
+
+  try {
+    const { data, error } = await db.rpc('get_student_activity', { p_email: email, pass_code: authPwd });
+    if (error) throw error;
+
+    const s = data.summary || {};
+    setText('sam-total-views', s.total_pageviews || 0);
+    setText('sam-total-wa',    s.total_wa_clicks || 0);
+    setText('sam-unique-ips',  s.unique_ips      || 0);
+
+    const firstVisit = s.first_visit ? fmtDateTime(s.first_visit) : '—';
+    const lastVisit  = s.last_visit  ? fmtDateTime(s.last_visit)  : '—';
+    setText('sam-summary', `প্রথম ভিজিট: ${firstVisit} | শেষ ভিজিট: ${lastVisit}`);
+
+    const events = data.events || [];
+    const tbody  = document.getElementById('sam-events-tbl');
+    const icons  = { pageview:'👁️', whatsapp_click:'💬', page_time:'⏱️' };
+    if (!events.length) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="6">কোনো activity পাওয়া যায়নি</td></tr>';
+    } else {
+      tbody.innerHTML = events.map(e => `<tr>
+        <td>${icons[e.event_type]||'📌'} <span style="font-size:11px;">${e.event_type}</span></td>
+        <td style="font-weight:700;">${e.page||'—'}</td>
+        <td style="font-family:monospace;font-size:11px;color:var(--blue-light);">${e.ip_address||'—'}</td>
+        <td style="font-size:11px;">📍 ${e.city||'?'}, ${e.country||'?'}</td>
+        <td>${platformBadge(e.source||'direct')}</td>
+        <td style="font-size:11px;">${fmtDateTime(e.created_at)}</td>
+      </tr>`).join('');
+    }
+  } catch(err) {
+    console.error('Student activity error:', err);
+    setText('sam-summary', '❌ ডেটা লোড করতে সমস্যা হয়েছে');
+  }
+}
+
+function closeStudentActivityModal() {
+  document.getElementById('student-activity-modal').style.display = 'none';
+}
+
+// ══════════════════════════════════════════════════════
+// COURSE COMMENTS MANAGER
+// ══════════════════════════════════════════════════════
+let allCourseComments  = [];
+let ccDeletedCount     = 0;
+
+async function loadCourseComments() {
+  const loading = document.getElementById('cc-loading');
+  const empty   = document.getElementById('cc-empty');
+  const grid    = document.getElementById('cc-grid');
+  if (!grid) return;
+  loading.style.display = 'block';
+  empty.style.display   = 'none';
+  grid.innerHTML        = '';
+
+  try {
+    const res = await fetch(
+      `${SUPA_URL}/rest/v1/course_comments?select=*&order=created_at.desc&limit=300`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } }
+    );
+    const data = await res.json();
+    loading.style.display = 'none';
+
+    if (!Array.isArray(data) || !data.length) {
+      empty.style.display = 'block';
+      setText('cc-total', 0); setText('cc-avg', '—');
+      return;
+    }
+    allCourseComments = data;
+
+    // Update stats
+    const total  = data.length;
+    const avgRaw = data.reduce((s, c) => s + (c.rating||5), 0) / total;
+    setText('cc-total', total);
+    setText('cc-avg',   avgRaw.toFixed(1) + ' ⭐');
+
+    // Populate course filter
+    const courses = [...new Set(data.map(c => c.course_id))].sort((a,b) => a-b);
+    const sel     = document.getElementById('cc-course-filter');
+    sel.innerHTML = '<option value="all">সব কোর্স</option>' +
+      courses.map(id => `<option value="${id}">কোর্স #${id}</option>`).join('');
+
+    // Update badge
+    const badge = document.getElementById('comment-badge');
+    if (badge) { badge.style.display = 'inline'; badge.textContent = total; }
+
+    filterCourseComments();
+  } catch(err) {
+    loading.style.display = 'none';
+    grid.innerHTML = '<div class="center-text" style="padding:30px;color:var(--red);">❌ মন্তব্য লোড করতে সমস্যা হয়েছে।</div>';
+  }
+}
+
+function filterCourseComments() {
+  const q       = (document.getElementById('cc-search')?.value   || '').toLowerCase();
+  const course  = document.getElementById('cc-course-filter')?.value || 'all';
+  const sortVal = document.getElementById('cc-sort')?.value           || 'newest';
+
+  let list = [...allCourseComments];
+  if (q)          list = list.filter(c => (c.name||'').toLowerCase().includes(q) || (c.message||'').toLowerCase().includes(q));
+  if (course !== 'all') list = list.filter(c => String(c.course_id) === course);
+  if (sortVal === 'newest')  list.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+  if (sortVal === 'oldest')  list.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+  if (sortVal === 'highest') list.sort((a,b) => (b.rating||5) - (a.rating||5));
+  if (sortVal === 'lowest')  list.sort((a,b) => (a.rating||5) - (b.rating||5));
+
+  renderCourseComments(list);
+}
+
+function renderCourseComments(comments) {
+  const grid  = document.getElementById('cc-grid');
+  const empty = document.getElementById('cc-empty');
+  if (!grid) return;
+  if (!comments.length) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  const fmt = d => { try { return new Date(d).toLocaleDateString('bn-BD', { year:'numeric', month:'short', day:'numeric' }); } catch(e) { return d; } };
+  const stars = n => '⭐'.repeat(n) + '☆'.repeat(5-n);
+
+  grid.innerHTML = comments.map(c => `
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;"
+         onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(0,0,0,0.3)'"
+         onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);border-radius:18px 18px 0 0;"></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <div style="width:40px;height:40px;background:linear-gradient(135deg,var(--blue),#1a5f9e);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex-shrink:0;">${(c.name||'?').charAt(0).toUpperCase()}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;color:#fff;font-size:14px;">${c.name||'পাঠক'}</div>
+          <div style="font-size:11px;color:var(--text-muted);">${fmt(c.created_at)} • কোর্স #${c.course_id}</div>
+          ${c.student_email ? `<div style="font-size:10px;color:var(--green);margin-top:2px;">📧 ${c.student_email}</div>` : ''}
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px;">${stars(c.rating||5)}</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);line-height:1.7;border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-bottom:12px;">"${c.message||''}"</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <span style="font-size:10px;color:rgba(148,163,184,0.4);font-family:monospace;">ID: ${c.id}</span>
+        <button onclick="deleteCourseComment(${c.id}, '${(c.name||'').replace(/'/g,"\\'")}')"
+          style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:rgba(244,63,94,0.1);color:var(--red);border:1px solid rgba(244,63,94,0.25);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:inherit;"
+          onmouseover="this.style.background='var(--red)';this.style.color='#fff'"
+          onmouseout="this.style.background='rgba(244,63,94,0.1)';this.style.color='var(--red)'">
+          🗑️ মুছে ফেলুন
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+async function deleteCourseComment(id, name) {
+  if (!confirm(`"${name}" এর মন্তব্যটি মুছে ফেলবেন?`)) return;
+  try {
+    const { error } = await db.rpc('delete_course_comment', { p_id: id, pass_code: authPwd });
+    if (error) throw error;
+    allCourseComments = allCourseComments.filter(c => c.id !== id);
+    ccDeletedCount++;
+    setText('cc-deleted', ccDeletedCount);
+    const total  = allCourseComments.length;
+    const avgRaw = total > 0 ? allCourseComments.reduce((s,c) => s + (c.rating||5), 0) / total : 0;
+    setText('cc-total', total);
+    setText('cc-avg',   total > 0 ? avgRaw.toFixed(1) + ' ⭐' : '—');
+    const badge = document.getElementById('comment-badge');
+    if (badge) { badge.textContent = total; if(!total) badge.style.display='none'; }
+    filterCourseComments();
+    toast('✅ মন্তব্য সফলভাবে মুছে ফেলা হয়েছে!', 'ok');
+  } catch(err) {
+    console.error('Delete comment error:', err);
+    toast('❌ মুছতে সমস্যা হয়েছে। আবার চেষ্টা করুন।', 'err');
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// SETTINGS & PASSWORD MANAGEMENT
+// ══════════════════════════════════════════════════════
+function loadSettingsInfo() {
+  const isPersisted = localStorage.getItem("gic_admin_pwd_persist") ? true : false;
+  const modeEl = document.getElementById("settings-session-mode");
+  if (modeEl) {
+    modeEl.textContent = isPersisted ? "Remembered (Persistent)" : "Session Only (Temporary)";
+    modeEl.style.color = isPersisted ? "var(--green)" : "var(--gold-light)";
+  }
+}
+
+async function changeAdminPasswordSubmit(event) {
+  event.preventDefault();
+  const oldPwdInput = document.getElementById("settings-old-pwd");
+  const newPwdInput = document.getElementById("settings-new-pwd");
+  const confirmPwdInput = document.getElementById("settings-confirm-pwd");
+  const errEl = document.getElementById("settings-pwd-err");
+  const successEl = document.getElementById("settings-pwd-success");
+  const btn = document.getElementById("settings-pwd-submit-btn");
+
+  if (!oldPwdInput || !newPwdInput || !confirmPwdInput || !errEl || !successEl || !btn) return;
+
+  const oldPwd = oldPwdInput.value;
+  const newPwd = newPwdInput.value;
+  const confirmPwd = confirmPwdInput.value;
+
+  // Clear messages
+  errEl.style.display = "none";
+  successEl.style.display = "none";
+
+  // Front-end validations
+  if (newPwd !== confirmPwd) {
+    errEl.textContent = "❌ নতুন পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড মেলেনি!";
+    errEl.style.display = "block";
+    return;
+  }
+
+  if (newPwd.length < 6) {
+    errEl.textContent = "❌ নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে!";
+    errEl.style.display = "block";
+    return;
+  }
+
+  if (oldPwd === newPwd) {
+    errEl.textContent = "❌ নতুন পাসওয়ার্ড এবং বর্তমান পাসওয়ার্ড একই হতে পারবে না!";
+    errEl.style.display = "block";
+    return;
+  }
+
+  // Set loading state
+  btn.disabled = true;
+  btn.textContent = "⏳ পাসওয়ার্ড পরিবর্তন করা হচ্ছে...";
+
+  try {
+    const { data, error } = await db.rpc('change_admin_password', {
+      old_pass_code: oldPwd,
+      new_pass_code: newPwd
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    if (data && data.success) {
+      successEl.textContent = data.message;
+      successEl.style.display = "block";
+      
+      // Update our memory and sessionStorage/localStorage with the new password
+      authPwd = newPwd;
+      sessionStorage.setItem('gic_admin_pwd', newPwd);
+      if (localStorage.getItem('gic_admin_pwd_persist')) {
+        localStorage.setItem('gic_admin_pwd_persist', newPwd);
+      }
+      
+      // Reset form
+      oldPwdInput.value = "";
+      newPwdInput.value = "";
+      confirmPwdInput.value = "";
+
+      toast("✅ পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!", "ok");
+    } else {
+      errEl.textContent = data ? data.message : "❌ পাসওয়ার্ড পরিবর্তন ব্যর্থ হয়েছে।";
+      errEl.style.display = "block";
+    }
+  } catch (e) {
+    console.error("Change password error:", e);
+    errEl.textContent = "❌ ত্রুটি: " + e.message;
+    errEl.style.display = "block";
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "💾 পাসওয়ার্ড পরিবর্তন করুন";
+  }
+}
+</script>
+</body>
+</html>
