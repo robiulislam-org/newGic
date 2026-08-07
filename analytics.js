@@ -317,9 +317,13 @@ function setupEventListeners() {
   });
 }
 
+// Expose globally for interactive course tracking
+window.trackGicEvent = trackEvent;
+
 // ─── INIT ────────────────────────────────────────────────────────────────────────
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initAnalytics);
 } else {
   initAnalytics();
 }
+

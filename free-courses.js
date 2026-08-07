@@ -1588,6 +1588,29 @@ function generateDynamicCertificate() {
   document.getElementById('complete-success-box').style.display = 'none';
   document.getElementById('gic-certificate-view-container').style.display = 'flex';
   
+  // Store in Certificate Log for Admin Dashboard
+  try {
+    const certLog = JSON.parse(localStorage.getItem('gic_certificate_log') || '[]');
+    certLog.unshift({
+      id: certId,
+      name: name,
+      courseId: course ? course.id : currentCourseId,
+      courseTitle: course ? course.title : 'ফ্রি কোর্স',
+      date: dateStr,
+      timestamp: Date.now()
+    });
+    localStorage.setItem('gic_certificate_log', JSON.stringify(certLog.slice(0, 100)));
+  } catch(e) {}
+
+  if (window.trackGicEvent) {
+    window.trackGicEvent('certificate_generate', 'free-courses', {
+      student_name: name,
+      course_id: course ? course.id : currentCourseId,
+      course_title: course ? course.title : 'ফ্রি কোর্স',
+      cert_id: certId
+    });
+  }
+
   addXP(10);
   showToast('🎉 আপনার প্রশংসা সনদপত্র সফলভাবে তৈরি করা হয়েছে! +10 XP');
 }
