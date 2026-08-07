@@ -1568,7 +1568,8 @@ function spawnConfetti() {
 //  COURSE COMPLETION
 // ============================================================
 function generateDynamicCertificate() {
-  const name = document.getElementById('cert-input-name').value.trim();
+  const nameInput = document.getElementById('cert-input-name');
+  const name = nameInput ? nameInput.value.trim() : '';
   if (!name) {
     showToast('⚠️ অনুগ্রহ করে সার্টিফিকেটের জন্য আপনার নাম লিখুন!', 'warning');
     return;
@@ -1577,19 +1578,139 @@ function generateDynamicCertificate() {
   const course = miniCoursesData.find(c => c.id === currentCourseId);
   const now = new Date();
   const dateStr = now.toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' });
-  const certId = 'GIC-CERT-' + course.id + '-' + Math.floor(Math.random() * 900000 + 100000);
+  const certId = 'GIC-CERT-' + (course ? course.id : '00') + '-' + Math.floor(Math.random() * 900000 + 100000);
   
   document.getElementById('cert-student-name').innerText = name;
-  document.getElementById('cert-course-name').innerText = `"${course.title}"`;
+  document.getElementById('cert-course-name').innerText = `"${course ? course.title : 'ফ্রি কোর্স'}"`;
   document.getElementById('cert-date').innerText = dateStr;
   document.getElementById('cert-id').innerText = certId;
   
   document.getElementById('complete-success-box').style.display = 'none';
   document.getElementById('gic-certificate-view-container').style.display = 'flex';
   
-  // Award bonus XP for generating certificate
   addXP(10);
   showToast('🎉 আপনার প্রশংসা সনদপত্র সফলভাবে তৈরি করা হয়েছে! +10 XP');
+}
+
+function downloadCertificateAsImage() {
+  const name = document.getElementById('cert-student-name').innerText || 'শিক্ষার্থী';
+  const courseName = document.getElementById('cert-course-name').innerText || 'ফ্রি কোর্স';
+  const certDate = document.getElementById('cert-date').innerText || new Date().toLocaleDateString('bn-BD');
+  const certId = document.getElementById('cert-id').innerText || 'GIC-CERT-000';
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 1600;
+  canvas.height = 1130;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Outer Double Gold Border
+  ctx.strokeStyle = '#c8972a';
+  ctx.lineWidth = 16;
+  ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+
+  ctx.lineWidth = 4;
+  ctx.strokeRect(50, 50, canvas.width - 100, canvas.height - 100);
+
+  // Decorative Corner Ornaments
+  const drawCorner = (x, y) => {
+    ctx.fillStyle = '#c8972a';
+    ctx.beginPath();
+    ctx.arc(x, y, 12, 0, Math.PI * 2);
+    ctx.fill();
+  };
+  drawCorner(65, 65);
+  drawCorner(canvas.width - 65, 65);
+  drawCorner(65, canvas.height - 65);
+  drawCorner(canvas.width - 65, canvas.height - 65);
+
+  // Header Logo Symbol 'ق'
+  ctx.fillStyle = '#c8972a';
+  ctx.font = 'bold 72px "Amiri", "Noto Serif Bengali", serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('ق', canvas.width / 2, 145);
+
+  // Institution Name
+  ctx.fillStyle = '#5a7a9a';
+  ctx.font = 'bold 22px "Cinzel", sans-serif';
+  ctx.fillText('GLOBAL ISLAMIC CARE', canvas.width / 2, 195);
+
+  // Title
+  ctx.fillStyle = '#0a1628';
+  ctx.font = 'bold 46px "Noto Serif Bengali", sans-serif';
+  ctx.fillText('কোর্স সম্পূর্ণ করার সনদ', canvas.width / 2, 275);
+
+  // Gold Line
+  ctx.strokeStyle = '#c8972a';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(canvas.width / 2 - 120, 305);
+  ctx.lineTo(canvas.width / 2 + 120, 305);
+  ctx.stroke();
+
+  // Subtitle
+  ctx.fillStyle = '#64748b';
+  ctx.font = '24px "Noto Serif Bengali", sans-serif';
+  ctx.fillText('এই গৌরবময় প্রশংসাপত্রটি প্রদান করা হচ্ছে', canvas.width / 2, 365);
+
+  // Student Name (Highlight)
+  ctx.fillStyle = '#c8972a';
+  ctx.font = 'bold 56px "Noto Serif Bengali", sans-serif';
+  ctx.fillText(name, canvas.width / 2, 460);
+
+  // Appreciation Message
+  ctx.fillStyle = '#1e293b';
+  ctx.font = '24px "Noto Serif Bengali", sans-serif';
+  ctx.fillText(`সফলভাবে ও নিষ্ঠার সাথে Global Islamic Care-এর ${courseName} ফ্রি কোর্সটি`, canvas.width / 2, 550);
+  ctx.fillText('সম্পন্ন করায় তার ইসলামিক জ্ঞান ও আগ্রহের স্বীকৃতিস্বরূপ এই সনদপত্র অর্পণ করা হলো।', canvas.width / 2, 600);
+
+  // Approved Badge Seal
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(canvas.width / 2, 770, 70, 0, Math.PI * 2);
+  const grad = ctx.createRadialGradient(canvas.width / 2, 770, 10, canvas.width / 2, 770, 70);
+  grad.addColorStop(0, '#ffd700');
+  grad.addColorStop(1, '#c8972a');
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 4;
+  ctx.setLineDash([8, 6]);
+  ctx.stroke();
+  ctx.restore();
+
+  ctx.fillStyle = '#000000';
+  ctx.font = 'bold 20px sans-serif';
+  ctx.fillText('APPROVED', canvas.width / 2, 776);
+
+  // Date (Left)
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#64748b';
+  ctx.font = '20px "Noto Serif Bengali", sans-serif';
+  ctx.fillText('তারিখ:', 140, 930);
+  ctx.fillStyle = '#0a1628';
+  ctx.font = 'bold 24px "Noto Serif Bengali", sans-serif';
+  ctx.fillText(certDate, 140, 970);
+
+  // Cert ID (Right)
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#64748b';
+  ctx.font = '20px "Noto Serif Bengali", sans-serif';
+  ctx.fillText('সনদপত্র আইডি:', canvas.width - 140, 930);
+  ctx.fillStyle = '#0a1628';
+  ctx.font = 'bold 24px monospace';
+  ctx.fillText(certId, canvas.width - 140, 970);
+
+  // Download Trigger
+  const cleanName = name.replace(/[^\w\u0980-\u09FF]/g, '_');
+  const link = document.createElement('a');
+  link.download = `Certificate_${cleanName}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+  showToast('📥 সনদপত্রটি সফলভাবে ইমেজ (PNG) হিসেবে ডাউনলোড হয়েছে!');
 }
 
 function completeCourse() {
@@ -1604,9 +1725,19 @@ function completeCourse() {
   const shareText = `🏆 আমি Global Islamic Care-এর ফ্রি "${course.title}" কোর্স সম্পন্ন করেছি! তুমিও শুরু করো — সম্পূর্ণ বিনামূল্যে! 🕌`;
 
   const modal = document.createElement('div');
-  modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:20000;display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn 0.3s ease;overflow-y:auto;`;
+  modal.id = 'gic-completion-modal';
+  modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.3s ease;overflow-y:auto;`;
+  
+  // Close on backdrop click
+  modal.onclick = (e) => {
+    if (e.target === modal) modal.remove();
+  };
+
   modal.innerHTML = `
-    <div class="modal-box" style="max-width:820px; width:100%; border-radius:24px; background:linear-gradient(135deg,#0a1628,#1a3a6e); border:1px solid rgba(212,168,67,0.35); box-shadow:0 24px 80px rgba(0,0,0,0.6); overflow:hidden;">
+    <div class="modal-box" style="max-width:820px; width:100%; border-radius:24px; background:linear-gradient(135deg,#0a1628,#1a3a6e); border:1px solid rgba(212,168,67,0.35); box-shadow:0 24px 80px rgba(0,0,0,0.6); overflow:hidden; position:relative;">
+      
+      <!-- Top Right Close Button -->
+      <button onclick="this.closest('#gic-completion-modal').remove()" style="position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); color:#fff; font-size:18px; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; z-index:100;" onmouseover="this.style.background='#ef4444'; this.style.borderColor='#ef4444';" onmouseout="this.style.background='rgba(255,255,255,0.12)'; this.style.borderColor='rgba(255,255,255,0.25)';" title="বন্ধ করুন (Close)">✖</button>
       
       <!-- Congratulations Box -->
       <div id="complete-success-box" style="padding:40px 36px; text-align:center; max-width:480px; margin:0 auto;">
@@ -1634,14 +1765,14 @@ function completeCourse() {
 
         <div style="display:flex;flex-direction:column;gap:10px;">
           <a href="https://wa.me/8801733017521" target="_blank" style="display:block;background:#25D366;color:#fff;padding:14px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;">💬 ওস্তাদ কাউন্সেলিং ও লাইভ ক্লাস বুকিং</a>
-          <button onclick="openCommentModal(${course.id});this.closest('[style*=fixed]').remove();" style="background:rgba(212,168,67,0.15);border:1px solid rgba(212,168,67,0.3);color:var(--gold-light);padding:12px;border-radius:12px;cursor:pointer;font-size:14px;font-family:var(--font-body);font-weight:700;">⭐ রিভিউ দিন</button>
-          <button onclick="this.closest('[style*=fixed]').remove();closeCourseViewer();" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:12px;border-radius:12px;cursor:pointer;font-size:14px;font-family:var(--font-body);">← সব কোর্সে ফিরে যান</button>
+          <button onclick="openCommentModal(${course.id});this.closest('#gic-completion-modal').remove();" style="background:rgba(212,168,67,0.15);border:1px solid rgba(212,168,67,0.3);color:var(--gold-light);padding:12px;border-radius:12px;cursor:pointer;font-size:14px;font-family:var(--font-body);font-weight:700;">⭐ রিভিউ দিন</button>
+          <button onclick="this.closest('#gic-completion-modal').remove();closeCourseViewer();" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:12px;border-radius:12px;cursor:pointer;font-size:14px;font-family:var(--font-body);">← সব কোর্সে ফিরে যান</button>
         </div>
       </div>
 
       <!-- Certificate View Container (hidden by default) -->
-      <div id="gic-certificate-view-container" style="display:none; flex-direction:column; align-items:center; padding:30px; animation:fadeIn 0.4s ease;">
-        <div id="gic-certificate-view" style="background:#fff; border:10px double var(--gold); border-radius:12px; padding:40px; position:relative; color:#0a1628; box-shadow:0 10px 40px rgba(0,0,0,0.15); max-width:700px; width:100%; aspect-ratio: 1.414; display:flex; flex-direction:column; justify-content:center; text-align:center;">
+      <div id="gic-certificate-view-container" style="display:none; flex-direction:column; align-items:center; padding:30px 20px; animation:fadeIn 0.4s ease;">
+        <div id="gic-certificate-view" style="background:#fff; border:10px double var(--gold); border-radius:12px; padding:36px 28px; position:relative; color:#0a1628; box-shadow:0 10px 40px rgba(0,0,0,0.15); max-width:700px; width:100%; aspect-ratio: 1.414; display:flex; flex-direction:column; justify-content:center; text-align:center;">
           <!-- Seal background decoration -->
           <div style="position:absolute; inset:0; background:radial-gradient(circle, rgba(200,151,42,0.03) 0%, transparent 80%); pointer-events:none;"></div>
           
@@ -1674,12 +1805,18 @@ function completeCourse() {
         </div>
         
         <!-- Certificate Action Buttons -->
-        <div style="display:flex; gap:12px; margin-top:20px; width:100%; max-width:700px; justify-content:center;">
-          <button onclick="window.print()" style="background:linear-gradient(135deg,var(--gold),#f59e0b); color:#000; font-family:var(--font-body); font-weight:900; font-size:14px; padding:12px 24px; border-radius:10px; border:none; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 4px 15px rgba(212,168,67,0.3); transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-            🖨️ প্রিন্ট / ডাউনলোড (PDF)
+        <div style="display:flex; gap:10px; margin-top:20px; width:100%; max-width:700px; justify-content:center; flex-wrap:wrap;">
+          <button onclick="downloadCertificateAsImage()" style="background:linear-gradient(135deg,var(--gold),#f59e0b); color:#000; font-family:var(--font-body); font-weight:900; font-size:14px; padding:12px 20px; border-radius:10px; border:none; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 4px 15px rgba(212,168,67,0.3); transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+            📥 ডাউনলোড সনদ (PNG)
           </button>
-          <button onclick="this.closest('[style*=fixed]').remove(); closeCourseViewer();" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; font-family:var(--font-body); font-weight:700; font-size:14px; padding:12px 24px; border-radius:10px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-            ← সব কোর্সে ফিরে যান
+          <button onclick="window.print()" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#fff; font-family:var(--font-body); font-weight:700; font-size:14px; padding:12px 20px; border-radius:10px; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+            🖨️ প্রিন্ট / PDF
+          </button>
+          <button onclick="document.getElementById('complete-success-box').style.display='block'; document.getElementById('gic-certificate-view-container').style.display='none';" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#e2e8f0; font-family:var(--font-body); font-weight:600; font-size:13.5px; padding:12px 18px; border-radius:10px; cursor:pointer;">
+            ✏️ নাম পরিবর্তন
+          </button>
+          <button onclick="this.closest('#gic-completion-modal').remove(); closeCourseViewer();" style="background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.4); color:#fca5a5; font-family:var(--font-body); font-weight:700; font-size:13.5px; padding:12px 18px; border-radius:10px; cursor:pointer;">
+            ❌ বন্ধ করুন
           </button>
         </div>
       </div>
