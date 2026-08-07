@@ -7,9 +7,11 @@
 <meta name="description" content="Global Islamic Care ডিজিটাল ইসলামিক লাইব্রেরি — ১৫ লাইনের হাফেজী কোরআন শরীফ (১১৪টি সূরা ও ৩০টি পারা নেভিগেটর সহ), নাদিয়াতুল আমপারা, নূরানী কুরআন শিক্ষা ও কায়দা কিতাবসমূহ অনলাইনে পড়ুন, বুকমার্ক করুন এবং এইচডি কোয়ালিটিতে ডাউনলোডের সুবিধা।">
 <meta name="keywords" content="হাফেজী কোরআন ১৬ লাইন ১৫ লাইন, সূরা ইয়াসীন পিডিএফ, আমপারা পিডিএফ, কায়দা শিক্ষা বই, নূরানী কায়দা ডাউনলোড, ইসলামিক ডিজিটাল লাইব্রেরি, Global Islamic Care Library">
 <meta name="author" content="Global Islamic Care">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="theme-color" content="#0A1628">
 <link rel="canonical" href="https://globalislamiccare.com/library.html">
+<link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/library.html">
+<link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/library.html">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
@@ -767,6 +769,7 @@ footer a { color: var(--gold-light); text-decoration: none; }
   .modal-controls { justify-content: flex-start; }
 }
 </style>
+<script src="i18n.js"></script>
 </head>
 <body>
 
@@ -776,20 +779,27 @@ footer a { color: var(--gold-light); text-decoration: none; }
     <div class="logo-icon">ق</div>
     <div class="logo-text">
       <span class="lt-main">GLOBAL ISLAMIC CARE</span>
-      <span class="lt-sub">সহীহ কুরআন ও দ্বীনি শিক্ষা পোর্টাল</span>
+      <span class="lt-sub" data-i18n="nav_library">সহীহ কুরআন ও দ্বীনি শিক্ষা পোর্টাল</span>
     </div>
   </a>
 
   <ul class="nav-links">
-    <li><a href="index.html">হোম</a></li>
-    <li><a href="library.html" class="active">লাইব্রেরি</a></li>
-    <li><a href="index.html#courses">কোর্সসমূহ</a></li>
-    <li><a href="dashboard.html">ড্যাশবোর্ড</a></li>
+    <li><a href="index.html" data-i18n="nav_home">হোম</a></li>
+    <li><a href="library.html" class="active" data-i18n="nav_library">লাইব্রেরি</a></li>
+    <li><a href="quran.html" data-i18n="nav_quran">৩০ পারা কুরআন</a></li>
+    <li><a href="index.html#courses" data-i18n="nav_courses">কোর্সসমূহ</a></li>
+    <li><a href="dashboard.html" data-i18n="nav_dashboard">ড্যাশবোর্ড</a></li>
   </ul>
 
   <div class="nav-right-actions">
+    <!-- 🌐 Multi-Language Switcher Pill -->
+    <div class="lang-switcher" style="display:inline-flex; align-items:center; gap:4px; background:rgba(255,255,255,0.08); border:1px solid rgba(212,168,67,0.3); padding:3px 6px; border-radius:20px;">
+      <button class="lang-btn" data-lang="bn" onclick="setLanguage('bn')" style="border:none; border-radius:14px; padding:3px 8px; font-size:11.5px; cursor:pointer; background:var(--gold); color:#000; font-weight:bold; transition:all 0.2s;">🇧🇩 BN</button>
+      <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" style="border:none; border-radius:14px; padding:3px 8px; font-size:11.5px; cursor:pointer; background:rgba(255,255,255,0.1); color:#fff; transition:all 0.2s;">🇬🇧 EN</button>
+      <button class="lang-btn" data-lang="ar" onclick="setLanguage('ar')" style="border:none; border-radius:14px; padding:3px 8px; font-size:11.5px; cursor:pointer; background:rgba(255,255,255,0.1); color:#fff; transition:all 0.2s;">🇸🇦 AR</button>
+    </div>
     <button class="theme-toggle-btn" id="themeToggle" title="ডার্ক/লাইট থিম পরিবর্তন">🌙</button>
-    <a href="index.html#booking" class="btn-gold-sm">
+    <a href="index.html#booking" class="btn-gold-sm" data-i18n="nav_booking">
       <span>ফ্রি ক্লাস বুক করুন</span>
     </a>
   </div>
@@ -1362,7 +1372,16 @@ function jumpToPage(pageNum) {
   if (pageNum && currentPdfUrl) {
     pageInput.value = pageNum;
     localStorage.setItem('gic_last_page', pageNum);
-    pdfFrame.src = currentPdfUrl + '#page=' + pageNum;
+    
+    // Ensure clean base URL without existing hash fragment
+    const baseUrl = currentPdfUrl.split('#')[0];
+    const targetUrl = baseUrl + '#page=' + pageNum + '&toolbar=1&navpanes=0';
+    
+    // Force iframe location refresh so PDF viewer jumps immediately
+    pdfFrame.src = 'about:blank';
+    setTimeout(() => {
+      pdfFrame.src = targetUrl;
+    }, 40);
   }
 }
 
@@ -1410,14 +1429,27 @@ function shareBook(pdfUrl, title, platform) {
   }
 }
 
-// Hash sub-routing on load
+// Hash & URL Parameter sub-routing on load
 window.addEventListener('load', () => {
-  const hash = window.location.hash.replace('#', '');
-  if (hash) {
-    const targetCard = document.getElementById(hash);
-    if (targetCard) {
-      targetCard.scrollIntoView({ behavior: 'smooth' });
-      targetCard.style.borderColor = 'var(--gold)';
+  const urlParams = new URLSearchParams(window.location.search);
+  const paraNum = parseInt(urlParams.get('para'));
+  const pageNum = parseInt(urlParams.get('page'));
+
+  if (paraNum && paraNum >= 1 && paraNum <= 30) {
+    const p = paraList.find(item => item.num === paraNum);
+    if (p) {
+      openPdfViewer('Emdadia-Hafezi-Quran.pdf', '১৫ লাইন হাফেজী কুরআন শরীফ (ইমদাদিয়া)', true, p.page);
+    }
+  } else if (pageNum && pageNum >= 1 && pageNum <= 604) {
+    openPdfViewer('Emdadia-Hafezi-Quran.pdf', '১৫ লাইন হাফেজী কুরআন শরীফ (ইমদাদিয়া)', true, pageNum);
+  } else {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const targetCard = document.getElementById(hash);
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth' });
+        targetCard.style.borderColor = 'var(--gold)';
+      }
     }
   }
 });
