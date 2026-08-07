@@ -1,107 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
+  <!-- Main Landing Page -->
+  <url>
+    <loc>https://globalislamiccare.com/</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.00</priority>
+    <image:image>
+      <image:loc>https://globalislamiccare.com/og-image.jpg</image:loc>
+      <image:title>Global Islamic Care – অনলাইন কোরআন শিক্ষা ও হেফজুল কোরআন</image:title>
+    </image:image>
+  </url>
 
-<url>
-  <loc>https://globalislamiccare.com/</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/quran.html</loc>
-  <lastmod>2026-08-04T22:00:00+00:00</lastmod>
-  <priority>0.95</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/library.html</loc>
-  <lastmod>2026-08-05T12:00:00+00:00</lastmod>
-  <priority>0.95</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/Emdadia-Hafezi-Quran.pdf</loc>
-  <lastmod>2026-08-05T12:00:00+00:00</lastmod>
-  <priority>0.85</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/Ampara_Nadiatul.pdf</loc>
-  <lastmod>2026-08-05T12:00:00+00:00</lastmod>
-  <priority>0.85</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/Nurani%20Podhotite%20Quran%20Shikkha.pdf</loc>
-  <lastmod>2026-08-05T12:00:00+00:00</lastmod>
-  <priority>0.85</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/courses</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/teachers</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/about</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/blog</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/contact</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/policy</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/blog-tajweed-5-rules</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/blog-hifz-techniques</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/blog-quran-kids</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/blog-makhraj</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/blog-online-quran</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/blog-tilawat-fazilat</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://globalislamiccare.com/blog-family-quran</loc>
-  <lastmod>2026-04-04T08:18:12+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
+  <!-- Digital Islamic Library -->
+  <url>
+    <loc>https://globalislamiccare.com/library.html</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
 
+  <!-- Quran Portal Page -->
+  <url>
+    <loc>https://globalislamiccare.com/quran.html</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- PDF Quran & Islamic Kitabs -->
+  <url>
+    <loc>https://globalislamiccare.com/Emdadia-Hafezi-Quran.pdf</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://globalislamiccare.com/Ampara_Nadiatul.pdf</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://globalislamiccare.com/Nurani%20Podhotite%20Quran%20Shikkha.pdf</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Navigation Sections -->
+  <url>
+    <loc>https://globalislamiccare.com/#courses</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://globalislamiccare.com/#teachers</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://globalislamiccare.com/#about</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://globalislamiccare.com/#blog</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://globalislamiccare.com/#contact</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://globalislamiccare.com/#policy</loc>
+    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
 
 </urlset>
