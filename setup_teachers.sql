@@ -275,12 +275,13 @@ GRANT EXECUTE ON FUNCTION approve_teacher_review(text,bigint) TO anon;
 GRANT EXECUTE ON FUNCTION delete_teacher_review(text,bigint) TO anon;
 
 -- ══════════════════════════════════════════════════════════════
--- SLOT REFERENCE: 19 slots (Sat-Wed, 7:00 AM - 10:50 PM, 50 min each)
--- Slot 1: 07:00-07:50  Slot 2: 07:50-08:40  Slot 3: 08:40-09:30
--- Slot 4: 09:30-10:20  Slot 5: 10:20-11:10  Slot 6: 11:10-12:00
--- Slot 7: 12:00-12:50  Slot 8: 12:50-13:40  Slot 9: 13:40-14:30
--- Slot 10: 14:30-15:20 Slot 11: 15:20-16:10 Slot 12: 16:10-17:00
--- Slot 13: 17:00-17:50 Slot 14: 17:50-18:40 Slot 15: 18:40-19:30
--- Slot 16: 19:30-20:20 Slot 17: 20:20-21:10 Slot 18: 21:10-22:00
--- Slot 19: 22:00-22:50
+-- SLOT REFERENCE: 16 slots (Sat-Wed, 7:00 AM - 10:50 PM, 50 min class + 10 min break)
+-- Slot 1:  07:00 – 07:50    Slot 9:  15:00 – 15:50 (03:00 PM)
+-- Slot 2:  08:00 – 08:50    Slot 10: 16:00 – 16:50 (04:00 PM)
+-- Slot 3:  09:00 – 09:50    Slot 11: 17:00 – 17:50 (05:00 PM)
+-- Slot 4:  10:00 – 10:50    Slot 12: 18:00 – 18:50 (06:00 PM)
+-- Slot 5:  11:00 – 11:50    Slot 13: 19:00 – 19:50 (07:00 PM)
+-- Slot 6:  12:00 – 12:50    Slot 14: 20:00 – 20:50 (08:00 PM)
+-- Slot 7:  13:00 – 13:50 (01:00 PM)  Slot 15: 21:00 – 21:50 (09:00 PM)
+-- Slot 8:  14:00 – 14:50 (02:00 PM)  Slot 16: 22:00 – 22:50 (10:00 PM)
 -- ══════════════════════════════════════════════════════════════

@@ -3529,26 +3529,24 @@ async function changeAdminPasswordSubmit(event) {
 // ══════════════════════════════════════════════════════
 // TEACHER MANAGEMENT CONTROLLER
 // ══════════════════════════════════════════════════════
+// Slot definitions (16 slots: Class starts on the hour, 50 min duration, 10 min break. 7:00 AM to 10:50 PM)
 const TC_SLOTS = [
-  { idx: 1,  start: '07:00', end: '07:50', label: '০৭:০০' },
-  { idx: 2,  start: '07:50', end: '08:40', label: '০৭:৫০' },
-  { idx: 3,  start: '08:40', end: '09:30', label: '০৮:৪০' },
-  { idx: 4,  start: '09:30', end: '10:20', label: '০৯:৩০' },
-  { idx: 5,  start: '10:20', end: '11:10', label: '১০:২০' },
-  { idx: 6,  start: '11:10', end: '12:00', label: '১১:১০' },
-  { idx: 7,  start: '12:00', end: '12:50', label: '১২:০০' },
-  { idx: 8,  start: '12:50', end: '13:40', label: '১২:৫০' },
-  { idx: 9,  start: '13:40', end: '14:30', label: '১৩:৪০' },
-  { idx: 10, start: '14:30', end: '15:20', label: '১৪:৩০' },
-  { idx: 11, start: '15:20', end: '16:10', label: '১৫:২০' },
-  { idx: 12, start: '16:10', end: '17:00', label: '১৬:১০' },
-  { idx: 13, start: '17:00', end: '17:50', label: '১৭:০০' },
-  { idx: 14, start: '17:50', end: '18:40', label: '১৭:৫০' },
-  { idx: 15, start: '18:40', end: '19:30', label: '১৮:৪০' },
-  { idx: 16, start: '19:30', end: '20:20', label: '১৯:৩০' },
-  { idx: 17, start: '20:20', end: '21:10', label: '২০:২০' },
-  { idx: 18, start: '21:10', end: '22:00', label: '২১:১০' },
-  { idx: 19, start: '22:00', end: '22:50', label: '২২:০০' },
+  { idx: 1,  start: '০৭:০০', end: '০৭:৫০', label: '০৭:০০ – ০৭:৫০', period: 'সকাল' },
+  { idx: 2,  start: '০৮:০০', end: '০৮:৫০', label: '০৮:০০ – ০৮:৫০', period: 'সকাল' },
+  { idx: 3,  start: '০৯:০০', end: '০৯:৫০', label: '০৯:০০ – ০৯:৫০', period: 'সকাল' },
+  { idx: 4,  start: '১০:০০', end: '১০:৫০', label: '১০:০০ – ১০:৫০', period: 'সকাল' },
+  { idx: 5,  start: '১১:০০', end: '১১:৫০', label: '১১:০০ – ১১:৫০', period: 'সকাল' },
+  { idx: 6,  start: '১২:০০', end: '১২:৫০', label: '১২:০০ – ১২:৫০', period: 'দুপুর' },
+  { idx: 7,  start: '১৩:০০', end: '১৩:৫০', label: '১৩:০০ – ১৩:৫০', period: 'দুপুর (০১টা)' },
+  { idx: 8,  start: '১৪:০০', end: '১৪:৫০', label: '১৪:০০ – ১৪:৫০', period: 'দুপুর (০২টা)' },
+  { idx: 9,  start: '১৫:০০', end: '১৫:৫০', label: '১৫:০০ – ১৫:৫০', period: 'বিকেল (০৩টা)' },
+  { idx: 10, start: '১৬:০০', end: '১৬:৫০', label: '১৬:০০ – ১৬:৫০', period: 'বিকেল (০৪টা)' },
+  { idx: 11, start: '১৭:০০', end: '১৭:৫০', label: '১৭:০০ – ১৭:৫০', period: 'বিকেল (০৫টা)' },
+  { idx: 12, start: '১৮:০০', end: '১৮:৫০', label: '১৮:০০ – ১৮:৫০', period: 'সন্ধ্যা (০৬টা)' },
+  { idx: 13, start: '১৯:০০', end: '১৯:৫০', label: '১৯:০০ – ১৯:৫০', period: 'সন্ধ্যা (০৭টা)' },
+  { idx: 14, start: '২০:০০', end: '২০:৫০', label: '২০:০০ – ২০:৫০', period: 'রাত (০৮টা)' },
+  { idx: 15, start: '২১:০০', end: '২১:৫০', label: '২১:০০ – ২১:৫০', period: 'রাত (০৯টা)' },
+  { idx: 16, start: '২২:০০', end: '২২:৫০', label: '২২:০০ – ২২:৫০', period: 'রাত (১০টা)' },
 ];
 const TC_DAYS = { sat: 'শনিবার', sun: 'রবিবার', mon: 'সোমবার', tue: 'মঙ্গলবার', wed: 'বুধবার' };
 
@@ -3866,13 +3864,13 @@ function openAddTeacherModal() {
   document.getElementById('tm-is-active').checked = true;
   document.getElementById('tm-form-err').style.display = 'none';
 
-  // default schedule: slots 1 to 19 available on sat to wed
+  // default schedule: slots 1 to 16 available on sat to wed (07:00 to 22:50)
   modalScheduleState = {
-    sat: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
-    sun: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
-    mon: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
-    tue: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
-    wed: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+    sat: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+    sun: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+    mon: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+    tue: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+    wed: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
   };
   modalCurrentDay = 'sat';
   updatePhotoPreview();
