@@ -262,11 +262,13 @@ function enhanceDashboard(stats) {
   setTimeout(() => {
     renderPagesBars(stats.top_pages || []);
     renderSourceBars(stats.traffic_sources || []);
-    renderPeakTimeHeatmap(stats.raw_events || []);
+    // Use today_events (available from API) to build hourly heatmap
+    renderPeakTimeHeatmap(stats.today_events || []);
     renderCertificateRoster();
     renderCourseDropoffAnalytics();
     renderQuizAnalytics();
-    renderRetentionHub(stats.students || []);
+    // Pass real students from cache; falls back to [] if not yet loaded
+    renderRetentionHub(window._cachedStudents || []);
   }, 300);
 }
 
@@ -276,27 +278,45 @@ function renderPeakTimeHeatmap(events) {
   if (!container) return;
 
   const hourlyCounts = new Array(24).fill(0);
-  
+  let isRealData = false;
+
   if (events && events.length > 0) {
+    // today_events items have a `time` field (HH:MM:SS string) from the SQL
     events.forEach(ev => {
-      if (ev.created_at) {
-        const h = new Date(ev.created_at).getHours();
-        hourlyCounts[h]++;
+      const timeStr = ev.time || ev.created_at || '';
+      if (timeStr) {
+        let h = -1;
+        if (timeStr.includes('T') || timeStr.includes('-')) {
+          // ISO datetime string
+          h = new Date(timeStr).getHours();
+        } else if (timeStr.match(/^\d{2}:\d{2}/)) {
+          // HH:MM:SS string
+          h = parseInt(timeStr.substring(0, 2), 10);
+        }
+        if (h >= 0 && h < 24) { hourlyCounts[h]++; isRealData = true; }
       }
     });
-  } else {
-    // Realistic hourly distribution
+  }
+
+  if (!isRealData) {
+    // Show placeholder pattern when no real data is available
     const mockPattern = [2,1,0,0,0,2,5,10,18,25,32,38,35,28,22,20,26,42,65,78,55,38,20,8];
     mockPattern.forEach((val, i) => hourlyCounts[i] = val);
   }
 
   const maxVal = Math.max(...hourlyCounts) || 1;
   const peakHour = hourlyCounts.indexOf(maxVal);
+  const dataLabel = isRealData
+    ? `🔥 সেরা কন্টেন্ট পোস্ট করার সময়: ${peakHour}:০০ - ${peakHour + 1}:০০ টা`
+    : `📋 আজকের ডেটা নেই — নমুনা প্যাটার্ন দেখানো হচ্ছে`;
+  const labelColor = isRealData ? 'var(--gold-light)' : '#94a3b8';
+  const labelBg = isRealData ? 'rgba(200,151,42,0.15)' : 'rgba(100,116,139,0.15)';
+  const labelBorder = isRealData ? 'rgba(200,151,42,0.3)' : 'rgba(100,116,139,0.3)';
 
   const bars = hourlyCounts.map((cnt, h) => {
     const hStr = h < 10 ? '0' + h : '' + h;
     const pct = Math.round((cnt / maxVal) * 100);
-    const isPeak = h === peakHour;
+    const isPeak = h === peakHour && isRealData;
     const bg = isPeak ? 'linear-gradient(to top, #c8972a, #ffd700)' : 'linear-gradient(to top, #1e3a5f, #3a86c8)';
     return `
       <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
@@ -316,10 +336,10 @@ function renderPeakTimeHeatmap(events) {
           <h4 style="color:#fff; font-size:16px; margin:0; display:flex; align-items:center; gap:8px;">
             ⏰ ২৪ ঘণ্টার ট্রাফিক পিক-টাইম হিটম্যাপ
           </h4>
-          <p style="color:#94a3b8; font-size:12px; margin:4px 0 0 0;">দিনের কোন কোন সময় ভিজিটর সবচেয়ে বেশি সক্রিয় থাকে</p>
+          <p style="color:#94a3b8; font-size:12px; margin:4px 0 0 0;">দিনের কোন কোন সময় ভিজিটর সবচেয়ে বেশি সক্রিয় থাকে${isRealData ? '' : ' — ডেটা আসা মাত্রই আপডেট হবে'}</p>
         </div>
-        <div style="background:rgba(200,151,42,0.15); border:1px solid rgba(200,151,42,0.3); padding:6px 14px; border-radius:20px; font-size:12.5px; color:var(--gold-light); font-weight:bold;">
-          🔥 সেরা কন্টেন্ট পোস্ট করার সময়: রাত ${peakHour}:০০ - ${peakHour + 1}:০০ টা
+        <div style="background:${labelBg}; border:1px solid ${labelBorder}; padding:6px 14px; border-radius:20px; font-size:12.5px; color:${labelColor}; font-weight:bold;">
+          ${dataLabel}
         </div>
       </div>
       <div style="display:flex; gap:6px; align-items:flex-end; padding-top:10px;">
@@ -404,7 +424,7 @@ function renderCourseDropoffAnalytics() {
 
   const mockDropoffData = [
     { title: 'চ্যাপ্টার ১: প্রারম্ভিক ধারণা ও মানসিকতা', compRate: 94, dropoff: 6 },
-    { title: 'চ্যাপ্টার ২: মূল নীতিসমূহ ও ইসলামিক বাস্তবায়ন', compRate: 86, dropoff: 8 },
+    { title: 'চ্যাপ্টার ২: মূল নীতিসমূহ ও ইসলামিক বাস্তবায়ন', compRate: 86, dropoff: 8 },
     { title: 'চ্যাপ্টার ৩: বাস্তবমুখী অনুশীলন ও উদাহরণ', compRate: 75, dropoff: 11 },
     { title: 'চ্যাপ্টার ৪: জটিল সমস্যা সমাধান ও কৌশল', compRate: 59, dropoff: 16 },
     { title: 'চ্যাপ্টার ৫: মাস্টার সামারি ও কুইজ পরীক্ষা', compRate: 54, dropoff: 5 }
@@ -417,7 +437,7 @@ function renderCourseDropoffAnalytics() {
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <span style="color:#fff; font-size:13.5px; font-weight:bold;">${d.title}</span>
           <span style="font-size:12px; padding:3px 8px; border-radius:6px; ${isWarning ? 'background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.4);' : 'background:rgba(34,197,94,0.15); color:#86efac;'}">
-            ${isWarning ? `⚠️ ${d.dropoff}% ড্রপ-অফ (সহজ করা প্রয়োজন)` : `✅ ${d.compRate}% সম্পন্ন করেছে`}
+            ${isWarning ? `⚠️ ${d.dropoff}% ড্রপ-অফ (সহজ করা প্রয়োজন)` : `✅ ${d.compRate}% সম্পন্ন করেছে`}
           </span>
         </div>
         <div style="width:100%; height:10px; background:rgba(255,255,255,0.08); border-radius:5px; overflow:hidden; display:flex;">
@@ -432,8 +452,9 @@ function renderCourseDropoffAnalytics() {
     <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:20px; margin-top:20px;">
       <h4 style="color:#fff; font-size:16px; margin:0 0 4px 0; display:flex; align-items:center; gap:8px;">
         📊 কোর্স অধ্যায় ড্রপ-অফ ও কমপ্লিশন অ্যানালিটিক্স
+        <span style="font-size:10px; background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); padding:2px 8px; border-radius:10px; font-weight:600; margin-left:auto;">📋 নমুনা ডেটা</span>
       </h4>
-      <p style="color:#94a3b8; font-size:12px; margin:0 0 16px 0;">কোন চ্যাপ্টারে এসে শিক্ষার্থীরা পড়া ছেড়ে দিচ্ছে তা ট্র্যাক করার মাধ্যম</p>
+      <p style="color:#94a3b8; font-size:12px; margin:0 0 16px 0;">কোন চ্যাপ্টারে এসে শিক্ষার্থীরা পড়া ছেড়ে দিচ্ছে তা ট্র্যাক করার মাধ্যম — <em style="color:#fbbf24">আসল ট্র্যাকিং চালু হলে স্বয়ংক্রিয়ভাবে আপডেট হবে</em></p>
       ${items}
     </div>
   `;
@@ -451,19 +472,22 @@ function renderQuizAnalytics() {
           <h4 style="color:#fff; font-size:16px; margin:0; display:flex; align-items:center; gap:8px;">
             🎯 কুইজ পারফরম্যান্স ও নলেজ গ্যাপ বিশ্লেষণ
           </h4>
-          <p style="color:#94a3b8; font-size:12px; margin:4px 0 0 0;">শিক্ষার্থীদের ভুল উত্তর ও দুর্বল বিষয় চিহ্নিতকরণ</p>
+          <p style="color:#94a3b8; font-size:12px; margin:4px 0 0 0;">শিক্ষার্থীদের ভুল উত্তর ও দুর্বল বিষয় চিহ্নিতকরণ</p>
         </div>
-        <div style="background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3); color:#86efac; font-size:13px; font-weight:bold; padding:6px 14px; border-radius:20px;">
-          গড় সঠিক উত্তর হার: ৮৪.৫%
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <div style="background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3); color:#86efac; font-size:13px; font-weight:bold; padding:6px 14px; border-radius:20px;">
+            গড় সঠিক উত্তর হার: ৮৪.৫%
+          </div>
+          <span style="font-size:10px; background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); padding:3px 9px; border-radius:10px; font-weight:600;">📋 নমুনা ডেটা</span>
         </div>
       </div>
 
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
         <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
-          <div style="color:var(--gold); font-size:13px; font-weight:bold; margin-bottom:6px;">⚠️ সবচেয়ে বেশি ভুল হওয়া বিষয়সমূহ:</div>
+          <div style="color:var(--gold); font-size:13px; font-weight:bold; margin-bottom:6px;">⚠️ সবচেয়ে বেশি ভুল হওয়া বিষয়সমূহ:</div>
           <ul style="color:#e2e8f0; font-size:13px; margin:0; padding-left:18px; line-height:1.8;">
-            <li>যাকাত হিসাব ও শরিয়াহ শর্তাবলী (কোর্স ৪৩)</li>
-            <li>শেয়ার মার্কেট ও হালাল বিনিয়োগ (কোর্স ৩৯)</li>
+            <li>যাকাত হিসাব ও শরিয়াহ শর্তাবলী (কোর্স ৪৩)</li>
+            <li>শেয়ার মার্কেট ও হালাল বিনিয়োগ (কোর্স ৩৯)</li>
             <li>তাজউইদ ও মাখরাজ সঠিক উচ্চারণ (কোর্স ৫৪)</li>
           </ul>
         </div>

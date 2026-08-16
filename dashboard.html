@@ -271,7 +271,70 @@
 .prog-item {display:flex;flex-direction:column;gap:6px;}
 .prog-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;}
 .prog-track{height:9px;background:rgba(255,255,255,.06);border-radius:10px;overflow:hidden;}
-.prog-fill {height:100%;border-radius:10px;transition:width .75s cubic-bezier(.4,0,.2,1);min-width:4px;}</style>
+.prog-fill {height:100%;border-radius:10px;transition:width .75s cubic-bezier(.4,0,.2,1);min-width:4px;}
+
+/* ── TEACHER MANAGEMENT ── */
+.tc-tab-btn {
+  padding: 8px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03); color: var(--text-muted);
+  transition: all 0.2s;
+}
+.tc-tab-btn.active {
+  background: rgba(20,184,166,0.15); color: var(--teal); border-color: rgba(20,184,166,0.4);
+}
+.teacher-card {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: 20px; padding: 22px; position: relative;
+  transition: all 0.25s; display: flex; flex-direction: column; gap: 16px;
+}
+.teacher-card:hover {
+  transform: translateY(-3px); border-color: rgba(20,184,166,0.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.teacher-card.inactive {
+  opacity: 0.6; border-style: dashed;
+}
+.tc-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 2px solid var(--teal); object-fit: cover;
+  background: rgba(255,255,255,0.05); display: flex;
+  align-items: center; justify-content: center; font-size: 28px;
+  overflow: hidden; flex-shrink: 0;
+}
+.tc-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.tc-qual-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(200,151,42,0.15); color: var(--gold-light);
+  font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px;
+}
+.tc-spec-badge {
+  display: inline-flex; align-items: center;
+  background: rgba(30,96,145,0.2); color: var(--blue-light);
+  font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 12px;
+}
+.tc-schedule-slot-btn {
+  padding: 8px 4px; border-radius: 8px; font-size: 11px; font-weight: 600;
+  text-align: center; border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03); color: var(--text-muted);
+  cursor: pointer; transition: all 0.15s;
+}
+.tc-schedule-slot-btn.selected {
+  background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.5);
+  color: var(--green);
+}
+.tc-schedule-slot-btn:hover {
+  border-color: var(--teal);
+}
+.tc-modal-overlay {
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9990;
+  align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:20px;overflow-y:auto;
+}
+.tc-modal-box {
+  background:#0d1726;border:1px solid rgba(20,184,166,0.3);border-radius:20px;
+  padding:28px;max-width:760px;width:100%;max-height:90vh;overflow-y:auto;
+}
+</style>
 </head>
 <body>
 
@@ -313,6 +376,9 @@
   <div class="nav-item" onclick="switchTab('leads')">
     <span class="nav-icon">📱</span> লিডস ও ফোন নম্বর
   </div>
+  <div class="nav-item" onclick="switchTab('gmail-hub')">
+    <span class="nav-icon">📧</span> জিমেইল মেইল হাব
+  </div>
   <div class="nav-item" onclick="switchTab('students')">
     <span class="nav-icon">👨‍🎓</span> স্টুডেন্ট ডিরেক্টরি
   </div>
@@ -340,6 +406,9 @@
   <a href="quran.html" target="_blank" class="nav-item" style="text-decoration:none;">
     <span class="nav-icon">📖</span> আল-কুরআন ডিজিটাল পোর্টাল ↗
   </a>
+  <div class="nav-item" onclick="switchTab('teachers')" id="nav-teachers">
+    <span class="nav-icon">👨‍🏫</span> শিক্ষক ব্যবস্থাপনা <span id="teacher-badge" style="display:none;background:var(--teal);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
+  </div>
   <div class="nav-item" onclick="switchTab('reviews')" id="nav-reviews">
     <span class="nav-icon">⭐</span> রিভিউ ম্যানেজার <span id="review-badge" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
   </div>
@@ -687,6 +756,91 @@
       </div>
       <div style="margin-top:12px;font-size:12px;color:var(--text-muted);">
         মোট দেখানো হচ্ছে: <span id="leads-shown">0</span> জন | মোট: <span id="leads-total-count">0</span> জন
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: GMAIL HUB ═══ -->
+  <div class="tab-page" id="tab-gmail-hub">
+    <div class="page-hdr">
+      <div>
+        <h1>📧 জিমেইল মার্কেটিং ও বাল্ক সেন্ডার হাব</h1>
+        <p>লগইনকৃত সকল জিমেইল সেভ করা আছে — নির্বাচন করে মেইল ড্রাফট ও সেন্ড করুন</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-green" onclick="exportSelectedGmailsCSV()">📥 সিলেক্টেড CSV ডাউনলোড</button>
+        <button class="btn btn-blue" onclick="copySelectedGmails()">📋 সিলেক্টেড জিমেইল কপি</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stat-row" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+      <div class="stat-card g">
+        <div class="stat-label">📧 মোট নিবন্ধিত জিমেইল</div>
+        <div class="stat-val text-green" id="gm-total">0</div>
+        <div class="stat-sub">সুরক্ষিত ডাটাবেজে সেভড</div>
+      </div>
+      <div class="stat-card p">
+        <div class="stat-label">✅ নির্বাচিত জিমেইল</div>
+        <div class="stat-val text-purple" id="gm-selected-count">0</div>
+        <div class="stat-sub">মেইল পাঠানোর জন্য প্রস্তুত</div>
+      </div>
+      <div class="stat-card gd">
+        <div class="stat-label">🆕 আজকের নতুন জিমেইল</div>
+        <div class="stat-val text-gold" id="gm-today-count">0</div>
+        <div class="stat-sub">আজ প্রথমবার যুক্ত</div>
+      </div>
+    </div>
+
+    <!-- Gmail Mail Composer Box -->
+    <div class="card" style="border: 1px solid rgba(139,92,246,0.3); background: rgba(139,92,246,0.05);">
+      <div class="card-title text-purple">✉️ ১-ক্লিক বাল্ক ইমেইল কম্পোজার (BCC Mode)</div>
+      <div style="font-size:12.5px;color:var(--text-muted);margin-bottom:12px;">
+        নিচের তালিকা থেকে জিমেইল সিলেক্ট করুন, বিষয় ও মেসেজ লিখে ১-ক্লিকে জিমেইলে BCC আকারে ড্রাফট বানিয়ে সেন্ড করুন।
+      </div>
+      <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px;">
+        <input type="text" id="gm-subject" class="search-inp" placeholder="📧 মেইলের বিষয় (Subject)..." value="Global Islamic Care - বিশেষ আপডেট ও আমন্ত্রণ 🕌">
+        <textarea id="gm-body" style="width:100%;min-height:100px;padding:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:14px;font-family:inherit;outline:none;" placeholder="আস-সালামু আলাইকুম, আপনাকে আমাদের নতুন কোর্সে স্বাগত জানাচ্ছি..."></textarea>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-purple" onclick="sendBulkGmailBcc()">🚀 ১-ক্লিকে সিলেক্টেড জিমেইলে মেইল পাঠান (BCC)</button>
+        <button class="btn btn-blue" onclick="selectAllGmails(true)">☑️ সব সিলেক্ট করুন</button>
+        <button class="btn btn-gold" onclick="selectAllGmails(false)">☐ সব আন-সিলেক্ট করুন</button>
+      </div>
+    </div>
+
+    <!-- Gmail Table -->
+    <div class="card mt20">
+      <div class="card-title">
+        <span>📋 সকল নিবন্ধিত জিমেইল তালিকা</span>
+        <span class="sub" id="gm-shown-count">০ জন</span>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="gm-search" class="search-inp" placeholder="🔍 জিমেইল, স্টুডেন্ট আইডি বা শহর দিয়ে খুঁজুন..." oninput="filterGmailHub()">
+        <select class="filter-sel" id="gm-filter" onchange="filterGmailHub()">
+          <option value="all">সব জিমেইল</option>
+          <option value="today">আজকের নতুন জিমেইল</option>
+          <option value="active">সক্রিয় (৭ দিন)</option>
+        </select>
+      </div>
+      <div class="scroll-box">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px;"><input type="checkbox" id="gm-check-all" onchange="toggleCheckAllGmails(this.checked)"></th>
+              <th>#</th>
+              <th>স্টুডেন্ট আইডি</th>
+              <th>📧 জিমেইল ঠিকানা</th>
+              <th>📍 শহর/লোকেশন</th>
+              <th>⏱️ মোট সময়</th>
+              <th>যোগদানের সময়</th>
+              <th>অ্যাকশন</th>
+            </tr>
+          </thead>
+          <tbody id="gm-tbl">
+            <tr class="empty-row"><td colspan="8">ডেটা লোড হচ্ছে...</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -1129,7 +1283,7 @@
     <div id="admin-reviews-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;"></div>
 
     <!-- Delete Confirm Modal -->
-    <div id="rv-delete-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9990;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+    <div id="rv-delete-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9990;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
       <div style="background:#0d1726;border:1px solid rgba(244,63,94,0.3);border-radius:20px;padding:36px;max-width:420px;width:90%;text-align:center;">
         <div style="font-size:48px;margin-bottom:16px;">🗑️</div>
         <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:#fff;">রিভিউ মুছে ফেলবেন?</h3>
@@ -1141,6 +1295,275 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ═══ TAB: TEACHERS MANAGEMENT ═══ -->
+  <div class="tab-page" id="tab-teachers">
+    <div class="page-hdr">
+      <div>
+        <h1>👨‍🏫 শিক্ষক ব্যবস্থাপনা</h1>
+        <p>শিক্ষকদের প্রোফাইল, যোগ্যতা, অভিজ্ঞতা, সময়সূচি ও অভিভাবক রিভিউ নিয়ন্ত্রণ করুন</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="btn btn-primary" onclick="openAddTeacherModal()" style="background:linear-gradient(135deg,var(--teal),#0d9488);">➕ নতুন শিক্ষক যোগ করুন</button>
+        <button class="btn" onclick="loadTeachersAdmin()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);">🔄 রিফ্রেশ</button>
+      </div>
+    </div>
+
+    <!-- Stat Row -->
+    <div class="stat-row">
+      <div class="stat-card t">
+        <div class="stat-label">👨‍🏫 মোট শিক্ষক</div>
+        <div class="stat-val" id="tc-stat-total">0</div>
+        <div class="stat-sub">নিবন্ধিত প্রোফাইল</div>
+      </div>
+      <div class="stat-card g">
+        <div class="stat-label">✅ সক্রিয় শিক্ষক</div>
+        <div class="stat-val live" id="tc-stat-active">0</div>
+        <div class="stat-sub">ওয়েবসাইটে দৃশ্যমান</div>
+      </div>
+      <div class="stat-card gd">
+        <div class="stat-label">📅 ক্লাস বুকিং</div>
+        <div class="stat-val" id="tc-stat-bookings">0</div>
+        <div class="stat-sub">মোট স্লট বুকিং অনুরোধ</div>
+      </div>
+      <div class="stat-card p">
+        <div class="stat-label">⭐ শিক্ষক রিভিউ</div>
+        <div class="stat-val" id="tc-stat-reviews">0</div>
+        <div class="stat-sub" id="tc-stat-pending-reviews-txt">অপেক্ষমাণ: 0</div>
+      </div>
+    </div>
+
+    <!-- Sub-navigation Tabs -->
+    <div style="display:flex;gap:10px;margin-bottom:20px;border-bottom:1px solid var(--card-border);padding-bottom:12px;flex-wrap:wrap;">
+      <button class="tc-tab-btn active" id="tc-subtab-btn-list" onclick="switchTeacherSubTab('list')">👨‍🏫 শিক্ষক তালিকা</button>
+      <button class="tc-tab-btn" id="tc-subtab-btn-bookings" onclick="switchTeacherSubTab('bookings')">📅 বুকিং অনুরোধসমূহ <span id="tc-badge-bookings" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
+      <button class="tc-tab-btn" id="tc-subtab-btn-reviews" onclick="switchTeacherSubTab('reviews')">⭐ শিক্ষক রিভিউ ও অনুমোদন <span id="tc-badge-pending-reviews" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
+    </div>
+
+    <!-- ── VIEW 1: TEACHER LIST ── -->
+    <div id="tc-view-list">
+      <div class="card" style="margin-bottom:20px;padding:16px 20px;">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;">
+          <div style="display:flex;gap:10px;flex:1;min-width:260px;">
+            <input type="text" id="tc-search-inp" class="inp" placeholder="🔍 শিক্ষক খুঁজুন (নাম, যোগ্যতা, পদবী)..." oninput="filterAdminTeachers()" style="margin-bottom:0;flex:1;">
+            <select id="tc-filter-status" class="inp" onchange="filterAdminTeachers()" style="margin-bottom:0;width:150px;cursor:pointer;">
+              <option value="all">সকল শিক্ষক</option>
+              <option value="active">শুধুমাত্র সক্রিয়</option>
+              <option value="inactive">শুধুমাত্র নিষ্ক্রিয়</option>
+            </select>
+          </div>
+          <div style="font-size:13px;color:var(--text-muted);" id="tc-count-lbl">মোট ০ জন শিক্ষক</div>
+        </div>
+      </div>
+
+      <!-- Loading / Empty / Grid -->
+      <div id="tc-loading" class="center-text" style="display:none;">⏳ শিক্ষকদের তথ্য লোড হচ্ছে...</div>
+      <div id="tc-empty" class="center-text" style="display:none;background:var(--card-bg);border:1px dashed var(--card-border);border-radius:16px;padding:40px;">
+        <div style="font-size:44px;margin-bottom:12px;">👨‍🏫</div>
+        <h3 style="font-size:16px;color:#fff;margin-bottom:6px;">এখনো কোনো শিক্ষক যোগ করা হয়নি</h3>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">প্রথম শিক্ষক যুক্ত করতে নিচের বাটনে ক্লিক করুন</p>
+        <button class="btn btn-primary" onclick="openAddTeacherModal()">➕ শিক্ষক যোগ করুন</button>
+      </div>
+      <div id="admin-teachers-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;"></div>
+    </div>
+
+    <!-- ── VIEW 2: BOOKINGS LIST ── -->
+    <div id="tc-view-bookings" style="display:none;">
+      <div class="card">
+        <div class="card-title">
+          <span>📅 ক্লাস বুকিং অনুরোধ তালিকা</span>
+          <select id="tc-bk-filter-status" class="inp" onchange="renderBookingsTable()" style="margin-bottom:0;width:160px;padding:8px 12px;font-size:13px;">
+            <option value="all">সকল বুকিং</option>
+            <option value="pending">অপেক্ষমাণ (Pending)</option>
+            <option value="confirmed">নিশ্চিত (Confirmed)</option>
+            <option value="cancelled">বাতিল (Cancelled)</option>
+          </select>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>শিক্ষক</th>
+                <th>দিন ও সময়সূচি</th>
+                <th>শিক্ষার্থী / অভিভাবক</th>
+                <th>ফোন নম্বর</th>
+                <th>বার্তা</th>
+                <th>স্ট্যাটাস</th>
+                <th>অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody id="tc-bookings-tbody">
+              <tr class="empty-row"><td colspan="8">বুকিং লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW 3: TEACHER REVIEWS ── -->
+    <div id="tc-view-reviews" style="display:none;">
+      <div class="card">
+        <div class="card-title">
+          <span>⭐ শিক্ষক রিভিউ অনুমোদন ও ব্যবস্থাপনা</span>
+          <select id="tc-rv-filter-status" class="inp" onchange="renderTeacherReviewsTable()" style="margin-bottom:0;width:180px;padding:8px 12px;font-size:13px;">
+            <option value="all">সকল রিভিউ</option>
+            <option value="pending">অপেক্ষমাণ অনুমোদন</option>
+            <option value="approved">অনুমোদিত রিভিউ</option>
+          </select>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>শিক্ষক</th>
+                <th>রিভিউয়ার নাম</th>
+                <th>রেটিং</th>
+                <th>মন্তব্য</th>
+                <th>তারিখ</th>
+                <th>স্ট্যাটাস</th>
+                <th>অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody id="tc-reviews-tbody">
+              <tr class="empty-row"><td colspan="8">রিভিউ লোড হচ্ছে...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADD / EDIT TEACHER MODAL ── -->
+    <div id="teacher-modal" class="tc-modal-overlay">
+      <div class="tc-modal-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:14px;">
+          <h2 style="font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;" id="tm-title">
+            ➕ নতুন শিক্ষক যোগ করুন
+          </h2>
+          <button type="button" onclick="closeTeacherModal()" style="background:none;border:none;color:#94a3b8;font-size:22px;cursor:pointer;">✕</button>
+        </div>
+
+        <form id="teacher-form" onsubmit="saveTeacherSubmit(event)">
+          <input type="hidden" id="tm-id" value="">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষকের পুরো নাম *</label>
+              <input type="text" id="tm-name" class="inp" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান" required oninput="autoGenSlug()" style="margin-bottom:0;">
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">URL স্লাগ (SEO ফ্রেন্ডলি) *</label>
+              <input type="text" id="tm-slug" class="inp" placeholder="যেমন: hafez-abdur-rahman" required style="margin-bottom:0;">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">পদবী / উপাধি</label>
+              <input type="text" id="tm-designation" class="inp" placeholder="যেমন: হাফেজুল কুরআন ও মাওলানা" style="margin-bottom:0;">
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">WhatsApp বুকিং নম্বর</label>
+              <input type="text" id="tm-whatsapp" class="inp" placeholder="8801733017521" value="8801733017521" style="margin-bottom:0;">
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ছবির সরাসরি URL (Google Drive / Imgur / Direct Link)</label>
+            <div style="display:flex;gap:12px;align-items:center;">
+              <input type="url" id="tm-photo-url" class="inp" placeholder="https://example.com/photo.jpg" oninput="updatePhotoPreview()" style="margin-bottom:0;flex:1;">
+              <div id="tm-photo-preview" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:20px;">👨‍🏫</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">অভিজ্ঞতা (বছর)</label>
+              <input type="number" id="tm-experience" class="inp" placeholder="যেমন: 5" min="0" style="margin-bottom:0;">
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মোট ছাত্র পড়িয়েছেন</label>
+              <input type="number" id="tm-students" class="inp" placeholder="যেমন: 250" min="0" style="margin-bottom:0;">
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">সাজানোর ক্রম (Sort)</label>
+              <input type="number" id="tm-sort" class="inp" placeholder="0" value="0" style="margin-bottom:0;">
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">যোগ্যতাসমূহ (কমা দিয়ে আলাদা করুন)</label>
+            <input type="text" id="tm-qualifications" class="inp" placeholder="হাফেজ, মাওলানা, ক্বারী, মুফতি" style="margin-bottom:0;">
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">বিশেষজ্ঞতা বিষয় (কমা দিয়ে আলাদা করুন)</label>
+            <input type="text" id="tm-specializations" class="inp" placeholder="সহীহ তেলাওয়াত, হেফজ, তাজউইদ, শিশু শিক্ষা, নাজেরা" style="margin-bottom:0;">
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">সংক্ষিপ্ত পরিচিতি ও বায়ো (SEO এবং অভিভাবকের জন্য)</label>
+            <textarea id="tm-bio" class="inp" placeholder="শিক্ষকের বিস্তারিত পরিচয়, শিক্ষাগত ব্যাকগ্রাউন্ড এবং পাঠদানের পদ্ধতি লিখুন..." style="height:80px;resize:vertical;margin-bottom:0;"></textarea>
+          </div>
+
+          <!-- Weekly Schedule Picker -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+              <div>
+                <strong style="font-size:14px;color:#fff;">📅 সাপ্তাহিক ক্লাস ফাঁকা সময়সূচি নির্বাচন</strong>
+                <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">শনি থেকে বুধ, সকাল ৭:০০ – রাত ১০:৫০ পর্যন্ত (প্রতিটি ৫০ মিনিট)</p>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button type="button" class="btn btn-sm" onclick="selectAllDaySlots(true)" style="padding:4px 10px;font-size:11px;background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3);">সব ফাঁকা রাখুন</button>
+                <button type="button" class="btn btn-sm" onclick="selectAllDaySlots(false)" style="padding:4px 10px;font-size:11px;background:rgba(244,63,94,0.15);color:var(--red);border:1px solid rgba(244,63,94,0.3);">সব বন্ধ করুন</button>
+              </div>
+            </div>
+
+            <!-- Day Selector Tabs inside modal -->
+            <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+              <button type="button" class="tc-tab-btn active" id="tm-day-btn-sat" onclick="switchModalScheduleDay('sat')">শনিবার</button>
+              <button type="button" class="tc-tab-btn" id="tm-day-btn-sun" onclick="switchModalScheduleDay('sun')">রবিবার</button>
+              <button type="button" class="tc-tab-btn" id="tm-day-btn-mon" onclick="switchModalScheduleDay('mon')">সোমবার</button>
+              <button type="button" class="tc-tab-btn" id="tm-day-btn-tue" onclick="switchModalScheduleDay('tue')">মঙ্গলবার</button>
+              <button type="button" class="tc-tab-btn" id="tm-day-btn-wed" onclick="switchModalScheduleDay('wed')">বুধবার</button>
+            </div>
+
+            <!-- 19 Slots Grid -->
+            <div id="tm-slots-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;"></div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:10px;">💡 সবুজ রঙের স্লটগুলো শিক্ষার্থী ওয়েবসাইটে দেখতে পাবে এবং বুক করতে পারবে।</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+            <input type="checkbox" id="tm-is-active" checked style="width:18px;height:18px;accent-color:var(--teal);cursor:pointer;">
+            <label for="tm-is-active" style="font-size:14px;color:#fff;cursor:pointer;">সক্রিয় প্রোফাইল (ওয়েবসাইটে তৎক্ষণাৎ দৃশ্যমান হবে)</label>
+          </div>
+
+          <div id="tm-form-err" style="color:var(--red);font-size:13px;margin-bottom:14px;display:none;"></div>
+
+          <div style="display:flex;gap:12px;justify-content:flex-end;">
+            <button type="button" class="btn" onclick="closeTeacherModal()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);">বাতিল</button>
+            <button type="submit" id="tm-save-btn" class="btn btn-primary" style="background:linear-gradient(135deg,var(--teal),#0d9488);padding:12px 28px;">💾 সংরক্ষণ করুন</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── DELETE TEACHER CONFIRM MODAL ── -->
+    <div id="tc-delete-modal" class="tc-modal-overlay">
+      <div style="background:#0d1726;border:1px solid rgba(244,63,94,0.3);border-radius:20px;padding:32px;max-width:420px;width:100%;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">🗑️</div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:#fff;">শিক্ষক মুছে ফেলবেন?</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;line-height:1.6;">এই শিক্ষকের প্রোফাইল, সময়সূচি ও রিভিউ স্থায়ীভাবে মুছে যাবে।</p>
+        <div id="tc-delete-preview" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px;margin-bottom:20px;text-align:left;font-size:13px;"></div>
+        <div style="display:flex;gap:12px;justify-content:center;">
+          <button class="btn btn-red" onclick="confirmDeleteTeacherSubmit()">🗑️ হ্যাঁ, মুছে ফেলুন</button>
+          <button class="btn" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);" onclick="closeTeacherDeleteModal()">বাতিল করুন</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- ═══ TAB: SETTINGS ═══ -->
@@ -1469,15 +1892,26 @@ function renderTodayAnalytics() {
     } else {
       tbodyEvts.innerHTML = todayEvents.map(e => {
         const m = SOURCE_META[e.source] || SOURCE_META.direct;
-        const badgeClass = e.event_type === "whatsapp_click" ? "status-badge active" : "status-badge warn";
-        const badgeLabel = e.event_type === "whatsapp_click" ? "💬 WhatsApp" : "👁️ পেজ ভিউ";
+        const badgeClass = e.event_type === "whatsapp_click" ? "status-badge active" : (e.event_type === "page_time" ? "status-badge info" : "status-badge warn");
+        const badgeLabel = e.event_type === "whatsapp_click" ? "💬 WhatsApp" : (e.event_type === "page_time" ? "⏱️ টাইম" : "👁️ পেজ ভিউ");
+
+        const locParts = [];
+        if (e.area_village) locParts.push(e.area_village);
+        if (e.city && e.city !== 'Unknown') locParts.push(e.city);
+        if (e.division && e.division !== e.city) locParts.push(e.division);
+        if (e.country && e.country !== 'Unknown') locParts.push(e.country);
+        if (e.postal_code) locParts.push(`পোস্টাল: ${e.postal_code}`);
+        const fullLocStr = locParts.length > 0 ? locParts.join(', ') : `${e.city || '—'}, ${e.country || '—'}`;
+
+        const pageSpentStr = e.session_duration_seconds ? ` (${formatTimeSpent(e.session_duration_seconds)})` : "";
+
         return `<tr>
           <td class="text-muted" style="font-family:monospace;">${e.time}</td>
           <td><span class="${badgeClass}" style="font-size:11px;">${badgeLabel}</span></td>
-          <td><span class="${e.page === "home" ? "pg-tag home" : "pg-tag"}">${e.page}</span></td>
+          <td><span class="${e.page === "home" ? "pg-tag home" : "pg-tag"}">${e.page}${pageSpentStr}</span></td>
           <td><span class="src-badge ${e.source}">${m.icon} ${m.label}</span></td>
-          <td>
-            <div>📍 ${e.city}, ${e.country}</div>
+          <td style="font-size:12px;">
+            <div>📍 ${fullLocStr}</div>
             ${e.ip_address ? `
               <div style="font-size:10px; color:#64748b; margin-top:2.5px; display:flex; align-items:center; gap:4px;" title="${e.user_agent || ''}">
                 <span>📡 ${e.ip_address}</span>
@@ -1615,6 +2049,7 @@ function renderRegionsTable() {
 
 function renderPagesTable(pages) {
   const tbody = document.getElementById("pages-tbl");
+  if (!tbody) return; // element not present in current layout — bars used instead
   if (!pages.length) { tbody.innerHTML = emptyRow(3); return; }
   tbody.innerHTML = pages.map(p => {
     const ptStat = allPageTimes.find(x=>x.page===p.page);
@@ -1631,6 +2066,7 @@ function renderPagesTable(pages) {
 
 function renderSourceDetailTable(sources) {
   const tbody = document.getElementById("source-detail-tbl");
+  if (!tbody) return; // element not present in current layout — bars used instead
   if (!sources.length) { tbody.innerHTML = emptyRow(3); return; }
   const total = sources.reduce((s,r)=>s+Number(r.count),0);
   tbody.innerHTML = sources.map(s => {
@@ -1645,22 +2081,8 @@ function renderSourceDetailTable(sources) {
 }
 
 // ══════════════════════════════════════════════════════
-// STUDENTS / LEADS
+// STUDENTS / LEADS  (definition at line ~2349 is the active one)
 // ══════════════════════════════════════════════════════
-async function loadStudents() {
-  try {
-    const { data, error } = await db.rpc("get_students_list", { pass_code: authPwd });
-    if (error || !data) return;
-    allStudents = data;
-    renderLeads();
-    renderStudents();
-    updateLeadStats();
-    updateWaStats();
-    updateWaBtnLabel();
-    buildAlerts();
-    renderTodayLogins(); // show today's new logins in today tab
-  } catch(e) { console.error("Students load failed", e); }
-}
 
 // Render today's new logins in the today tab
 function renderTodayLogins() {
@@ -1677,7 +2099,8 @@ function renderTodayLogins() {
     return jd.startsWith(todayStr);
   });
 
-  setText("today-new-logins", todayLogins.length);
+  // Note: today-new-logins stat is set by enhanceDashboard() from SQL data.
+  // Do NOT overwrite it here with a join_date count — that causes conflicting values.
 
   if (!todayLogins.length) {
     tbody.innerHTML = `<tr class="empty-row"><td colspan="3">আজ কেউ লগইন করেননি</td></tr>`;
@@ -1760,7 +2183,16 @@ function renderLeads(filtered) {
   setText("lead-total", allStudents.length);
 
   if (!list.length) { tbody.innerHTML = emptyRow(8); return; }
-  tbody.innerHTML = list.map((s, i) => `
+  tbody.innerHTML = list.map((s, i) => {
+    const locParts = [];
+    if (s.area_village) locParts.push(s.area_village);
+    if (s.district) locParts.push(s.district);
+    if (s.division && s.division !== s.district) locParts.push(s.division);
+    if (s.postal_code) locParts.push(`পোস্টাল: ${s.postal_code}`);
+    const locStr = locParts.length > 0 ? locParts.join(', ') : "—";
+    const timeSpentStr = formatTimeSpent(s.total_time_seconds || 0);
+
+    return `
     <tr>
       <td class="text-muted">${i+1}</td>
       <td><strong class="text-blue">${s.student_id||"—"}</strong></td>
@@ -1769,8 +2201,9 @@ function renderLeads(filtered) {
           ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করতে ক্লিক করুন">📱 ${s.phone}</span>` : ""}
           ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>` : ""}
           ${!s.phone && !s.email ? '<span style="color:var(--text-muted);">নেই</span>' : ""}
+          <div style="font-size:10.5px; color:#64748b; margin-top:2px;">📍 ${locStr} • ⏱️ সময়: ${timeSpentStr}</div>
           ${s.last_ip ? `
-            <div style="font-size:10.5px; color:#64748b; margin-top:2px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
+            <div style="font-size:10.5px; color:#64748b; margin-top:1px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
               <span>📡 IP: <strong>${s.last_ip}</strong></span>
               <span>•</span>
               <span>💻 ${getCleanDeviceName(s.last_ua)}</span>
@@ -1786,7 +2219,8 @@ function renderLeads(filtered) {
         ${s.phone ? `<a href="https://wa.me/880${String(s.phone).replace(/^0/,"")}?text=আস-সালামু+আলাইকুম" target="_blank" class="btn btn-sm btn-green">💬</a>` : "—"}
       </td>
     </tr>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function filterLeads() {
@@ -1813,7 +2247,16 @@ function renderStudents(filtered) {
   setText("stu-count-lbl", list.length + " জন নিবন্ধিত");
   const tbody = document.getElementById("stu-tbl");
   if (!list.length) { tbody.innerHTML = emptyRow(7); return; }
-  tbody.innerHTML = list.map((s,i) => `
+  tbody.innerHTML = list.map((s,i) => {
+    const locParts = [];
+    if (s.area_village) locParts.push(s.area_village);
+    if (s.district) locParts.push(s.district);
+    if (s.division && s.division !== s.district) locParts.push(s.division);
+    if (s.postal_code) locParts.push(`পোস্টাল: ${s.postal_code}`);
+    const locStr = locParts.length > 0 ? locParts.join(', ') : "—";
+    const timeSpentStr = formatTimeSpent(s.total_time_seconds || 0);
+
+    return `
     <tr>
       <td class="text-muted">${i+1}</td>
       <td><strong class="text-blue">${s.student_id||"—"}</strong></td>
@@ -1822,8 +2265,9 @@ function renderStudents(filtered) {
           ${s.phone ? `<span class="phone-chip" onclick="copyPhone('${s.phone}')" title="কপি করতে ক্লিক করুন">📱 ${s.phone}</span>` : ""}
           ${s.email ? `<span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>` : ""}
           ${!s.phone && !s.email ? '<span style="color:var(--text-muted);">নেই</span>' : ""}
+          <div style="font-size:10.5px; color:#64748b; margin-top:2px;">📍 ${locStr} • ⏱️ সময়: ${timeSpentStr}</div>
           ${s.last_ip ? `
-            <div style="font-size:10.5px; color:#64748b; margin-top:2px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
+            <div style="font-size:10.5px; color:#64748b; margin-top:1px; display:flex; align-items:center; gap:4px;" title="${s.last_ua || ''}">
               <span>📡 IP: <strong>${s.last_ip}</strong></span>
               <span>•</span>
               <span>💻 ${getCleanDeviceName(s.last_ua)}</span>
@@ -1836,7 +2280,8 @@ function renderStudents(filtered) {
       <td style="font-size:12px;">${formatDate(s.last_active)}</td>
       <td>${statusBadge(s)}</td>
     </tr>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function filterStudents() {
@@ -1993,7 +2438,7 @@ function buildAlerts() {
       type:"info",
       title:"🎯 UTM ক্যাম্পেইন শুরু করুন",
       desc:"আপনার সোশ্যাল মিডিয়া পোস্টে UTM লিংক যোগ করলে কোন পোস্ট থেকে বেশি ভিজিটর আসছে তা জানতে পারবেন।",
-      action:{ label:"🛠️ UTM লিংক তৈরি করুন", fn:"switchTab('campaigns')" }
+      action:{ label:"📊 রিপোর্ট ও এক্সপোর্ট দেখুন", fn:"switchTab('reports')" }
     });
   }
   if (!alerts.length) {
@@ -2225,6 +2670,26 @@ async function refreshAll() {
   } catch(e) { toast("❌ রিফ্রেশ ব্যর্থ হয়েছে", "err"); }
 }
 
+async function loadStudents() {
+  try {
+    const { data, error } = await db.rpc("get_students_list", { pass_code: authPwd });
+    if (error || !data) return;
+    allStudents = data;
+    window._cachedStudents = data; // make available to dashboard-enhance.js for Retention Hub
+    renderLeads();
+    renderStudents();
+    renderGmailHub();
+    updateLeadStats();
+    updateWaStats();
+    updateWaBtnLabel();
+    buildAlerts();
+    renderTodayLogins(); // show today's new logins in today tab
+    // Re-render retention hub with real students now that data is available
+    if (typeof renderRetentionHub === 'function') renderRetentionHub(data);
+  } catch(e) { console.error("Students load failed", e); }
+}
+
+
 // ══════════════════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════════════════
@@ -2233,10 +2698,12 @@ function switchTab(id) {
   document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
   document.getElementById("tab-" + id)?.classList.add("active");
   document.querySelector(`.nav-item[onclick="switchTab('${id}')"]`)?.classList.add("active");
+  if (id === 'gmail-hub')       renderGmailHub();
   if (id === 'reviews')         loadAdminReviews();
   if (id === 'visitor-log')     loadVisitorLog();
   if (id === 'course-comments') loadCourseComments();
   if (id === 'settings')        loadSettingsInfo();
+  if (id === 'teachers')        loadTeachersAdmin();
 }
 
 // ══════════════════════════════════════════════════════
@@ -2499,6 +2966,145 @@ function toast(msg, type="ok") {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.className = "", 3000);
 }
+let selectedGmailSet = new Set();
+
+function formatTimeSpent(secs) {
+  if (!secs || isNaN(secs) || secs <= 0) return '—';
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  const mBn = m.toLocaleString('bn-BD');
+  const sBn = s.toLocaleString('bn-BD');
+  if (m > 0) return `${mBn} মি ${sBn} সে`;
+  return `${sBn} সেকেন্ড`;
+}
+
+function renderGmailHub(filtered) {
+  const gmailsList = (filtered || allStudents).filter(s => s.email && s.email.trim() !== "");
+  const totalGmails = allStudents.filter(s => s.email && s.email.trim() !== "").length;
+  
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dhaka' });
+  const todayNewGmails = allStudents.filter(s => s.email && s.join_date && s.join_date.startsWith(todayStr)).length;
+
+  setText("gm-total", totalGmails);
+  setText("gm-today-count", todayNewGmails);
+  setText("gm-shown-count", gmailsList.length + " জন");
+  setText("gm-selected-count", selectedGmailSet.size);
+
+  const tbody = document.getElementById("gm-tbl");
+  if (!tbody) return;
+
+  if (!gmailsList.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="8">কোনো নিবন্ধিত জিমেইল পাওয়া যায়নি</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = gmailsList.map((s, idx) => {
+    const isChecked = selectedGmailSet.has(s.email) ? 'checked' : '';
+    const locParts = [];
+    if (s.area_village) locParts.push(s.area_village);
+    if (s.district) locParts.push(s.district);
+    if (s.division && s.division !== s.district) locParts.push(s.division);
+    if (s.postal_code) locParts.push(`পোস্টাল: ${s.postal_code}`);
+    const locStr = locParts.length > 0 ? locParts.join(', ') : (s.district || "বাংলাদেশ");
+    const timeSpentStr = formatTimeSpent(s.total_time_seconds || 0);
+
+    return `<tr>
+      <td><input type="checkbox" class="gm-chk" value="${s.email}" ${isChecked} onchange="toggleGmailSelection('${s.email}', this.checked)"></td>
+      <td class="text-muted">${idx + 1}</td>
+      <td><strong class="text-blue">${s.student_id || "—"}</strong></td>
+      <td>
+        <span class="email-chip" onclick="copyEmail('${s.email}')" title="কপি করতে ক্লিক করুন">📧 ${s.email}</span>
+        ${s.last_ip ? `<div style="font-size:10px;color:#64748b;margin-top:2px;">📡 ${s.last_ip}</div>` : ""}
+      </td>
+      <td style="font-size:12px;">📍 ${locStr}</td>
+      <td class="text-gold" style="font-size:12px;">⏱️ ${timeSpentStr}</td>
+      <td style="font-size:12px;">${s.join_date ? s.join_date.slice(0, 10) : "—"}</td>
+      <td>
+        <a href="mailto:${s.email}" target="_blank" class="btn btn-sm btn-blue">📧 মেইল</a>
+      </td>
+    </tr>`;
+  }).join("");
+}
+
+function filterGmailHub() {
+  const q = (document.getElementById("gm-search")?.value || "").toLowerCase().trim();
+  const f = document.getElementById("gm-filter")?.value || "all";
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dhaka' });
+
+  let list = allStudents.filter(s => {
+    if (!s.email || !s.email.trim()) return false;
+    const match = !q || s.email.toLowerCase().includes(q) || (s.student_id || "").toLowerCase().includes(q) || (s.district || "").toLowerCase().includes(q) || (s.division || "").toLowerCase().includes(q);
+    let filterOk = true;
+    if (f === "today") filterOk = s.join_date && s.join_date.startsWith(todayStr);
+    if (f === "active") filterOk = isActive(s);
+    return match && filterOk;
+  });
+
+  renderGmailHub(list);
+}
+
+function toggleGmailSelection(email, checked) {
+  if (checked) selectedGmailSet.add(email);
+  else selectedGmailSet.delete(email);
+  setText("gm-selected-count", selectedGmailSet.size);
+}
+
+function selectAllGmails(shouldSelect) {
+  const checkboxes = document.querySelectorAll(".gm-chk");
+  checkboxes.forEach(chk => {
+    chk.checked = shouldSelect;
+    if (shouldSelect) selectedGmailSet.add(chk.value);
+    else selectedGmailSet.delete(chk.value);
+  });
+  const checkAllBox = document.getElementById("gm-check-all");
+  if (checkAllBox) checkAllBox.checked = shouldSelect;
+  setText("gm-selected-count", selectedGmailSet.size);
+  toast(shouldSelect ? `✅ ${selectedGmailSet.size}টি জিমেইল সিলেক্ট করা হয়েছে` : "☐ সব সিলেক্ট মুছে ফেলা হয়েছে", "ok");
+}
+
+function toggleCheckAllGmails(checked) {
+  selectAllGmails(checked);
+}
+
+function sendBulkGmailBcc() {
+  if (selectedGmailSet.size === 0) {
+    toast("⚠️ অনুগ্রহ করে তালিকা থেকে অন্তত একটি জিমেইল সিলেক্ট করুন!", "err");
+    return;
+  }
+  const subject = encodeURIComponent(document.getElementById("gm-subject")?.value.trim() || "Global Islamic Care Update");
+  const body = encodeURIComponent(document.getElementById("gm-body")?.value.trim() || "");
+  const bccList = Array.from(selectedGmailSet).join(",");
+
+  const mailtoUrl = `mailto:?bcc=${encodeURIComponent(bccList)}&subject=${subject}&body=${body}`;
+  window.open(mailtoUrl, "_blank");
+  toast(`🚀 ${selectedGmailSet.size}টি ইমেইলসহ জিমেইল ড্রাফট খোলা হচ্ছে!`, "ok");
+}
+
+function copySelectedGmails() {
+  if (selectedGmailSet.size === 0) {
+    toast("⚠️ কোনো জিমেইল সিলেক্ট করা হয়নি!", "err");
+    return;
+  }
+  const list = Array.from(selectedGmailSet).join("\n");
+  navigator.clipboard.writeText(list).then(() => {
+    toast(`✅ ${selectedGmailSet.size}টি জিমেইল ক্লিপবোর্ডে কপি হয়েছে!`, "ok");
+  });
+}
+
+function exportSelectedGmailsCSV() {
+  const gmails = selectedGmailSet.size > 0 
+    ? allStudents.filter(s => selectedGmailSet.has(s.email)) 
+    : allStudents.filter(s => s.email && s.email.trim());
+    
+  if (!gmails.length) { toast("কোনো জিমেইল নেই", "err"); return; }
+  const rows = ["স্টুডেন্ট আইডি,ইমেইল,ফোন,জেলা,বিভাগ,পোস্টাল,মোট সময়(সেকেন্ড),যোগদানের সময়"];
+  gmails.forEach(s => {
+    rows.push(`${s.student_id||""},${s.email||""},${s.phone||""},"${s.district||""}","${s.division||""}","${s.postal_code||""}",${s.total_time_seconds||0},"${s.join_date||""}"`);
+  });
+  downloadCSV("GIC-Selected-Gmails.csv", rows.join("\n"));
+  toast(`✅ ${gmails.length}টি জিমেইল CSV ডাউনলোড শুরু হয়েছে`, "ok");
+}
+
 // ══════════════════════════════════════════════════════
 // VISITOR LOG
 // ══════════════════════════════════════════════════════
@@ -2919,6 +3525,729 @@ async function changeAdminPasswordSubmit(event) {
     btn.textContent = "💾 পাসওয়ার্ড পরিবর্তন করুন";
   }
 }
+
+// ══════════════════════════════════════════════════════
+// TEACHER MANAGEMENT CONTROLLER
+// ══════════════════════════════════════════════════════
+const TC_SLOTS = [
+  { idx: 1,  start: '07:00', end: '07:50', label: '০৭:০০' },
+  { idx: 2,  start: '07:50', end: '08:40', label: '০৭:৫০' },
+  { idx: 3,  start: '08:40', end: '09:30', label: '০৮:৪০' },
+  { idx: 4,  start: '09:30', end: '10:20', label: '০৯:৩০' },
+  { idx: 5,  start: '10:20', end: '11:10', label: '১০:২০' },
+  { idx: 6,  start: '11:10', end: '12:00', label: '১১:১০' },
+  { idx: 7,  start: '12:00', end: '12:50', label: '১২:০০' },
+  { idx: 8,  start: '12:50', end: '13:40', label: '১২:৫০' },
+  { idx: 9,  start: '13:40', end: '14:30', label: '১৩:৪০' },
+  { idx: 10, start: '14:30', end: '15:20', label: '১৪:৩০' },
+  { idx: 11, start: '15:20', end: '16:10', label: '১৫:২০' },
+  { idx: 12, start: '16:10', end: '17:00', label: '১৬:১০' },
+  { idx: 13, start: '17:00', end: '17:50', label: '১৭:০০' },
+  { idx: 14, start: '17:50', end: '18:40', label: '১৭:৫০' },
+  { idx: 15, start: '18:40', end: '19:30', label: '১৮:৪০' },
+  { idx: 16, start: '19:30', end: '20:20', label: '১৯:৩০' },
+  { idx: 17, start: '20:20', end: '21:10', label: '২০:২০' },
+  { idx: 18, start: '21:10', end: '22:00', label: '২১:১০' },
+  { idx: 19, start: '22:00', end: '22:50', label: '২২:০০' },
+];
+const TC_DAYS = { sat: 'শনিবার', sun: 'রবিবার', mon: 'সোমবার', tue: 'মঙ্গলবার', wed: 'বুধবার' };
+
+let allAdminTeachers = [];
+let allAdminBookings = [];
+let allAdminTeacherReviews = [];
+let teacherToDelete = null;
+let modalScheduleState = { sat:[], sun:[], mon:[], tue:[], wed:[] };
+let modalCurrentDay = 'sat';
+
+async function loadTeachersAdmin() {
+  const loading = document.getElementById('tc-loading');
+  const empty   = document.getElementById('tc-empty');
+  const grid    = document.getElementById('admin-teachers-grid');
+  
+  if (loading) loading.style.display = 'block';
+  if (empty)   empty.style.display   = 'none';
+  if (grid)    grid.innerHTML        = '';
+
+  try {
+    // 1. Fetch Teachers (try RPC first, fallback to REST)
+    let teachersData = [];
+    try {
+      const { data, error } = await db.rpc('get_teachers_admin', { pass_code: authPwd });
+      if (!error && Array.isArray(data)) teachersData = data;
+    } catch(e) {}
+    
+    if (teachersData.length === 0) {
+      try {
+        const { data, error } = await db.from('teachers').select('*').order('sort_order', { ascending: true });
+        if (!error && Array.isArray(data)) teachersData = data;
+      } catch(e) {}
+    }
+    allAdminTeachers = teachersData;
+
+    // 2. Fetch Bookings
+    let bookingsData = [];
+    try {
+      const { data, error } = await db.rpc('get_teacher_bookings', { pass_code: authPwd });
+      if (!error && Array.isArray(data)) bookingsData = data;
+    } catch(e) {}
+    if (bookingsData.length === 0) {
+      try {
+        const { data, error } = await db.from('teacher_bookings').select('*, teachers(name)').order('created_at', { ascending: false });
+        if (!error && Array.isArray(data)) {
+          bookingsData = data.map(b => ({
+            ...b,
+            teacher_name: b.teachers ? b.teachers.name : '—'
+          }));
+        }
+      } catch(e) {}
+    }
+    allAdminBookings = bookingsData;
+
+    // 3. Fetch Reviews
+    let reviewsData = [];
+    try {
+      const { data, error } = await db.rpc('get_teacher_reviews_admin', { pass_code: authPwd });
+      if (!error && Array.isArray(data)) reviewsData = data;
+    } catch(e) {}
+    if (reviewsData.length === 0) {
+      try {
+        const { data, error } = await db.from('teacher_reviews').select('*, teachers(name)').order('created_at', { ascending: false });
+        if (!error && Array.isArray(data)) {
+          reviewsData = data.map(r => ({
+            ...r,
+            teacher_name: r.teachers ? r.teachers.name : '—'
+          }));
+        }
+      } catch(e) {}
+    }
+    allAdminTeacherReviews = reviewsData;
+
+    if (loading) loading.style.display = 'none';
+
+    // Update Stats
+    const totalTeachers = allAdminTeachers.length;
+    const activeTeachers = allAdminTeachers.filter(t => t.is_active !== false).length;
+    const totalBookings = allAdminBookings.length;
+    const pendingBookings = allAdminBookings.filter(b => b.status === 'pending').length;
+    const totalReviews = allAdminTeacherReviews.length;
+    const pendingReviews = allAdminTeacherReviews.filter(r => !r.is_approved).length;
+
+    setText('tc-stat-total', totalTeachers);
+    setText('tc-stat-active', activeTeachers);
+    setText('tc-stat-bookings', totalBookings);
+    setText('tc-stat-reviews', totalReviews);
+    setText('tc-stat-pending-reviews-txt', `অপেক্ষমাণ: ${pendingReviews}`);
+
+    // Update Badges
+    const badgeBk = document.getElementById('tc-badge-bookings');
+    if (badgeBk) {
+      badgeBk.textContent = pendingBookings;
+      badgeBk.style.display = pendingBookings > 0 ? 'inline' : 'none';
+    }
+    const badgeRv = document.getElementById('tc-badge-pending-reviews');
+    if (badgeRv) {
+      badgeRv.textContent = pendingReviews;
+      badgeRv.style.display = pendingReviews > 0 ? 'inline' : 'none';
+    }
+    const sbBadge = document.getElementById('teacher-badge');
+    if (sbBadge) {
+      const totalAlerts = pendingBookings + pendingReviews;
+      sbBadge.textContent = totalTeachers;
+      sbBadge.style.display = totalTeachers > 0 ? 'inline' : 'none';
+    }
+
+    filterAdminTeachers();
+    renderBookingsTable();
+    renderTeacherReviewsTable();
+  } catch(err) {
+    if (loading) loading.style.display = 'none';
+    console.error('Error loading teachers:', err);
+    toast('❌ শিক্ষক ডেটা লোড ব্যর্থ হয়েছে', 'err');
+  }
+}
+
+function switchTeacherSubTab(subTab) {
+  ['list', 'bookings', 'reviews'].forEach(t => {
+    document.getElementById(`tc-subtab-btn-${t}`)?.classList.toggle('active', t === subTab);
+    const view = document.getElementById(`tc-view-${t}`);
+    if (view) view.style.display = (t === subTab) ? 'block' : 'none';
+  });
+}
+
+function filterAdminTeachers() {
+  const q = (document.getElementById('tc-search-inp')?.value || '').toLowerCase().trim();
+  const f = document.getElementById('tc-filter-status')?.value || 'all';
+  const grid = document.getElementById('admin-teachers-grid');
+  const empty = document.getElementById('tc-empty');
+
+  let list = allAdminTeachers.filter(t => {
+    const nameMatch = (t.name || '').toLowerCase().includes(q) ||
+                      (t.designation || '').toLowerCase().includes(q) ||
+                      (t.bio || '').toLowerCase().includes(q) ||
+                      ((t.qualifications || []).join(' ')).toLowerCase().includes(q) ||
+                      ((t.specializations || []).join(' ')).toLowerCase().includes(q);
+    let statusOk = true;
+    if (f === 'active')   statusOk = (t.is_active !== false);
+    if (f === 'inactive') statusOk = (t.is_active === false);
+    return nameMatch && statusOk;
+  });
+
+  const countLbl = document.getElementById('tc-count-lbl');
+  if (countLbl) countLbl.textContent = `মোট ${list.length} জন শিক্ষক`;
+
+  if (!list || list.length === 0) {
+    if (grid) grid.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+
+  if (empty) empty.style.display = 'none';
+  renderAdminTeachersGrid(list);
+}
+
+function renderAdminTeachersGrid(list) {
+  const grid = document.getElementById('admin-teachers-grid');
+  if (!grid) return;
+
+  grid.innerHTML = list.map(t => {
+    const isActive = t.is_active !== false;
+    const schedule = t.weekly_schedule || {};
+    let totalSlots = 0;
+    Object.keys(schedule).forEach(k => {
+      if (Array.isArray(schedule[k])) totalSlots += schedule[k].length;
+    });
+
+    const qualBadges = (t.qualifications || []).map(q => `<span class="tc-qual-badge">📜 ${q}</span>`).join('');
+    const specBadges = (t.specializations || []).map(s => `<span class="tc-spec-badge">${s}</span>`).join('');
+
+    const avatarHtml = t.photo_url
+      ? `<img src="${t.photo_url}" alt="${t.name}" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`
+      : '👨‍🏫';
+
+    return `
+    <div class="teacher-card ${isActive ? '' : 'inactive'}" id="tc-card-${t.id}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="tc-avatar">${avatarHtml}</div>
+          <div>
+            <h3 style="font-size:16px;font-weight:700;color:#fff;margin-bottom:3px;">${t.name}</h3>
+            <div style="font-size:12px;color:var(--text-muted);">${t.designation || 'কোরআন শিক্ষক'}</div>
+            <div style="font-size:11px;color:var(--teal);margin-top:2px;font-family:monospace;">/${t.slug}</div>
+          </div>
+        </div>
+        <div>
+          <span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:${isActive ? 'rgba(16,185,129,0.15);color:var(--green)' : 'rgba(244,63,94,0.15);color:var(--red)'};">
+            ${isActive ? '● সক্রিয়' : '○ নিষ্ক্রিয়'}
+          </span>
+        </div>
+      </div>
+
+      ${qualBadges || specBadges ? `<div style="display:flex;gap:6px;flex-wrap:wrap;">${qualBadges} ${specBadges}</div>` : ''}
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:10px 12px;text-align:center;">
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--gold-light);">${t.experience_years || 0} বছর+</div>
+          <div style="font-size:10px;color:var(--text-muted);">অভিজ্ঞতা</div>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--blue-light);">${t.students_taught || 0}+</div>
+          <div style="font-size:10px;color:var(--text-muted);">শিক্ষার্থী</div>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--green);">${totalSlots}টি</div>
+          <div style="font-size:10px;color:var(--text-muted);">ফাঁকা স্লট</div>
+        </div>
+      </div>
+
+      ${t.bio ? `<div style="font-size:12px;color:var(--text-muted);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${t.bio}</div>` : ''}
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;flex-wrap:wrap;">
+        <a href="teachers.html?id=${t.slug}" target="_blank" class="btn btn-sm" style="background:rgba(58,134,200,0.15);color:var(--blue-light);border:1px solid rgba(58,134,200,0.3);text-decoration:none;font-size:12px;padding:6px 12px;">
+          🔗 প্রোফাইল দেখুন
+        </a>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-sm" onclick="toggleTeacherActiveStatus(${t.id}, ${isActive})" title="${isActive ? 'নিষ্ক্রিয় করুন' : 'সক্রিয় করুন'}" style="padding:6px 10px;font-size:12px;background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.12);">
+            ${isActive ? '👁️ অফ' : '👁️ অন'}
+          </button>
+          <button class="btn btn-sm" onclick="openEditTeacherModal(${t.id})" style="padding:6px 12px;font-size:12px;background:rgba(20,184,166,0.15);color:var(--teal);border:1px solid rgba(20,184,166,0.3);">
+            ✏️ এডিট
+          </button>
+          <button class="btn btn-sm btn-red" onclick="openDeleteTeacherModal(${t.id})" style="padding:6px 10px;font-size:12px;">
+            🗑️
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function autoGenSlug() {
+  const idInput = document.getElementById('tm-id');
+  if (idInput && idInput.value) return; // do not overwrite on edit
+  const name = document.getElementById('tm-name').value.trim();
+  const slugInput = document.getElementById('tm-slug');
+  if (!slugInput) return;
+
+  const slug = name.toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/--+/g, '-');
+  if (slug) slugInput.value = slug;
+}
+
+function updatePhotoPreview() {
+  const url = document.getElementById('tm-photo-url')?.value.trim();
+  const preview = document.getElementById('tm-photo-preview');
+  if (!preview) return;
+  if (url) {
+    preview.innerHTML = `<img src="${url}" alt="Preview" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`;
+  } else {
+    preview.innerHTML = '👨‍🏫';
+  }
+}
+
+function switchModalScheduleDay(day) {
+  modalCurrentDay = day;
+  ['sat','sun','mon','tue','wed'].forEach(d => {
+    document.getElementById(`tm-day-btn-${d}`)?.classList.toggle('active', d === day);
+  });
+  renderModalSlots();
+}
+
+function renderModalSlots() {
+  const container = document.getElementById('tm-slots-container');
+  if (!container) return;
+
+  const activeSlots = modalScheduleState[modalCurrentDay] || [];
+
+  container.innerHTML = TC_SLOTS.map(s => {
+    const isSelected = activeSlots.includes(s.idx);
+    return `
+      <button type="button" class="tc-schedule-slot-btn ${isSelected ? 'selected' : ''}" onclick="toggleModalSlot(${s.idx})">
+        <div>${s.label}</div>
+        <div style="font-size:9px;opacity:0.75;">${isSelected ? '✅ ফাঁকা' : '❌ অফ'}</div>
+      </button>
+    `;
+  }).join('');
+}
+
+function toggleModalSlot(idx) {
+  if (!modalScheduleState[modalCurrentDay]) modalScheduleState[modalCurrentDay] = [];
+  const arr = modalScheduleState[modalCurrentDay];
+  const pos = arr.indexOf(idx);
+  if (pos > -1) arr.splice(pos, 1);
+  else { arr.push(idx); arr.sort((a,b) => a - b); }
+  renderModalSlots();
+}
+
+function selectAllDaySlots(selectAll) {
+  if (selectAll) {
+    modalScheduleState[modalCurrentDay] = TC_SLOTS.map(s => s.idx);
+  } else {
+    modalScheduleState[modalCurrentDay] = [];
+  }
+  renderModalSlots();
+}
+
+function openAddTeacherModal() {
+  document.getElementById('tm-title').textContent = '➕ নতুন শিক্ষক যোগ করুন';
+  document.getElementById('tm-id').value = '';
+  document.getElementById('tm-name').value = '';
+  document.getElementById('tm-slug').value = '';
+  document.getElementById('tm-designation').value = 'হাফেজুল কুরআন ও মাওলানা';
+  document.getElementById('tm-whatsapp').value = '8801733017521';
+  document.getElementById('tm-photo-url').value = '';
+  document.getElementById('tm-experience').value = '5';
+  document.getElementById('tm-students').value = '200';
+  document.getElementById('tm-sort').value = '0';
+  document.getElementById('tm-qualifications').value = 'হাফেজ, মাওলানা';
+  document.getElementById('tm-specializations').value = 'সহীহ তেলাওয়াত, তাজউইদ, হেফজ';
+  document.getElementById('tm-bio').value = '';
+  document.getElementById('tm-is-active').checked = true;
+  document.getElementById('tm-form-err').style.display = 'none';
+
+  // default schedule: slots 1 to 19 available on sat to wed
+  modalScheduleState = {
+    sat: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+    sun: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+    mon: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+    tue: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+    wed: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+  };
+  modalCurrentDay = 'sat';
+  updatePhotoPreview();
+  switchModalScheduleDay('sat');
+
+  document.getElementById('teacher-modal').style.display = 'flex';
+}
+
+function openEditTeacherModal(id) {
+  const teacher = allAdminTeachers.find(t => t.id === id);
+  if (!teacher) return;
+
+  document.getElementById('tm-title').textContent = '✏️ শিক্ষক তথ্য সম্পাদনা';
+  document.getElementById('tm-id').value = teacher.id;
+  document.getElementById('tm-name').value = teacher.name || '';
+  document.getElementById('tm-slug').value = teacher.slug || '';
+  document.getElementById('tm-designation').value = teacher.designation || '';
+  document.getElementById('tm-whatsapp').value = teacher.whatsapp || '8801733017521';
+  document.getElementById('tm-photo-url').value = teacher.photo_url || '';
+  document.getElementById('tm-experience').value = teacher.experience_years || 0;
+  document.getElementById('tm-students').value = teacher.students_taught || 0;
+  document.getElementById('tm-sort').value = teacher.sort_order || 0;
+  document.getElementById('tm-qualifications').value = (teacher.qualifications || []).join(', ');
+  document.getElementById('tm-specializations').value = (teacher.specializations || []).join(', ');
+  document.getElementById('tm-bio').value = teacher.bio || '';
+  document.getElementById('tm-is-active').checked = (teacher.is_active !== false);
+  document.getElementById('tm-form-err').style.display = 'none';
+
+  modalScheduleState = {
+    sat: (teacher.weekly_schedule && teacher.weekly_schedule.sat) || [],
+    sun: (teacher.weekly_schedule && teacher.weekly_schedule.sun) || [],
+    mon: (teacher.weekly_schedule && teacher.weekly_schedule.mon) || [],
+    tue: (teacher.weekly_schedule && teacher.weekly_schedule.tue) || [],
+    wed: (teacher.weekly_schedule && teacher.weekly_schedule.wed) || []
+  };
+  modalCurrentDay = 'sat';
+  updatePhotoPreview();
+  switchModalScheduleDay('sat');
+
+  document.getElementById('teacher-modal').style.display = 'flex';
+}
+
+function closeTeacherModal() {
+  document.getElementById('teacher-modal').style.display = 'none';
+}
+
+async function saveTeacherSubmit(event) {
+  event.preventDefault();
+  const errEl = document.getElementById('tm-form-err');
+  const saveBtn = document.getElementById('tm-save-btn');
+  errEl.style.display = 'none';
+
+  const id = document.getElementById('tm-id').value;
+  const name = document.getElementById('tm-name').value.trim();
+  const slug = document.getElementById('tm-slug').value.trim().toLowerCase();
+  const designation = document.getElementById('tm-designation').value.trim();
+  const whatsapp = document.getElementById('tm-whatsapp').value.trim();
+  const photoUrl = document.getElementById('tm-photo-url').value.trim();
+  const experience = parseInt(document.getElementById('tm-experience').value) || 0;
+  const students = parseInt(document.getElementById('tm-students').value) || 0;
+  const sortOrder = parseInt(document.getElementById('tm-sort').value) || 0;
+  const qualStr = document.getElementById('tm-qualifications').value.trim();
+  const specStr = document.getElementById('tm-specializations').value.trim();
+  const bio = document.getElementById('tm-bio').value.trim();
+  const isActive = document.getElementById('tm-is-active').checked;
+
+  const qualifications = qualStr ? qualStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const specializations = specStr ? specStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+  if (!name || !slug) {
+    errEl.textContent = '❌ নাম এবং স্লাগ আবশ্যক!';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  saveBtn.disabled = true;
+  saveBtn.textContent = '⏳ সংরক্ষণ হচ্ছে...';
+
+  try {
+    if (id) {
+      // UPDATE
+      let updateOk = false;
+      try {
+        const { data, error } = await db.rpc('update_teacher', {
+          pass_code: authPwd,
+          p_id: parseInt(id),
+          p_name: name,
+          p_slug: slug,
+          p_photo_url: photoUrl,
+          p_designation: designation,
+          p_qualifications: qualifications,
+          p_bio: bio,
+          p_experience: experience,
+          p_students: students,
+          p_specializations: specializations,
+          p_schedule: modalScheduleState,
+          p_whatsapp: whatsapp,
+          p_sort_order: sortOrder,
+          p_is_active: isActive
+        });
+        if (!error && data && data.success) updateOk = true;
+      } catch(e) {}
+
+      if (!updateOk) {
+        // Direct REST fallback
+        const { error } = await db.from('teachers').update({
+          name, slug, photo_url: photoUrl, designation,
+          qualifications, bio, experience_years: experience,
+          students_taught: students, specializations,
+          weekly_schedule: modalScheduleState,
+          whatsapp, sort_order: sortOrder, is_active: isActive
+        }).eq('id', id);
+        if (error) throw error;
+      }
+      toast('✅ শিক্ষকের তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
+    } else {
+      // INSERT
+      let insertOk = false;
+      try {
+        const { data, error } = await db.rpc('add_teacher', {
+          pass_code: authPwd,
+          p_name: name,
+          p_slug: slug,
+          p_photo_url: photoUrl,
+          p_designation: designation,
+          p_qualifications: qualifications,
+          p_bio: bio,
+          p_experience: experience,
+          p_students: students,
+          p_specializations: specializations,
+          p_schedule: modalScheduleState,
+          p_whatsapp: whatsapp,
+          p_sort_order: sortOrder
+        });
+        if (!error && data && data.success) insertOk = true;
+      } catch(e) {}
+
+      if (!insertOk) {
+        // Direct REST fallback
+        const { error } = await db.from('teachers').insert([{
+          name, slug, photo_url: photoUrl, designation,
+          qualifications, bio, experience_years: experience,
+          students_taught: students, specializations,
+          weekly_schedule: modalScheduleState,
+          whatsapp, sort_order: sortOrder, is_active: isActive
+        }]);
+        if (error) throw error;
+      }
+      toast('✅ নতুন শিক্ষক সফলভাবে যুক্ত হয়েছে!', 'ok');
+    }
+
+    closeTeacherModal();
+    loadTeachersAdmin();
+  } catch(err) {
+    console.error('Save teacher error:', err);
+    errEl.textContent = '❌ ত্রুটি: ' + (err.message || 'সংরক্ষণ ব্যর্থ হয়েছে');
+    errEl.style.display = 'block';
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = '💾 সংরক্ষণ করুন';
+  }
+}
+
+async function toggleTeacherActiveStatus(id, currentStatus) {
+  const newStatus = !currentStatus;
+  try {
+    const { error } = await db.from('teachers').update({ is_active: newStatus }).eq('id', id);
+    if (error) throw error;
+    const t = allAdminTeachers.find(item => item.id === id);
+    if (t) t.is_active = newStatus;
+    toast(`✅ প্রোফাইল ${newStatus ? 'সক্রিয়' : 'নিষ্ক্রিয়'} করা হয়েছে!`, 'ok');
+    filterAdminTeachers();
+  } catch(err) {
+    console.error('Toggle status error:', err);
+    toast('❌ স্ট্যাটাস পরিবর্তন ব্যর্থ হয়েছে', 'err');
+  }
+}
+
+function openDeleteTeacherModal(id) {
+  const teacher = allAdminTeachers.find(t => t.id === id);
+  if (!teacher) return;
+  teacherToDelete = teacher;
+  document.getElementById('tc-delete-preview').innerHTML = `
+    <strong>${teacher.name}</strong><br>
+    <span style="color:var(--text-muted);font-size:12px;">পদবী: ${teacher.designation || '—'} | স্লাগ: /${teacher.slug}</span>
+  `;
+  document.getElementById('tc-delete-modal').style.display = 'flex';
+}
+
+function closeTeacherDeleteModal() {
+  document.getElementById('tc-delete-modal').style.display = 'none';
+  teacherToDelete = null;
+}
+
+async function confirmDeleteTeacherSubmit() {
+  if (!teacherToDelete) return;
+  const id = teacherToDelete.id;
+  try {
+    let delOk = false;
+    try {
+      const { data, error } = await db.rpc('delete_teacher', { pass_code: authPwd, p_id: id });
+      if (!error && data) delOk = true;
+    } catch(e) {}
+
+    if (!delOk) {
+      const { error } = await db.from('teachers').delete().eq('id', id);
+      if (error) throw error;
+    }
+
+    allAdminTeachers = allAdminTeachers.filter(t => t.id !== id);
+    closeTeacherDeleteModal();
+    toast('✅ শিক্ষক সফলভাবে মুছে ফেলা হয়েছে!', 'ok');
+    loadTeachersAdmin();
+  } catch(err) {
+    console.error('Delete teacher error:', err);
+    toast('❌ ডিলিট করতে সমস্যা হয়েছে', 'err');
+  }
+}
+
+function renderBookingsTable() {
+  const tbody = document.getElementById('tc-bookings-tbody');
+  const filter = document.getElementById('tc-bk-filter-status')?.value || 'all';
+  if (!tbody) return;
+
+  let list = allAdminBookings;
+  if (filter !== 'all') list = list.filter(b => b.status === filter);
+
+  if (list.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">কোনো বুকিং অনুরোধ নেই</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map((b, i) => {
+    const dayName = TC_DAYS[b.day_of_week] || b.day_of_week;
+    const statusColor = b.status === 'confirmed' ? 'var(--green)' : (b.status === 'cancelled' ? 'var(--red)' : 'var(--gold-light)');
+    const statusLabel = b.status === 'confirmed' ? '✅ নিশ্চিত' : (b.status === 'cancelled' ? '❌ বাতিল' : '⏳ অপেক্ষমাণ');
+    const waMsg = `সালামুআলাইকুম! আপনার GIC শিক্ষক বুকিং সম্পর্কে যোগাযোগ করছি।`;
+    const waLink = b.student_phone ? `https://wa.me/${b.student_phone.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(waMsg)}` : '#';
+
+    return `
+      <tr>
+        <td>${i+1}</td>
+        <td><strong>${b.teacher_name || '—'}</strong></td>
+        <td><span class="tc-qual-badge">📅 ${dayName}</span> <strong style="color:#fff;">${b.slot_start}</strong></td>
+        <td>${b.student_name || '—'}</td>
+        <td>
+          <a href="${waLink}" target="_blank" class="phone-chip" style="text-decoration:none;">
+            💬 ${b.student_phone || '—'}
+          </a>
+        </td>
+        <td style="font-size:12px;max-width:200px;color:var(--text-muted);">${b.message || '—'}</td>
+        <td>
+          <span style="font-size:11px;font-weight:700;color:${statusColor};">${statusLabel}</span>
+        </td>
+        <td>
+          <select onchange="updateBookingStatusSubmit(${b.id}, this.value)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;">
+            <option value="pending" ${b.status==='pending'?'selected':''}>অপেক্ষমাণ</option>
+            <option value="confirmed" ${b.status==='confirmed'?'selected':''}>নিশ্চিত</option>
+            <option value="cancelled" ${b.status==='cancelled'?'selected':''}>বাতিল</option>
+          </select>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+async function updateBookingStatusSubmit(id, newStatus) {
+  try {
+    let ok = false;
+    try {
+      const { data, error } = await db.rpc('update_booking_status', { pass_code: authPwd, p_id: id, p_status: newStatus });
+      if (!error && data) ok = true;
+    } catch(e) {}
+    if (!ok) {
+      await db.from('teacher_bookings').update({ status: newStatus }).eq('id', id);
+    }
+    const b = allAdminBookings.find(item => item.id === id);
+    if (b) b.status = newStatus;
+    toast('✅ বুকিং স্ট্যাটাস আপডেট হয়েছে!', 'ok');
+    renderBookingsTable();
+  } catch(err) {
+    console.error(err);
+    toast('❌ স্ট্যাটাস আপডেট ব্যর্থ হয়েছে', 'err');
+  }
+}
+
+function renderTeacherReviewsTable() {
+  const tbody = document.getElementById('tc-reviews-tbody');
+  const filter = document.getElementById('tc-rv-filter-status')?.value || 'all';
+  if (!tbody) return;
+
+  let list = allAdminTeacherReviews;
+  if (filter === 'pending')  list = list.filter(r => !r.is_approved);
+  if (filter === 'approved') list = list.filter(r => r.is_approved);
+
+  if (list.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">কোনো রিভিউ নেই</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map((r, i) => {
+    const isAppr = r.is_approved;
+    const stars = '⭐'.repeat(r.rating || 5);
+    const date = r.created_at ? new Date(r.created_at).toLocaleDateString('bn-BD') : '—';
+
+    return `
+      <tr>
+        <td>${i+1}</td>
+        <td><strong>${r.teacher_name || '—'}</strong></td>
+        <td>${r.reviewer_name || 'এক অভিভাবক'}</td>
+        <td>${stars}</td>
+        <td style="font-size:12px;max-width:240px;color:#e2e8f0;">${r.message}</td>
+        <td style="font-size:12px;color:var(--text-muted);">${date}</td>
+        <td>
+          <span style="font-size:11px;font-weight:700;color:${isAppr ? 'var(--green)' : 'var(--red)'};">
+            ${isAppr ? '✅ অনুমোদিত' : '⏳ অপেক্ষমাণ'}
+          </span>
+        </td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            ${!isAppr ? `
+              <button class="btn btn-sm btn-green" onclick="approveTeacherReviewSubmit(${r.id})" style="padding:4px 8px;font-size:11px;">
+                ✅ অনুমোদন
+              </button>
+            ` : ''}
+            <button class="btn btn-sm btn-red" onclick="deleteTeacherReviewSubmit(${r.id})" style="padding:4px 8px;font-size:11px;">
+              🗑️
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+async function approveTeacherReviewSubmit(id) {
+  try {
+    let ok = false;
+    try {
+      const { data, error } = await db.rpc('approve_teacher_review', { pass_code: authPwd, p_id: id });
+      if (!error && data) ok = true;
+    } catch(e) {}
+    if (!ok) {
+      await db.from('teacher_reviews').update({ is_approved: true }).eq('id', id);
+    }
+    const r = allAdminTeacherReviews.find(item => item.id === id);
+    if (r) r.is_approved = true;
+    toast('✅ রিভিউ অনুমোদিত হয়েছে!', 'ok');
+    loadTeachersAdmin();
+  } catch(err) {
+    console.error(err);
+    toast('❌ অনুমোদন ব্যর্থ হয়েছে', 'err');
+  }
+}
+
+async function deleteTeacherReviewSubmit(id) {
+  if (!confirm('এই রিভিউটি মুছে ফেলবেন?')) return;
+  try {
+    let ok = false;
+    try {
+      const { data, error } = await db.rpc('delete_teacher_review', { pass_code: authPwd, p_id: id });
+      if (!error && data) ok = true;
+    } catch(e) {}
+    if (!ok) {
+      await db.from('teacher_reviews').delete().eq('id', id);
+    }
+    allAdminTeacherReviews = allAdminTeacherReviews.filter(r => r.id !== id);
+    toast('✅ রিভিউ মুছে ফেলা হয়েছে!', 'ok');
+    loadTeachersAdmin();
+  } catch(err) {
+    console.error(err);
+    toast('❌ ডিলিট ব্যর্থ হয়েছে', 'err');
+  }
+}
+
 </script>
 </body>
 </html>

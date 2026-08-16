@@ -1,5 +1,5 @@
-// Global Islamic Care - Analytics Script v4
-// IP + Platform + Device Fingerprint + Persistent Gmail Recall
+// Global Islamic Care - Analytics Script v5
+// IP Multi-Provider Geolocation + Detailed Location Breakdown + Heartbeat Time Spent + Gmail Recall
 import { supabaseUrl, supabaseAnonKey } from "./gic-config.js";
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
@@ -12,7 +12,7 @@ const isSupabaseConfigured =
 let supabase          = null;
 let sessionId         = null;
 let userIpAddress     = "";
-let userLocation      = { country: "Unknown", city: "Unknown" };
+let userLocation      = { country: "Unknown", city: "Unknown", division: "", postal_code: "", area_village: "" };
 let currentPage       = "home";
 let liveChannel       = null;
 let sessionJoinedAt   = new Date().toISOString();
@@ -20,10 +20,9 @@ let pageStartTime     = Date.now();
 let lastTrackedPageId = null;
 let referrerInfo      = {};
 let deviceFingerprint = "";
+let heartbeatInterval = null;
 
 // ─── DEVICE FINGERPRINT ─────────────────────────────────────────────────────────
-// Generates a stable ID from device characteristics.
-// This is NOT 100% unique but identifies the same device with high probability.
 function buildDeviceFingerprint() {
   const components = [
     navigator.userAgent || "",
@@ -35,7 +34,6 @@ function buildDeviceFingerprint() {
     navigator.platform  || ""
   ];
   const raw = components.join("|");
-  // Simple deterministic hash
   let h = 0;
   for (let i = 0; i < raw.length; i++) {
     h = (Math.imul(31, h) + raw.charCodeAt(i)) | 0;
@@ -44,8 +42,6 @@ function buildDeviceFingerprint() {
 }
 
 // ─── PERSISTENT VISITOR ID ──────────────────────────────────────────────────────
-// Stores a unique visitor ID in localStorage so the SAME device is recognized
-// across sessions — even without login.
 function getOrCreateVisitorId() {
   let vid = localStorage.getItem("gic_visitor_id");
   if (!vid) {
@@ -56,20 +52,14 @@ function getOrCreateVisitorId() {
 }
 
 // ─── GET STUDENT EMAIL ──────────────────────────────────────────────────────────
-// Returns Gmail if visitor has EVER logged in on this device.
-// Works even if the session "expired" — the email is kept separately for analytics.
 function getStudentEmail() {
   try {
-    // 1. Check active session
     const s = JSON.parse(localStorage.getItem("gic_student_session") || "null");
     if (s && s.email) {
-      // Cache it separately for resilience
       localStorage.setItem("gic_known_email", s.email);
       return s.email;
     }
-    // 2. Fall back to cached email from previous login on this device
-    const cached = localStorage.getItem("gic_known_email") || "";
-    return cached;
+    return localStorage.getItem("gic_known_email") || "";
   } catch (e) { return ""; }
 }
 
@@ -148,17 +138,64 @@ function detectReferrerSource() {
   };
 }
 
+// ─── MULTI-PROVIDER GEOLOCATION ─────────────────────────────────────────────────
+async function fetchDetailedLocation() {
+  // Provider 1: freeipapi.com
+  try {
+    const res = await fetch("https://freeipapi.com/api/json");
+    if (res.ok) {
+      const d = await res.json();
+      userIpAddress             = d.ipAddress || "";
+      userLocation.country      = d.countryName || "Unknown";
+      userLocation.city         = d.cityName || "Unknown";
+      userLocation.division     = d.regionName || d.cityName || "";
+      userLocation.postal_code  = d.zipCode || "";
+      if (userLocation.country) return;
+    }
+  } catch (e) {}
+
+  // Provider 2: ipapi.co (Fallback)
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    if (res.ok) {
+      const d = await res.json();
+      if (d.ip) userIpAddress = d.ip;
+      userLocation.country     = d.country_name || userLocation.country;
+      userLocation.city        = d.city || userLocation.city;
+      userLocation.division    = d.region || userLocation.division;
+      userLocation.postal_code = d.postal || userLocation.postal_code;
+      if (userLocation.country) return;
+    }
+  } catch (e) {}
+
+  // Provider 3: ip-api.com (Fallback)
+  try {
+    const res = await fetch("http://ip-api.com/json/");
+    if (res.ok) {
+      const d = await res.json();
+      if (d.query) userIpAddress = d.query;
+      userLocation.country     = d.country || userLocation.country;
+      userLocation.city        = d.city || userLocation.city;
+      userLocation.division    = d.regionName || userLocation.division;
+      userLocation.postal_code = d.zip || userLocation.postal_code;
+    }
+  } catch (e) {}
+}
+
 // ─── PAGE TIME FLUSH ────────────────────────────────────────────────────────────
 async function flushTimeOnPage(pageId) {
   if (!supabase || !pageId) return;
   const elapsed = Math.round((Date.now() - pageStartTime) / 1000);
-  if (elapsed < 2) return;
+  if (elapsed < 1) return;
   try {
     await supabase.from("analytics_events").insert({
       event_type:         "page_time",
       page:               pageId,
       country:            userLocation.country,
       city:               userLocation.city,
+      division:           userLocation.division,
+      postal_code:        userLocation.postal_code,
+      area_village:       userLocation.area_village,
       ip_address:         userIpAddress,
       student_email:      getStudentEmail(),
       device_fingerprint: deviceFingerprint,
@@ -177,33 +214,17 @@ async function initAnalytics() {
   try {
     supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-    // Session ID (per-tab)
     sessionId = sessionStorage.getItem("gic_analytics_session");
     if (!sessionId) {
       sessionId = "sess_" + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
       sessionStorage.setItem("gic_analytics_session", sessionId);
     }
 
-    // Build device fingerprint
     deviceFingerprint = buildDeviceFingerprint();
-
-    // Referrer
     referrerInfo = detectReferrerSource();
 
-    // IP + Location
-    try {
-      const res = await fetch("https://freeipapi.com/api/json");
-      if (res.ok) {
-        const d = await res.json();
-        userIpAddress        = d.ipAddress   || "";
-        userLocation.country = d.countryName || "Unknown";
-        userLocation.city    = d.cityName    || "Unknown";
-      }
-    } catch (e) {
-      console.warn("📊 GIC: IP fetch failed", e);
-    }
+    await fetchDetailedLocation();
 
-    // Active page
     const activeDiv = document.querySelector(".page.active");
     if (activeDiv) currentPage = activeDiv.id.replace("page-", "");
     lastTrackedPageId = currentPage;
@@ -229,6 +250,9 @@ async function trackEvent(eventType, pageId, extraData = {}) {
       page:               pageId,
       country:            userLocation.country,
       city:               userLocation.city,
+      division:           userLocation.division,
+      postal_code:        userLocation.postal_code,
+      area_village:       userLocation.area_village,
       ip_address:         userIpAddress,
       student_email:      getStudentEmail(),
       device_fingerprint: deviceFingerprint,
@@ -262,6 +286,9 @@ async function updatePresenceState() {
       page:               currentPage,
       country:            userLocation.country,
       city:               userLocation.city,
+      division:           userLocation.division,
+      postal_code:        userLocation.postal_code,
+      area_village:       userLocation.area_village,
       ip_address:         userIpAddress,
       student_email:      getStudentEmail(),
       device_fingerprint: deviceFingerprint,
@@ -277,14 +304,24 @@ async function updatePresenceState() {
   }
 }
 
-// ─── PAGE TIME TRACKING ─────────────────────────────────────────────────────────
+// ─── PAGE TIME HEARTBEAT TRACKING (15 Seconds Interval) ───────────────────────
 function setupTimeTracking() {
+  // Continuous 15s heartbeat to prevent duration loss on abrupt mobile close
+  if (heartbeatInterval) clearInterval(heartbeatInterval);
+  heartbeatInterval = setInterval(() => {
+    if (document.visibilityState === "visible") {
+      flushTimeOnPage(lastTrackedPageId);
+      pageStartTime = Date.now();
+    }
+  }, 15000);
+
   document.addEventListener("visibilitychange", async () => {
     if (document.visibilityState === "hidden") {
       await flushTimeOnPage(lastTrackedPageId);
       pageStartTime = Date.now();
     }
   });
+
   window.addEventListener("beforeunload", () => {
     flushTimeOnPage(lastTrackedPageId);
   });
@@ -326,4 +363,5 @@ if (document.readyState === "loading") {
 } else {
   initAnalytics();
 }
+
 

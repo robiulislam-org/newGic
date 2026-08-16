@@ -1836,9 +1836,66 @@ footer {
     bottom: 24px;
     box-shadow: 0 8px 30px rgba(212,168,67,0.45);
   }
-  .mc-floating-cta.show {
-    transform: translateX(-50%) translateY(0);
-  }
+}
+
+/* ───── PUBLIC TEACHER CARDS ───── */
+.pub-teacher-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.pub-teacher-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(15,39,68,0.12);
+  border-color: rgba(200,151,42,0.4);
+}
+.pub-teacher-avatar {
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  overflow: hidden;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px;
+  flex-shrink: 0;
+  margin: 0 auto 14px;
+  box-shadow: 0 4px 14px rgba(200,151,42,0.2);
+}
+.pub-teacher-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.pub-teacher-name {
+  font-size: 18px; font-weight: 800; color: var(--blue-dark);
+  text-align: center; margin-bottom: 3px; line-height: 1.3;
+}
+.pub-teacher-desig {
+  font-size: 13px; color: var(--text-muted);
+  text-align: center; margin-bottom: 12px;
+}
+.pub-tc-qual-tags {
+  display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 14px;
+}
+.pub-tc-qual-tag {
+  background: rgba(200,151,42,0.1); color: #9c6e14;
+  border: 1px solid rgba(200,151,42,0.25);
+  font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 12px;
+}
+.pub-tc-stats-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  background: var(--cream); border-radius: 12px;
+  padding: 10px; text-align: center; margin-bottom: 16px;
+  border: 1px solid rgba(0,0,0,0.03);
+}
+.pub-tc-stat-val { font-size: 14px; font-weight: 800; color: var(--blue-dark); }
+.pub-tc-stat-lbl { font-size: 11px; color: var(--text-muted); }
+.pub-tc-actions {
+  display: flex; gap: 8px; flex-direction: column;
 }
 </style>
 </head>
@@ -2468,6 +2525,22 @@ footer {
       <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-blue btn-lg">💬 শিক্ষক সম্পর্কে জানুন</a>
     </div>
 
+    <!-- Dynamic Teacher Profiles Grid Section -->
+    <div style="margin: 48px 0 44px;" id="public-teachers-section">
+      <div style="text-align:center;margin-bottom:32px;" class="reveal">
+        <div class="section-label" style="margin:0 auto 12px;display:inline-flex;background:rgba(30,96,145,0.1);border-color:rgba(30,96,145,0.25);color:var(--blue-dark);">👨‍🏫 শিক্ষক প্রোফাইল ও সময়সূচি</div>
+        <h2 style="font-size:clamp(22px,3.5vw,32px);font-weight:800;color:var(--blue-dark);margin-bottom:8px;">আমাদের সম্মানিত শিক্ষকবৃন্দ</h2>
+        <p style="color:var(--text-muted);font-size:15px;max-width:560px;margin:0 auto;">যেকোনো শিক্ষকের প্রোফাইলে ক্লিক করে তাঁর শিক্ষাগত যোগ্যতা, অভিজ্ঞতা এবং শনি-বুধ ফাঁকা ক্লাস সময়সূচি দেখে সরাসরি বুক করুন।</p>
+      </div>
+
+      <div id="public-teachers-loading" style="text-align:center;padding:40px;color:var(--text-muted);">
+        <div style="font-size:32px;margin-bottom:8px;">⏳</div>
+        <div>শিক্ষকমণ্ডলীর তথ্য লোড হচ্ছে...</div>
+      </div>
+
+      <div id="public-teachers-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;"></div>
+    </div>
+
     <!-- Teaching method -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:40px;" class="reveal">
       <div class="about-block" style="margin:0;">
@@ -2479,7 +2552,6 @@ footer {
         <p>শুরুতে একপেজ, তারপর ধীরে ধীরে বাড়ানো হয়। পুরনো পাঠ যেন ভুলে না যায় সেদিকে বিশেষ মনোযোগ দেওয়া হয়। তিন বছরের টার্গেটে সম্পূর্ণ হেফজ সম্পন্ন করা হয়।</p>
       </div>
     </div>
-
 
     <div class="reveal" style="text-align:center;">
       <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg" style="margin-bottom:16px;">💬 ফ্রি কাউন্সেলিং সেশন বুক করুন</a>
@@ -3003,6 +3075,13 @@ function showPage(id, push = true) {
     }
   }
 
+  // Auto-load teachers when navigating to teachers page
+  if (id === 'teachers') {
+    if (typeof loadPublicTeachers === 'function') {
+      loadPublicTeachers();
+    }
+  }
+
   // Update browser address bar URL
   if (push) {
     try {
@@ -3266,6 +3345,103 @@ async function submitRvpReview() {
     btn.textContent = 'রিভিউ পাঠান ✅';
   }
 }
+
+// ───── PUBLIC TEACHERS LOADER ─────
+let publicTeachersLoaded = false;
+
+async function loadPublicTeachers(force = false) {
+  if (publicTeachersLoaded && !force) return;
+  const grid = document.getElementById('public-teachers-grid');
+  const loading = document.getElementById('public-teachers-loading');
+  if (!grid) return;
+
+  if (loading) loading.style.display = 'block';
+
+  try {
+    const res = await fetch(
+      `${gicReviewsSupaUrl}/rest/v1/teachers?is_active=eq.true&order=sort_order.asc,created_at.asc`,
+      {
+        headers: {
+          'apikey': gicReviewsSupaKey,
+          'Authorization': 'Bearer ' + gicReviewsSupaKey
+        }
+      }
+    );
+    const data = await res.json();
+    if (loading) loading.style.display = 'none';
+
+    if (!Array.isArray(data) || data.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted); background: var(--cream); border-radius: 16px; border: 1px dashed var(--border);">
+          <div style="font-size: 40px; margin-bottom: 10px;">🕌</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--blue-dark); margin-bottom: 6px;">শীঘ্রই শিক্ষকদের তালিকা যুক্ত হচ্ছে</div>
+          <p style="font-size: 14px;">আমাদের অভিজ্ঞ হাফেজ ও আলেম শিক্ষকদের সাথে ফ্রি ক্লাসের জন্য যোগাযোগ করুন।</p>
+          <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa" style="margin-top: 14px; display: inline-flex;">💬 WhatsApp-এ জানুন</a>
+        </div>
+      `;
+      return;
+    }
+
+    publicTeachersLoaded = true;
+    grid.innerHTML = data.map(t => {
+      const quals = (t.qualifications || []).map(q => `<span class="pub-tc-qual-tag">📜 ${q}</span>`).join('');
+      const avatarHtml = t.photo_url
+        ? `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`
+        : '👨‍🏫';
+
+      const schedule = t.weekly_schedule || {};
+      let totalSlots = 0;
+      Object.keys(schedule).forEach(k => {
+        if (Array.isArray(schedule[k])) totalSlots += schedule[k].length;
+      });
+
+      const profileUrl = `teachers.html?id=${t.slug}`;
+      const waMsg = `সালামুআলাইকুম! আমি শিক্ষক ${t.name}-এর সাথে কোরআন ক্লাস করতে আগ্রহী।`;
+      const waNumber = t.whatsapp || '8801733017521';
+      const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+
+      return `
+        <div class="pub-teacher-card reveal">
+          <div>
+            <div class="pub-teacher-avatar">${avatarHtml}</div>
+            <h3 class="pub-teacher-name">${t.name}</h3>
+            <div class="pub-teacher-desig">${t.designation || 'হাফেজ ও মাওলানা'}</div>
+            
+            ${quals ? `<div class="pub-tc-qual-tags">${quals}</div>` : ''}
+
+            <div class="pub-tc-stats-row">
+              <div>
+                <div class="pub-tc-stat-val">${t.experience_years > 0 ? t.experience_years + ' বছর+' : 'অভিজ্ঞ'}</div>
+                <div class="pub-tc-stat-lbl">অভিজ্ঞতা</div>
+              </div>
+              <div>
+                <div class="pub-tc-stat-val">${t.students_taught > 0 ? t.students_taught + '+' : '৫০+'}</div>
+                <div class="pub-tc-stat-lbl">ছাত্র পড়িয়েছেন</div>
+              </div>
+            </div>
+
+            ${t.bio ? `<p style="font-size:13.5px;color:var(--text-muted);line-height:1.6;margin-bottom:16px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${t.bio}</p>` : ''}
+          </div>
+
+          <div class="pub-tc-actions">
+            <a href="${profileUrl}" class="btn btn-blue btn-full" style="padding:10px 16px;font-size:13.5px;font-weight:700;text-decoration:none;border-radius:12px;justify-content:center;box-shadow:none;">
+              👨‍🏫 প্রোফাইল ও সময়সূচি দেখুন ↗
+            </a>
+            <a href="${waUrl}" target="_blank" class="btn btn-wa btn-full" style="padding:9px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:12px;justify-content:center;box-shadow:none;">
+              💬 সরাসরি বুক করুন
+            </a>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    setTimeout(checkReveal, 100);
+  } catch(e) {
+    console.error('Error loading public teachers:', e);
+    if (loading) loading.style.display = 'none';
+  }
+}
+
 // ───── URL ROUTING & SPA HISTORY NAVIGATION ─────
 // Handle popstate (Back/Forward browser buttons)
 window.addEventListener('popstate', (e) => {
@@ -3278,11 +3454,17 @@ window.addEventListener('popstate', (e) => {
   }
 });
 
-// Auto-navigate on initial page load if "?page=XXX" is in the URL query params
+// Auto-navigate on initial page load if "?page=XXX" is in the URL query params or sessionStorage
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const pageId = urlParams.get('page');
-  if (pageId && pageId !== 'home') {
+  const sessionPage = sessionStorage.getItem('gic_open_page');
+  if (sessionPage) {
+    sessionStorage.removeItem('gic_open_page');
+    setTimeout(() => {
+      if (typeof showPage === 'function') showPage(sessionPage, false);
+    }, 150);
+  } else if (pageId && pageId !== 'home') {
     setTimeout(() => {
       if (typeof showPage === 'function') {
         showPage(pageId, false);

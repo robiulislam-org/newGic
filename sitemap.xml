@@ -28,9 +28,17 @@
   <!-- Quran Portal Page -->
   <url>
     <loc>https://globalislamiccare.com/quran.html</loc>
-    <lastmod>2026-08-05T12:00:00+00:00</lastmod>
+    <lastmod>2026-08-16T12:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
+  </url>
+
+  <!-- Teachers & Individual Profiles Page -->
+  <url>
+    <loc>https://globalislamiccare.com/teachers.html</loc>
+    <lastmod>2026-08-16T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.92</priority>
   </url>
 
   <!-- PDF Quran & Islamic Kitabs -->
