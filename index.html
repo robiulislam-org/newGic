@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
@@ -2557,8 +2557,176 @@ footer {
       <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg" style="margin-bottom:16px;">💬 ফ্রি কাউন্সেলিং সেশন বুক করুন</a>
       <p style="color:var(--text-muted);font-size:14px;">কোনো বাধ্যবাধকতা নেই · সম্পূর্ণ বিনামূল্যে</p>
     </div>
+
+    <!-- ── TEACHER APPLICATION FORM ── -->
+    <div id="teacher-apply-section" style="margin-top:60px;" class="reveal">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(200,151,42,0.12);border:1px solid rgba(200,151,42,0.3);color:var(--gold-dark, #c8972a);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:0.04em;margin-bottom:14px;">✨ শিক্ষক হিসেবে যোগ দিন</div>
+        <h2 style="font-size:clamp(22px,3.5vw,30px);font-weight:800;color:var(--blue-dark);margin-bottom:10px;">GIC-তে শিক্ষক হিসেবে যুক্ত হতে চান?</h2>
+        <p style="color:var(--text-muted);font-size:15px;max-width:520px;margin:0 auto;">আপনার তথ্য জমা দিন। আমরা পর্যালোচনা করে অনুমোদন দিলে আপনার প্রোফাইল ওয়েবসাইটে প্রকাশিত হবে।</p>
+      </div>
+
+      <div style="background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:32px;max-width:780px;margin:0 auto;box-shadow:0 4px 32px rgba(15,39,68,0.08);">
+
+        <!-- Step Indicator -->
+        <div style="display:flex;align-items:center;gap:0;margin-bottom:28px;justify-content:center;">
+          <div id="apply-step-ind-1" style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--blue-dark);">
+            <span style="width:28px;height:28px;border-radius:50%;background:var(--blue-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;">১</span> পাবলিক তথ্য
+          </div>
+          <div style="width:40px;height:2px;background:var(--border);margin:0 10px;" id="apply-step-line"></div>
+          <div id="apply-step-ind-2" style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-muted);">
+            <span style="width:28px;height:28px;border-radius:50%;background:var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-size:13px;" id="apply-step2-circle">২</span> ব্যক্তিগত তথ্য
+          </div>
+        </div>
+
+        <form id="teacher-apply-form" onsubmit="submitTeacherApplication(event)">
+
+          <!-- STEP 1: PUBLIC INFO -->
+          <div id="apply-step-1">
+
+            <!-- Category -->
+            <div style="margin-bottom:18px;">
+              <label style="display:block;font-size:13px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;">শিক্ষকের ক্যাটাগরি বেছে নিন *</label>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+                <label style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;text-align:center;" id="cat-label-hafez">
+                  <input type="radio" name="app-category" value="hafez" style="display:none;" onchange="onCategoryChange('hafez')" required>
+                  <span style="font-size:28px;">📜</span>
+                  <span style="font-size:13px;font-weight:700;color:var(--blue-dark);">হাফেজ শিক্ষক</span>
+                  <span style="font-size:11px;color:var(--text-muted);">কোরআন হেফজকারী</span>
+                </label>
+                <label style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;text-align:center;" id="cat-label-alem">
+                  <input type="radio" name="app-category" value="alem" style="display:none;" onchange="onCategoryChange('alem')">
+                  <span style="font-size:28px;">🎓</span>
+                  <span style="font-size:13px;font-weight:700;color:var(--blue-dark);">আলেম শিক্ষক</span>
+                  <span style="font-size:11px;color:var(--text-muted);">মাওলানা / মুফতি</span>
+                </label>
+                <label style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;text-align:center;" id="cat-label-female">
+                  <input type="radio" name="app-category" value="female" style="display:none;" onchange="onCategoryChange('female')">
+                  <span style="font-size:28px;">👩‍🏫</span>
+                  <span style="font-size:13px;font-weight:700;color:var(--blue-dark);">মহিলা শিক্ষক</span>
+                  <span style="font-size:11px;color:var(--text-muted);">পুরুষ / মহিলা উভয়ের জন্য</span>
+                </label>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div>
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">পুরো নাম *</label>
+                <input type="text" id="app-name" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান" required style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+              <div>
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">পদবী / উপাধি</label>
+                <input type="text" id="app-designation" placeholder="যেমন: হাফেজুল কুরআন ও মাওলানা" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div>
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">অভিজ্ঞতা (বছর)</label>
+                <input type="number" id="app-experience" placeholder="যেমন: 5" min="0" max="50" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+              <div>
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">মোট ছাত্র পড়িয়েছেন</label>
+                <input type="number" id="app-students" placeholder="যেমন: 100" min="0" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">যোগ্যতাসমূহ (কমা দিয়ে আলাদা করুন)</label>
+              <input type="text" id="app-qualifications" placeholder="যেমন: হাফেজ, মাওলানা, ক্বারী, দাওরায়ে হাদিস" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">বিশেষজ্ঞতার বিষয় (কমা দিয়ে আলাদা করুন)</label>
+              <input type="text" id="app-specializations" placeholder="যেমন: সহীহ তেলাওয়াত, তাজউইদ, হেফজ, নাজেরা, শিশু শিক্ষা" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">ছবির সরাসরি লিংক (Google Drive / Imgur)</label>
+              <input type="url" id="app-photo-url" placeholder="https://drive.google.com/..." style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">💡 Google Drive-এর ক্ষেত্রে: শেয়ার লিংক থেকে File ID নিয়ে https://drive.google.com/uc?id=FILE_ID ফরম্যাটে দিন</div>
+            </div>
+
+            <div style="margin-bottom:20px;">
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">সংক্ষিপ্ত পরিচিতি</label>
+              <textarea id="app-bio" rows="3" placeholder="আপনার শিক্ষাগত পটভূমি, অভিজ্ঞতা এবং কোরআন শেখানোর পদ্ধতি সম্পর্কে সংক্ষেপে লিখুন..." style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;resize:vertical;transition:border-color 0.2s;box-sizing:border-box;line-height:1.7;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+            </div>
+
+            <div style="text-align:right;">
+              <button type="button" onclick="applyGoToStep2()" style="background:var(--blue-dark, #0f2744);color:#fff;padding:12px 28px;border:none;border-radius:10px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">পরবর্তী → ব্যক্তিগত তথ্য</button>
+            </div>
+          </div>
+
+          <!-- STEP 2: PRIVATE INFO -->
+          <div id="apply-step-2" style="display:none;">
+
+            <div style="background:#fff8f0;border:1.5px solid #f59e0b33;border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;">
+              <span style="font-size:18px;flex-shrink:0;">🔒</span>
+              <div style="font-size:13px;color:#92400e;line-height:1.6;">
+                <strong>গোপনীয়তার নিশ্চয়তা:</strong> এই তথ্য সম্পূর্ণ নিরাপদ। শুধুমাত্র আমাদের প্রতিষ্ঠানের প্রশাসক দেখতে পারবেন। কখনো পাবলিকলি প্রকাশ করা হবে না।
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div>
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">ফোন নম্বর *</label>
+                <input type="tel" id="app-phone" placeholder="+8801XXXXXXXXX" required style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+              <div>
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">WhatsApp নম্বর</label>
+                <input type="tel" id="app-whatsapp" placeholder="+8801XXXXXXXXX" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div>
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">ইমেইল</label>
+                <input type="email" id="app-email" placeholder="example@email.com" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+              <div>
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">জাতীয় পরিচয়পত্র নম্বর (NID)</label>
+                <input type="text" id="app-nid" placeholder="১৭ বা ১০ ডিজিটের NID" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">বর্তমান ঠিকানা</label>
+              <input type="text" id="app-address" placeholder="গ্রাম/মহল্লা, উপজেলা, জেলা" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+            </div>
+
+            <div style="margin-bottom:20px;">
+              <label style="display:block;font-size:13px;font-weight:600;color:var(--blue-dark);margin-bottom:6px;">অতিরিক্ত তথ্য বা বার্তা (ঐচ্ছিক)</label>
+              <textarea id="app-notes" rows="2" placeholder="আপনার কোনো বিশেষ দক্ষতা, প্রাপ্যতার সময় বা অন্য কোনো তথ্য জানাতে চাইলে লিখুন..." style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;resize:vertical;transition:border-color 0.2s;box-sizing:border-box;line-height:1.7;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+            </div>
+
+            <div id="apply-form-err" style="display:none;background:#fff1f2;border:1px solid #fca5a5;border-radius:10px;padding:12px 16px;font-size:13px;color:#be123c;margin-bottom:16px;"></div>
+
+            <div style="display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;">
+              <button type="button" onclick="applyGoToStep1()" style="background:transparent;color:var(--text-muted);padding:12px 20px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;">← পেছনে যান</button>
+              <button type="submit" id="apply-submit-btn" style="background:linear-gradient(135deg, #0f2744, #1e3d6e);color:#fff;padding:13px 32px;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+                📤 আবেদন জমা দিন
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+        <!-- Success Message -->
+        <div id="apply-success" style="display:none;text-align:center;padding:32px 20px;">
+          <div style="font-size:56px;margin-bottom:16px;">✅</div>
+          <h3 style="font-size:20px;font-weight:800;color:var(--blue-dark);margin-bottom:10px;">আবেদন সফলভাবে জমা হয়েছে!</h3>
+          <p style="color:var(--text-muted);font-size:14px;max-width:400px;margin:0 auto 20px;line-height:1.7;">
+            আলহামদুলিল্লাহ! আপনার আবেদন আমরা পেয়েছি। পর্যালোচনা সম্পন্ন হলে আমরা আপনার সাথে যোগাযোগ করব। প্রোফাইল অনুমোদিত হলে ওয়েবসাইটে প্রকাশিত হবে।
+          </p>
+          <a href="https://wa.me/8801733017521" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;">💬 WhatsApp-এ যোগাযোগ করুন</a>
+        </div>
+
+      </div>
+    </div><!-- /teacher-apply-section -->
+
   </div>
 </div>
+
 
 <!-- ─────────── ABOUT PAGE ─────────── -->
 <div class="page" id="page-about">
@@ -3053,7 +3221,6 @@ function showPage(id, push = true) {
   // close nav
   const navLinks = document.getElementById('navLinks');
   if (navLinks) navLinks.classList.remove('open');
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
   setTimeout(checkReveal, 100);
 
@@ -3396,9 +3563,24 @@ async function loadPublicTeachers(force = false) {
       });
 
       const profileUrl = `teachers.html?id=${t.slug}`;
-      const waMsg = `সালামুআলাইকুম! আমি শিক্ষক ${t.name}-এর সাথে কোরআন ক্লাস করতে আগ্রহী।`;
-      const waNumber = t.whatsapp || '8801733017521';
-      const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+      const catLabel = { hafez: 'হাফেজ শিক্ষক', alem: 'আলেম শিক্ষক', female: 'মহিলা শিক্ষক' }[t.category] || 'কোরআন শিক্ষক';
+      const specs = (t.specializations || []).slice(0, 3).join(', ') || 'কোরআন শিক্ষা';
+      const profileLink = `https://robiulislam.org/teachers.html?id=${t.slug}`;
+      const waMsg = `🌟 *নতুন শিক্ষার্থী আবেদন — Global Islamic Care (GIC)*
+
+একজন অভিভাবক শিক্ষক পছন্দ করেছেন:
+
+👨‍🏫 *শিক্ষক:* ${t.name}
+🏷️ *পদবী:* ${t.designation || catLabel}
+📚 *বিশেষজ্ঞতা:* ${specs}
+🔗 *প্রোফাইল:* ${profileLink}
+
+📌 অভিভাবক এই শিক্ষকের সাথে তাঁর সন্তানের ক্লাস বুক করতে আগ্রহী।
+অনুগ্রহ করে শীঘ্রই যোগাযোগ করুন।
+
+_Global Islamic Care — সহীহ কোরআন শিক্ষার অনলাইন প্রতিষ্ঠান_`;
+      const GIC_WA_NUMBER = '8801733017521'; // প্রতিষ্ঠানের নম্বর
+      const waUrl = `https://wa.me/${GIC_WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
 
       return `
         <div class="pub-teacher-card reveal">
@@ -3428,7 +3610,7 @@ async function loadPublicTeachers(force = false) {
               👨‍🏫 প্রোফাইল ও সময়সূচি দেখুন ↗
             </a>
             <a href="${waUrl}" target="_blank" class="btn btn-wa btn-full" style="padding:9px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:12px;justify-content:center;box-shadow:none;">
-              💬 সরাসরি বুক করুন
+              💬 এই শিক্ষক পছন্দ করেছি
             </a>
           </div>
         </div>
@@ -3589,8 +3771,89 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Stars 1-5 default active on page load handled by JS */
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
+<script>
+// ════════════════════════════════════════════════
+// TEACHER APPLICATION FORM CONTROLLER
+// ════════════════════════════════════════════════
+const GIC_SUPA_URL_APP = 'https://abpweawndpnaftkcsdcp.supabase.co';
+const GIC_SUPA_KEY_APP = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNzI3NTUsImV4cCI6MjA1NzY0ODc1NX0.nQOJJv1wOSDSPaVJPV8wy3u07B4HVB3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y';
+let dbApp = null;
+try { if (typeof supabase !== 'undefined') { dbApp = supabase.createClient(GIC_SUPA_URL_APP, GIC_SUPA_KEY_APP); } } catch(e) {}
 
+function onCategoryChange(cat) {
+  ['hafez','alem','female'].forEach(function(c) {
+    var el = document.getElementById('cat-label-' + c);
+    if (el) { if (c === cat) { el.style.borderColor = '#0f2744'; el.style.background = 'rgba(15,39,68,0.07)'; } else { el.style.borderColor = 'var(--border)'; el.style.background = ''; } }
+  });
+}
 
+function applyGoToStep2() {
+  var name = (document.getElementById('app-name') ? document.getElementById('app-name').value : '').trim();
+  var catRadio = document.querySelector('input[name="app-category"]:checked');
+  if (!catRadio) { alert('অনুগ্রহ করে একটি ক্যাটাগরি বেছে নিন।'); return; }
+  if (!name) { alert('অনুগ্রহ করে আপনার পুরো নাম লিখুন।'); document.getElementById('app-name').focus(); return; }
+  document.getElementById('apply-step-1').style.display = 'none';
+  document.getElementById('apply-step-2').style.display = 'block';
+  var ind2 = document.getElementById('apply-step-ind-2'); var circle2 = document.getElementById('apply-step2-circle');
+  if (ind2) ind2.style.color = 'var(--blue-dark)';
+  if (circle2) { circle2.style.background = 'var(--blue-dark)'; circle2.style.color = '#fff'; }
+  document.getElementById('teacher-apply-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function applyGoToStep1() {
+  document.getElementById('apply-step-1').style.display = 'block';
+  document.getElementById('apply-step-2').style.display = 'none';
+  var ind2 = document.getElementById('apply-step-ind-2'); var circle2 = document.getElementById('apply-step2-circle');
+  if (ind2) ind2.style.color = 'var(--text-muted)';
+  if (circle2) { circle2.style.background = 'var(--border)'; circle2.style.color = 'var(--text-muted)'; }
+}
+
+async function submitTeacherApplication(event) {
+  event.preventDefault();
+  var errEl = document.getElementById('apply-form-err');
+  var submitBtn = document.getElementById('apply-submit-btn');
+  errEl.style.display = 'none';
+  var catRadio = document.querySelector('input[name="app-category"]:checked');
+  var category = catRadio ? catRadio.value : '';
+  var name = (document.getElementById('app-name').value || '').trim();
+  var designation = (document.getElementById('app-designation').value || '').trim();
+  var experience = parseInt(document.getElementById('app-experience').value) || 0;
+  var students = parseInt(document.getElementById('app-students').value) || 0;
+  var qualStr = (document.getElementById('app-qualifications').value || '').trim();
+  var specStr = (document.getElementById('app-specializations').value || '').trim();
+  var photoUrl = (document.getElementById('app-photo-url').value || '').trim();
+  var bio = (document.getElementById('app-bio').value || '').trim();
+  var phone = (document.getElementById('app-phone').value || '').trim();
+  var whatsapp = (document.getElementById('app-whatsapp').value || '').trim();
+  var email = (document.getElementById('app-email').value || '').trim();
+  var nid = (document.getElementById('app-nid').value || '').trim();
+  var address = (document.getElementById('app-address').value || '').trim();
+  var notes = (document.getElementById('app-notes').value || '').trim();
+  if (!phone && !whatsapp) { errEl.textContent = '❌ ফোন নম্বর বা WhatsApp নম্বর — যেকোনো একটি অবশ্যই দিতে হবে।'; errEl.style.display = 'block'; return; }
+  var qualifications = qualStr ? qualStr.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : [];
+  var specializations = specStr ? specStr.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : [];
+  submitBtn.disabled = true; submitBtn.innerHTML = '⏳ জমা দেওয়া হচ্ছে...';
+  try {
+    var success = false; var errMsg = '';
+    if (!dbApp) { try { dbApp = supabase.createClient(GIC_SUPA_URL_APP, GIC_SUPA_KEY_APP); } catch(ex) {} }
+    if (dbApp) {
+      try {
+        var res = await dbApp.rpc('submit_teacher_application', { p_category: category, p_name: name, p_designation: designation, p_photo_url: photoUrl, p_qualifications: qualifications, p_specializations: specializations, p_experience_years: experience, p_students_taught: students, p_bio: bio, p_weekly_schedule: {sat:[],sun:[],mon:[],tue:[],wed:[]}, p_phone: phone, p_whatsapp_number: whatsapp, p_email: email, p_address: address, p_nid_number: nid, p_private_notes: notes });
+        if (res.error) { errMsg = res.error.message; } else if (res.data && res.data.success) { success = true; } else if (res.data && res.data.message) { errMsg = res.data.message; }
+      } catch(e) {
+        try {
+          var ins = await dbApp.from('teacher_applications').insert([{ category: category, name: name, designation: designation, photo_url: photoUrl, qualifications: qualifications, specializations: specializations, experience_years: experience, students_taught: students, bio: bio, weekly_schedule: {sat:[],sun:[],mon:[],tue:[],wed:[]}, phone: phone, whatsapp_number: whatsapp, email: email, address: address, nid_number: nid, private_notes: notes, status: 'pending' }]);
+          if (!ins.error) { success = true; } else { errMsg = ins.error.message; }
+        } catch(e2) { errMsg = e2.message || 'সমস্যা হয়েছে'; }
+      }
+    } else { errMsg = 'ডেটাবেজ সংযোগ প্রস্তুত নয়। পেজ রিলোড করে আবার চেষ্টা করুন।'; }
+    if (success) { document.getElementById('teacher-apply-form').style.display = 'none'; document.getElementById('apply-success').style.display = 'block'; }
+    else { errEl.textContent = '❌ ' + (errMsg || 'আবেদন জমা দিতে সমস্যা হয়েছে।'); errEl.style.display = 'block'; }
+  } catch(err) {
+    errEl.textContent = '❌ ' + (err.message || 'অপ্রত্যাশিত সমস্যা হয়েছে'); errEl.style.display = 'block';
+  } finally { submitBtn.disabled = false; submitBtn.innerHTML = '📤 আবেদন জমা দিন'; }
+}
+</script>
 
 </body>
 </html>
