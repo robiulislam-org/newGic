@@ -3622,6 +3622,60 @@ async function loadTeachersAdmin() {
         if (!error && Array.isArray(data)) teachersData = data;
       } catch(e) {}
     }
+    
+    // If database has 0 teachers, provide the 3 demo teachers so admin can view/manage/delete
+    if (teachersData.length === 0) {
+      teachersData = [
+        {
+          id: 'demo-1',
+          name: "হাফেজ মাওলানা তানভীর আহমেদ (Hafez Tanvir Ahmed)",
+          slug: "hafez-tanvir-ahmed",
+          designation: "Hafez of Quran & Senior Tajweed Instructor",
+          photo_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80",
+          qualifications: ["Dawrah-e-Hadith", "Hifzul Quran", "Sanad-e-Tajweed"],
+          bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন শিক্ষা দিচ্ছেন।",
+          experience_years: 7,
+          students_taught: 180,
+          specializations: ["Foundation Recitation", "Tajweed & Makharij", "Kids Pedagogy"],
+          weekly_schedule: { sat: [10, 11, 14], sun: [10, 14], mon: [10, 11], tue: [10, 14], wed: [10, 11, 14] },
+          whatsapp: "+8801733017521",
+          sort_order: 1,
+          is_active: true
+        },
+        {
+          id: 'demo-2',
+          name: "মুফতি সালমান ফারিস (Mufti Salman Faris)",
+          slug: "mufti-salman-faris",
+          designation: "Mufti & Quran Memorization Mentor",
+          photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+          qualifications: ["Mufti (Ifta)", "Dawrah-e-Hadith", "Hifzul Quran 30 Para"],
+          bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ।",
+          experience_years: 9,
+          students_taught: 240,
+          specializations: ["Complete Hifzul Quran", "Advanced Tajweed"],
+          weekly_schedule: { sat: [11, 13, 15], sun: [11, 15], mon: [11, 13], tue: [11, 15], wed: [11, 13, 15] },
+          whatsapp: "+8801733017521",
+          sort_order: 2,
+          is_active: true
+        },
+        {
+          id: 'demo-3',
+          name: "হাফেজা উম্মে কুলসুম (Hafeza Umme Kulsum)",
+          slug: "hafeza-umme-kulsum",
+          designation: "Senior Female Quran Mentor",
+          photo_url: "",
+          qualifications: ["Hafeza of Quran", "Alema Degree", "Tajweed Certified"],
+          bio: "ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা ও সহীহ তেলাওয়াত শেখান।",
+          experience_years: 5,
+          students_taught: 150,
+          specializations: ["Female Student Track", "Early Childhood Noorani"],
+          weekly_schedule: { sat: [9, 10, 12], sun: [9, 12], mon: [9, 10], tue: [9, 12], wed: [9, 10, 12] },
+          whatsapp: "+8801733017521",
+          sort_order: 3,
+          is_active: true
+        }
+      ];
+    }
     allAdminTeachers = teachersData;
 
     // 2. Fetch Bookings
