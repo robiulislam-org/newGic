@@ -7,8 +7,8 @@
   <!-- SEO Meta — updated dynamically by JS -->
   <link rel="icon" type="image/jpeg" href="logo.jpg">
   <link rel="apple-touch-icon" href="logo.jpg">
-  <title id="pg-title">Faculty Profile & Schedule | Global Islamic Care</title>
-  <meta name="description" id="pg-desc" content="Learn Quran with certified scholars at GIC. View mentor qualifications, experience, and weekly live class schedules to book 1-on-1 sessions.">
+  <title id="pg-title">শিক্ষক প্রোফাইল | GIC — Global Islamic Care</title>
+  <meta name="description" id="pg-desc" content="GIC-এর যোগ্য ও অভিজ্ঞ শিক্ষকদের সাথে সহীহ কোরআন শিখুন। শিক্ষকের যোগ্যতা, অভিজ্ঞতা ও সময়সূচি দেখুন এবং পছন্দের সময়ে ক্লাস বুক করুন।">
   <meta name="keywords" id="pg-kw" content="কোরআন শিক্ষক, হাফেজ শিক্ষক, মাওলানা, তাজউইদ শিক্ষক, অনলাইন কোরআন, GIC">
   <meta name="robots" content="index, follow">
   <link rel="canonical" id="pg-canonical" href="https://globalislamiccare.com/teachers.html">
@@ -409,39 +409,39 @@
 <!-- ── PAGE LOADER ── -->
 <div id="page-loader">
   <div class="loader-logo"><img src="logo.jpg" alt="GIC" style="width:64px;height:64px;border-radius:16px;object-fit:cover;box-shadow:0 8px 24px rgba(0,43,128,0.4);border:2px solid rgba(200,151,42,0.4);"></div>
-  <div class="loader-text">Loading mentor profile...</div>
+  <div class="loader-text">লোড হচ্ছে...</div>
   <div class="loader-bar"><div class="loader-bar-inner"></div></div>
 </div>
 
 <!-- ── NOT FOUND ── -->
 <div id="not-found" style="display:none; min-height:100vh; align-items:center; justify-content:center; flex-direction:column; gap:16px; text-align:center; padding:40px;">
   <div class="nf-icon">😔</div>
-  <h2>Teacher Profile Not Found</h2>
-  <p style="color:var(--text-muted); max-width:320px;">This mentor profile is currently unavailable or inactive.</p>
-  <a href="index.html#teachers" class="btn btn-navy" style="margin-top:8px;">← Back to All Faculty</a>
+  <h2>শিক্ষক পাওয়া যায়নি</h2>
+  <p style="color:var(--text-muted); max-width:320px;">এই URL-এ কোনো শিক্ষকের প্রোফাইল নেই, অথবা এটি নিষ্ক্রিয় করা হয়েছে।</p>
+  <a href="index.html#teachers" class="btn btn-navy" style="margin-top:8px;">← সকল শিক্ষক দেখুন</a>
 </div>
 
 <!-- ── BOOKING MODAL ── -->
 <div class="modal-overlay" id="booking-modal">
   <div class="modal">
-    <div class="modal-title">📅 Book 1-on-1 Class Slot</div>
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Your appointment will be confirmed directly via WhatsApp</p>
-    <div class="modal-slot-info" id="modal-slot-info">Saturday, ০৭:০০ – ০৭:৫০</div>
+    <div class="modal-title">📅 ক্লাস সময় বুক করুন</div>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">WhatsApp-এ আপনার বুকিং নিশ্চিত হবে</p>
+    <div class="modal-slot-info" id="modal-slot-info">শনিবার, ০৭:০০ – ০৭:৫০</div>
     <div class="form-group">
-      <label class="form-label" for="bk-name">Your Full Name</label>
-      <input class="form-inp" id="bk-name" type="text" placeholder="Enter your full name">
+      <label class="form-label" for="bk-name">আপনার নাম</label>
+      <input class="form-inp" id="bk-name" type="text" placeholder="পূর্ণ নাম লিখুন">
     </div>
     <div class="form-group">
-      <label class="form-label" for="bk-phone">Phone / WhatsApp Number</label>
+      <label class="form-label" for="bk-phone">ফোন নম্বর (WhatsApp)</label>
       <input class="form-inp" id="bk-phone" type="tel" placeholder="+880 XXXXXXXXXX">
     </div>
     <div class="form-group">
-      <label class="form-label" for="bk-msg">Message (Optional)</label>
-      <textarea class="form-inp" id="bk-msg" placeholder="Write any specific learning goals or questions..."></textarea>
+      <label class="form-label" for="bk-msg">বার্তা (ঐচ্ছিক)</label>
+      <textarea class="form-inp" id="bk-msg" placeholder="কোনো বিশেষ কথা থাকলে লিখুন..."></textarea>
     </div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeBookingModal()">Cancel</button>
-      <button class="btn btn-wa" id="bk-submit-btn" onclick="submitBooking()">💬 Confirm on WhatsApp</button>
+      <button class="btn btn-outline" onclick="closeBookingModal()">বাতিল</button>
+      <button class="btn btn-wa" id="bk-submit-btn" onclick="submitBooking()">💬 WhatsApp-এ পাঠান</button>
     </div>
   </div>
 </div>
@@ -449,8 +449,8 @@
 <!-- ── REVIEW MODAL ── -->
 <div class="modal-overlay" id="review-modal">
   <div class="modal">
-    <div class="modal-title">⭐ Leave a Review</div>
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">এই শিক্ষক সম্পর্কে আপনার Experience শেয়ার করুন</p>
+    <div class="modal-title">⭐ রিভিউ দিন</div>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">এই শিক্ষক সম্পর্কে আপনার অভিজ্ঞতা শেয়ার করুন</p>
     <div class="form-group">
       <label class="form-label">রেটিং দিন</label>
       <div class="star-picker" id="rv-stars">
@@ -462,7 +462,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label" for="rv-name">Your Full Name</label>
+      <label class="form-label" for="rv-name">আপনার নাম</label>
       <input class="form-inp" id="rv-name" type="text" placeholder="অভিভাবক / শিক্ষার্থীর নাম">
     </div>
     <div class="form-group">
@@ -471,7 +471,7 @@
     </div>
     <div id="review-modal-success" style="display:none; background:var(--green-soft); border:1px solid rgba(26,158,95,0.3); border-radius:10px; padding:12px 16px; font-size:14px; color:var(--green); font-weight:600; margin-bottom:12px;">✅ ধন্যবাদ! আপনার রিভিউ পর্যালোচনার পরে প্রকাশিত হবে।</div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeReviewModal()">Cancel</button>
+      <button class="btn btn-outline" onclick="closeReviewModal()">বাতিল</button>
       <button class="btn btn-gold" onclick="submitReview()">✅ রিভিউ পাঠান</button>
     </div>
   </div>
@@ -504,11 +504,11 @@
           <div class="hero-stats">
             <div class="hero-stat">
               <span class="hero-stat-val" id="stat-exp">—</span>
-              <span class="hero-stat-lbl">বছরের Experience</span>
+              <span class="hero-stat-lbl">বছরের অভিজ্ঞতা</span>
             </div>
             <div class="hero-stat">
               <span class="hero-stat-val" id="stat-students">—</span>
-              <span class="hero-stat-lbl">জন Students Taught</span>
+              <span class="hero-stat-lbl">জন ছাত্র পড়িয়েছেন</span>
             </div>
             <div class="hero-stat">
               <span class="hero-stat-val" id="stat-rating">—</span>
@@ -546,7 +546,7 @@
             <div class="card-icon">📅</div>
             <div>
               <div class="card-title">সাপ্তাহিক সময়সূচি</div>
-              <div class="card-subtitle">Saturday – Wednesday · প্রতিটি স্লট ৫০ মিনিট</div>
+              <div class="card-subtitle">শনিবার – বুধবার · প্রতিটি স্লট ৫০ মিনিট</div>
             </div>
           </div>
 
@@ -564,7 +564,7 @@
             <div class="day-tab" onclick="showDay('wed')" id="dtab-wed">বুধ</div>
           </div>
           <div class="slots-grid" id="slots-grid">
-            <div style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:20px;">Loading mentor profile...</div>
+            <div style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:20px;">লোড হচ্ছে...</div>
           </div>
         </div>
 
@@ -578,7 +578,7 @@
             </div>
           </div>
           <div class="reviews-list" id="reviews-list">
-            <div class="no-reviews">No reviews yet for this mentor</div>
+            <div class="no-reviews">এখনো কোনো রিভিউ নেই</div>
           </div>
 
           <!-- Submit Review -->
@@ -629,7 +629,7 @@
               <button class="btn btn-wa btn-full" id="wa-direct-btn" onclick="openWhatsApp()">
                 💬 WhatsApp-এ যোগাযোগ করুন
               </button>
-              <p class="wa-note">সময়সূচি থেকে Open Slotsে ক্লিক করে সরাসরি বুক করুন</p>
+              <p class="wa-note">সময়সূচি থেকে ফাঁকা স্লটে ক্লিক করে সরাসরি বুক করুন</p>
             </div>
           </div>
 
@@ -637,7 +637,7 @@
           <div class="card" style="margin-top:0;">
             <div style="font-weight:700; font-size:14px; color:var(--navy); margin-bottom:14px;">📊 দ্রুত তথ্য</div>
             <div class="bc-info-row">
-              <span class="bc-info-lbl">Experience</span>
+              <span class="bc-info-lbl">অভিজ্ঞতা</span>
               <span class="bc-info-val" id="qs-exp">—</span>
             </div>
             <div class="bc-info-row">
@@ -689,7 +689,7 @@ const SLOTS = [
   { idx: 16, start: '২২:০০', end: '২২:৫০', label: '২২:০০ – ২২:৫০', period: 'রাত (১০টা)' },
 ];
 
-const DAY_NAMES = { sat: 'Saturday', sun: 'Sunday', mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday' };
+const DAY_NAMES = { sat: 'শনিবার', sun: 'রবিবার', mon: 'সোমবার', tue: 'মঙ্গলবার', wed: 'বুধবার' };
 
 let teacherData = null;
 let reviewsData = [];
@@ -699,17 +699,17 @@ let reviewRating = 5;
 
 const DEMO_TEACHERS_MAP = {
   'hafez-tanvir-ahmed': {
-    name: "হাফেজ মাওলানা তানভীর আহমেদ (Hafez Tanvir Ahmed)",
+    name: "হাফেজ মাওলানা তানভীর আহমেদ",
     slug: "hafez-tanvir-ahmed",
-    designation: "Hafez of Quran & Senior Tajweed Instructor (হাফেজ ও তাজবীদ শিক্ষক)",
+    designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
     photo_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80",
-    qualifications: ["Dawrah-e-Hadith", "Hifzul Quran", "Sanad-e-Tajweed"],
+    qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
     languages: ["বাংলা", "English", "العربية"],
     category: "hafez",
-    bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী (UK, USA) শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন ও তাজউইদ শিক্ষা দিচ্ছেন। শিশুদের সহজে শেখানোর বিশেষ পারদর্শিতা রয়েছে।",
+    bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী (UK, USA) শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন ও তাজউইদ শিক্ষা দিচ্ছেন।",
     experience_years: 7,
     students_taught: 180,
-    specializations: ["Foundation Recitation", "Tajweed & Makharij", "Kids Pedagogy"],
+    specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "শিশু শিক্ষা"],
     weekly_schedule: {
       sat: [10, 11, 14],
       sun: [10, 14],
@@ -719,17 +719,17 @@ const DEMO_TEACHERS_MAP = {
     }
   },
   'mufti-salman-faris': {
-    name: "মুফতি সালমান ফারিস (Mufti Salman Faris)",
+    name: "মুফতি সালমান ফারিস",
     slug: "mufti-salman-faris",
-    designation: "Mufti & Quran Memorization Mentor (মুফতি ও হেফজ মেন্টর)",
+    designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
     photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
-    qualifications: ["Mufti (Ifta)", "Dawrah-e-Hadith", "Hifzul Quran 30 Para"],
+    qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
     languages: ["বাংলা", "English", "Urdu"],
     category: "alem",
-    bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ থেকে শুরু করে দ্রুত হিফজ সম্পন্ন করার বিষয়ে অভিজ্ঞ।",
+    bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ ও দ্রুত হেফজ সম্পন্ন করায় অভিজ্ঞ।",
     experience_years: 9,
     students_taught: 240,
-    specializations: ["Complete Hifzul Quran", "Advanced Tajweed", "Adult Learning Track"],
+    specializations: ["সম্পূর্ণ হেফজ প্রোগ্রাম", "উন্নত তাজউইদ", "বড়দের কোরআন"],
     weekly_schedule: {
       sat: [11, 13, 15],
       sun: [11, 15],
@@ -739,17 +739,17 @@ const DEMO_TEACHERS_MAP = {
     }
   },
   'hafeza-umme-kulsum': {
-    name: "হাফেজা উম্মে কুলসুম (Hafeza Umme Kulsum)",
+    name: "হাফেজা উম্মে কুলসুম",
     slug: "hafeza-umme-kulsum",
-    designation: "Senior Female Quran Mentor (সিনিয়র মহিলা কোরআন শিক্ষক)",
+    designation: "সিনিয়র মহিলা কোরআন শিক্ষক",
     photo_url: "",
-    qualifications: ["Hafeza of Quran", "Alema Degree", "Tajweed Certified"],
+    qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড"],
     languages: ["বাংলা", "English"],
     category: "female",
-    bio: "ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা, সহীহ তেলাওয়াত ও তাজউইদ শিক্ষা দেন। শত শত শিক্ষার্থী তাঁর কাছে পড়ে উপকৃত হয়েছেন।",
+    bio: "ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা, সহীহ তেলাওয়াত ও তাজউইদ শিক্ষা দেন।",
     experience_years: 5,
     students_taught: 150,
-    specializations: ["Female Student Track", "Early Childhood Noorani", "Daily Duas & Masail"],
+    specializations: ["মহিলা শিক্ষার্থী", "নূরানী কায়দা", "দৈনিক দোয়া ও মাসায়েল"],
     weekly_schedule: {
       sat: [9, 10, 12],
       sun: [9, 12],
@@ -779,12 +779,11 @@ async function init() {
     console.warn('DB lookup failed, checking demo roster:', e);
   }
 
-  // Fallback to demo teacher map if available
   if (DEMO_TEACHERS_MAP[slug]) {
     teacherData = DEMO_TEACHERS_MAP[slug];
     reviewsData = [
-      { student_name: "রাহেলা বেগম (লন্ডন, UK)", rating: 5, comment: "মাশাআল্লাহ ওস্তাদ অত্যন্ত যত্নসহকারে ও ধৈর্যের সাথে আমার সন্তানকে তাজউইদ শেখাচ্ছেন।", created_at: new Date().toISOString() },
-      { student_name: "ফারহান আহমেদ (ঢাকা)", rating: 5, comment: "দেড় মাসেই আমার ছেলের তেলাওয়াতে চমৎকার উন্নতি হয়েছে। জাজাকাল্লাহ খায়রান।", created_at: new Date().toISOString() }
+      { student_name: "রাহেলা বেগম (ঢাকা)", rating: 5, comment: "মাশাআল্লাহ ওস্তাদ অত্যন্ত যত্নসহকারে ও ধৈর্যের সাথে আমার সন্তানকে তাজউইদ শেখাচ্ছেন।", created_at: new Date().toISOString() },
+      { student_name: "ফারহান আহমেদ (UK)", rating: 5, comment: "দেড় মাসেই আমার ছেলের তেলাওয়াতে চমৎকার উন্নতি হয়েছে। জাজাকাল্লাহ খায়রান।", created_at: new Date().toISOString() }
     ];
     renderPage();
     hideLoader();

@@ -12,14 +12,14 @@
  */
 
 const categoriesData = {
-  all: "All Lessons (সব কোর্স)",
-  pillars: "🕌 Pillars of Islam (মূল ভিত্তি)",
-  health: "💪 Sunnah & Health (স্বাস্থ্য)",
-  communication: "🤝 Manners & Relations (সম্পর্ক)",
-  money: "💰 Halal Living & Finance (উপার্জন)",
-  mindset: "🧠 Character & Mindset (আত্মউন্নয়ন)",
-  sales: "💼 Ethics in Trade (ব্যবসা)",
-  history: "📜 Islamic History (ইতিহাস)"
+  all: "সব কোর্স",
+  pillars: "🕌 ইসলামের মূল ভিত্তি",
+  health: "💪 শরীরচর্চা ও স্বাস্থ্য",
+  communication: "🤝 কমিউনিকেশন ও সম্পর্ক",
+  money: "💰 মানি ম্যানেজমেন্ট",
+  mindset: "🧠 মাইন্ডসেট ও আত্মউন্নয়ন",
+  sales: "💼 সেলস ও ব্যবসা",
+  history: "📜 ইতিহাস ও অন্যান্য"
 };
 
 const miniCoursesData = [

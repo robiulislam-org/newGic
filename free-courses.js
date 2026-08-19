@@ -69,28 +69,28 @@ function updateAuthUI() {
 
   if (studentSession && studentSession.student_id) {
     const contactInfo = studentSession.email 
-      ? `Email: ${studentSession.email}` 
-      : `Phone: ${studentSession.phone || 'নেই'}`;
+      ? `জিমেইল: ${studentSession.email}` 
+      : `নম্বর: ${studentSession.phone || 'নেই'}`;
     authBar.innerHTML = `
       <div class="student-auth-info">
         <div class="student-avatar">${studentSession.student_id.slice(-2)}</div>
         <div class="student-details">
-          <h4>Student ID: <span style="color:var(--gold);font-family:monospace;">${studentSession.student_id}</span></h4>
+          <h4>স্টুডেন্ট আইডি: <span style="color:var(--gold);font-family:monospace;">${studentSession.student_id}</span></h4>
           <p>${contactInfo}</p>
         </div>
       </div>
-      <button class="btn" style="background: transparent; border: 2px solid #ef4444; color: #ef4444; font-size: 13px; padding: 10px 20px; font-weight: 700; border-radius: 10px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ef4444';" onclick="logoutStudent()">Logout</button>
+      <button class="btn" style="background: transparent; border: 2px solid #ef4444; color: #ef4444; font-size: 13px; padding: 10px 20px; font-weight: 700; border-radius: 10px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ef4444';" onclick="logoutStudent()">লগআউট</button>
     `;
   } else {
     authBar.innerHTML = `
       <div class="student-auth-info">
         <div class="student-avatar" style="background:#e2e8f0;color:#64748b;">?</div>
         <div class="student-details">
-          <h4>Sign In to Save Progress</h4>
-          <p style="color:#f97316;">⚠️ Login to retain your completed lessons, XP, and streak scores across devices.</p>
+          <h4>প্রগ্রেস সেভ করতে লগইন করুন</h4>
+          <p style="color:#f97316;">⚠️ লগইন না করলে রিফ্রেশে আপনার অগ্রগতি মুছে যাবে! আপনার স্টুডেন্ট আইডি মনে রাখুন।</p>
         </div>
       </div>
-      <button class="btn btn-blue" onclick="openStudentAuth()">Login with Google</button>
+      <button class="btn btn-blue" onclick="openStudentAuth()">লগইন / আইডি তৈরি করুন</button>
     `;
   }
 }
@@ -112,7 +112,7 @@ async function loginWithGoogle() {
   const statusEl = document.getElementById('auth-status');
   if (statusEl) {
     statusEl.style.color = '#1e293b';
-    statusEl.innerText = 'Opening Google Sign-In...';
+    statusEl.innerText = 'গুগল লগইন উইন্ডো খোলা হচ্ছে...';
   }
   
   const authClient = getAuthClient();
@@ -632,12 +632,12 @@ function renderMiniCourses() {
         <div style="margin-top:14px; background:rgba(255,255,255,0.18); border-radius:20px; height:6px; overflow:hidden;">
           <div style="background:linear-gradient(90deg,var(--gold),#f59e0b); height:100%; width:${progress}%; border-radius:20px; transition:width 0.5s ease;"></div>
         </div>
-        <div style="color:rgba(255,255,255,0.7); font-size:11px; margin-top:6px; font-weight:600;">${completedCount}/${course.chapters.length} Parts সম্পন্ন • ${progress}%</div>
+        <div style="color:rgba(255,255,255,0.7); font-size:11px; margin-top:6px; font-weight:600;">${completedCount}/${course.chapters.length} পার্ট সম্পন্ন • ${progress}%</div>
       </div>
       <div class="course-body" style="padding: 20px; background:#fff;">
         <div style="display:flex; justify-content:space-between; margin-bottom:14px; font-size:11.5px; color:var(--text-muted); font-weight:700; flex-wrap:wrap; gap:8px;">
           <span style="display:flex; align-items:center; gap:4px; background:var(--cream); padding:5px 10px; border-radius:20px;">⏱️ ${course.duration}</span>
-          <span style="display:flex; align-items:center; gap:4px; background:var(--cream); padding:5px 10px; border-radius:20px;">📑 ${course.chapters.length} Parts</span>
+          <span style="display:flex; align-items:center; gap:4px; background:var(--cream); padding:5px 10px; border-radius:20px;">📑 ${course.chapters.length} পার্ট</span>
           <span style="display:flex; align-items:center; gap:4px; background:var(--cream); padding:5px 10px; border-radius:20px;">📊 ${difficulty}</span>
         </div>
         
@@ -655,7 +655,7 @@ function renderMiniCourses() {
 
         </div>
         <button onclick="openCourseViewer(${course.id})" class="btn btn-primary btn-full" style="margin-bottom:12px; font-size:15px; padding:14px; font-weight:800; letter-spacing:0.3px; border-radius:12px;">
-          ${progress > 0 && progress < 100 ? '▶ চলুন এগিয়ে যাই →' : progress === 100 ? '🔄 পুনরায় পড়ুন' : '🚀 কোর্স Start Lesson →'}
+          ${progress > 0 && progress < 100 ? '▶ চলুন এগিয়ে যাই →' : progress === 100 ? '🔄 পুনরায় পড়ুন' : '🚀 কোর্স শুরু করুন →'}
         </button>
         <!-- Social Bar -->
         <div class="course-social-bar" style="display:flex; align-items:center; gap:8px; padding-top:10px; border-top:1px solid var(--border);">
@@ -811,7 +811,7 @@ function renderCommentsList(courseId) {
   const list = document.getElementById('comments-list');
   if (!list) return;
 
-  list.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ Loading comments...</div>`;
+  list.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ মন্তব্য লোড হচ্ছে...</div>`;
 
   fetch(`${gicSupabaseUrl}/rest/v1/course_comments?course_id=eq.${courseId}&order=created_at.desc&limit=50`, {
     headers: { 'apikey': gicSupabaseKey, 'Authorization': 'Bearer ' + gicSupabaseKey }
@@ -821,7 +821,7 @@ function renderCommentsList(courseId) {
     if (!Array.isArray(comments) || comments.length === 0) {
       list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-muted);">
         <div style="font-size:40px;margin-bottom:12px;">💭</div>
-        <p>No reflections yet. Be the first to share!</p>
+        <p>এখনো কোনো মন্তব্য নেই। প্রথম মন্তব্য করুন!</p>
       </div>`;
       return;
     }
@@ -840,7 +840,7 @@ function renderCommentsList(courseId) {
     `).join('');
   })
   .catch(() => {
-    list.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);">Could not load comments.</div>`;
+    list.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);">মন্তব্য লোড করা যায়নি।</div>`;
   });
 }
 
@@ -920,7 +920,7 @@ function openShareModal(courseId) {
 
   const shareUrl = getCleanCourseShareUrl(cId);
     
-  const shareText = `📖 *${course.title}* — সম্পূর্ণ Free Lesson (Global Islamic Care)!
+  const shareText = `📖 *${course.title}* — সম্পূর্ণ ফ্রি কোর্স (Global Islamic Care)!
 
 🌟 *কোর্সের বৈশিষ্ট্যসমূহ:*
 ✅ তাজউইদ ও সহীহ উচ্চারণ শিক্ষা
@@ -962,7 +962,7 @@ function openShareModal(courseId) {
     // Reset copy button state styles
     copyBtn.style.background = 'var(--blue)';
     copyBtn.style.color = '#fff';
-    copyBtn.innerHTML = '<span>Copy Link</span>';
+    copyBtn.innerHTML = '<span>কপি করুন</span>';
     
     copyBtn.onclick = () => {
       navigator.clipboard.writeText(shareUrl).then(() => {
@@ -971,11 +971,11 @@ function openShareModal(courseId) {
         
         // Animate success state
         copyBtn.style.background = '#22c55e';
-        copyBtn.innerHTML = '<span>Copied! ✓</span>';
+        copyBtn.innerHTML = '<span>কপি হয়েছে! ✓</span>';
         
         setTimeout(() => {
           copyBtn.style.background = 'var(--blue)';
-          copyBtn.innerHTML = '<span>Copy Link</span>';
+          copyBtn.innerHTML = '<span>কপি করুন</span>';
         }, 2000);
       }).catch(err => {
         console.error('Failed to copy: ', err);
@@ -1043,7 +1043,7 @@ function renderXPBar() {
       </div>
       <div style="display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:700;">
         <span style="font-size:20px;">✅</span>
-        <span style="color:#4ade80;">${completedChapters.length} Parts সম্পন্ন</span>
+        <span style="color:#4ade80;">${completedChapters.length} পার্ট সম্পন্ন</span>
       </div>
     </div>
   `;
@@ -1102,7 +1102,7 @@ function renderCourseEngagementBar(courseId) {
   bar.innerHTML = `
     <span style="font-size:13px;font-weight:700;color:var(--text-muted);flex:1;">${course.title}</span>
     <button class="social-btn cv-like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLikeInViewer(${courseId}, this)" style="font-size:13px;">
-      ${isLiked ? '❤️' : '🤍'} Likes (${getLikeCount(courseId)})
+      ${isLiked ? '❤️' : '🤍'} লাইক (${getLikeCount(courseId)})
     </button>
     <button class="social-btn" onclick="openCommentModal(${courseId})" style="font-size:13px;">
       💬 মন্তব্য (${commentCount})
@@ -1120,7 +1120,7 @@ function toggleLikeInViewer(courseId, btn) {
   courseLikes[courseId] = !courseLikes[courseId];
   localStorage.setItem('gic_likes', JSON.stringify(courseLikes));
   const isLiked = courseLikes[courseId];
-  btn.innerHTML = `${isLiked ? '❤️' : '🤍'} Likes (${getLikeCount(courseId)})`;
+  btn.innerHTML = `${isLiked ? '❤️' : '🤍'} লাইক (${getLikeCount(courseId)})`;
   btn.classList.toggle('liked', isLiked);
   if (isLiked) { addXP(2); showToast('❤️ লাইক দেওয়ার জন্য ধন্যবাদ! +2 XP'); }
 }
@@ -1166,7 +1166,7 @@ function toggleViewerDarkMode() {
     if (viewerDarkMode) {
       viewer.style.background = '#091526';
       viewer.style.color = '#e2e8f0';
-      btn.innerHTML = '☀️ Light Mode';
+      btn.innerHTML = '☀️ লাইট মোড';
       btn.classList.add('liked');
       
       const overridesExist = document.getElementById('dark-mode-viewer-overrides');
@@ -1191,7 +1191,7 @@ function toggleViewerDarkMode() {
     } else {
       viewer.style.background = 'var(--cream)';
       viewer.style.color = 'var(--text)';
-      btn.innerHTML = '🌙 Dark Mode';
+      btn.innerHTML = '🌙 ডার্ক মোড';
       btn.classList.remove('liked');
       const el = document.getElementById('dark-mode-viewer-overrides');
       if (el) el.remove();
@@ -1242,7 +1242,7 @@ function showChapter(index) {
 
   const progressPercent = ((index + 1) / course.chapters.length) * 100;
   document.getElementById('cv-progress-fill').style.width = progressPercent + '%';
-  document.getElementById('cv-progress-text').innerText = `Parts ${index + 1} / ${course.chapters.length}`;
+  document.getElementById('cv-progress-text').innerText = `পার্ট ${index + 1} / ${course.chapters.length}`;
 
   const contentEl = document.getElementById('cv-chapter-content');
   const titleEl = document.getElementById('cv-chapter-title');
@@ -1258,7 +1258,7 @@ function showChapter(index) {
         <button onclick="changeFontSize(10)" class="social-btn" style="padding:6px 12px; font-weight:700; font-size:12px; cursor:pointer;" title="ফন্ট বড় করুন">🔍 A+</button>
         <button onclick="changeFontSize(-10)" class="social-btn" style="padding:6px 12px; font-weight:700; font-size:12px; cursor:pointer;" title="ফন্ট ছোট করুন">🔍 A-</button>
         <button onclick="toggleViewerDarkMode()" id="btn-viewer-dark" class="social-btn ${viewerDarkMode ? 'liked' : ''}" style="padding:6px 12px; font-size:12px; cursor:pointer;" title="ডার্ক মোড টগল">
-          ${viewerDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          ${viewerDarkMode ? '☀️ লাইট মোড' : '🌙 ডার্ক মোড'}
         </button>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
@@ -1290,7 +1290,7 @@ function showChapter(index) {
       <span style="background:rgba(26,95,158,0.08);color:var(--blue);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;">⏱️ প্রায় ${readTime} মিনিট</span>
       <span style="background:rgba(212,168,67,0.1);color:var(--gold);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;">⚡ +10 XP</span>
       <span id="cv-read-badge" style="background:rgba(34,197,94,0.1);color:#22c55e;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;display:none;">✅ সম্পন্ন</span>
-      <span style="margin-left:auto;background:rgba(26,95,158,0.06);color:var(--text-muted);padding:5px 12px;border-radius:20px;font-size:12px;">Parts ${index + 1} / ${course.chapters.length}</span>
+      <span style="margin-left:auto;background:rgba(26,95,158,0.06);color:var(--text-muted);padding:5px 12px;border-radius:20px;font-size:12px;">পার্ট ${index + 1} / ${course.chapters.length}</span>
     </div>
 
     <!-- Fun fact box -->
@@ -1329,7 +1329,7 @@ function showChapter(index) {
     ${index < course.chapters.length - 1 ? `
     <div id="cv-teaser" style="display:none;margin-top:20px;background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(26,95,158,0.1));border:1px dashed rgba(212,168,67,0.5);border-radius:14px;padding:20px;text-align:center;">
       <div style="font-size:24px;margin-bottom:8px;">🔥</div>
-      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;">পরবর্তী Partsে আসছে...</div>
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;">পরবর্তী পার্টে আসছে...</div>
       <div style="font-size:14px;color:var(--text);line-height:1.7;">${chapter.teaser || ''}</div>
     </div>
     ` : ''}
@@ -1341,7 +1341,7 @@ function showChapter(index) {
         ← পূর্ববর্তী
       </button>
       <button class="btn btn-primary" id="cv-btn-next" onclick="showChapter(currentChapterIndex + 1)" disabled style="opacity:0.5;cursor:not-allowed;">
-        ${index === course.chapters.length - 1 ? 'Lesson Completed 🏆' : 'Next Part →'}
+        ${index === course.chapters.length - 1 ? 'কোর্স সমাপ্ত 🏆' : 'পরবর্তী পার্ট →'}
       </button>
     </div>
   `;
@@ -1373,7 +1373,7 @@ function showChapter(index) {
     }
   }, 1000);
 
-  // Automatically parse Arabic quotes and inject "📋 দোয়া Copy Link" buttons
+  // Automatically parse Arabic quotes and inject "📋 দোয়া কপি করুন" buttons
   setTimeout(() => {
     const bqs = document.querySelectorAll('.gic-chapter-body blockquote');
     bqs.forEach(bq => {
@@ -1383,7 +1383,7 @@ function showChapter(index) {
         const copyBtn = document.createElement('button');
         copyBtn.className = 'social-btn arabic-copy-btn';
         copyBtn.style.cssText = 'font-size:11px; margin-top:10px; display:inline-flex; align-items:center; gap:4px; padding:5px 10px; border-radius:15px; cursor:pointer;';
-        copyBtn.innerHTML = '📋 দোয়া Copy Link';
+        copyBtn.innerHTML = '📋 দোয়া কপি করুন';
         copyBtn.onclick = () => copyArabicText(textToCopy);
         bq.appendChild(copyBtn);
       }
@@ -1480,10 +1480,10 @@ function enableNextButton() {
 
   const course = miniCoursesData.find(c => c.id === currentCourseId);
   if (currentChapterIndex === course.chapters.length - 1) {
-    nextBtn.innerHTML = 'Lesson Completed 🏆';
+    nextBtn.innerHTML = 'কোর্স সমাপ্ত 🏆';
     nextBtn.onclick = () => completeCourse();
   } else {
-    nextBtn.innerHTML = 'Next Part →';
+    nextBtn.innerHTML = 'পরবর্তী পার্ট →';
     nextBtn.onclick = () => showChapter(currentChapterIndex + 1);
   }
 }
@@ -1581,7 +1581,7 @@ function generateDynamicCertificate() {
   const certId = 'GIC-CERT-' + (course ? course.id : '00') + '-' + Math.floor(Math.random() * 900000 + 100000);
   
   document.getElementById('cert-student-name').innerText = name;
-  document.getElementById('cert-course-name').innerText = `"${course ? course.title : 'Free Lesson'}"`;
+  document.getElementById('cert-course-name').innerText = `"${course ? course.title : 'ফ্রি কোর্স'}"`;
   document.getElementById('cert-date').innerText = dateStr;
   document.getElementById('cert-id').innerText = certId;
   
@@ -1595,7 +1595,7 @@ function generateDynamicCertificate() {
       id: certId,
       name: name,
       courseId: course ? course.id : currentCourseId,
-      courseTitle: course ? course.title : 'Free Lesson',
+      courseTitle: course ? course.title : 'ফ্রি কোর্স',
       date: dateStr,
       timestamp: Date.now()
     });
@@ -1606,7 +1606,7 @@ function generateDynamicCertificate() {
     window.trackGicEvent('certificate_generate', 'free-courses', {
       student_name: name,
       course_id: course ? course.id : currentCourseId,
-      course_title: course ? course.title : 'Free Lesson',
+      course_title: course ? course.title : 'ফ্রি কোর্স',
       cert_id: certId
     });
   }
@@ -1617,7 +1617,7 @@ function generateDynamicCertificate() {
 
 function downloadCertificateAsImage() {
   const name = document.getElementById('cert-student-name').innerText || 'শিক্ষার্থী';
-  const courseName = document.getElementById('cert-course-name').innerText || 'Free Lesson';
+  const courseName = document.getElementById('cert-course-name').innerText || 'ফ্রি কোর্স';
   const certDate = document.getElementById('cert-date').innerText || new Date().toLocaleDateString('bn-BD');
   const certId = document.getElementById('cert-id').innerText || 'GIC-CERT-000';
 
@@ -1687,7 +1687,7 @@ function downloadCertificateAsImage() {
   // Appreciation Message
   ctx.fillStyle = '#1e293b';
   ctx.font = '24px "Noto Serif Bengali", sans-serif';
-  ctx.fillText(`সফলভাবে ও নিষ্ঠার সাথে Global Islamic Care-এর ${courseName} Free Lessonটি`, canvas.width / 2, 550);
+  ctx.fillText(`সফলভাবে ও নিষ্ঠার সাথে Global Islamic Care-এর ${courseName} ফ্রি কোর্সটি`, canvas.width / 2, 550);
   ctx.fillText('সম্পন্ন করায় তার ইসলামিক জ্ঞান ও আগ্রহের স্বীকৃতিস্বরূপ এই সনদপত্র অর্পণ করা হলো।', canvas.width / 2, 600);
 
   // Approved Badge Seal
@@ -1809,7 +1809,7 @@ function completeCourse() {
           <h3 id="cert-student-name" style="font-family:var(--font-body); font-size:28px; color:var(--gold); font-weight:800; margin-bottom:14px;">[শিক্ষার্থীর নাম]</h3>
           
           <p style="font-size:13.5px; line-height:1.75; color:var(--text); max-width:550px; margin:0 auto 18px;">
-            সফলভাবে ও নিষ্ঠার সাথে <strong style="color:var(--blue);">Global Islamic Care</strong>-এর <strong id="cert-course-name" style="color:var(--blue-dark); font-size:14.5px;">"[কোর্সের নাম]"</strong> Free Lessonটি সম্পন্ন করায় তার ইসলামিক জ্ঞান ও আগ্রহের স্বীকৃতিস্বরূপ এই সনদপত্র অর্পণ করা হলো।
+            সফলভাবে ও নিষ্ঠার সাথে <strong style="color:var(--blue);">Global Islamic Care</strong>-এর <strong id="cert-course-name" style="color:var(--blue-dark); font-size:14.5px;">"[কোর্সের নাম]"</strong> ফ্রি কোর্সটি সম্পন্ন করায় তার ইসলামিক জ্ঞান ও আগ্রহের স্বীকৃতিস্বরূপ এই সনদপত্র অর্পণ করা হলো।
           </p>
           
           <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px; font-size:12px;">
