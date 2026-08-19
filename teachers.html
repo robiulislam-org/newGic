@@ -790,6 +790,15 @@ function renderPage() {
     el.textContent = q;
     qualEl.appendChild(el);
   });
+  (t.languages || []).forEach(l => {
+    const el = document.createElement('span');
+    el.className = 'qual-tag';
+    el.style.background = 'rgba(58,134,200,0.15)';
+    el.style.color = '#3a86c8';
+    el.style.borderColor = 'rgba(58,134,200,0.3)';
+    el.textContent = '🌐 ' + l;
+    qualEl.appendChild(el);
+  });
 
   // Bio
   if (t.bio) {

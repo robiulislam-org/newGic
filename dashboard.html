@@ -4382,11 +4382,14 @@ function renderApplicationsGrid(apps) {
 
   grid.innerHTML = apps.map((app, i) => {
     const st = statusColors[app.status] || statusColors.pending;
-    const cat = TC_CATEGORY_LABELS[app.category] || app.category;
-    const catColor = TC_CATEGORY_TEXT[app.category] || '#fff';
-    const catBg = TC_CATEGORY_COLORS[app.category] || 'rgba(255,255,255,0.1)';
+    const catLabel = app.designation || TC_CATEGORY_LABELS[app.category] || app.category || 'কোরআন শিক্ষক';
     const date = app.created_at ? new Date(app.created_at).toLocaleDateString('bn-BD', { year:'numeric', month:'long', day:'numeric' }) : '—';
     const quals = (app.qualifications || []).slice(0,3).map(q => `<span style="background:rgba(200,151,42,0.15);color:#c8972a;font-size:10px;padding:2px 8px;border-radius:10px;">${q}</span>`).join(' ');
+    const langs = (app.languages || []).map(l => `<span style="background:rgba(58,134,200,0.15);color:var(--blue-light);font-size:10px;padding:2px 6px;border-radius:6px;">${l}</span>`).join(' ');
+
+    const avatarHtml = app.photo_url 
+      ? `<img src="${app.photo_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`
+      : '👨‍🏫';
 
     return `
     <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:20px;transition:transform 0.2s;position:relative;">
@@ -4395,15 +4398,14 @@ function renderApplicationsGrid(apps) {
         <span style="font-size:11px;font-weight:700;background:${st.bg};color:${st.color};padding:4px 10px;border-radius:20px;">${st.label}</span>
       </div>
 
-      <!-- Category + Name -->
+      <!-- Avatar + Name -->
       <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:${catBg};border:2px solid ${catColor};display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">
-          ${app.category === 'female' ? '👩' : (app.category === 'alem' ? '🎓' : '📜')}
+        <div style="width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.06);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;overflow:hidden;">
+          ${avatarHtml}
         </div>
-        <div style="flex:1;min-width:0;padding-right:90px;">
+        <div style="flex:1;min-width:0;padding-right:85px;">
           <h3 style="font-size:16px;font-weight:700;color:#fff;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${app.name}</h3>
-          <div style="font-size:12px;color:${catColor};font-weight:600;">${cat}</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${app.designation || 'পদবী উল্লেখ করেননি'}</div>
+          <div style="font-size:12px;color:var(--gold-light);font-weight:600;">${catLabel}</div>
         </div>
       </div>
 
@@ -4414,12 +4416,13 @@ function renderApplicationsGrid(apps) {
           <div style="font-size:10px;color:var(--text-muted);">অভিজ্ঞতা</div>
         </div>
         <div style="text-align:center;">
-          <div style="font-size:15px;font-weight:800;color:var(--blue-light);">${app.phone || app.whatsapp_number ? '✅' : '❌'}</div>
-          <div style="font-size:10px;color:var(--text-muted);">যোগাযোগ তথ্য</div>
+          <div style="font-size:15px;font-weight:800;color:var(--blue-light);">${app.students_taught || 0}+</div>
+          <div style="font-size:10px;color:var(--text-muted);">ছাত্র পড়িয়েছেন</div>
         </div>
       </div>
 
-      ${quals ? `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;">${quals}</div>` : ''}
+      ${quals ? `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;">${quals}</div>` : ''}
+      ${langs ? `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;align-items:center;"><span style="font-size:10px;color:var(--text-muted);">🌐 ভাষা:</span> ${langs}</div>` : ''}
 
       <div style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">📅 আবেদন: ${date}</div>
 
@@ -4442,8 +4445,7 @@ function openAppDetailModal(appId) {
   if (!app) return;
   currentAppDetail = app;
 
-  const cat = TC_CATEGORY_LABELS[app.category] || app.category;
-  const catColor = TC_CATEGORY_TEXT[app.category] || '#fff';
+  const catLabel = app.designation || TC_CATEGORY_LABELS[app.category] || app.category || 'কোরআন শিক্ষক';
   const date = app.created_at ? new Date(app.created_at).toLocaleString('bn-BD') : '—';
   const schedule = app.weekly_schedule || {};
   const days = { sat: 'শনি', sun: 'রবি', mon: 'সোম', tue: 'মঙ্গল', wed: 'বুধ' };
@@ -4456,13 +4458,13 @@ function openAppDetailModal(appId) {
   if (content) content.innerHTML = `
     <!-- Header -->
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;padding:16px;background:rgba(255,255,255,0.03);border-radius:12px;">
-      <div style="width:64px;height:64px;border-radius:50%;background:${TC_CATEGORY_COLORS[app.category]||'rgba(255,255,255,0.1)'};border:2px solid ${catColor};display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0;">
-        ${app.photo_url ? `<img src="${app.photo_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.onerror=null;this.innerHTML='👤'">` : (app.category==='female'?'👩':'👨')}
+      <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.08);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0;overflow:hidden;">
+        ${app.photo_url ? `<img src="${app.photo_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.onerror=null;this.parentElement.innerHTML='👤'">` : '👤'}
       </div>
       <div>
         <h3 style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;">${app.name}</h3>
-        <div style="font-size:13px;color:${catColor};font-weight:600;margin-bottom:2px;">${cat}</div>
-        <div style="font-size:12px;color:var(--text-muted);">${app.designation || ''}</div>
+        <div style="font-size:13px;color:var(--gold-light);font-weight:600;margin-bottom:2px;">${catLabel}</div>
+        <div style="font-size:11.5px;color:var(--text-muted);">ক্যাটাগরি ট্যাগ: ${app.category || '—'}</div>
       </div>
     </div>
 
@@ -4473,8 +4475,12 @@ function openAppDetailModal(appId) {
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">অভিজ্ঞতা</div><div style="font-size:13px;color:#fff;">${app.experience_years || 0} বছর</div></div>
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">ছাত্র পড়িয়েছেন</div><div style="font-size:13px;color:#fff;">${app.students_taught || 0}+</div></div>
       </div>
+      ${app.languages && app.languages.length > 0 ? `
+        <div style="margin-top:10px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">🌐 ভাষাগত দক্ষতা</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">${(app.languages||[]).map(l=>`<span style="background:rgba(58,134,200,0.15);color:var(--blue-light);font-size:11px;padding:3px 10px;border-radius:20px;">${l}</span>`).join('')}</div></div>
+      ` : ''}
       ${app.qualifications && app.qualifications.length > 0 ? `
-        <div style="margin-top:10px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">যোগ্যতা</div>
+        <div style="margin-top:10px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">শিক্ষাগত যোগ্যতা</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">${(app.qualifications||[]).map(q=>`<span style="background:rgba(200,151,42,0.15);color:#c8972a;font-size:11px;padding:3px 10px;border-radius:20px;">${q}</span>`).join('')}</div></div>
       ` : ''}
       ${app.specializations && app.specializations.length > 0 ? `
