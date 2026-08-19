@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link rel="apple-touch-icon" href="logo.jpg">
   <title>GIC Admin Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -341,7 +343,7 @@
 <!-- ══════════════ LOGIN ══════════════ -->
 <div id="login-wrap">
   <div class="login-box">
-    <div class="login-logo">🕌</div>
+    <img src="logo.jpg" alt="Global Islamic Care" style="width:72px;height:72px;border-radius:20px;object-fit:cover;margin:0 auto 16px;box-shadow:0 8px 30px rgba(0,43,128,0.5);border:2.5px solid rgba(200,151,42,0.45);display:block;">
     <h2>গ্লোবাল ইসলামিক কেয়ার</h2>
     <p>অ্যাডমিন ড্যাশবোর্ড — পাসওয়ার্ড দিয়ে প্রবেশ করুন</p>
     <form id="login-form">
@@ -361,9 +363,12 @@
 
 <!-- ══════════════ SIDEBAR ══════════════ -->
 <nav id="sidebar">
-  <div class="sidebar-logo">
-    <span>GIC Dashboard</span>
-    <small>Global Islamic Care</small>
+  <div class="sidebar-logo" style="display:flex;align-items:center;gap:12px;padding:0 20px 20px;">
+    <img src="logo.jpg" alt="Global Islamic Care" style="width:42px;height:42px;border-radius:12px;object-fit:cover;border:1.5px solid rgba(200,151,42,0.4);box-shadow:0 4px 14px rgba(0,43,128,0.5);flex-shrink:0;">
+    <div>
+      <span style="font-size:15px;font-weight:800;background:linear-gradient(90deg,#fff,var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;display:block;">Global Islamic Care</span>
+      <small style="font-size:11px;color:var(--text-muted);">Admin Portal</small>
+    </div>
   </div>
 
   <div class="nav-section">মূল মেনু</div>

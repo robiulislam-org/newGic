@@ -166,18 +166,18 @@ nav {
   text-decoration: none;
 }
 
-.logo-icon {
-  width: 44px; height: 44px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+.logo-img {
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-arabic);
-  font-size: 24px;
-  color: var(--dark);
-  font-weight: 700;
-  box-shadow: 0 4px 15px rgba(200,151,42,0.35);
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0, 43, 128, 0.4);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.nav-logo:hover .logo-img {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 43, 128, 0.55);
 }
 
 .logo-text { display: flex; flex-direction: column; }
@@ -775,7 +775,7 @@ footer a { color: var(--gold-light); text-decoration: none; }
 <!-- NAVIGATION BAR -->
 <nav>
   <a href="index.html" class="nav-logo">
-    <div class="logo-icon">ق</div>
+    <img src="logo.jpg" alt="GIC" class="logo-img">
     <div class="logo-text">
       <span class="lt-main">GLOBAL ISLAMIC CARE</span>
       <span class="lt-sub" data-i18n="nav_library">সহীহ কুরআন ও দ্বীনি শিক্ষা পোর্টাল</span>
