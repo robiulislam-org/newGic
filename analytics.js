@@ -168,16 +168,16 @@ async function fetchDetailedLocation() {
     }
   } catch (e) {}
 
-  // Provider 3: ip-api.com (Fallback)
+  // Provider 3: ipwho.is (Fallback - 100% HTTPS Secure)
   try {
-    const res = await fetch("http://ip-api.com/json/");
+    const res = await fetch("https://ipwho.is/");
     if (res.ok) {
       const d = await res.json();
-      if (d.query) userIpAddress = d.query;
+      if (d.ip) userIpAddress = d.ip;
       userLocation.country     = d.country || userLocation.country;
       userLocation.city        = d.city || userLocation.city;
-      userLocation.division    = d.regionName || userLocation.division;
-      userLocation.postal_code = d.zip || userLocation.postal_code;
+      userLocation.division    = d.region || userLocation.division;
+      userLocation.postal_code = d.postal || userLocation.postal_code;
     }
   } catch (e) {}
 }

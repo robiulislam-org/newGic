@@ -9,15 +9,15 @@
   <meta name="description" id="pg-desc" content="GIC-এর যোগ্য ও অভিজ্ঞ শিক্ষকদের সাথে সহীহ কোরআন শিখুন। শিক্ষকের যোগ্যতা, অভিজ্ঞতা ও সময়সূচি দেখুন এবং পছন্দের সময়ে ক্লাস বুক করুন।">
   <meta name="keywords" id="pg-kw" content="কোরআন শিক্ষক, হাফেজ শিক্ষক, মাওলানা, তাজউইদ শিক্ষক, অনলাইন কোরআন, GIC">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" id="pg-canonical" href="https://robiulislam.org/teachers.html">
+  <link rel="canonical" id="pg-canonical" href="https://globalislamiccare.com/teachers.html">
 
   <!-- Open Graph -->
   <meta property="og:type" content="profile">
   <meta property="og:site_name" content="GIC — Global Islamic Care">
   <meta property="og:title" id="og-title" content="শিক্ষক প্রোফাইল | GIC">
   <meta property="og:description" id="og-desc" content="GIC-এর হাফেজ ও মাওলানা শিক্ষকের প্রোফাইল দেখুন।">
-  <meta property="og:image" id="og-img" content="https://robiulislam.org/og-image.jpg">
-  <meta property="og:url" id="og-url" content="https://robiulislam.org/teachers.html">
+  <meta property="og:image" id="og-img" content="https://globalislamiccare.com/og-image.jpg">
+  <meta property="og:url" id="og-url" content="https://globalislamiccare.com/teachers.html">
   <meta name="twitter:card" content="summary_large_image">
 
   <!-- Fonts & Icons -->
@@ -731,7 +731,7 @@ function renderPage() {
   // Update meta / SEO
   const title = `${t.name} | শিক্ষক প্রোফাইল | GIC — Global Islamic Care`;
   const desc  = t.bio ? t.bio.substring(0, 155) : `${t.name} — ${t.designation}। GIC-তে অনলাইনে কোরআন শিখুন।`;
-  const url   = `https://robiulislam.org/teachers.html?id=${t.slug}`;
+  const url   = `https://globalislamiccare.com/teachers.html?id=${t.slug}`;
 
   document.getElementById('pg-title').textContent   = title;
   document.title = title;
@@ -755,7 +755,7 @@ function renderPage() {
     "worksFor": {
       "@type": "EducationalOrganization",
       "name": "Global Islamic Care (GIC)",
-      "url": "https://robiulislam.org"
+      "url": "https://globalislamiccare.com"
     },
     "knowsAbout": t.specializations || [],
     "hasCredential": (t.qualifications || []).map(q => ({ "@type": "EducationalOccupationalCredential", "name": q }))
