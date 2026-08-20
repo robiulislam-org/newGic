@@ -3714,7 +3714,7 @@ async function loadStudents() {
     renderTodayLogins(); // show today's new logins in today tab
     // Re-render retention hub with real students now that data is available
     if (typeof renderRetentionHub === 'function') renderRetentionHub(data);
-  } catch(e) { console.error("Students load failed", e); }
+  } catch(e) { console.error("Students load failed", e); toast("স্টুডেন্ট ডেটা লোড হতে সমস্যা হয়েছে", "err"); }
 }
 
 
