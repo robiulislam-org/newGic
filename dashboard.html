@@ -2247,7 +2247,7 @@
             <label class="cms-lbl">পরিসংখ্যান ২ (সংখ্যা + লেবেল)</label>
             <div style="display:flex;gap:8px;">
               <input type="text" id="cms-stat-num-1" class="inp" placeholder="১০০+" oninput="markCmsDirty()" style="width:110px;">
-              <input type="text" id="cms-stat-lbl-1" class="inp" placeholder="যোগ্য হাফেজ ও আলেম শিক্ষক" oninput="markCmsDirty()">
+              <input type="text" id="cms-stat-lbl-1" class="inp" placeholder="যোগ্য ও অভিজ্ঞ শিক্ষক" oninput="markCmsDirty()">
             </div>
           </div>
           <div style="background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
@@ -2402,11 +2402,11 @@
       </div>
       <div style="margin-bottom:14px;">
         <label class="cms-lbl">কার্ডের শিরোনাম</label>
-        <input type="text" id="cms-why-m-title" class="inp" placeholder="হাফেজ-আলেম শিক্ষক">
+        <input type="text" id="cms-why-m-title" class="inp" placeholder="অভিজ্ঞ শিক্ষকবৃন্দ">
       </div>
       <div style="margin-bottom:20px;">
         <label class="cms-lbl">বিস্তারিত বিবরণী</label>
-        <textarea id="cms-why-m-desc" class="inp" style="height:90px;resize:vertical;" placeholder="আমাদের সকল শিক্ষক হাফেজ ও আলেম..."></textarea>
+        <textarea id="cms-why-m-desc" class="inp" style="height:90px;resize:vertical;" placeholder="আমাদের সকল শিক্ষক সনদপ্রাপ্ত..."></textarea>
       </div>
       <div style="display:flex;gap:10px;justify-content:flex-end;">
         <button type="button" class="btn" style="background:rgba(255,255,255,0.06);color:#fff;" onclick="closeWhyUsModal()">বাতিল</button>
@@ -4813,6 +4813,7 @@ function renderAdminTeachersGrid(list) {
           <span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:${isActive ? 'rgba(16,185,129,0.15);color:var(--green)' : 'rgba(244,63,94,0.15);color:var(--red)'};">
             ${isActive ? '● সক্রিয়' : '○ নিষ্ক্রিয়'}
           </span>
+          ${isAdmin ? `<button class="btn btn-outline btn-sm edit-teacher" data-id="${t.id}" onclick="editTeacher(${t.id})">✏️ সম্পাদনা</button>` : ''}
         </div>
       </div>
 
@@ -5753,7 +5754,7 @@ const CMS_DEFAULT_DATA = {
     title_line1: "কোরআনের আলোয়",
     title_line2: "জীবন গড়ুন",
     arabic_ayah: "وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا",
-    description: "হাফেজ ও আলেম শিক্ষকদের সাথে সহীহ শুদ্ধ কোরআন শিক্ষা। শিশু থেকে বয়স্ক — পরিবারের সকলের জন্য। বিশ্বের যেকোনো দেশ থেকে বাংলায় শিখুন।",
+    description: "অভিজ্ঞ শিক্ষকদের সাথে সহীহ শুদ্ধ কোরআন শিক্ষা। শিশু থেকে বয়স্ক — পরিবারের সকলের জন্য। বিশ্বের যেকোনো দেশ থেকে বাংলায় শিখুন।",
     wa_btn_text: "💬 WhatsApp করুন",
     courses_btn_text: "কোর্স দেখুন →",
     points: [
@@ -5769,7 +5770,7 @@ const CMS_DEFAULT_DATA = {
   },
   ticker: {
     items: [
-      "হাফেজ-আলেম শিক্ষক",
+      "অভিজ্ঞ শিক্ষকবৃন্দ",
       "সম্পূর্ণ বাংলায় পাঠদান",
       "কোরআন ও সুন্নাহর আদর্শ",
       "নৈতিক চরিত্র গঠন",
@@ -5782,9 +5783,9 @@ const CMS_DEFAULT_DATA = {
   why_us: {
     label: "কেন আমরা?",
     title: "Global Islamic Care-এ কেন শিখবেন?",
-    subtitle: "আধুনিক পদ্ধতি, হাফেজ-আলেম শিক্ষক এবং সম্পূর্ণ বাংলায় পাঠদানের মাধ্যমে অনন্য শিক্ষার অভিজ্ঞতা।",
+    subtitle: "আধুনিক পদ্ধতি, অভিজ্ঞ শিক্ষক এবং সম্পূর্ণ বাংলায় পাঠদানের মাধ্যমে অনন্য শিক্ষার অভিজ্ঞতা।",
     cards: [
-      { id: 1, icon: "🎓", title: "হাফেজ-আলেম শিক্ষক", desc: "আমাদের সকল শিক্ষক হাফেজ ও আলেম — তাজউইদে দক্ষ এবং আন্তর্জাতিক মানের পাঠদানে অভিজ্ঞ।" },
+      { id: 1, icon: "🎓", title: "অভিজ্ঞ শিক্ষকবৃন্দ", desc: "আমাদের সকল শিক্ষক সনদপ্রাপ্ত — তাজউইদে দক্ষ এবং আন্তর্জাতিক মানের পাঠদানে অভিজ্ঞ।" },
       { id: 2, icon: "🌍", title: "যেকোনো দেশ থেকে", desc: "বাংলাদেশ, ইউকে, মালয়েশিয়া বা বিশ্বের যেকোনো প্রান্ত থেকে ক্লাস করুন — শুধু ইন্টারনেট থাকলেই হবে।" },
       { id: 3, icon: "🗣️", title: "সম্পূর্ণ বাংলায়", desc: "প্রতিটি ক্লাস শুদ্ধ বাংলায় পরিচালিত। মাতৃভাষায় শেখা সবচেয়ে সহজ ও কার্যকর।" },
       { id: 4, icon: "👨‍👩‍👧‍👦", title: "পরিবারের সকলের জন্য", desc: "৭ বছরের শিশু থেকে বয়স্ক — একই পরিবারের ২-৩ জন একসাথে গ্রুপে ক্লাস করার অনন্য সুযোগ।" },
@@ -5986,12 +5987,12 @@ const CMS_DEFAULT_DATA = {
   about: {
     title: "আমাদের সম্পর্কে",
     subtitle: "Global Islamic Care একটি আন্তর্জাতিক মানের অনলাইন কোরআন শিক্ষা প্রতিষ্ঠান।",
-    story: "আমাদের লক্ষ্য বিশ্বব্যাপী ছড়িয়ে থাকা বাংলাভাষী মুসলিমদের কাছে বিশুদ্ধ কোরআনের শিক্ষা সহজে পৌঁছে দেওয়া। দেশ-বিদেশের অভিজ্ঞ হাফেজ ও আলেম শিক্ষকদের তত্ত্বাবধানে আমরা শিক্ষার্থীদের আন্তরিকতার সাথে গড়ে তুলছি।",
+    story: "আমাদের লক্ষ্য বিশ্বব্যাপী ছড়িয়ে থাকা বাংলাভাষী মুসলিমদের কাছে বিশুদ্ধ কোরআনের শিক্ষা সহজে পৌঁছে দেওয়া। দেশ-বিদেশের অভিজ্ঞ ও যোগ্য শিক্ষকদের তত্ত্বাবধানে আমরা শিক্ষার্থীদের আন্তরিকতার সাথে গড়ে তুলছি।",
     mission: "প্রতিটি ঘরে ঘরে সহীহ শুদ্ধ কোরআনের বাণী পৌঁছে দেওয়া এবং কোরআন-সুন্নাহ ভিত্তিক আদর্শ প্রজন্ম গড়ে তোলা।",
     vision: "একটি বিশ্বস্ত ও আধুনিক ইসলামিক শিক্ষাকেন্দ্র হিসেবে বিশ্বজুড়ে মুসলিমদের দ্বীনি শিক্ষায় পথপ্রদর্শক হওয়া।",
     stats: [
       { num: "৫,০০০+", label: "সফল শিক্ষার্থী" },
-      { num: "১০০+", label: "যোগ্য হাফেজ ও আলেম শিক্ষক" },
+      { num: "১০০+", label: "যোগ্য ও অভিজ্ঞ শিক্ষক" },
       { num: "২০+", label: "দেশ থেকে শিক্ষার্থী" },
       { num: "৯৮%", label: "সন্তুষ্টি হার" }
     ]

@@ -9,21 +9,23 @@
   <link rel="apple-touch-icon" href="logo.jpg">
   <title id="pg-title">শিক্ষক প্রোফাইল | GIC — Global Islamic Care</title>
   <meta name="description" id="pg-desc" content="GIC-এর যোগ্য ও অভিজ্ঞ শিক্ষকদের সাথে সহীহ কোরআন শিখুন। শিক্ষকের যোগ্যতা, অভিজ্ঞতা ও সময়সূচি দেখুন এবং পছন্দের সময়ে ক্লাস বুক করুন।">
-  <meta name="keywords" id="pg-kw" content="কোরআন শিক্ষক, হাফেজ শিক্ষক, মাওলানা, তাজউইদ শিক্ষক, অনলাইন কোরআন, GIC">
+  <meta name="keywords" id="pg-kw" content="কোরআন শিক্ষক, তাজউইদ শিক্ষক, অনলাইন কোরআন, GIC">
   <meta name="robots" content="index, follow">
   <link rel="canonical" id="pg-canonical" href="https://globalislamiccare.com/teachers.html">
 
   <!-- Open Graph -->
+  <meta property="og:locale" content="bn_BD">
   <meta property="og:type" content="profile">
   <meta property="og:site_name" content="GIC — Global Islamic Care">
   <meta property="og:title" id="og-title" content="শিক্ষক প্রোফাইল | GIC">
-  <meta property="og:description" id="og-desc" content="GIC-এর হাফেজ ও মাওলানা শিক্ষকের প্রোফাইল দেখুন।">
+  <meta property="og:description" id="og-desc" content="GIC-এর শিক্ষক প্রোফাইল দেখুন।">
   <meta property="og:image" id="og-img" content="https://globalislamiccare.com/og-image.jpg">
   <meta property="og:url" id="og-url" content="https://globalislamiccare.com/teachers.html">
   <meta name="twitter:card" content="summary_large_image">
 
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="teachers.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
   <!-- Structured Data — filled by JS -->
@@ -487,12 +489,39 @@
       <img src="logo.jpg" alt="GIC" style="width:36px;height:36px;border-radius:10px;object-fit:cover;box-shadow:0 2px 8px rgba(0,43,128,0.3);">
       <span class="nav-brand-text">GIC</span>
     </a>
-    <a class="nav-back" href="index.html" onclick="sessionStorage.setItem('gic_open_page','teachers'); return true;">← শিক্ষকবৃন্দ</a>
+    <a class="nav-back" href="teachers.html" id="all-teachers-link">← সকল শিক্ষকবৃন্দ</a>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero-section">
-    <div class="hero-inner">
+  <!-- TOP TEACHER APPLY BANNER CTA -->
+  <div style="padding:0 16px;">
+    <a href="apply-teacher.html" class="teacher-cta-banner">
+      <div class="cta-banner-content">
+        <div class="cta-banner-icon">🎓</div>
+        <div>
+          <div class="cta-banner-title">শিক্ষক হিসেবে যুক্ত হতে চাই (আবেদন করুন)</div>
+          <div class="cta-banner-sub">Global Islamic Care-এ একজন যোগ্য কোরআন শিক্ষক হিসেবে যুক্ত হওয়ার জন্য আবেদন করুন।</div>
+        </div>
+      </div>
+      <span class="cta-banner-btn">আবেদন করুন →</span>
+    </a>
+  </div>
+
+  <!-- TEACHER DIRECTORY SECTION (List View) -->
+  <div id="teacher-directory-section" class="directory-container" style="display:none;">
+    <div class="directory-header">
+      <h1 class="directory-title">আমাদের সম্মানিত শিক্ষকবৃন্দ</h1>
+      <p class="directory-subtitle">সহীহ তাজউইদ ও সুন্দর উচ্চারণে কোরআন শেখাতে আমাদের অভিজ্ঞ শিক্ষকগণ প্রস্তুত</p>
+    </div>
+    <div class="teacher-grid-wrapper" id="teacher-grid">
+      <!-- Cards rendered by JS -->
+    </div>
+  </div>
+
+  <!-- TEACHER DETAIL SECTION (Single Teacher View) -->
+  <div id="teacher-detail-section" style="display:none;">
+    <!-- HERO -->
+    <section class="hero-section">
+      <div class="hero-inner">
       <div class="hero-layout">
         <div class="hero-avatar-wrap">
           <div class="hero-avatar" id="hero-avatar">👨‍🏫</div>
@@ -654,7 +683,7 @@
       </div><!-- /right-col -->
 
     </div><!-- /two-col -->
-  </div><!-- /page-body -->
+  </div><!-- /#teacher-detail-section -->
 
   <footer class="page-footer">
     <p>© ২০২৫ <a href="index.html">Global Islamic Care (GIC)</a> · সহীহ কোরআন শিক্ষার অনলাইন প্রতিষ্ঠান</p>
@@ -760,11 +789,88 @@ const DEMO_TEACHERS_MAP = {
   }
 };
 
+// ── DIRECTORY RENDER ──
+function renderTeacherDirectory(teachersList) {
+  const container = document.getElementById('teacher-grid');
+  if (!container) return;
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const isAdmin = urlParams.get('admin') === '1' || sessionStorage.getItem('gic_admin') === '1';
+
+  const list = (teachersList && teachersList.length > 0) ? teachersList : Object.values(DEMO_TEACHERS_MAP);
+
+  container.innerHTML = list.map(t => {
+    const photo = t.photo_url ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" />` : `<span class="tc-avatar-fallback">👨‍🏫</span>`;
+    const ratingVal = t.rating || 5.0;
+    const ratingStr = `⭐ ${ratingVal} / 5.0`;
+    const quals = Array.isArray(t.qualifications) ? t.qualifications : (typeof t.qualifications === 'string' ? JSON.parse(t.qualifications || '[]') : []);
+    const qualTags = quals.map(q => `<span class="tc-tag">${q}</span>`).join('');
+    
+    return `
+      <div class="teacher-card-item">
+        <div class="tc-photo-wrap">${photo}</div>
+        <div class="tc-name">${t.name}</div>
+        <div class="tc-designation">${t.designation || 'কোরআন শিক্ষক'}</div>
+        <div class="tc-rating">${ratingStr}</div>
+        <div class="tc-qualifications">${qualTags}</div>
+        <a href="teachers.html?id=${t.slug || t.id}" class="tc-action-btn">বিস্তারিত প্রোফাইল →</a>
+        ${isAdmin ? `
+          <div class="tc-admin-tools">
+            <button class="tc-admin-btn tc-admin-edit" onclick="editTeacherCard('${t.slug || t.id}')">✏️ এডিট</button>
+            <button class="tc-admin-btn tc-admin-delete" onclick="deleteTeacherCard('${t.slug || t.id}')">🗑️ মুছুন</button>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function editTeacherCard(idOrSlug) {
+  window.location.href = `dashboard.html?edit_teacher=${idOrSlug}`;
+}
+
+async function deleteTeacherCard(idOrSlug) {
+  if (!confirm('আপনি কি নিশ্চিত যে এই শিক্ষক প্রোফাইলটি মুছে ফেলতে চান?')) return;
+  try {
+    const { error } = await db.from('teachers').delete().eq('slug', idOrSlug);
+    if (error) {
+      alert('মুছে ফেলতে সমস্যা হয়েছে: ' + error.message);
+    } else {
+      alert('শিক্ষক সফলভাবে মুছে ফেলা হয়েছে!');
+      window.location.reload();
+    }
+  } catch(e) {
+    alert('ত্রুটি ঘটেছে!');
+  }
+}
+
 // ── INIT ──
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const slug = params.get('id');
-  if (!slug) { showNotFound(); return; }
+
+  // Load all teachers for directory roster
+  let allTeachers = Object.values(DEMO_TEACHERS_MAP);
+  try {
+    const { data } = await db.from('teachers').select('*');
+    if (data && data.length > 0) {
+      allTeachers = data;
+    }
+  } catch(e) {
+    console.warn('Could not fetch DB teachers:', e);
+  }
+
+  renderTeacherDirectory(allTeachers);
+
+  if (!slug) {
+    document.getElementById('teacher-directory-section').style.display = 'block';
+    document.getElementById('teacher-detail-section').style.display = 'none';
+    hideLoader();
+    return;
+  }
+
+  document.getElementById('teacher-directory-section').style.display = 'none';
+  document.getElementById('teacher-detail-section').style.display = 'block';
 
   try {
     const { data, error } = await db.rpc('get_teacher_by_slug', { p_slug: slug });
@@ -782,8 +888,8 @@ async function init() {
   if (DEMO_TEACHERS_MAP[slug]) {
     teacherData = DEMO_TEACHERS_MAP[slug];
     reviewsData = [
-      { student_name: "রাহেলা বেগম (ঢাকা)", rating: 5, comment: "মাশাআল্লাহ ওস্তাদ অত্যন্ত যত্নসহকারে ও ধৈর্যের সাথে আমার সন্তানকে তাজউইদ শেখাচ্ছেন।", created_at: new Date().toISOString() },
-      { student_name: "ফারহান আহমেদ (UK)", rating: 5, comment: "দেড় মাসেই আমার ছেলের তেলাওয়াতে চমৎকার উন্নতি হয়েছে। জাজাকাল্লাহ খায়রান।", created_at: new Date().toISOString() }
+      { reviewer_name: "রাহেলা বেগম (ঢাকা)", rating: 5, message: "মাশাআল্লাহ ওস্তাদ অত্যন্ত যত্নসহকারে ও ধৈর্যের সাথে আমার সন্তানকে তাজউইদ শেখাচ্ছেন।", created_at: new Date().toISOString() },
+      { reviewer_name: "ফারহান আহমেদ (UK)", rating: 5, message: "দেড় মাসেই আমার ছেলের তেলাওয়াতে চমৎকার উন্নতি হয়েছে। জাজাকাল্লাহ খায়রান।", created_at: new Date().toISOString() }
     ];
     renderPage();
     hideLoader();
@@ -1046,6 +1152,7 @@ document.getElementById('review-modal').addEventListener('click', function(e) {
 setRating(5);
 init();
 </script>
+<script src="inline_edit.js"></script>
 
 </body>
 </html>
