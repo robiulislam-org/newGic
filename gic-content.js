@@ -662,3 +662,12 @@ if (document.readyState === 'loading') {
 } else {
   initGicContent();
 }
+
+
+// ── LISTEN FOR REAL-TIME CMS PREVIEW UPDATES ─────────────────────────
+window.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'GIC_CMS_PREVIEW' && event.data.content) {
+    window.GIC_SITE_CONTENT = event.data.content;
+    applyDynamicContent(event.data.content);
+  }
+});

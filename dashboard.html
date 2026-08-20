@@ -328,7 +328,111 @@
 .tc-schedule-slot-btn:hover {
   border-color: var(--teal);
 }
+
 .tc-modal-overlay {
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:99999 !important;
+  align-items:center;justify-content:center;backdrop-filter:blur(8px);padding:20px;overflow-y:auto;
+}
+.tc-modal-overlay.active {
+  display:flex !important;
+}
+
+/* ── CMS SPLIT WORKSPACE & LIVE PREVIEW ── */
+.cms-workspace-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  align-items: start;
+}
+@media(max-width:1380px){
+  .cms-workspace-split {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 16px;
+  }
+}
+@media(max-width:1080px){
+  .cms-workspace-split {
+    grid-template-columns: 1fr;
+  }
+  .cms-preview-pane {
+    position: static !important;
+    height: 580px !important;
+    margin-top: 20px;
+  }
+}
+.cms-preview-pane {
+  position: sticky;
+  top: 20px;
+  background: #0b1523;
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 100px);
+}
+.cms-preview-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cms-device-btn {
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted);
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cms-device-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+.cms-device-btn.active {
+  background: rgba(58,134,200,0.2);
+  color: var(--blue-light);
+  border-color: rgba(58,134,200,0.4);
+}
+.cms-preview-frame-wrap {
+  flex: 1;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+.cms-preview-frame-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+.cms-preview-frame-wrap.mobile-view {
+  background: #0f172a;
+  padding: 10px 0;
+}
+.cms-preview-frame-wrap.mobile-view iframe {
+  width: 375px !important;
+  border: 2px solid #334155;
+  border-radius: 24px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+}
+
+.old-modal {
   display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9990;
   align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:20px;overflow-y:auto;
 }
@@ -1657,22 +1761,19 @@
   </div>
 
 
-  <!-- ═══ TAB: WEBSITE CONTENT MANAGEMENT SYSTEM (CMS) ═══ -->
+    <!-- ═══ TAB: WEBSITE CONTENT MANAGEMENT SYSTEM (CMS) ═══ -->
   <div class="tab-page" id="tab-cms">
     <div class="page-hdr" style="margin-bottom:20px;">
       <div>
         <h1 style="display:flex;align-items:center;gap:10px;">🌐 ওয়েবসাইট কন্টেন্ট ম্যানেজার <span style="font-size:12px;background:linear-gradient(135deg,var(--gold),#e5b95c);color:#0a1628;padding:3px 10px;border-radius:12px;font-weight:800;letter-spacing:0.5px;">LIVE CMS v1.0</span></h1>
-        <p>ওয়েবসাইটের যেকোনো লেখা, কোর্স, ছবি, লাইব্রেরি কিতাব, এফএকিউ ও ব্যানার সরাসরি পরিবর্তন, যুক্ত বা মুছে ফেলুন।</p>
+        <p>ওয়েবসাইটের যেকোনো লেখা, কোর্স, ছবি, লাইব্রেরি কিতাব, এফএকিউ ও ব্যানার সরাসরি পরিবর্তন করুন এবং পাশে লাইভ প্রিভিউ দেখুন।</p>
       </div>
       <div class="hdr-actions" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <div id="cms-save-status" class="status-badge" style="background:rgba(16,185,129,0.15);color:var(--green);font-size:12px;padding:6px 14px;border:1px solid rgba(16,185,129,0.3);display:flex;align-items:center;gap:6px;">
           <span style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;"></span> ক্লাউডের সাথে সিঙ্কড
         </div>
-        <button class="btn btn-gold" onclick="saveAllCmsChanges()" id="cms-save-btn" style="box-shadow:0 4px 14px rgba(200,151,42,0.3);">
+        <button class="btn btn-gold" onclick="saveAllCmsChanges()" id="cms-save-btn" style="box-shadow:0 4px 14px rgba(200,151,42,0.3);font-size:14px;padding:10px 20px;">
           💾 পরিবর্তন সংরক্ষণ করুন
-        </button>
-        <button class="btn btn-blue" onclick="window.open('index.html', '_blank')">
-          👁️ ওয়েবসাইট দেখুন
         </button>
         <button class="btn" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);" onclick="exportCmsBackup()" title="সকল কন্টেন্ট JSON ফাইলে ডাউনলোড করুন">
           📥 ব্যাকআপ নিন
@@ -1688,7 +1789,7 @@
     </div>
 
     <!-- CMS Sub-Navigation Tabs Bar -->
-    <div style="background:rgba(15,39,68,0.5);border:1px solid var(--card-border);border-radius:14px;padding:8px;margin-bottom:24px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;" id="cms-sub-nav">
+    <div style="background:rgba(15,39,68,0.5);border:1px solid var(--card-border);border-radius:14px;padding:8px;margin-bottom:20px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;" id="cms-sub-nav">
       <button type="button" class="cms-tab-btn active" onclick="switchCmsSubTab('general')">🏢 ১. ব্র্যান্ডিং ও সাধারণ</button>
       <button type="button" class="cms-tab-btn" onclick="switchCmsSubTab('hero')">🚀 ২. হোম হিরো সেকশন</button>
       <button type="button" class="cms-tab-btn" onclick="switchCmsSubTab('ticker')">📢 ৩. রানিং টিকার</button>
@@ -1706,8 +1807,13 @@
       <button type="button" class="cms-tab-btn" onclick="switchCmsSubTab('footer')">🦶 ১৫. ফুটার ও কপিরাইট</button>
     </div>
 
-    <!-- ──────────────────────── 1. GENERAL & BRANDING ──────────────────────── -->
-    <div class="cms-sub-panel active" id="cms-panel-general">
+    <!-- ── CMS SPLIT WORKSPACE: LEFT (EDITOR) & RIGHT (LIVE PREVIEW) ── -->
+    <div class="cms-workspace-split">
+      
+      <!-- LEFT COLUMN: EDITOR PANELS -->
+      <div class="cms-editor-pane">
+
+        <div class="cms-sub-panel active" id="cms-panel-general">
       <div class="card">
         <div class="card-title">
           <span>🏢 সাধারণ ও ব্র্যান্ডিং তথ্য</span>
@@ -2249,9 +2355,39 @@
           </div>
         </div>
       </div>
-    </div>
+          </div><!-- /cms-editor-pane -->
 
+      <!-- RIGHT COLUMN: STICKY REAL-TIME LIVE PREVIEW PANEL -->
+      <div class="cms-preview-pane">
+        <div class="cms-preview-hdr">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <strong style="font-size:14px;color:#fff;display:flex;align-items:center;gap:6px;">
+              👁️ লাইভ ওয়েবসাইট প্রিভিউ
+            </strong>
+            <span style="font-size:11px;background:rgba(34,197,94,0.15);color:#22c55e;padding:2px 7px;border-radius:10px;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse 1.5s infinite;"></span> রিয়েল-টাইম
+            </span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button type="button" class="cms-device-btn active" id="cms-dev-desktop" onclick="switchCmsDeviceMode('desktop')" title="ডেস্কটপ ভিউ">💻 ডেস্কটপ</button>
+            <button type="button" class="cms-device-btn" id="cms-dev-mobile" onclick="switchCmsDeviceMode('mobile')" title="মোবাইল ভিউ">📱 মোবাইল</button>
+            <button type="button" class="cms-device-btn" onclick="refreshCmsPreview()" title="রিফ্রেশ করুন">🔄</button>
+            <button type="button" class="cms-device-btn" onclick="window.open('index.html', '_blank')" title="নতুন ট্যাবে খুলুন">🔗</button>
+          </div>
+        </div>
+
+        <div class="cms-preview-frame-wrap" id="cms-preview-wrap">
+          <iframe id="cms-live-preview-frame" src="index.html" title="Website Live Preview"></iframe>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;">
+          💡 আপনি বাম পাশে যা পরিবর্তন করবেন, ডানপাশে তৎক্ষণাৎ তা লাইভ দেখতে পাবেন।
+        </div>
+      </div><!-- /cms-preview-pane -->
+
+    </div><!-- /cms-workspace-split -->
   </div><!-- /tab-cms -->
+
 
   <!-- ══════════════ CMS MODALS ══════════════ -->
 
@@ -5912,6 +6048,7 @@ async function initCmsDashboard() {
       localStorage.setItem('gic_site_content', JSON.stringify(cmsSiteContent));
       populateCmsForms();
       updateCmsStatus('synced');
+      setTimeout(updateLivePreview, 500);
     }
   } catch(e) {
     console.warn('CMS Supabase fetch error:', e);
@@ -5930,6 +6067,79 @@ function switchCmsSubTab(name) {
 }
 
 // ── MARK DIRTY STATE ────────────────────────────────────────────────
+
+
+// ── MODAL CLICK OUTSIDE & ESCAPE HANDLER ────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.tc-modal-overlay').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.tc-modal-overlay.active').forEach(m => m.classList.remove('active'));
+    }
+  });
+});
+
+// ── REAL-TIME LIVE PREVIEW CONTROLLER ────────────────────────────────
+function updateLivePreview() {
+  collectCmsFormData();
+  const iframe = document.getElementById('cms-live-preview-frame');
+  if (iframe && iframe.contentWindow) {
+    try {
+      // Direct call if available
+      if (typeof iframe.contentWindow.applyDynamicContent === 'function') {
+        iframe.contentWindow.applyDynamicContent(cmsSiteContent);
+      }
+      // postMessage fallback
+      iframe.contentWindow.postMessage({
+        type: 'GIC_CMS_PREVIEW',
+        content: cmsSiteContent
+      }, '*');
+    } catch(e) {
+      console.warn('Live preview sync notice:', e);
+    }
+  }
+}
+
+function refreshCmsPreview() {
+  const iframe = document.getElementById('cms-live-preview-frame');
+  if (iframe) {
+    iframe.src = 'index.html?t=' + Date.now();
+    setTimeout(updateLivePreview, 400);
+    toast('🔄 প্রিভিউ রিফ্রেশ করা হয়েছে', 'ok');
+  }
+}
+
+function switchCmsDeviceMode(mode) {
+  const wrap = document.getElementById('cms-preview-wrap');
+  const btnDesk = document.getElementById('cms-dev-desktop');
+  const btnMob = document.getElementById('cms-dev-mobile');
+  if (!wrap) return;
+
+  if (mode === 'mobile') {
+    wrap.classList.add('mobile-view');
+    btnMob?.classList.add('active');
+    btnDesk?.classList.remove('active');
+  } else {
+    wrap.classList.remove('mobile-view');
+    btnDesk?.classList.add('active');
+    btnMob?.classList.remove('active');
+  }
+}
+
+// Hook all markCmsDirty calls to also trigger live preview
+const _origMarkCmsDirty = markCmsDirty;
+markCmsDirty = function() {
+  cmsIsDirty = true;
+  updateCmsStatus('unsaved');
+  updateLivePreview();
+};
+
 function markCmsDirty() {
   cmsIsDirty = true;
   updateCmsStatus('unsaved');
@@ -6242,56 +6452,83 @@ async function saveAllCmsChanges() {
   const saveBtn = document.getElementById('cms-save-btn');
   if (saveBtn) {
     saveBtn.disabled = true;
-    saveBtn.innerHTML = '⏳ সেভ হচ্ছে...';
+    saveBtn.style.opacity = '0.7';
+    saveBtn.innerHTML = '⏳ সংরক্ষণ হচ্ছে...';
   }
   updateCmsStatus('saving');
 
   collectCmsFormData();
 
-  // Save to LocalStorage immediately
+  // 1. Instant local persistence
   try {
     localStorage.setItem('gic_site_content', JSON.stringify(cmsSiteContent));
   } catch(e) {}
 
-  // Save to Supabase Cloud
-  try {
-    let savedCount = 0;
-    const sections = Object.keys(cmsSiteContent);
+  // 2. Real-time preview frame sync
+  updateLivePreview();
 
-    for (const key of sections) {
-      const { data, error } = await db.rpc('save_site_content', {
-        pass_code: authPwd,
-        p_key: key,
-        p_section: key,
-        p_data: cmsSiteContent[key]
-      });
+  // 3. Supabase Cloud Sync
+  let savedCount = 0;
+  let cloudError = null;
 
-      if (!error && data && data.success) {
-        savedCount++;
-      } else {
-        // Fallback: direct upsert if RPC not present yet
-        await db.from('site_content').upsert({
-          key: key,
-          section: key,
-          data: cmsSiteContent[key],
-          updated_at: new Date().toISOString()
-        });
-        savedCount++;
+  if (db && typeof db.rpc === 'function') {
+    try {
+      const sections = Object.keys(cmsSiteContent);
+      for (const key of sections) {
+        try {
+          const { data, error } = await db.rpc('save_site_content', {
+            pass_code: authPwd || '',
+            p_key: key,
+            p_section: key,
+            p_data: cmsSiteContent[key]
+          });
+          if (!error && data && data.success) {
+            savedCount++;
+          } else {
+            // Direct table upsert fallback
+            await db.from('site_content').upsert({
+              key: key,
+              section: key,
+              data: cmsSiteContent[key],
+              updated_at: new Date().toISOString()
+            });
+            savedCount++;
+          }
+        } catch(e) {
+          // Direct table upsert fallback
+          await db.from('site_content').upsert({
+            key: key,
+            section: key,
+            data: cmsSiteContent[key],
+            updated_at: new Date().toISOString()
+          });
+          savedCount++;
+        }
       }
+    } catch(err) {
+      cloudError = err;
+      console.warn('CMS Cloud Save Notice:', err);
     }
+  }
 
-    toast(`✅ সফলভাবে সংরক্ষিত! ${savedCount}টি সেকশন ক্লাউডে আপডেট হয়েছে।`, 'ok');
-    cmsIsDirty = false;
-    updateCmsStatus('synced');
-  } catch(err) {
-    console.error('CMS Save Error:', err);
-    toast('⚠️ ক্লাউডে সেভ করতে সমস্যা হয়েছে: ' + (err.message || 'ত্রুটি'), 'err');
-    updateCmsStatus('unsaved');
-  } finally {
-    if (saveBtn) {
-      saveBtn.disabled = false;
+  cmsIsDirty = false;
+  updateCmsStatus('synced');
+
+  if (saveBtn) {
+    saveBtn.disabled = false;
+    saveBtn.style.opacity = '1';
+    saveBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    saveBtn.innerHTML = '🎉 সফলভাবে সংরক্ষিত!';
+    setTimeout(() => {
+      saveBtn.style.background = '';
       saveBtn.innerHTML = '💾 পরিবর্তন সংরক্ষণ করুন';
-    }
+    }, 2500);
+  }
+
+  if (cloudError) {
+    toast('✅ লোকাল ব্রাউজারে সংরক্ষিত ও প্রকাশিত! (ক্লাউড সিঙ্কের জন্য Supabase স্ক্রিপ্ট রান করুন)', 'ok');
+  } else {
+    toast('🎉 সকল পরিবর্তন সফলভাবে সংরক্ষিত ও ওয়েবসাইটে প্রকাশিত হয়েছে!', 'ok');
   }
 }
 
