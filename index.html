@@ -2538,6 +2538,11 @@ footer {
       <div class="section-label" style="margin:0 auto 16px;display:inline-flex;background:rgba(200,151,42,0.12);border-color:rgba(200,151,42,0.3);color:var(--gold-light);">আমাদের শিক্ষকবৃন্দ</div>
       <h1>অভিজ্ঞ ও যোগ্য <span style="color:var(--gold-light)">শিক্ষকদের তত্ত্বাবধানে</span> শিখুন</h1>
       <p style="margin-top:14px;">আমাদের সকল শিক্ষক সনদপ্রাপ্ত ও অভিজ্ঞ। তারা তাজউইদে দক্ষ এবং বাংলায় পাঠদানে অভিজ্ঞ।</p>
+      <div style="margin-top:20px;">
+        <a href="#teacher-apply-section" onclick="document.getElementById('teacher-apply-section')?.scrollIntoView({behavior:'smooth'}); return true;" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg, rgba(200,151,42,0.25), rgba(200,151,42,0.45));border:1.5px solid #c8972a;color:#fff;padding:12px 24px;border-radius:30px;font-size:16px;font-weight:700;text-decoration:none;box-shadow:0 4px 18px rgba(200,151,42,0.3);">
+          🎓 শিক্ষক হিসেবে যুক্ত হতে চাই (আবেদন করতে ক্লিক করুন) →
+        </a>
+      </div>
     </div>
   </div>
 
@@ -3808,7 +3813,7 @@ _Global Islamic Care — সহীহ কোরআন শিক্ষার অ�
           <div class="pub-teacher-avatar">${avatarHtml}</div>
           <h3 class="pub-teacher-name">${t.name}</h3>
           <div class="pub-teacher-desig">${t.designation || 'কোরআন শিক্ষক'}</div>
-          
+          <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(200,151,42,0.12);color:#b38012;padding:3px 10px;border-radius:12px;font-size:12.5px;font-weight:700;margin:6px 0 10px 0;">⭐ ${t.rating || 5.0} / 5.0 (রেটিং)</div>
           ${quals ? `<div class="pub-tc-qual-tags">${quals}</div>` : ''}
           ${langTags}
 
