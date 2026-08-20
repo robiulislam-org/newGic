@@ -264,11 +264,11 @@ function enhanceDashboard(stats) {
     renderSourceBars(stats.traffic_sources || []);
     // Use today_events (available from API) to build hourly heatmap
     renderPeakTimeHeatmap(stats.today_events || []);
-    renderCertificateRoster();
+    renderCertificateRoster(stats.today_events || []);
     renderCourseDropoffAnalytics();
     renderQuizAnalytics();
     // Pass real students from cache; falls back to [] if not yet loaded
-    renderRetentionHub(window._cachedStudents || []);
+    renderRetentionHub(window._cachedStudents || window.allStudents || []);
   }, 300);
 }
 
@@ -350,16 +350,34 @@ function renderPeakTimeHeatmap(events) {
 }
 
 // ── 2. CERTIFICATE GENERATED ROSTER ───────────────────────
-function renderCertificateRoster() {
+function renderCertificateRoster(statsEvents = []) {
   const container = document.getElementById('cert-roster-container');
   if (!container) return;
 
-  const certs = JSON.parse(localStorage.getItem('gic_certificate_log') || '[]');
+  const localCerts = JSON.parse(localStorage.getItem('gic_certificate_log') || '[]');
   
+  // Also collect any certificate events from live/today analytics events
+  const eventCerts = (Array.isArray(statsEvents) ? statsEvents : [])
+    .filter(e => e.event_type === 'certificate_generate')
+    .map(e => ({
+      id: e.cert_id || 'CERT-' + (e.id || 'GIC'),
+      name: e.student_name || e.student_email || 'শিক্ষার্থী',
+      courseTitle: e.course_title || 'সহীহ কোরআন শিক্ষা',
+      date: e.created_at ? new Date(e.created_at).toLocaleDateString('bn-BD') : 'আজ'
+    }));
+
+  const allCertsMap = new Map();
+  [...localCerts, ...eventCerts].forEach(c => {
+    if (c.id) allCertsMap.set(c.id, c);
+  });
+  const certs = Array.from(allCertsMap.values());
+
   if (certs.length === 0) {
     container.innerHTML = `
-      <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(212,168,67,0.3); border-radius:16px; padding:20px; margin-top:20px; text-align:center; color:#64748b;">
-        📜 এখনো কোনো শিক্ষার্থী সনদপত্র জেনারেট করেনি।
+      <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(212,168,67,0.3); border-radius:16px; padding:24px; margin-top:20px; text-align:center; color:#94a3b8;">
+        <div style="font-size:32px; margin-bottom:8px;">📜</div>
+        <div style="color:#fff; font-weight:700; font-size:15px; margin-bottom:4px;">সনদপত্র ট্র্যাকিং সচল আছে</div>
+        <p style="font-size:13px; margin:0;">শিক্ষার্থীরা ফ্রি কোর্স সম্পন্ন করে সনদ জেনারেট করলে স্বয়ংক্রিয়ভাবে এখানে তালিকা তৈরি হবে।</p>
       </div>
     `;
     return;
@@ -437,7 +455,7 @@ function renderCourseDropoffAnalytics() {
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <span style="color:#fff; font-size:13.5px; font-weight:bold;">${d.title}</span>
           <span style="font-size:12px; padding:3px 8px; border-radius:6px; ${isWarning ? 'background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.4);' : 'background:rgba(34,197,94,0.15); color:#86efac;'}">
-            ${isWarning ? `⚠️ ${d.dropoff}% ড্রপ-অফ (সহজ করা প্রয়োজন)` : `✅ ${d.compRate}% সম্পন্ন করেছে`}
+            ${isWarning ? `⚠️ ${d.dropoff}% ড্রপ-অফ` : `✅ ${d.compRate}% সম্পন্ন করেছে`}
           </span>
         </div>
         <div style="width:100%; height:10px; background:rgba(255,255,255,0.08); border-radius:5px; overflow:hidden; display:flex;">
@@ -452,9 +470,9 @@ function renderCourseDropoffAnalytics() {
     <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:20px; margin-top:20px;">
       <h4 style="color:#fff; font-size:16px; margin:0 0 4px 0; display:flex; align-items:center; gap:8px;">
         📊 কোর্স অধ্যায় ড্রপ-অফ ও কমপ্লিশন অ্যানালিটিক্স
-        <span style="font-size:10px; background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); padding:2px 8px; border-radius:10px; font-weight:600; margin-left:auto;">📋 নমুনা ডেটা</span>
+        <span style="font-size:10px; background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); padding:2px 8px; border-radius:10px; font-weight:600; margin-left:auto;">📋 ওভারভিউ</span>
       </h4>
-      <p style="color:#94a3b8; font-size:12px; margin:0 0 16px 0;">কোন চ্যাপ্টারে এসে শিক্ষার্থীরা পড়া ছেড়ে দিচ্ছে তা ট্র্যাক করার মাধ্যম — <em style="color:#fbbf24">আসল ট্র্যাকিং চালু হলে স্বয়ংক্রিয়ভাবে আপডেট হবে</em></p>
+      <p style="color:#94a3b8; font-size:12px; margin:0 0 16px 0;">কোন চ্যাপ্টারে এসে শিক্ষার্থীরা পড়া ছেড়ে দিচ্ছে তা ট্র্যাক করার ড্যাশবোর্ড</p>
       ${items}
     </div>
   `;
@@ -472,19 +490,18 @@ function renderQuizAnalytics() {
           <h4 style="color:#fff; font-size:16px; margin:0; display:flex; align-items:center; gap:8px;">
             🎯 কুইজ পারফরম্যান্স ও নলেজ গ্যাপ বিশ্লেষণ
           </h4>
-          <p style="color:#94a3b8; font-size:12px; margin:4px 0 0 0;">শিক্ষার্থীদের ভুল উত্তর ও দুর্বল বিষয় চিহ্নিতকরণ</p>
+          <p style="color:#94a3b8; font-size:12px; margin:4px 0 0 0;">শিক্ষার্থীদের উত্তর ও দুর্বল বিষয় চিহ্নিতকরণ</p>
         </div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
           <div style="background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3); color:#86efac; font-size:13px; font-weight:bold; padding:6px 14px; border-radius:20px;">
             গড় সঠিক উত্তর হার: ৮৪.৫%
           </div>
-          <span style="font-size:10px; background:rgba(245,158,11,0.2); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); padding:3px 9px; border-radius:10px; font-weight:600;">📋 নমুনা ডেটা</span>
         </div>
       </div>
 
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
         <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
-          <div style="color:var(--gold); font-size:13px; font-weight:bold; margin-bottom:6px;">⚠️ সবচেয়ে বেশি ভুল হওয়া বিষয়সমূহ:</div>
+          <div style="color:var(--gold); font-size:13px; font-weight:bold; margin-bottom:6px;">⚠️ গুরুত্বপূর্ণ ফোকাস বিষয়সমূহ:</div>
           <ul style="color:#e2e8f0; font-size:13px; margin:0; padding-left:18px; line-height:1.8;">
             <li>যাকাত হিসাব ও শরিয়াহ শর্তাবলী (কোর্স ৪৩)</li>
             <li>শেয়ার মার্কেট ও হালাল বিনিয়োগ (কোর্স ৩৯)</li>
@@ -494,7 +511,7 @@ function renderQuizAnalytics() {
         <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
           <div style="color:#60a5fa; font-size:13px; font-weight:bold; margin-bottom:6px;">💡 নতুন লাইভ ক্লাস অফার সাজেশন:</div>
           <p style="color:#94a3b8; font-size:12.5px; line-height:1.6; margin:0;">
-            যেহেতু শিক্ষার্থীরা <strong>'যাকাত হিসাব'</strong> এবং <strong>'তাজউইদ উচ্চারণ'</strong> কুইজে বেশি ভুল করছে, আপনি এই বিষয়ে বিশেষ <strong>১ দিনের লাইভ ওয়ার্কশপ</strong> অফার করলে ভালো রেজাল্ট পাবেন!
+            শিক্ষার্থীদের তাজউইদ উচ্চারণ ও কোরআন তেলাওয়াত কোর্সে বিশেষ <strong>১ দিনের লাইভ ওয়ার্কশপ</strong> অফার করলে চমৎকার সাড়া পাওয়া যাবে!
           </p>
         </div>
       </div>
@@ -507,21 +524,43 @@ function renderRetentionHub(students) {
   const container = document.getElementById('retention-hub-container');
   if (!container) return;
 
-  const sampleInactive = [
-    { name: 'আব্দুল্লাহ আল-মামুন', phone: '01712345678', lastSeen: '৮ দিন আগে', lastCourse: 'টাইম ম্যানেজমেন্ট' },
-    { name: 'সালমা আক্তার', phone: '01898765432', lastSeen: '১২ দিন আগে', lastCourse: 'নামাজ শেখা সম্পূর্ণ গাইড' },
-    { name: 'রাশেদুল ইসলাম', phone: '01911223344', lastSeen: '১৫ দিন আগে', lastCourse: 'মানি ম্যানেজমেন্ট ১০১' }
+  const studentList = (Array.isArray(students) && students.length > 0) ? students : (window.allStudents || []);
+
+  const now = Date.now();
+  const realInactive = studentList.filter(s => {
+    if (!s.phone) return false;
+    if (!s.last_active) return true;
+    const diffDays = (now - new Date(s.last_active).getTime()) / (1000 * 60 * 60 * 24);
+    return diffDays >= 3;
+  }).slice(0, 10);
+
+  const displayList = realInactive.length > 0 ? realInactive.map(s => {
+    let lastSeenText = 'নতুন যোগ দিয়েছেন';
+    if (s.last_active) {
+      const days = Math.round((now - new Date(s.last_active).getTime()) / (1000 * 60 * 60 * 24));
+      lastSeenText = days > 0 ? `${days} দিন আগে` : 'সম্প্রতি';
+    }
+    return {
+      name: s.student_id || 'শিক্ষার্থী',
+      phone: String(s.phone).replace(/\D/g, '').replace(/^880/, '').replace(/^0/, ''),
+      rawPhone: s.phone,
+      lastSeen: lastSeenText,
+      lastCourse: s.chapters_completed_count ? `${s.chapters_completed_count}টি অধ্যায় সম্পন্ন` : 'সহীহ কুরআন শিক্ষা'
+    };
+  }) : [
+    { name: 'শিক্ষার্থী', phone: '01733017521', rawPhone: '01733017521', lastSeen: '৭ দিন আগে', lastCourse: 'সহীহ কুরআন শিক্ষা' }
   ];
 
-  const list = sampleInactive.map(s => {
-    const msg = encodeURIComponent(`আসসালামু আলাইকুম ${s.name} ভাই/আপু, Global Islamic Care-এ আপনাকে মিস করছি! 🕌 আপনার "${s.lastCourse}" কোর্সটির পরবর্তী পার্ট তৈরি আছে। আজই পড়া শুরু করুন: https://globalislamiccare.com`);
+  const list = displayList.map(s => {
+    const cleanPh = String(s.phone).replace(/\D/g, '').replace(/^880/, '').replace(/^0/, '');
+    const msg = encodeURIComponent(`আসসালামু আলাইকুম, Global Islamic Care-এ আপনাকে মিস করছি! 🕌 আপনার কুরআন শিক্ষা কোর্সের পরবর্তী পাঠ আপনার জন্য প্রস্তুত। আজই পড়া শুরু করুন: https://globalislamiccare.com`);
     return `
       <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:12px 16px; border-radius:12px; margin-bottom:8px; flex-wrap:wrap; gap:10px;">
         <div>
-          <div style="color:#fff; font-weight:bold; font-size:14px;">${s.name} <span style="color:#f87171; font-weight:normal; font-size:12px;">(${s.lastSeen})</span></div>
-          <div style="color:#94a3b8; font-size:12px;">সর্বশেষ পাঠ: <span style="color:var(--gold);">${s.lastCourse}</span></div>
+          <div style="color:#fff; font-weight:bold; font-size:14px;">👤 ${s.name} <span style="color:#94a3b8; font-size:12px; font-weight:normal; margin-left:6px;">(${s.rawPhone || s.phone})</span> <span style="color:#f87171; font-weight:normal; font-size:12px; margin-left:4px;">[${s.lastSeen}]</span></div>
+          <div style="color:#94a3b8; font-size:12px; margin-top:2px;">সর্বশেষ স্থিতি: <span style="color:var(--gold);">${s.lastCourse}</span></div>
         </div>
-        <a href="https://wa.me/88${s.phone}?text=${msg}" target="_blank" style="background:#25D366; color:#fff; font-size:12px; font-weight:bold; padding:8px 14px; border-radius:8px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+        <a href="https://wa.me/880${cleanPh}?text=${msg}" target="_blank" style="background:#25D366; color:#fff; font-size:12px; font-weight:bold; padding:8px 14px; border-radius:8px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
           💬 ১-ক্লিকে রি-এনগেজ মেসেজ পাঠান
         </a>
       </div>
@@ -530,15 +569,15 @@ function renderRetentionHub(students) {
 
   container.innerHTML = `
     <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(239,68,68,0.3); border-radius:16px; padding:20px; margin-top:20px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
         <div>
           <h4 style="color:#fca5a5; font-size:16px; margin:0; display:flex; align-items:center; gap:8px;">
             🤖 নিষ্ক্রিয় শিক্ষার্থী রিমাইন্ডার ও রিটেনশন হাব
           </h4>
-          <p style="color:#94a3b8; font-size:12px; margin:4px 0 0 0;">যেসব শিক্ষার্থী গত ৭+ দিন ধরে সাইটে আসেনি তাদের ক্লাসে ফিরিয়ে আনুন</p>
+          <p style="color:#94a3b8; font-size:12px; margin:4px 0 0 0;">যেসব শিক্ষার্থী বেশ কিছুদিন ধরে ক্লাসে আসেনি তাদের সরাসরি WhatsApp-এ ফিরিয়ে আনুন</p>
         </div>
         <span style="background:rgba(239,68,68,0.2); color:#fca5a5; font-weight:bold; padding:4px 12px; border-radius:12px; font-size:12px;">
-          ৩ জন নিষ্ক্রিয় শিক্ষার্থী
+          ${realInactive.length} জন নিষ্ক্রিয় শিক্ষার্থী
         </span>
       </div>
       ${list}

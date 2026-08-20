@@ -2,11 +2,23 @@
 
 (function() {
   const urlParams = new URLSearchParams(window.location.search);
-  const isAdmin = urlParams.get('admin') === '1' || sessionStorage.getItem('gic_admin') === '1';
+  const adminParam = urlParams.get('admin') === '1';
+  let adminPwd = sessionStorage.getItem('gic_admin_pwd') || localStorage.getItem('gic_admin_pwd_persist');
 
-  if (!isAdmin) return;
+  // Check admin access
+  const isAdmin = (adminParam && adminPwd) || sessionStorage.getItem('gic_admin') === '1';
 
-  // Store original admin status
+  if (!isAdmin && !adminParam) return;
+
+  // If ?admin=1 is requested without existing session, require verification
+  if (adminParam && !adminPwd) {
+    const entered = prompt('🔐 GIC এডমিন পাসওয়ার্ড দিন:');
+    if (!entered) return;
+    adminPwd = entered;
+    sessionStorage.setItem('gic_admin_pwd', entered);
+  }
+
+  // Store admin session flag
   sessionStorage.setItem('gic_admin', '1');
 
   // Add Admin Indicator Ribbon
@@ -52,28 +64,52 @@
 
   // Save All handler
   document.getElementById('gic-save-all-btn')?.addEventListener('click', async function() {
+    const saveBtn = this;
+    saveBtn.disabled = true;
+    saveBtn.textContent = '⏳ সেভ হচ্ছে...';
+
     const payload = {};
     document.querySelectorAll('[data-editable="true"]').forEach(el => {
       const id = el.getAttribute('data-editable-id');
       payload[id] = el.innerHTML.trim();
     });
 
+    // Save locally first
+    localStorage.setItem('gic_inline_edits', JSON.stringify(payload));
+
+    const pwd = sessionStorage.getItem('gic_admin_pwd') || localStorage.getItem('gic_admin_pwd_persist') || adminPwd || '';
+
     try {
-      if (window.db) {
-        const { error } = await window.db.from('site_content').upsert({
-          key: 'inline_edits',
-          section: 'inline_edits',
-          data: payload
-        });
-        if (error) throw error;
-      } else {
-        localStorage.setItem('gic_inline_edits', JSON.stringify(payload));
+      const supaUrl = window.GIC_SUPA_URL || "https://abpweawndpnaftkcsdcp.supabase.co";
+      const supaKey = window.GIC_SUPA_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFicHdlYXduZHBuYWZ0a2NzZGNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1Njc1ODMsImV4cCI6MjA5NTE0MzU4M30.B3rV8pp0HL9xYBhGDcJGJD3b1unjtNk1ChB_4_OgW9Y";
+
+      let client = window.db;
+      if (!client && window.supabase && typeof window.supabase.createClient === 'function') {
+        client = window.supabase.createClient(supaUrl, supaKey);
       }
-      alert('সফলভাবে সেভ হয়েছে!');
+
+      if (client && typeof client.rpc === 'function') {
+        const { data, error } = await client.rpc('save_site_content', {
+          pass_code: pwd,
+          p_key: 'inline_edits',
+          p_section: 'inline_edits',
+          p_data: payload
+        });
+        if (error || (data && !data.success)) {
+          console.warn('RPC save notice:', error || data);
+          alert('✅ লোকালি সেভ হয়েছে! (ক্লাউড সেভের জন্য সঠিক পাসওয়ার্ড প্রয়োজন)');
+        } else {
+          alert('✅ সফলভাবে ক্লাউড ডাটাবেজে সেভ হয়েছে!');
+        }
+      } else {
+        alert('✅ সফলভাবে লোকালি সেভ হয়েছে!');
+      }
     } catch(e) {
-      console.warn('Backend save failed, saved locally:', e);
-      localStorage.setItem('gic_inline_edits', JSON.stringify(payload));
-      alert('লোকালি সেভ হয়েছে!');
+      console.warn('Save error:', e);
+      alert('✅ লোকালি সেভ হয়েছে!');
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = '💾 সব পরিবর্তন সেভ করুন';
     }
   });
 

@@ -1440,7 +1440,8 @@ window.addEventListener('load', () => {
   } else if (pageNum && pageNum >= 1 && pageNum <= 604) {
     openPdfViewer('Emdadia-Hafezi-Quran.pdf', '১৫ লাইন হাফেজী কুরআন শরীফ (ইমদাদিয়া)', true, pageNum);
   } else {
-    const hash = window.location.hash.replace('#', '');
+    let hash = window.location.hash.replace('#', '');
+    try { hash = decodeURIComponent(hash); } catch(e) {}
     if (hash) {
       const targetCard = document.getElementById(hash);
       if (targetCard) {
@@ -1458,6 +1459,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 </script>
+<script type="module" src="analytics.js"></script>
 
 </body>
 </html>

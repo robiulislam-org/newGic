@@ -414,7 +414,7 @@ function applyDynamicContent(content) {
 
     const titleEl = document.querySelector('.hero-title');
     if (titleEl && h.title_line1) {
-      titleEl.innerHTML = `<span class="gold">${h.title_line1}</span><br>${h.title_line2 ? `জীবন <span class="blue">${h.title_line2}</span>` : ''}`;
+      titleEl.innerHTML = `<span class="gold">${h.title_line1}</span><br>${h.title_line2 ? `<span class="blue">${h.title_line2}</span>` : ''}`;
     }
 
     const arabicEl = document.querySelector('.hero-arabic');

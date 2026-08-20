@@ -23,13 +23,12 @@ alter table students enable row level security;
 create policy "Allow public inserts" on students
   for insert with check (true);
 
--- Policy: Allow public to read their own data (based on student_id/phone check handled by function)
--- We will use SECURITY DEFINER functions instead of complex RLS for simplicity in this case.
-create policy "Allow public reads" on students
-  for select using (true);
+-- Policy: Block direct public reads and updates (Handled securely via SECURITY DEFINER RPC functions)
+create policy "Disable public reads on students" on students
+  for select using (false);
   
-create policy "Allow public updates" on students
-  for update using (true);
+create policy "Disable public updates on students" on students
+  for update using (false);
 
 -- 3. Function to login or create a new student
 create or replace function login_or_create_student(p_phone text)

@@ -3237,7 +3237,7 @@ function renderLeads(filtered) {
       <td style="font-size:12px;">${formatDate(s.last_active)}</td>
       <td>${statusBadge(s)}</td>
       <td>
-        ${s.phone ? `<a href="https://wa.me/880${String(s.phone).replace(/^0/,"")}?text=আস-সালামু+আলাইকুম" target="_blank" class="btn btn-sm btn-green">💬</a>` : "—"}
+        ${s.phone ? `<a href="https://wa.me/880${String(s.phone).replace(/\D/g, '').replace(/^880/, '').replace(/^0/, '')}?text=${encodeURIComponent('আস-সালামু আলাইকুম')}" target="_blank" class="btn btn-sm btn-green">💬</a>` : "—"}
       </td>
     </tr>
   `;
@@ -3390,6 +3390,7 @@ function renderFunnel() {
 // ══════════════════════════════════════════════════════
 function renderCampaigns() {
   const tbody = document.getElementById("utm-tbl");
+  if (!tbody) return;
   if (!allUtm.length) { tbody.innerHTML = emptyRow(5); return; }
   const maxV = Math.max(...allUtm.map(c=>Number(c.visits)),1);
   tbody.innerHTML = allUtm.map(c => {
@@ -3406,17 +3407,23 @@ function renderCampaigns() {
 }
 
 function buildUtmLink() {
-  const base = document.getElementById("utm-url").value.trim() || "https://globalislamiccare.com";
-  const src = document.getElementById("utm-src").value;
-  const med = document.getElementById("utm-med").value;
-  const camp = encodeURIComponent(document.getElementById("utm-camp").value.trim() || "campaign");
+  const urlEl = document.getElementById("utm-url");
+  if (!urlEl) return;
+  const base = urlEl.value.trim() || "https://globalislamiccare.com";
+  const src = document.getElementById("utm-src")?.value || "direct";
+  const med = document.getElementById("utm-med")?.value || "social";
+  const camp = encodeURIComponent(document.getElementById("utm-camp")?.value.trim() || "campaign");
   const link = `${base}?utm_source=${src}&utm_medium=${med}&utm_campaign=${camp}`;
-  document.getElementById("utm-link-text").textContent = link;
-  document.getElementById("utm-result").style.display = "block";
+  const resLink = document.getElementById("utm-link-text");
+  if (resLink) resLink.textContent = link;
+  const resBox = document.getElementById("utm-result");
+  if (resBox) resBox.style.display = "block";
 }
 
 function copyUtmLink() {
-  const txt = document.getElementById("utm-link-text").textContent;
+  const txtEl = document.getElementById("utm-link-text");
+  if (!txtEl) return;
+  const txt = txtEl.textContent;
   navigator.clipboard.writeText(txt).then(() => toast("✅ UTM লিংক কপি হয়েছে!", "ok"));
 }
 
@@ -3910,29 +3917,39 @@ async function confirmDeleteReview() {
   delBtn.textContent = 'মুছছে...';
 
   try {
-    const res = await fetch(
-      `${RV_SUPA_URL}/rest/v1/institution_reviews?id=eq.${reviewToDelete}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'apikey': RV_SUPA_KEY,
-          'Authorization': 'Bearer ' + RV_SUPA_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
+    let success = false;
+    // 1. Try secure RPC first
+    try {
+      const { data, error } = await db.rpc('delete_institution_review', {
+        p_id: reviewToDelete,
+        pass_code: authPwd || ''
+      });
+      if (!error && (data === undefined || data === null || data === true || data?.success !== false)) {
+        success = true;
+      }
+    } catch(rpcEx) {
+      console.warn('RPC delete fallback:', rpcEx);
+    }
+
+    // 2. Direct delete fallback if RPC not matched
+    if (!success) {
+      const res = await fetch(
+        `${RV_SUPA_URL}/rest/v1/institution_reviews?id=eq.${reviewToDelete}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'apikey': RV_SUPA_KEY,
+            'Authorization': 'Bearer ' + RV_SUPA_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          }
         }
-      }
-    );
+      );
+      if (res.ok) success = true;
+    }
 
-    if (!res.ok) {
-      let errBody = '';
-      try { errBody = await res.text(); } catch(e) {}
-      console.error('Supabase DELETE failed:', res.status, errBody);
-
-      if (res.status === 401 || res.status === 403) {
-        toast('❌ Permission নেই! Supabase SQL Editor-তে fix_reviews_delete.sql রান করুন', 'err');
-      } else {
-        toast(`❌ সমস্যা হয়েছে (${res.status})। আবার চেষ্টা করুন`, 'err');
-      }
+    if (!success) {
+      toast('❌ রিভিউ মুছতে সমস্যা হয়েছে। অ্যাডমিন পাসওয়ার্ড সঠিক কিনা পরীক্ষা করুন।', 'err');
       return;
     }
 
@@ -4813,7 +4830,7 @@ function renderAdminTeachersGrid(list) {
           <span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:${isActive ? 'rgba(16,185,129,0.15);color:var(--green)' : 'rgba(244,63,94,0.15);color:var(--red)'};">
             ${isActive ? '● সক্রিয়' : '○ নিষ্ক্রিয়'}
           </span>
-          ${isAdmin ? `<button class="btn btn-outline btn-sm edit-teacher" data-id="${t.id}" onclick="editTeacher(${t.id})">✏️ সম্পাদনা</button>` : ''}
+          ${isAdmin ? `<button class="btn btn-outline btn-sm edit-teacher" data-id="${t.id}" onclick="openEditTeacherModal(${t.id})">✏️ সম্পাদনা</button>` : ''}
         </div>
       </div>
 
@@ -5421,6 +5438,7 @@ function renderApplicationsGrid(apps) {
     const avatarHtml = app.photo_url 
       ? `<img src="${app.photo_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`
       : '👨‍🏫';
+    const suggestedSlug = (app.name || '').toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').substring(0, 30);
 
     return `
     <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:20px;transition:transform 0.2s;position:relative;">
@@ -5463,7 +5481,7 @@ function renderApplicationsGrid(apps) {
           👁️ বিস্তারিত দেখুন
         </button>
         ${app.status === 'pending' ? `
-          <button onclick="quickApproveApp(${app.id}, '${(app.name || '').toLowerCase().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').substring(0,30)}')" class="btn btn-sm btn-green" style="padding:8px 12px;font-size:12px;">✅ অনুমোদন</button>
+          <button onclick="quickApproveApp(${app.id}, '${suggestedSlug}')" class="btn btn-sm btn-green" style="padding:8px 12px;font-size:12px;">✅ অনুমোদন</button>
           <button onclick="quickRejectApp(${app.id})" class="btn btn-sm btn-red" style="padding:8px 10px;font-size:12px;">❌</button>
         ` : ''}
       </div>

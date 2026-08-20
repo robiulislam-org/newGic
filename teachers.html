@@ -1048,7 +1048,7 @@ function closeBookingModal() {
   document.body.style.overflow = '';
 }
 
-function submitBooking() {
+async function submitBooking() {
   const name  = document.getElementById('bk-name').value.trim();
   const phone = document.getElementById('bk-phone').value.trim();
   const msg   = document.getElementById('bk-msg').value.trim();
@@ -1059,8 +1059,27 @@ function submitBooking() {
   const dayName  = DAY_NAMES[selectedSlot.day] || selectedSlot.day;
   const slotTime = `${selectedSlot.slot.label} (${selectedSlot.slot.period || 'ক্লাস'})`;
   const waMsg = `সালামুআলাইকুম! আমি *${name}* আপনার ওয়েবসাইট থেকে শিক্ষক *${t.name}*-এর ক্লাস বুক করতে চাই।\n\n📅 দিন: ${dayName}\n⏰ সময়: ${slotTime}\n📞 ফোন: ${phone}${msg ? '\n\n💬 বার্তা: ' + msg : ''}`;
-  const waNumber = t.whatsapp || '8801733017521';
+  const rawWa = t.whatsapp || '8801733017521';
+  const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
   const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+
+  // Save to database
+  try {
+    if (db && t && t.id) {
+      await db.from('teacher_bookings').insert([{
+        teacher_id: t.id,
+        day_of_week: selectedSlot.day,
+        slot_start: selectedSlot.slot.label || slotTime,
+        student_name: name,
+        student_phone: phone,
+        message: msg || '',
+        status: 'pending'
+      }]);
+    }
+  } catch(err) {
+    console.warn('Booking db sync notice:', err);
+  }
+
   window.open(waUrl, '_blank');
   closeBookingModal();
 }
@@ -1068,7 +1087,8 @@ function submitBooking() {
 function openWhatsApp() {
   const t = teacherData;
   const waMsg = `সালামুআলাইকুম! আমি শিক্ষক *${t.name}*-এর সাথে কোরআন ক্লাস সম্পর্কে জানতে চাই।`;
-  const waNumber = t.whatsapp || '8801733017521';
+  const rawWa = t.whatsapp || '8801733017521';
+  const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
   window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`, '_blank');
 }
 
@@ -1152,6 +1172,7 @@ document.getElementById('review-modal').addEventListener('click', function(e) {
 setRating(5);
 init();
 </script>
+<script type="module" src="analytics.js"></script>
 <script src="inline_edit.js"></script>
 
 </body>
