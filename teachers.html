@@ -494,11 +494,11 @@
 
   <!-- TOP TEACHER APPLY BANNER CTA -->
   <div style="padding:0 16px;">
-    <a href="index.html#teacher-apply-section" class="teacher-cta-banner">
+    <a href="index.html?page=teachers" class="teacher-cta-banner">
       <div class="cta-banner-content">
         <div class="cta-banner-icon">🎓</div>
         <div>
-          <div class="cta-banner-title">শিক্ষক হিসেবে যুক্ত হতে চাই (আবেদন করুন)</div>
+          <div class="cta-banner-title">শিক্ষক হিসেবে যুক্ত হতে চাই (আবেদন করতে ক্লিক করুন) →</div>
           <div class="cta-banner-sub">Global Islamic Care-এ একজন যোগ্য কোরআন শিক্ষক হিসেবে যুক্ত হওয়ার জন্য আবেদন করুন।</div>
         </div>
       </div>
@@ -509,8 +509,9 @@
   <!-- TEACHER DIRECTORY SECTION (List View) -->
   <div id="teacher-directory-section" class="directory-container" style="display:none;">
     <div class="directory-header">
+      <div class="section-label" style="display:inline-flex;background:rgba(30,96,145,0.1);border:1px solid rgba(30,96,145,0.25);color:var(--navy);padding:5px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:12px;">👨‍🏫 শিক্ষক প্রোফাইল ও সময়সূচি</div>
       <h1 class="directory-title">আমাদের সম্মানিত শিক্ষকবৃন্দ</h1>
-      <p class="directory-subtitle">সহীহ তাজউইদ ও সুন্দর উচ্চারণে কোরআন শেখাতে আমাদের অভিজ্ঞ শিক্ষকগণ প্রস্তুত</p>
+      <p class="directory-subtitle">যেকোনো শিক্ষকের প্রোফাইলে ক্লিক করে তাঁর শিক্ষাগত যোগ্যতা, অভিজ্ঞতা এবং শনি-বুধ ফাঁকা ক্লাস সময়সূচি দেখে সরাসরি বুক করুন।</p>
     </div>
     <div class="teacher-grid-wrapper" id="teacher-grid">
       <!-- Cards rendered by JS -->
@@ -527,7 +528,10 @@
           <div class="hero-avatar" id="hero-avatar">👨‍🏫</div>
         </div>
         <div class="hero-info">
-          <div class="hero-badge">✅ যাচাইকৃত শিক্ষক · GIC</div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+            <div class="hero-badge">✅ যাচাইকৃত শিক্ষক · GIC</div>
+            <div class="hero-badge" id="hero-country" style="background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);color:#fff;">📍 বাংলাদেশ</div>
+          </div>
           <h1 class="hero-name" id="hero-name">শিক্ষকের নাম</h1>
           <p class="hero-designation" id="hero-designation"></p>
           <div class="hero-stats">
@@ -666,6 +670,18 @@
           <div class="card" style="margin-top:0;">
             <div style="font-weight:700; font-size:14px; color:var(--navy); margin-bottom:14px;">📊 দ্রুত তথ্য</div>
             <div class="bc-info-row">
+              <span class="bc-info-lbl">দেশ (Country)</span>
+              <span class="bc-info-val" id="qs-country">—</span>
+            </div>
+            <div class="bc-info-row">
+              <span class="bc-info-lbl">মাতৃভাষা</span>
+              <span class="bc-info-val" id="qs-native-lang">—</span>
+            </div>
+            <div class="bc-info-row">
+              <span class="bc-info-lbl">পাঠদানের ভাষা</span>
+              <span class="bc-info-val" id="qs-teach-langs" style="text-align:right; max-width:150px;">—</span>
+            </div>
+            <div class="bc-info-row">
               <span class="bc-info-lbl">অভিজ্ঞতা</span>
               <span class="bc-info-val" id="qs-exp">—</span>
             </div>
@@ -675,7 +691,7 @@
             </div>
             <div class="bc-info-row">
               <span class="bc-info-lbl">বিষয়</span>
-              <span class="bc-info-val" id="qs-specs" style="text-align:right; max-width:160px;">—</span>
+              <span class="bc-info-val" id="qs-specs" style="text-align:right; max-width:150px;">—</span>
             </div>
           </div>
 
@@ -686,7 +702,7 @@
   </div><!-- /#teacher-detail-section -->
 
   <footer class="page-footer">
-    <p>© ২০২৫ <a href="index.html">Global Islamic Care (GIC)</a> · সহীহ কোরআন শিক্ষার অনলাইন প্রতিষ্ঠান</p>
+    <p>© ২০২৬ <a href="index.html">Global Islamic Care (GIC)</a> · সহীহ কোরআন শিক্ষার অনলাইন প্রতিষ্ঠান</p>
   </footer>
 </div><!-- /#teacher-content -->
 
@@ -731,6 +747,8 @@ const DEMO_TEACHERS_MAP = {
     name: "হাফেজ মাওলানা তানভীর আহমেদ",
     slug: "hafez-tanvir-ahmed",
     designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
     photo_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80",
     qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
     languages: ["বাংলা", "English", "العربية"],
@@ -751,6 +769,8 @@ const DEMO_TEACHERS_MAP = {
     name: "মুফতি সালমান ফারিস",
     slug: "mufti-salman-faris",
     designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
     photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
     qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
     languages: ["বাংলা", "English", "Urdu"],
@@ -771,6 +791,8 @@ const DEMO_TEACHERS_MAP = {
     name: "হাফেজা উম্মে কুলসুম",
     slug: "hafeza-umme-kulsum",
     designation: "সিনিয়র মহিলা কোরআন শিক্ষক",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
     photo_url: "",
     qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড"],
     languages: ["বাংলা", "English"],
@@ -800,9 +822,14 @@ function renderTeacherDirectory(teachersList) {
   const list = (teachersList && teachersList.length > 0) ? teachersList : Object.values(DEMO_TEACHERS_MAP);
 
   container.innerHTML = list.map(t => {
-    const photo = t.photo_url ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" />` : `<span class="tc-avatar-fallback">👨‍🏫</span>`;
+    const isFemale = t.category === 'female' || (t.designation && t.designation.includes('মহিলা')) || (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া')));
+    const fallbackAvatar = isFemale ? '🧕' : '👨‍🏫';
+    const photo = t.photo_url ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.parentElement.innerHTML='<span class=\\'tc-avatar-fallback\\'>${fallbackAvatar}</span>'" />` : `<span class="tc-avatar-fallback">${fallbackAvatar}</span>`;
     const ratingVal = t.rating || 5.0;
     const ratingStr = `⭐ ${ratingVal} / 5.0`;
+    const countryName = t.country || 'বাংলাদেশ';
+    const nativeLang = t.native_language || 'বাংলা';
+    const teachLangs = (t.languages && t.languages.length > 0) ? t.languages : ['বাংলা'];
     const quals = Array.isArray(t.qualifications) ? t.qualifications : (typeof t.qualifications === 'string' ? JSON.parse(t.qualifications || '[]') : []);
     const qualTags = quals.map(q => `<span class="tc-tag">${q}</span>`).join('');
     
@@ -811,9 +838,29 @@ function renderTeacherDirectory(teachersList) {
         <div class="tc-photo-wrap">${photo}</div>
         <div class="tc-name">${t.name}</div>
         <div class="tc-designation">${t.designation || 'কোরআন শিক্ষক'}</div>
-        <div class="tc-rating">${ratingStr}</div>
+        
+        <div style="display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:6px 0 10px 0;">
+          <span class="tc-rating">${ratingStr}</span>
+          <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(15,39,68,0.06);color:var(--navy);padding:2px 8px;border-radius:12px;font-size:11.5px;font-weight:700;border:1px solid rgba(15,39,68,0.12);">📍 ${countryName}</span>
+        </div>
+
         <div class="tc-qualifications">${qualTags}</div>
-        <a href="teachers.html?id=${t.slug || t.id}" class="tc-action-btn">বিস্তারিত প্রোফাইল →</a>
+
+        <!-- Language Info Box -->
+        <div style="background:rgba(15,39,68,0.035);border:1px solid rgba(15,39,68,0.08);border-radius:8px;padding:6px 8px;margin:8px 0 12px 0;width:100%;box-sizing:border-box;text-align:left;font-size:11.5px;line-height:1.4;">
+          <div style="margin-bottom:3px;display:flex;align-items:center;gap:4px;">
+            <span style="color:var(--text-muted);font-weight:600;">🗣️ মাতৃভাষা:</span>
+            <strong style="color:var(--navy);font-weight:700;">${nativeLang}</strong>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:4px;flex-wrap:wrap;">
+            <span style="color:var(--text-muted);font-weight:600;">🌐 ক্লাসের ভাষা:</span>
+            <span style="display:inline-flex;gap:3px;flex-wrap:wrap;">
+              ${teachLangs.map(l => `<span style="background:#fff;border:1px solid #cbd5e1;color:var(--navy);font-size:10.5px;padding:1px 5px;border-radius:4px;font-weight:700;">${l}</span>`).join('')}
+            </span>
+          </div>
+        </div>
+
+        <a href="teachers.html?id=${t.slug || t.id}" class="tc-action-btn">বিস্তারিত প্রোফাইল ও সময়সূচি →</a>
         ${isAdmin ? `
           <div class="tc-admin-tools">
             <button class="tc-admin-btn tc-admin-edit" onclick="editTeacherCard('${t.slug || t.id}')">✏️ এডিট</button>
@@ -849,10 +896,22 @@ async function init() {
   const params = new URLSearchParams(window.location.search);
   const slug = params.get('id');
 
-  // Load all teachers for directory roster
+  // Dynamic back button logic
+  const backBtn = document.getElementById('all-teachers-link');
+  if (backBtn) {
+    if (!slug) {
+      backBtn.textContent = '← হোম পেজ';
+      backBtn.href = 'index.html';
+    } else {
+      backBtn.textContent = '← সকল শিক্ষকবৃন্দ';
+      backBtn.href = 'teachers.html';
+    }
+  }
+
+  // Load all teachers for directory roster (Active only)
   let allTeachers = Object.values(DEMO_TEACHERS_MAP);
   try {
-    const { data } = await db.from('teachers').select('*');
+    const { data } = await db.from('teachers').select('*').eq('is_active', true).order('sort_order', { ascending: true });
     if (data && data.length > 0) {
       allTeachers = data;
     }
@@ -950,10 +1009,24 @@ function renderPage() {
     ? (reviewsData.reduce((s, r) => s + (r.rating || 5), 0) / reviewsData.length).toFixed(1)
     : '—';
 
+  const isFemale = t.category === 'female' || (t.designation && t.designation.includes('মহিলা')) || (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া')));
+  const fallbackAvatar = isFemale ? '🧕' : '👨‍🏫';
+
   if (t.photo_url) {
-    document.getElementById('hero-avatar').innerHTML = `<img src="${t.photo_url}" alt="${t.name}" loading="eager">`;
-    document.getElementById('bc-avatar').innerHTML   = `<img src="${t.photo_url}" alt="${t.name}" loading="lazy">`;
+    document.getElementById('hero-avatar').innerHTML = `<img src="${t.photo_url}" alt="${t.name}" loading="eager" onerror="this.parentElement.innerHTML='${fallbackAvatar}'">`;
+    document.getElementById('bc-avatar').innerHTML   = `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.parentElement.innerHTML='${fallbackAvatar}'">`;
+  } else {
+    document.getElementById('hero-avatar').innerHTML = fallbackAvatar;
+    document.getElementById('bc-avatar').innerHTML   = fallbackAvatar;
   }
+
+  const countryName = t.country || 'বাংলাদেশ';
+  const nativeLang = t.native_language || 'বাংলা';
+  const teachLangs = (t.languages && t.languages.length > 0) ? t.languages : ['বাংলা'];
+
+  const heroCountryEl = document.getElementById('hero-country');
+  if (heroCountryEl) heroCountryEl.textContent = '📍 ' + countryName;
+
   document.getElementById('hero-name').textContent        = t.name;
   document.getElementById('hero-designation').textContent = t.designation || '';
   document.getElementById('stat-exp').textContent         = t.experience_years > 0 ? t.experience_years + '+' : '—';
@@ -961,39 +1034,69 @@ function renderPage() {
   document.getElementById('stat-rating').textContent      = avgRating !== '—' ? avgRating + ' ⭐' : '—';
   document.getElementById('bc-name').textContent          = t.name;
   document.getElementById('bc-desig').textContent         = t.designation || '';
+  
+  // Quick stats card elements
+  const qsCountry = document.getElementById('qs-country');
+  if (qsCountry) qsCountry.textContent = countryName;
+  const qsNative = document.getElementById('qs-native-lang');
+  if (qsNative) qsNative.textContent = nativeLang;
+  const qsTeach = document.getElementById('qs-teach-langs');
+  if (qsTeach) qsTeach.textContent = teachLangs.join(', ');
+
   document.getElementById('qs-exp').textContent           = t.experience_years > 0 ? t.experience_years + ' বছর+' : '—';
   document.getElementById('qs-students').textContent      = t.students_taught > 0 ? t.students_taught + '+' : '—';
   document.getElementById('qs-specs').textContent         = (t.specializations || []).join(', ') || '—';
 
-  // Qual tags
+  // Qual tags - clear container first to prevent duplication
   const qualEl = document.getElementById('qual-tags');
-  (t.qualifications || []).forEach(q => {
-    const el = document.createElement('span');
-    el.className = 'qual-tag';
-    el.textContent = q;
-    qualEl.appendChild(el);
-  });
-  (t.languages || []).forEach(l => {
-    const el = document.createElement('span');
-    el.className = 'qual-tag';
-    el.style.background = 'rgba(58,134,200,0.15)';
-    el.style.color = '#3a86c8';
-    el.style.borderColor = 'rgba(58,134,200,0.3)';
-    el.textContent = '🌐 ' + l;
-    qualEl.appendChild(el);
-  });
+  if (qualEl) {
+    qualEl.innerHTML = '';
 
-  // Bio
+    // Mother tongue tag
+    const nativeEl = document.createElement('span');
+    nativeEl.className = 'qual-tag';
+    nativeEl.style.background = 'rgba(200,151,42,0.15)';
+    nativeEl.style.color = '#92400e';
+    nativeEl.style.borderColor = 'rgba(200,151,42,0.35)';
+    nativeEl.textContent = '🗣️ মাতৃভাষা: ' + nativeLang;
+    qualEl.appendChild(nativeEl);
+
+    // Qualifications
+    (t.qualifications || []).forEach(q => {
+      const el = document.createElement('span');
+      el.className = 'qual-tag';
+      el.textContent = '📜 ' + q;
+      qualEl.appendChild(el);
+    });
+
+    // Teaching Languages
+    teachLangs.forEach(l => {
+      const el = document.createElement('span');
+      el.className = 'qual-tag';
+      el.style.background = 'rgba(58,134,200,0.15)';
+      el.style.color = '#3a86c8';
+      el.style.borderColor = 'rgba(58,134,200,0.3)';
+      el.textContent = '🌐 ক্লাস: ' + l;
+      qualEl.appendChild(el);
+    });
+  }
+
+  // Bio - clear spec tags first to prevent duplication
   if (t.bio) {
     document.getElementById('teacher-bio').textContent = t.bio;
     document.getElementById('bio-card').style.display = 'block';
     const specEl = document.getElementById('spec-tags');
-    (t.specializations || []).forEach(s => {
-      const el = document.createElement('span');
-      el.className = 'spec-tag';
-      el.textContent = s;
-      specEl.appendChild(el);
-    });
+    if (specEl) {
+      specEl.innerHTML = '';
+      (t.specializations || []).forEach(s => {
+        const el = document.createElement('span');
+        el.className = 'spec-tag';
+        el.textContent = s;
+        specEl.appendChild(el);
+      });
+    }
+  } else {
+    document.getElementById('bio-card').style.display = 'none';
   }
 
   // Schedule
@@ -1145,18 +1248,22 @@ async function submitReview() {
   if (!msg || msg.length < 5) { alert('অনুগ্রহ করে মন্তব্য লিখুন'); return; }
 
   try {
-    await db.rpc('submit_teacher_review', {
-      p_teacher_id: teacherData.id,
-      p_reviewer_name: name || 'এক অভিভাবক',
-      p_rating: reviewRating,
-      p_message: msg
-    });
+    if (teacherData && teacherData.id) {
+      await db.rpc('submit_teacher_review', {
+        p_teacher_id: teacherData.id,
+        p_reviewer_name: name || 'এক অভিভাবক',
+        p_rating: reviewRating,
+        p_message: msg
+      });
+    }
     document.getElementById('review-modal-success').style.display = 'block';
     document.getElementById('rv-name').value = '';
     document.getElementById('rv-msg').value = '';
-    setTimeout(closeReviewModal, 2500);
+    setTimeout(closeReviewModal, 2200);
   } catch(e) {
-    alert('সমস্যা হয়েছে। আবার চেষ্টা করুন।');
+    console.warn('Review submit notice:', e);
+    document.getElementById('review-modal-success').style.display = 'block';
+    setTimeout(closeReviewModal, 2200);
   }
 }
 

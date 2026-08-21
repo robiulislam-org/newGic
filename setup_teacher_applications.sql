@@ -1,4 +1,4 @@
-﻿-- ══════════════════════════════════════════════════════════════
+-- ══════════════════════════════════════════════════════════════
 -- GIC TEACHER APPLICATION SYSTEM — Database Migration
 -- Run this in Supabase SQL Editor
 -- ══════════════════════════════════════════════════════════════
@@ -33,9 +33,14 @@ CREATE TABLE IF NOT EXISTS public.teacher_applications (
 );
 
 -- Ensure columns exist if table was already created
+-- Ensure columns exist if table was already created
 ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS languages text[] DEFAULT '{}';
+ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS country text DEFAULT 'বাংলাদেশ';
+ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS native_language text DEFAULT 'বাংলা';
 ALTER TABLE public.teacher_applications DROP CONSTRAINT IF EXISTS teacher_applications_category_check;
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS languages text[] DEFAULT '{}';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS country text DEFAULT 'বাংলাদেশ';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS native_language text DEFAULT 'বাংলা';
 
 ALTER TABLE public.teacher_applications ENABLE ROW LEVEL SECURITY;
 
@@ -65,7 +70,9 @@ CREATE OR REPLACE FUNCTION submit_teacher_application(
   p_address           text DEFAULT '',
   p_nid_number        text DEFAULT '',
   p_private_notes     text DEFAULT '',
-  p_languages         text[] DEFAULT '{}'
+  p_languages         text[] DEFAULT '{}',
+  p_country           text DEFAULT 'বাংলাদেশ',
+  p_native_language   text DEFAULT 'বাংলা'
 )
 RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE new_id bigint;
@@ -81,14 +88,16 @@ BEGIN
   INSERT INTO public.teacher_applications (
     category, name, designation, photo_url, qualifications, specializations,
     languages, experience_years, students_taught, bio, weekly_schedule,
-    phone, whatsapp_number, email, address, nid_number, private_notes
+    phone, whatsapp_number, email, address, nid_number, private_notes,
+    country, native_language
   ) VALUES (
     COALESCE(p_category, 'hafez'), trim(p_name), trim(p_designation), trim(p_photo_url),
     p_qualifications, p_specializations, COALESCE(p_languages, '{}'),
     COALESCE(p_experience_years, 0), COALESCE(p_students_taught, 0),
     trim(p_bio), COALESCE(p_weekly_schedule, '{"sat":[],"sun":[],"mon":[],"tue":[],"wed":[]}'),
     trim(p_phone), trim(p_whatsapp_number),
-    trim(p_email), trim(p_address), trim(p_nid_number), trim(p_private_notes)
+    trim(p_email), trim(p_address), trim(p_nid_number), trim(p_private_notes),
+    COALESCE(trim(p_country), 'বাংলাদেশ'), COALESCE(trim(p_native_language), 'বাংলা')
   ) RETURNING id INTO new_id;
 
   RETURN json_build_object('success', true, 'id', new_id, 'message', 'আবেদন সফলভাবে জমা হয়েছে');
@@ -136,14 +145,15 @@ BEGIN
   INSERT INTO public.teachers (
     name, slug, photo_url, designation, qualifications, bio,
     experience_years, students_taught, specializations, languages,
-    weekly_schedule, whatsapp, is_active, sort_order
+    weekly_schedule, whatsapp, is_active, sort_order, country, native_language
   ) VALUES (
     app_row.name, p_slug, app_row.photo_url, app_row.designation,
     app_row.qualifications, app_row.bio, app_row.experience_years,
     app_row.students_taught, app_row.specializations, COALESCE(app_row.languages, '{}'),
     app_row.weekly_schedule,
     CASE WHEN trim(app_row.whatsapp_number) <> '' THEN app_row.whatsapp_number ELSE p_whatsapp END,
-    true, p_sort_order
+    true, p_sort_order,
+    COALESCE(app_row.country, 'বাংলাদেশ'), COALESCE(app_row.native_language, 'বাংলা')
   ) RETURNING id INTO new_teacher_id;
 
   UPDATE public.teacher_applications
@@ -176,7 +186,7 @@ BEGIN
   RETURN true;
 END; $$;
 
-GRANT EXECUTE ON FUNCTION submit_teacher_application(text,text,text,text,text[],text[],integer,integer,text,jsonb,text,text,text,text,text,text,text[]) TO anon;
+GRANT EXECUTE ON FUNCTION submit_teacher_application(text,text,text,text,text[],text[],integer,integer,text,jsonb,text,text,text,text,text,text,text[],text,text) TO anon;
 GRANT EXECUTE ON FUNCTION get_teacher_applications(text,text) TO anon;
 GRANT EXECUTE ON FUNCTION approve_teacher_application(text,bigint,text,text,integer) TO anon;
 GRANT EXECUTE ON FUNCTION reject_teacher_application(text,bigint) TO anon;

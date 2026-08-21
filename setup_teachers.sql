@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS public.teachers (
   photo_url         text DEFAULT '',
   designation       text DEFAULT '',
   qualifications    text[] DEFAULT '{}',
+  languages         text[] DEFAULT '{"বাংলা"}',
+  country           text DEFAULT 'বাংলাদেশ',
+  native_language   text DEFAULT 'বাংলা',
   bio               text DEFAULT '',
   experience_years  integer DEFAULT 0,
   students_taught   integer DEFAULT 0,
@@ -23,6 +26,10 @@ CREATE TABLE IF NOT EXISTS public.teachers (
   sort_order        integer DEFAULT 0,
   created_at        timestamptz DEFAULT now()
 );
+
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS languages text[] DEFAULT '{"বাংলা"}';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS country text DEFAULT 'বাংলাদেশ';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS native_language text DEFAULT 'বাংলা';
 
 ALTER TABLE public.teachers ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "teachers_public_read" ON public.teachers FOR SELECT USING (true);
