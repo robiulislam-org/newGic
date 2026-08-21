@@ -5521,11 +5521,13 @@ function openAppDetailModal(appId) {
     <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:12px;padding:16px;margin-bottom:16px;">
       <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">🌐 পাবলিক তথ্য (ওয়েবসাইটে দেখাবে)</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">📍 দেশ</div><div style="font-size:13px;color:#fff;font-weight:700;">${app.country || 'বাংলাদেশ'}</div></div>
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">🗣️ মাতৃভাষা</div><div style="font-size:13px;color:#fff;font-weight:700;">${app.native_language || 'বাংলা'}</div></div>
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">অভিজ্ঞতা</div><div style="font-size:13px;color:#fff;">${app.experience_years || 0} বছর</div></div>
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">ছাত্র পড়িয়েছেন</div><div style="font-size:13px;color:#fff;">${app.students_taught || 0}+</div></div>
       </div>
       ${app.languages && app.languages.length > 0 ? `
-        <div style="margin-top:10px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">🌐 ভাষাগত দক্ষতা</div>
+        <div style="margin-top:10px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">🌐 ক্লাসের ভাষা</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">${(app.languages||[]).map(l=>`<span style="background:rgba(58,134,200,0.15);color:var(--blue-light);font-size:11px;padding:3px 10px;border-radius:20px;">${l}</span>`).join('')}</div></div>
       ` : ''}
       ${app.qualifications && app.qualifications.length > 0 ? `
@@ -5540,21 +5542,72 @@ function openAppDetailModal(appId) {
       ${schedSummary ? `<div style="margin-top:10px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">সাপ্তাহিক সময়সূচি</div><div style="display:flex;gap:4px;flex-wrap:wrap;">${schedSummary}</div></div>` : ''}
     </div>
 
-    <!-- Private Info -->
+    <!-- Private Info & Documents -->
     <div style="background:rgba(244,63,94,0.06);border:1px solid rgba(244,63,94,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">🔒 গোপনীয় তথ্য (শুধু আপনি দেখতে পাচ্ছেন)</div>
+      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">🔒 গোপনীয় তথ্য ও ডকুমেন্ট যাচাইকরণ</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">ফোন নম্বর</div>
-          <div style="font-size:13px;color:#fff;">${app.phone ? `<a href="tel:${app.phone}" style="color:var(--green);text-decoration:none;">📞 ${app.phone}</a>` : '—'}</div></div>
-        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">WhatsApp</div>
-          <div style="font-size:13px;color:#fff;">${app.whatsapp_number ? `<a href="https://wa.me/${app.whatsapp_number.replace(/[^0-9]/g,'')}" target="_blank" style="color:#25d366;text-decoration:none;">💬 ${app.whatsapp_number}</a>` : '—'}</div></div>
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">ব্যক্তিগত ফোন নম্বর</div>
+          <div style="font-size:13px;color:#fff;">${app.phone ? `<a href="tel:${app.phone}" style="color:var(--green);text-decoration:none;font-weight:700;">📞 ${app.phone}</a>` : '—'}</div></div>
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">WhatsApp নম্বর</div>
+          <div style="font-size:13px;color:#fff;">${app.whatsapp_number ? `<a href="https://wa.me/${app.whatsapp_number.replace(/[^0-9]/g,'')}" target="_blank" style="color:#25d366;text-decoration:none;font-weight:700;">💬 ${app.whatsapp_number}</a>` : '—'}</div></div>
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">ইমেইল</div>
           <div style="font-size:13px;color:#fff;">${app.email ? `<a href="mailto:${app.email}" style="color:var(--blue-light);text-decoration:none;">✉️ ${app.email}</a>` : '—'}</div></div>
-        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">NID নম্বর</div>
-          <div style="font-size:13px;color:#fff;">${app.nid_number || '—'}</div></div>
-        <div style="grid-column:1/-1;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">ঠিকানা</div>
-          <div style="font-size:13px;color:#fff;">${app.address || '—'}</div></div>
-        ${app.private_notes ? `<div style="grid-column:1/-1;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">অতিরিক্ত তথ্য</div>
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">NID / পাসপোর্ট নম্বর</div>
+          <div style="font-size:13px;color:#fff;font-weight:700;">${app.nid_number || '—'}</div></div>
+        
+        <div style="grid-column:1/-1;">
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">🏠 বর্তমান ঠিকানা</div>
+          <div style="font-size:12.5px;color:#fff;">${app.present_address || app.address || '—'}</div>
+        </div>
+        
+        ${app.permanent_address ? `
+        <div style="grid-column:1/-1;">
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">🏡 স্থায়ী / পূর্বের ঠিকানা</div>
+          <div style="font-size:12.5px;color:#fff;">${app.permanent_address}</div>
+        </div>` : ''}
+
+        <!-- Uploaded Identity Document Images -->
+        <div style="grid-column:1/-1;margin-top:10px;background:rgba(0,0,0,0.25);border-radius:10px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--gold-light);margin-bottom:8px;">📄 আপলোডকৃত পরিচয়পত্র ডকুমেন্ট:</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            ${app.nid_front_url ? `
+              <div style="text-align:center;">
+                <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">NID কার্ড (সামনে)</div>
+                <a href="${app.nid_front_url}" target="_blank">
+                  <img src="${app.nid_front_url}" style="width:120px;height:75px;object-fit:cover;border-radius:6px;border:1.5px solid rgba(255,255,255,0.2);" alt="NID Front">
+                </a>
+              </div>
+            ` : ''}
+            ${app.nid_back_url ? `
+              <div style="text-align:center;">
+                <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">NID কার্ড (পিছনে)</div>
+                <a href="${app.nid_back_url}" target="_blank">
+                  <img src="${app.nid_back_url}" style="width:120px;height:75px;object-fit:cover;border-radius:6px;border:1.5px solid rgba(255,255,255,0.2);" alt="NID Back">
+                </a>
+              </div>
+            ` : ''}
+            ${app.passport_url ? `
+              <div style="text-align:center;">
+                <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">পাসপোর্ট পেজ</div>
+                <a href="${app.passport_url}" target="_blank">
+                  <img src="${app.passport_url}" style="width:120px;height:75px;object-fit:cover;border-radius:6px;border:1.5px solid rgba(255,255,255,0.2);" alt="Passport">
+                </a>
+              </div>
+            ` : ''}
+            ${(!app.nid_front_url && !app.nid_back_url && !app.passport_url) ? `
+              <div style="font-size:12px;color:var(--text-muted);">কোনো ডকুমেন্ট ফাইল আপলোড করা হয়নি</div>
+            ` : ''}
+          </div>
+        </div>
+
+        <!-- Terms Agreement Status -->
+        <div style="grid-column:1/-1;margin-top:6px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,0.15);color:var(--green);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:8px;">
+            ✅ প্রতিষ্ঠানের সকল নিয়ম ও শর্তাবলীতে সম্মত হয়েছেন
+          </span>
+        </div>
+
+        ${app.private_notes ? `<div style="grid-column:1/-1;margin-top:6px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">মন্তব্য / নোট</div>
           <div style="font-size:12px;color:#e2e8f0;line-height:1.6;">${app.private_notes}</div></div>` : ''}
       </div>
     </div>
