@@ -1862,18 +1862,74 @@ footer {
   border-color: rgba(200,151,42,0.4);
 }
 .pub-teacher-avatar {
-  width: 84px; height: 84px;
+  width: 90px; height: 90px;
   border-radius: 50%;
   border: 3px solid var(--gold);
   overflow: hidden;
   background: var(--cream);
   display: flex; align-items: center; justify-content: center;
-  font-size: 38px;
   flex-shrink: 0;
   margin: 0 auto 14px;
   box-shadow: 0 4px 14px rgba(200,151,42,0.2);
+  position: relative;
 }
 .pub-teacher-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Custom Distinct Avatar Placeholders for Male & Female */
+.tc-avatar-custom {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+.tc-avatar-male {
+  background: linear-gradient(145deg, #0b2239 0%, #15395b 55%, #1d4e78 100%);
+  color: #fff;
+  border: 2px solid #e5b95c;
+  box-shadow: inset 0 0 14px rgba(229,185,92,0.3);
+}
+.tc-avatar-female {
+  background: linear-gradient(145deg, #380b3d 0%, #581c61 55%, #86198f 100%);
+  color: #fff;
+  border: 2px solid #f472b6;
+  box-shadow: inset 0 0 14px rgba(244,114,182,0.3);
+}
+.tc-avatar-icon {
+  font-size: 36px;
+  line-height: 1;
+  margin-top: -6px;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+  transition: transform 0.25s ease;
+}
+.pub-teacher-card:hover .tc-avatar-icon {
+  transform: scale(1.1);
+}
+.tc-avatar-role-pill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 9.5px;
+  font-weight: 800;
+  text-align: center;
+  padding: 2px 0 3px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+.tc-avatar-male .tc-avatar-role-pill {
+  background: linear-gradient(90deg, #c8972a, #b8831e);
+  color: #ffffff;
+}
+.tc-avatar-female .tc-avatar-role-pill {
+  background: linear-gradient(90deg, #db2777, #9333ea);
+  color: #ffffff;
+}
 .pub-teacher-name {
   font-size: 18px; font-weight: 800; color: var(--blue-dark);
   text-align: center; margin-bottom: 3px; line-height: 1.3;
@@ -3361,7 +3417,7 @@ const DEMO_PUBLIC_TEACHERS = [
     designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
-    photo_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80",
+    photo_url: "",
     qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
     languages: ["বাংলা", "English", "العربية"],
     category: "hafez",
@@ -3383,7 +3439,7 @@ const DEMO_PUBLIC_TEACHERS = [
     designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
-    photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+    photo_url: "",
     qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
     languages: ["বাংলা", "English", "Urdu"],
     category: "alem",
@@ -3458,11 +3514,17 @@ async function loadPublicTeachers(force = false) {
 
   publicTeachersLoaded = true;
   grid.innerHTML = data.map(t => {
-    const isFemale = t.category === 'female' || (t.designation && t.designation.includes('মহিলা')) || (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া')));
-    const fallbackAvatar = isFemale ? '🧕' : '👨‍🏫';
-    const avatarHtml = t.photo_url
-      ? `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='${fallbackAvatar}'">`
-      : fallbackAvatar;
+    const isFemale = t.category === 'female' || 
+                     (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
+                     (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
+
+    const customFallback = isFemale
+      ? `<div class="tc-avatar-custom tc-avatar-female" title="মহিলা শিক্ষিকা"><div class="tc-avatar-icon">🧕</div><div class="tc-avatar-role-pill">মহিলা শিক্ষিকা</div></div>`
+      : `<div class="tc-avatar-custom tc-avatar-male" title="পুরুষ শিক্ষক"><div class="tc-avatar-icon">👨‍🏫</div><div class="tc-avatar-role-pill">পুরুষ শিক্ষক</div></div>`;
+
+    const avatarHtml = (t.photo_url && t.photo_url.trim() !== '')
+      ? `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.parentElement.innerHTML=\`${customFallback.replace(/"/g, '\\"')}\`">`
+      : customFallback;
 
     const quals = (t.qualifications || []).map(q => `<span class="pub-tc-qual-tag">📜 ${q}</span>`).join('');
     const countryName = t.country || 'বাংলাদেশ';

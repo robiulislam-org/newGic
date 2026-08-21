@@ -151,12 +151,77 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .tc-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Custom Distinct Avatar Placeholders for Male & Female */
+.tc-avatar-custom {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.tc-avatar-male {
+  background: linear-gradient(145deg, #0b2239 0%, #15395b 55%, #1d4e78 100%);
+  color: #fff;
+  border: 2.5px solid #e5b95c;
+  box-shadow: inset 0 0 14px rgba(229,185,92,0.3);
+}
+
+.tc-avatar-female {
+  background: linear-gradient(145deg, #380b3d 0%, #581c61 55%, #86198f 100%);
+  color: #fff;
+  border: 2.5px solid #f472b6;
+  box-shadow: inset 0 0 14px rgba(244,114,182,0.3);
+}
+
+.tc-avatar-icon {
+  font-size: 38px;
+  line-height: 1;
+  margin-top: -8px;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+  transition: transform 0.25s ease;
+}
+
+.teacher-card-item:hover .tc-avatar-icon,
+.pub-teacher-card:hover .tc-avatar-icon {
+  transform: scale(1.1);
+}
+
+.tc-avatar-role-pill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+  padding: 3px 0 4px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.tc-avatar-male .tc-avatar-role-pill {
+  background: linear-gradient(90deg, #c8972a, #b8831e);
+  color: #ffffff;
+}
+
+.tc-avatar-female .tc-avatar-role-pill {
+  background: linear-gradient(90deg, #db2777, #9333ea);
+  color: #ffffff;
 }
 
 .tc-avatar-fallback {

@@ -749,7 +749,7 @@ const DEMO_TEACHERS_MAP = {
     designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
-    photo_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80",
+    photo_url: "",
     qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
     languages: ["বাংলা", "English", "العربية"],
     category: "hafez",
@@ -771,7 +771,7 @@ const DEMO_TEACHERS_MAP = {
     designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
-    photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+    photo_url: "",
     qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
     languages: ["বাংলা", "English", "Urdu"],
     category: "alem",
@@ -822,9 +822,17 @@ function renderTeacherDirectory(teachersList) {
   const list = (teachersList && teachersList.length > 0) ? teachersList : Object.values(DEMO_TEACHERS_MAP);
 
   container.innerHTML = list.map(t => {
-    const isFemale = t.category === 'female' || (t.designation && t.designation.includes('মহিলা')) || (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া')));
-    const fallbackAvatar = isFemale ? '🧕' : '👨‍🏫';
-    const photo = t.photo_url ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.parentElement.innerHTML='<span class=\\'tc-avatar-fallback\\'>${fallbackAvatar}</span>'" />` : `<span class="tc-avatar-fallback">${fallbackAvatar}</span>`;
+    const isFemale = t.category === 'female' || 
+                     (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
+                     (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
+
+    const customFallback = isFemale
+      ? `<div class="tc-avatar-custom tc-avatar-female" title="মহিলা শিক্ষিকা"><div class="tc-avatar-icon">🧕</div><div class="tc-avatar-role-pill">মহিলা শিক্ষিকা</div></div>`
+      : `<div class="tc-avatar-custom tc-avatar-male" title="পুরুষ শিক্ষক"><div class="tc-avatar-icon">👨‍🏫</div><div class="tc-avatar-role-pill">পুরুষ শিক্ষক</div></div>`;
+
+    const photo = (t.photo_url && t.photo_url.trim() !== '')
+      ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.parentElement.innerHTML=\`${customFallback.replace(/"/g, '\\"')}\`" />`
+      : customFallback;
     const ratingVal = t.rating || 5.0;
     const ratingStr = `⭐ ${ratingVal} / 5.0`;
     const countryName = t.country || 'বাংলাদেশ';
@@ -1009,15 +1017,24 @@ function renderPage() {
     ? (reviewsData.reduce((s, r) => s + (r.rating || 5), 0) / reviewsData.length).toFixed(1)
     : '—';
 
-  const isFemale = t.category === 'female' || (t.designation && t.designation.includes('মহিলা')) || (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া')));
-  const fallbackAvatar = isFemale ? '🧕' : '👨‍🏫';
+  const isFemale = t.category === 'female' || 
+                   (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
+                   (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
 
-  if (t.photo_url) {
-    document.getElementById('hero-avatar').innerHTML = `<img src="${t.photo_url}" alt="${t.name}" loading="eager" onerror="this.parentElement.innerHTML='${fallbackAvatar}'">`;
-    document.getElementById('bc-avatar').innerHTML   = `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.parentElement.innerHTML='${fallbackAvatar}'">`;
+  const heroFallback = isFemale
+    ? `<div class="tc-avatar-custom tc-avatar-female" style="border:none;" title="মহিলা শিক্ষিকা"><div class="tc-avatar-icon" style="font-size:52px;margin-top:-6px;">🧕</div><div class="tc-avatar-role-pill" style="font-size:12px;padding:3px 0 5px;">মহিলা শিক্ষিকা</div></div>`
+    : `<div class="tc-avatar-custom tc-avatar-male" style="border:none;" title="পুরুষ শিক্ষক"><div class="tc-avatar-icon" style="font-size:52px;margin-top:-6px;">👨‍🏫</div><div class="tc-avatar-role-pill" style="font-size:12px;padding:3px 0 5px;">পুরুষ শিক্ষক</div></div>`;
+
+  const bcFallback = isFemale
+    ? `<div class="tc-avatar-custom tc-avatar-female" style="border:none;" title="মহিলা শিক্ষিকা"><div class="tc-avatar-icon" style="font-size:26px;margin-top:0;">🧕</div></div>`
+    : `<div class="tc-avatar-custom tc-avatar-male" style="border:none;" title="পুরুষ শিক্ষক"><div class="tc-avatar-icon" style="font-size:26px;margin-top:0;">👨‍🏫</div></div>`;
+
+  if (t.photo_url && t.photo_url.trim() !== '') {
+    document.getElementById('hero-avatar').innerHTML = `<img src="${t.photo_url}" alt="${t.name}" loading="eager" onerror="this.parentElement.innerHTML=\`${heroFallback.replace(/"/g, '\\"')}\`">`;
+    document.getElementById('bc-avatar').innerHTML   = `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.parentElement.innerHTML=\`${bcFallback.replace(/"/g, '\\"')}\`">`;
   } else {
-    document.getElementById('hero-avatar').innerHTML = fallbackAvatar;
-    document.getElementById('bc-avatar').innerHTML   = fallbackAvatar;
+    document.getElementById('hero-avatar').innerHTML = heroFallback;
+    document.getElementById('bc-avatar').innerHTML   = bcFallback;
   }
 
   const countryName = t.country || 'বাংলাদেশ';
