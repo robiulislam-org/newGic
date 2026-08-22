@@ -426,24 +426,36 @@
 <!-- ── BOOKING MODAL ── -->
 <div class="modal-overlay" id="booking-modal">
   <div class="modal">
-    <div class="modal-title">📅 ক্লাস সময় বুক করুন</div>
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">WhatsApp-এ আপনার বুকিং নিশ্চিত হবে</p>
+    <div class="modal-title">📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট</div>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">শিক্ষকের সাথে আপনার ক্লাস সমন্বয় করার জন্য ফর্মটি পূরণ করুন</p>
     <div class="modal-slot-info" id="modal-slot-info">শনিবার, ০৭:০০ – ০৭:৫০</div>
     <div class="form-group">
-      <label class="form-label" for="bk-name">আপনার নাম</label>
-      <input class="form-inp" id="bk-name" type="text" placeholder="পূর্ণ নাম লিখুন">
+      <label class="form-label" for="bk-name">শিক্ষার্থী / অভিভাবকের নাম *</label>
+      <input class="form-inp" id="bk-name" type="text" placeholder="পূর্ণ নাম লিখুন" required>
     </div>
     <div class="form-group">
-      <label class="form-label" for="bk-phone">ফোন নম্বর (WhatsApp)</label>
-      <input class="form-inp" id="bk-phone" type="tel" placeholder="+880 XXXXXXXXXX">
+      <label class="form-label" for="bk-phone">ফোন নম্বর (WhatsApp সহ) *</label>
+      <input class="form-inp" id="bk-phone" type="tel" placeholder="+880 XXXXXXXXXX" required>
     </div>
     <div class="form-group">
-      <label class="form-label" for="bk-msg">বার্তা (ঐচ্ছিক)</label>
-      <textarea class="form-inp" id="bk-msg" placeholder="কোনো বিশেষ কথা থাকলে লিখুন..."></textarea>
+      <label class="form-label" for="bk-course">কোন বিষয়ে পড়তে চান?</label>
+      <select class="form-inp" id="bk-course" style="width:100%;background:#fff;">
+        <option value="সহীহ কোরআন তেলাওয়াত ও তাজউইদ">📖 সহীহ কোরআন তেলাওয়াত ও তাজউইদ</option>
+        <option value="নূরানী কায়দা ও আমপারা (বেসিক)">👶 নূরানী কায়দা ও আমপারা (বেসিক)</option>
+        <option value="হিফজুল কোরআন প্রোগ্রাম">🕌 হিফজুল কোরআন প্রোগ্রাম</option>
+        <option value="শিশু ও কিশোরদের স্পেশাল ক্লাস">🧒 শিশু ও কিশোরদের ক্লাস</option>
+        <option value="মা-বোনদের জন্য বিশেষ ক্লাস">🧕 মা-বোনদের ক্লাস</option>
+        <option value="বয়স্কদের সহজ কোরআন শিক্ষা">🧓 বয়স্কদের সহজ কোরআন শিক্ষা</option>
+        <option value="অন্যান্য / পরামর্শ সাপেক্ষে">💬 অন্যান্য / পরামর্শ সাপেক্ষে</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="bk-msg">অতিরিক্ত বার্তা (ঐচ্ছিক)</label>
+      <textarea class="form-inp" id="bk-msg" placeholder="শিক্ষার্থীর বয়স, বর্তমান লেভেল বা কোনো বিশেষ চাওয়া থাকলে লিখুন..."></textarea>
     </div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeBookingModal()">বাতিল</button>
-      <button class="btn btn-wa" id="bk-submit-btn" onclick="submitBooking()">💬 WhatsApp-এ পাঠান</button>
+      <button class="btn btn-wa" id="bk-submit-btn" onclick="submitBooking()">💬 রিকোয়েস্ট পাঠান (WhatsApp)</button>
     </div>
   </div>
 </div>
@@ -509,10 +521,41 @@
   <!-- TEACHER DIRECTORY SECTION (List View) -->
   <div id="teacher-directory-section" class="directory-container" style="display:none;">
     <div class="directory-header">
-      <div class="section-label" style="display:inline-flex;background:rgba(30,96,145,0.1);border:1px solid rgba(30,96,145,0.25);color:var(--navy);padding:5px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:12px;">👨‍🏫 শিক্ষক প্রোফাইল ও সময়সূচি</div>
-      <h1 class="directory-title">আমাদের সম্মানিত শিক্ষকবৃন্দ</h1>
-      <p class="directory-subtitle">যেকোনো শিক্ষকের প্রোফাইলে ক্লিক করে তাঁর শিক্ষাগত যোগ্যতা, অভিজ্ঞতা এবং শনি-বুধ ফাঁকা ক্লাস সময়সূচি দেখে সরাসরি বুক করুন।</p>
+      <div class="section-label" style="display:inline-flex;background:rgba(30,96,145,0.1);border:1px solid rgba(30,96,145,0.25);color:var(--navy);padding:5px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:12px;">👨‍🏫 বিশ্বজুড়ে অভিজ্ঞ কোরআন শিক্ষক ডিরেক্টরি</div>
+      <h1 class="directory-title">পছন্দের শিক্ষক খুঁজুন ও সরাসরি ক্লাস শুরু করুন</h1>
+      <p class="directory-subtitle">যোগ্যতা, বিষয়, নিজস্ব ফি ও সময়সূচি দেখে দেশ-বিদেশের শীর্ষ হাফেজ ও আলেম শিক্ষকদের সাথে ফ্রি ট্রায়াল ক্লাস শুরু করুন।</p>
     </div>
+
+    <!-- Marketplace Filter & Search Suite -->
+    <div class="mkt-filter-container">
+      <div class="mkt-search-row">
+        <div class="mkt-search-input-wrap">
+          <span class="mkt-search-icon">🔍</span>
+          <input type="text" id="mkt-search-input" class="mkt-search-input" placeholder="শিক্ষকের নাম, মাদরাসা, বিষয় (হিফজ, তাজউইদ, নূরানী) বা দেশ দিয়ে খুঁজুন..." oninput="handleMarketplaceSearch()">
+        </div>
+      </div>
+
+      <!-- Gender Filter Chips -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+        <span style="font-size:13px;font-weight:700;color:var(--navy);margin-right:4px;">শিক্ষক ক্যাটাগরি:</span>
+        <button type="button" class="mkt-chip active" id="chip-gender-all" onclick="setGenderFilter('all')">👥 সকল শিক্ষক</button>
+        <button type="button" class="mkt-chip mkt-chip-gender-male" id="chip-gender-male" onclick="setGenderFilter('male')">👨‍🏫 পুরুষ শিক্ষক</button>
+        <button type="button" class="mkt-chip mkt-chip-gender-female" id="chip-gender-female" onclick="setGenderFilter('female')">🧕 মহিলা শিক্ষিকা</button>
+      </div>
+
+      <!-- Subject Filter Chips -->
+      <div class="mkt-filter-chips-row">
+        <span style="font-size:13px;font-weight:700;color:var(--navy);margin-right:4px;">বিশেষজ্ঞতা:</span>
+        <button type="button" class="mkt-chip active" id="chip-sub-all" onclick="setSubjectFilter('all')">সব বিষয়</button>
+        <button type="button" class="mkt-chip" id="chip-sub-noorani" onclick="setSubjectFilter('নূরানী')">নূরানী কায়দা</button>
+        <button type="button" class="mkt-chip" id="chip-sub-tajweed" onclick="setSubjectFilter('তাজউইদ')">তাজউইদ ও সুন্দর সুর</button>
+        <button type="button" class="mkt-chip" id="chip-sub-hifz" onclick="setSubjectFilter('হিফজ')">হিফজুল কোরআন</button>
+        <button type="button" class="mkt-chip" id="chip-sub-kids" onclick="setSubjectFilter('শিশু')">শিশু ও কিশোর</button>
+        <button type="button" class="mkt-chip" id="chip-sub-female" onclick="setSubjectFilter('মহিলা')">মা-বোনদের ক্লাস</button>
+        <button type="button" class="mkt-chip" id="chip-sub-adult" onclick="setSubjectFilter('বয়স্ক')">বয়স্কদের সহজ কোরআন</button>
+      </div>
+    </div>
+
     <div class="teacher-grid-wrapper" id="teacher-grid">
       <!-- Cards rendered by JS -->
     </div>
@@ -573,13 +616,25 @@
           <div class="spec-tags" id="spec-tags"></div>
         </div>
 
+        <!-- DEMO MEDIA CARD -->
+        <div class="card" id="demo-card" style="display:none;">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(200,151,42,0.15);color:var(--gold-dark);">🎥</div>
+            <div>
+              <div class="card-title">ডেমো তেলাওয়াত ও পরিচিতি</div>
+              <div class="card-subtitle">শিক্ষকের উচ্চারণ ও পাঠদানের মান শুনুন</div>
+            </div>
+          </div>
+          <div id="demo-media-container" style="padding:4px 0;"></div>
+        </div>
+
         <!-- SCHEDULE CARD -->
         <div class="card">
           <div class="card-header">
             <div class="card-icon">📅</div>
             <div>
-              <div class="card-title">সাপ্তাহিক সময়সূচি</div>
-              <div class="card-subtitle">শনিবার – বুধবার · প্রতিটি স্লট ৫০ মিনিট</div>
+              <div class="card-title">পড়ার সুবিধাজনক সময়সূচি</div>
+              <div class="card-subtitle">ফাঁকা স্লটে ক্লিক করে সরাসরি ফ্রি ট্রায়াল বুক করুন</div>
             </div>
           </div>
 
@@ -632,8 +687,8 @@
             <div class="card-header">
               <div class="card-icon" style="background:var(--green-soft);">📲</div>
               <div>
-                <div class="card-title">ক্লাস বুক করুন</div>
-                <div class="card-subtitle">সময়সূচি থেকে স্লট বেছে নিন</div>
+                <div class="card-title">ক্লাস শুরু করুন</div>
+                <div class="card-subtitle">ফ্রি ট্রায়াল ক্লাস বা সরাসরি কথা বলুন</div>
               </div>
             </div>
 
@@ -645,24 +700,32 @@
               </div>
             </div>
 
+            <div class="bc-info-row" style="background:rgba(16,185,129,0.08);padding:8px 12px;border-radius:10px;border:1px solid rgba(16,185,129,0.2);margin-bottom:10px;">
+              <span class="bc-info-lbl" style="color:#047857;font-weight:700;">💰 শিক্ষকের ফি</span>
+              <span class="bc-info-val" id="bc-fee-val" style="color:#047857;font-weight:800;font-size:14.5px;">আলোচনা সাপেক্ষে</span>
+            </div>
+
             <div class="bc-info-row">
-              <span class="bc-info-lbl">ক্লাস সময়</span>
-              <span class="bc-info-val">৫০ মিনিট</span>
+              <span class="bc-info-lbl">ক্লাস সময়</span>
+              <span class="bc-info-val" id="bc-time-val">৫০ মিনিট</span>
             </div>
             <div class="bc-info-row">
-              <span class="bc-info-lbl">সপ্তাহের দিন</span>
-              <span class="bc-info-val">শনি – বুধ</span>
+              <span class="bc-info-lbl">সাপ্তাহিক দিন</span>
+              <span class="bc-info-val" id="bc-days-val">সুবিধাজনক সময়ে</span>
             </div>
             <div class="bc-info-row">
               <span class="bc-info-lbl">ক্লাস মাধ্যম</span>
-              <span class="bc-info-val">অনলাইন (Zoom)</span>
+              <span class="bc-info-val">অনলাইন (Zoom / Meet)</span>
             </div>
 
-            <div style="margin-top:16px;">
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
               <button class="btn btn-wa btn-full" id="wa-direct-btn" onclick="openWhatsApp()">
-                💬 WhatsApp-এ যোগাযোগ করুন
+                💬 WhatsApp-এ সরাসরি কথা বলুন
               </button>
-              <p class="wa-note">সময়সূচি থেকে ফাঁকা স্লটে ক্লিক করে সরাসরি বুক করুন</p>
+              <button class="btn btn-navy btn-full" onclick="openBookingModal('sat', { label: 'সুবিধাজনক সময়', period: 'ট্রায়াল ক্লাস' })">
+                📅 ফ্রি ট্রায়াল রিকোয়েস্ট পাঠান
+              </button>
+              <p class="wa-note">সময়সূচি থেকে নির্দিষ্ট স্লটে ক্লিক করেও সরাসরি বুক করতে পারেন</p>
             </div>
           </div>
 
@@ -742,6 +805,12 @@ let currentDay = 'sat';
 let selectedSlot = null;
 let reviewRating = 5;
 
+// Marketplace Filter States
+let rawTeachersList = [];
+let activeGenderFilter = 'all';
+let activeSubjectFilter = 'all';
+let currentSearchQuery = '';
+
 const DEMO_TEACHERS_MAP = {
   'hafez-tanvir-ahmed': {
     name: "হাফেজ মাওলানা তানভীর আহমেদ",
@@ -749,10 +818,14 @@ const DEMO_TEACHERS_MAP = {
     designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
+    gender: "male",
+    monthly_fee: "৳১,৫০০/মাস",
+    hourly_rate: "$5/hr",
     photo_url: "",
     qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
     languages: ["বাংলা", "English", "العربية"],
     category: "hafez",
+    is_verified: true,
     bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী (UK, USA) শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন ও তাজউইদ শিক্ষা দিচ্ছেন।",
     experience_years: 7,
     students_taught: 180,
@@ -771,14 +844,18 @@ const DEMO_TEACHERS_MAP = {
     designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
+    gender: "male",
+    monthly_fee: "৳২,০০০/মাস",
+    hourly_rate: "$7/hr",
     photo_url: "",
     qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
     languages: ["বাংলা", "English", "Urdu"],
     category: "alem",
+    is_verified: true,
     bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ ও দ্রুত হেফজ সম্পন্ন করায় অভিজ্ঞ।",
     experience_years: 9,
     students_taught: 240,
-    specializations: ["সম্পূর্ণ হেফজ প্রোগ্রাম", "উন্নত তাজউইদ", "বড়দের কোরআন"],
+    specializations: ["হিফজুল কোরআন", "তাজউইদ ও সুর", "বয়স্কদের শিক্ষা"],
     weekly_schedule: {
       sat: [11, 13, 15],
       sun: [11, 15],
@@ -790,17 +867,21 @@ const DEMO_TEACHERS_MAP = {
   'hafeza-umme-kulsum': {
     name: "হাফেজা উম্মে কুলসুম",
     slug: "hafeza-umme-kulsum",
-    designation: "সিনিয়র মহিলা কোরআন শিক্ষক",
+    designation: "সিনিয়র মহিলা কোরআন শিক্ষিকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
+    gender: "female",
+    monthly_fee: "৳১,২০০/মাস",
+    hourly_rate: "$4/hr",
     photo_url: "",
     qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড"],
     languages: ["বাংলা", "English"],
     category: "female",
+    is_verified: true,
     bio: "ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা, সহীহ তেলাওয়াত ও তাজউইদ শিক্ষা দেন।",
     experience_years: 5,
     students_taught: 150,
-    specializations: ["মহিলা শিক্ষার্থী", "নূরানী কায়দা", "দৈনিক দোয়া ও মাসায়েল"],
+    specializations: ["মা-বোনদের ক্লাস", "নূরানী কায়দা", "শিশু শিক্ষা", "দৈনিক দোয়া ও মাসায়েল"],
     weekly_schedule: {
       sat: [9, 10, 12],
       sun: [9, 12],
@@ -811,18 +892,105 @@ const DEMO_TEACHERS_MAP = {
   }
 };
 
+// ── MARKETPLACE FILTER HANDLERS ──
+function setGenderFilter(gender) {
+  activeGenderFilter = gender;
+  ['all', 'male', 'female'].forEach(g => {
+    const el = document.getElementById(`chip-gender-${g}`);
+    if (el) el.classList.toggle('active', g === gender);
+  });
+  filterAndRenderTeachers();
+}
+
+function setSubjectFilter(subjectKey) {
+  activeSubjectFilter = subjectKey;
+  const chipMap = {
+    'all': 'chip-sub-all',
+    'নূরানী': 'chip-sub-noorani',
+    'তাজউইদ': 'chip-sub-tajweed',
+    'হিফজ': 'chip-sub-hifz',
+    'শিশু': 'chip-sub-kids',
+    'মহিলা': 'chip-sub-female',
+    'বয়স্ক': 'chip-sub-adult'
+  };
+  Object.keys(chipMap).forEach(k => {
+    const el = document.getElementById(chipMap[k]);
+    if (el) el.classList.toggle('active', k === subjectKey);
+  });
+  filterAndRenderTeachers();
+}
+
+function handleMarketplaceSearch() {
+  const inp = document.getElementById('mkt-search-input');
+  currentSearchQuery = inp ? inp.value.trim().toLowerCase() : '';
+  filterAndRenderTeachers();
+}
+
+function filterAndRenderTeachers() {
+  let list = rawTeachersList.slice();
+
+  // 1. Gender Filter
+  if (activeGenderFilter !== 'all') {
+    list = list.filter(t => {
+      const isFemale = t.gender === 'female' || t.category === 'female' || 
+                       (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
+                       (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
+      return activeGenderFilter === 'female' ? isFemale : !isFemale;
+    });
+  }
+
+  // 2. Subject Filter
+  if (activeSubjectFilter !== 'all') {
+    list = list.filter(t => {
+      const specs = (t.specializations || []).join(' ').toLowerCase();
+      const quals = (t.qualifications || []).join(' ').toLowerCase();
+      const desig = (t.designation || '').toLowerCase();
+      const bio = (t.bio || '').toLowerCase();
+      const target = activeSubjectFilter.toLowerCase();
+      return specs.includes(target) || quals.includes(target) || desig.includes(target) || bio.includes(target);
+    });
+  }
+
+  // 3. Search Query Filter
+  if (currentSearchQuery) {
+    list = list.filter(t => {
+      const name = (t.name || '').toLowerCase();
+      const desig = (t.designation || '').toLowerCase();
+      const country = (t.country || '').toLowerCase();
+      const specs = (t.specializations || []).join(' ').toLowerCase();
+      const quals = (t.qualifications || []).join(' ').toLowerCase();
+      const bio = (t.bio || '').toLowerCase();
+      return name.includes(currentSearchQuery) || desig.includes(currentSearchQuery) || 
+             country.includes(currentSearchQuery) || specs.includes(currentSearchQuery) || 
+             quals.includes(currentSearchQuery) || bio.includes(currentSearchQuery);
+    });
+  }
+
+  renderTeacherDirectory(list);
+}
+
 // ── DIRECTORY RENDER ──
-function renderTeacherDirectory(teachersList) {
+function renderTeacherDirectory(list) {
   const container = document.getElementById('teacher-grid');
   if (!container) return;
   
   const urlParams = new URLSearchParams(window.location.search);
   const isAdmin = urlParams.get('admin') === '1' || sessionStorage.getItem('gic_admin') === '1';
 
-  const list = (teachersList && teachersList.length > 0) ? teachersList : Object.values(DEMO_TEACHERS_MAP);
+  if (!list || list.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:48px 20px; background:#fff; border-radius:16px; border:1px dashed var(--border);">
+        <div style="font-size:44px; margin-bottom:12px;">🔍</div>
+        <h3 style="font-size:18px; color:var(--navy); margin-bottom:6px;">কোনো শিক্ষক পাওয়া যায়নি</h3>
+        <p style="color:var(--text-muted); font-size:14px; max-width:400px; margin:0 auto 16px;">আপনার অনুসন্ধানের সাথে মিলিয়ে কোনো শিক্ষক প্রোফাইল মেলেনি। অন্য ফিল্টার সিলেক্ট করুন অথবা নিচে শিক্ষক হিসেবে আবেদন করুন।</p>
+        <button class="btn btn-outline btn-sm" onclick="setGenderFilter('all'); setSubjectFilter('all'); document.getElementById('mkt-search-input').value=''; currentSearchQuery=''; filterAndRenderTeachers();">🔄 ফিল্টার রিসেট করুন</button>
+      </div>
+    `;
+    return;
+  }
 
   container.innerHTML = list.map(t => {
-    const isFemale = t.category === 'female' || 
+    const isFemale = t.gender === 'female' || t.category === 'female' || 
                      (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
                      (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
 
@@ -840,6 +1008,7 @@ function renderTeacherDirectory(teachersList) {
     const teachLangs = (t.languages && t.languages.length > 0) ? t.languages : ['বাংলা'];
     const quals = Array.isArray(t.qualifications) ? t.qualifications : (typeof t.qualifications === 'string' ? JSON.parse(t.qualifications || '[]') : []);
     const qualTags = quals.map(q => `<span class="tc-tag">${q}</span>`).join('');
+    const feeDisplay = t.monthly_fee || 'আলোচনা সাপেক্ষে';
     
     return `
       <div class="teacher-card-item">
@@ -847,15 +1016,18 @@ function renderTeacherDirectory(teachersList) {
         <div class="tc-name">${t.name}</div>
         <div class="tc-designation">${t.designation || 'কোরআন শিক্ষক'}</div>
         
-        <div style="display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:6px 0 10px 0;">
+        <div style="display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 8px 0;">
+          <span class="tc-verified-badge">✅ ভেরিফাইড</span>
           <span class="tc-rating">${ratingStr}</span>
           <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(15,39,68,0.06);color:var(--navy);padding:2px 8px;border-radius:12px;font-size:11.5px;font-weight:700;border:1px solid rgba(15,39,68,0.12);">📍 ${countryName}</span>
         </div>
 
+        <div class="tc-fee-badge">💰 ফি: ${feeDisplay}</div>
+
         <div class="tc-qualifications">${qualTags}</div>
 
         <!-- Language Info Box -->
-        <div style="background:rgba(15,39,68,0.035);border:1px solid rgba(15,39,68,0.08);border-radius:8px;padding:6px 8px;margin:8px 0 12px 0;width:100%;box-sizing:border-box;text-align:left;font-size:11.5px;line-height:1.4;">
+        <div style="background:rgba(15,39,68,0.035);border:1px solid rgba(15,39,68,0.08);border-radius:8px;padding:6px 8px;margin:4px 0 12px 0;width:100%;box-sizing:border-box;text-align:left;font-size:11.5px;line-height:1.4;">
           <div style="margin-bottom:3px;display:flex;align-items:center;gap:4px;">
             <span style="color:var(--text-muted);font-weight:600;">🗣️ মাতৃভাষা:</span>
             <strong style="color:var(--navy);font-weight:700;">${nativeLang}</strong>
@@ -868,7 +1040,7 @@ function renderTeacherDirectory(teachersList) {
           </div>
         </div>
 
-        <a href="teachers.html?id=${t.slug || t.id}" class="tc-action-btn">বিস্তারিত প্রোফাইল ও সময়সূচি →</a>
+        <a href="teachers.html?id=${t.slug || t.id}" class="tc-action-btn">বিস্তারিত প্রোফাইল ও ডেমো বুক করুন →</a>
         ${isAdmin ? `
           <div class="tc-admin-tools">
             <button class="tc-admin-btn tc-admin-edit" onclick="editTeacherCard('${t.slug || t.id}')">✏️ এডিট</button>
@@ -927,7 +1099,8 @@ async function init() {
     console.warn('Could not fetch DB teachers:', e);
   }
 
-  renderTeacherDirectory(allTeachers);
+  rawTeachersList = allTeachers;
+  filterAndRenderTeachers();
 
   if (!slug) {
     document.getElementById('teacher-directory-section').style.display = 'block';
@@ -1017,7 +1190,7 @@ function renderPage() {
     ? (reviewsData.reduce((s, r) => s + (r.rating || 5), 0) / reviewsData.length).toFixed(1)
     : '—';
 
-  const isFemale = t.category === 'female' || 
+  const isFemale = t.gender === 'female' || t.category === 'female' || 
                    (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
                    (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
 
@@ -1052,6 +1225,10 @@ function renderPage() {
   document.getElementById('bc-name').textContent          = t.name;
   document.getElementById('bc-desig').textContent         = t.designation || '';
   
+  // Set dynamic fee in booking card
+  const bcFeeEl = document.getElementById('bc-fee-val');
+  if (bcFeeEl) bcFeeEl.textContent = t.monthly_fee || 'আলোচনা সাপেক্ষে';
+
   // Quick stats card elements
   const qsCountry = document.getElementById('qs-country');
   if (qsCountry) qsCountry.textContent = countryName;
@@ -1096,6 +1273,20 @@ function renderPage() {
       el.textContent = '🌐 ক্লাস: ' + l;
       qualEl.appendChild(el);
     });
+  }
+
+  // Smart Lightweight Demo Video / Recitation Player
+  const demoCard = document.getElementById('demo-card');
+  const demoMedia = document.getElementById('demo-media-container');
+  if (t.demo_video_url && t.demo_video_url.trim() !== '') {
+    const rendered = renderSmartPlayer(demoMedia, t.demo_video_url.trim(), t.name);
+    if (rendered) {
+      demoCard.style.display = 'block';
+    } else {
+      demoCard.style.display = 'none';
+    }
+  } else {
+    demoCard.style.display = 'none';
   }
 
   // Bio - clear spec tags first to prevent duplication
@@ -1169,16 +1360,17 @@ function closeBookingModal() {
 }
 
 async function submitBooking() {
-  const name  = document.getElementById('bk-name').value.trim();
-  const phone = document.getElementById('bk-phone').value.trim();
-  const msg   = document.getElementById('bk-msg').value.trim();
-  const t     = teacherData;
+  const name   = document.getElementById('bk-name').value.trim();
+  const phone  = document.getElementById('bk-phone').value.trim();
+  const course = document.getElementById('bk-course') ? document.getElementById('bk-course').value : 'সহীহ কোরআন';
+  const msg    = document.getElementById('bk-msg').value.trim();
+  const t      = teacherData;
 
   if (!name || !phone) { alert('অনুগ্রহ করে নাম ও ফোন নম্বর দিন'); return; }
 
   const dayName  = DAY_NAMES[selectedSlot.day] || selectedSlot.day;
   const slotTime = `${selectedSlot.slot.label} (${selectedSlot.slot.period || 'ক্লাস'})`;
-  const waMsg = `সালামুআলাইকুম! আমি *${name}* আপনার ওয়েবসাইট থেকে শিক্ষক *${t.name}*-এর ক্লাস বুক করতে চাই।\n\n📅 দিন: ${dayName}\n⏰ সময়: ${slotTime}\n📞 ফোন: ${phone}${msg ? '\n\n💬 বার্তা: ' + msg : ''}`;
+  const waMsg = `সালামুআলাইকুম! আমি *${name}* আপনার প্ল্যাটফর্ম থেকে শিক্ষক *${t.name}*-এর সাথে ফ্রি ট্রায়াল ক্লাস করতে চাই।\n\n📖 বিষয়: ${course}\n📅 পছন্দের দিন: ${dayName}\n⏰ সময়: ${slotTime}\n📞 যোগাযোগ: ${phone}${msg ? '\n\n💬 বার্তা: ' + msg : ''}`;
   const rawWa = t.whatsapp || '8801733017521';
   const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
   const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
@@ -1188,11 +1380,11 @@ async function submitBooking() {
     if (db && t && t.id) {
       await db.from('teacher_bookings').insert([{
         teacher_id: t.id,
-        day_of_week: selectedSlot.day,
-        slot_start: selectedSlot.slot.label || slotTime,
+        slot_day: selectedSlot.day,
+        slot_time: selectedSlot.slot.label || slotTime,
         student_name: name,
         student_phone: phone,
-        message: msg || '',
+        student_msg: `[বিষয়: ${course}] ` + (msg || ''),
         status: 'pending'
       }]);
     }
@@ -1206,7 +1398,7 @@ async function submitBooking() {
 
 function openWhatsApp() {
   const t = teacherData;
-  const waMsg = `সালামুআলাইকুম! আমি শিক্ষক *${t.name}*-এর সাথে কোরআন ক্লাস সম্পর্কে জানতে চাই।`;
+  const waMsg = `সালামুআলাইকুম! আমি শিক্ষক *${t.name}*-এর সাথে কোরআন ক্লাস ও ফি সম্পর্কে জানতে চাই।`;
   const rawWa = t.whatsapp || '8801733017521';
   const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
   window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`, '_blank');
@@ -1282,6 +1474,139 @@ async function submitReview() {
     document.getElementById('review-modal-success').style.display = 'block';
     setTimeout(closeReviewModal, 2200);
   }
+}
+
+// ── SMART LIGHTWEIGHT VIDEO PLAYER FUNCTIONS ──
+function getSmartVideoInfo(url) {
+  if (!url || typeof url !== 'string') return null;
+  url = url.trim();
+  if (!url) return null;
+
+  // 1. YouTube (Standard, Shortened, Shorts, Embed)
+  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|watch\?.+&v=))([\w-]{11})/i);
+  if (ytMatch && ytMatch[1]) {
+    const videoId = ytMatch[1];
+    return {
+      type: 'youtube',
+      videoId: videoId,
+      embedUrl: `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`,
+      thumbnailUrl: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      providerName: 'YouTube'
+    };
+  }
+
+  // 2. Google Drive
+  const gdriveMatch = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([a-zA-Z0-9_-]+)/i);
+  if (gdriveMatch && gdriveMatch[1]) {
+    const fileId = gdriveMatch[1];
+    return {
+      type: 'gdrive',
+      fileId: fileId,
+      embedUrl: `https://drive.google.com/file/d/${fileId}/preview`,
+      thumbnailUrl: null,
+      providerName: 'Google Drive'
+    };
+  }
+
+  // 3. Direct Video
+  if (url.match(/\.(mp4|webm|ogg)$/i)) {
+    return {
+      type: 'direct_video',
+      url: url,
+      providerName: 'Direct Video'
+    };
+  }
+
+  // 4. Other Web Link
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return {
+      type: 'external',
+      url: url,
+      providerName: 'External Link'
+    };
+  }
+
+  return null;
+}
+
+function renderSmartPlayer(containerEl, videoUrl, teacherName) {
+  const info = getSmartVideoInfo(videoUrl);
+  if (!info) {
+    containerEl.innerHTML = '';
+    return false;
+  }
+
+  const safeName = (teacherName || '').replace(/['"]/g, '');
+
+  if (info.type === 'youtube') {
+    containerEl.innerHTML = `
+      <div class="smart-video-wrapper">
+        <div class="sv-facade" onclick="playSmartVideo(this, '${info.embedUrl}')">
+          <img src="${info.thumbnailUrl}" alt="Video Thumbnail" style="width:100%;height:100%;object-fit:cover;opacity:0.88;transition:all 0.3s;" onerror="this.style.display='none'">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(15,23,42,0.8) 0%, rgba(15,23,42,0.2) 60%, transparent 100%);"></div>
+          
+          <div class="sv-play-btn" title="ভিডিও চালু করতে ক্লিক করুন">
+            ▶
+          </div>
+
+          <div style="position:absolute;bottom:12px;left:14px;right:14px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="color:#fff;font-size:13px;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,0.8);">🎥 ${safeName ? safeName + ' — ' : ''}ডেমো ক্লাস / তেলাওয়াত</span>
+            <span style="background:rgba(239,68,68,0.9);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;">YouTube</span>
+          </div>
+        </div>
+      </div>
+    `;
+    return true;
+  }
+
+  if (info.type === 'gdrive') {
+    containerEl.innerHTML = `
+      <div class="smart-video-wrapper">
+        <div class="sv-facade" style="background:linear-gradient(135deg, #0f2744 0%, #1e3a8a 100%);" onclick="playSmartVideo(this, '${info.embedUrl}')">
+          <div class="sv-play-btn" style="background:rgba(16,185,129,0.95);box-shadow:0 0 0 8px rgba(16,185,129,0.28), 0 8px 20px rgba(0,0,0,0.4);" title="ভিডিও চালু করতে ক্লিক করুন">
+            ▶
+          </div>
+          <div style="position:absolute;bottom:12px;left:14px;right:14px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="color:#fff;font-size:13px;font-weight:700;">🎥 ${safeName ? safeName + ' — ' : ''}ডেমো ক্লাস / তেলাওয়াত</span>
+            <span style="background:rgba(16,185,129,0.9);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;">Google Drive</span>
+          </div>
+        </div>
+      </div>
+    `;
+    return true;
+  }
+
+  if (info.type === 'direct_video') {
+    containerEl.innerHTML = `
+      <div style="width:100%;border-radius:14px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.18);background:#000;">
+        <video controls style="width:100%;height:auto;display:block;border-radius:14px;" preload="metadata">
+          <source src="${info.url}">
+          আপনার ব্রাউজার ভিডিও প্লেয়ার সাপোর্ট করছে না।
+        </video>
+      </div>
+    `;
+    return true;
+  }
+
+  containerEl.innerHTML = `
+    <div style="background:var(--surface2);padding:14px 18px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--border);">
+      <div>
+        <div style="font-weight:700;font-size:14px;color:var(--navy);">🎧 শিক্ষকের ডেমো তেলাওয়াত / পরিচিতি</div>
+        <div style="font-size:12px;color:var(--text-muted);">অনলাইনে শুনে যাচাই করুন</div>
+      </div>
+      <a href="${info.url}" target="_blank" rel="noopener noreferrer" class="btn btn-navy btn-sm" style="font-size:13px;padding:8px 16px;display:inline-flex;align-items:center;gap:6px;">
+        ▶️ শুনুন / দেখুন ↗
+      </a>
+    </div>
+  `;
+  return true;
+}
+
+function playSmartVideo(facadeEl, embedUrl) {
+  const parent = facadeEl.parentElement;
+  parent.innerHTML = `
+    <iframe src="${embedUrl}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:14px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  `;
 }
 
 // Close modal on overlay click

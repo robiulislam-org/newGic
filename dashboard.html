@@ -1664,6 +1664,24 @@
             </div>
           </div>
 
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ক্যাটাগরি / জেন্ডার</label>
+              <select id="tm-gender" class="inp" style="margin-bottom:0;">
+                <option value="male">👨‍🏫 পুরুষ শিক্ষক (Male)</option>
+                <option value="female">🧕 মহিলা শিক্ষিকা (Female)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মাসিক ফি (টাকা বা টেক্সট)</label>
+              <input type="text" id="tm-monthly-fee" class="inp" placeholder="যেমন: ৳১,৫০০/মাস বা আলোচনা সাপেক্ষে" style="margin-bottom:0;">
+            </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ডেমো ভিডিও লিংক (YouTube/Drive)</label>
+              <input type="url" id="tm-demo-url" class="inp" placeholder="https://youtube.com/..." style="margin-bottom:0;">
+            </div>
+          </div>
+
           <div style="margin-bottom:14px;">
             <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ছবির সরাসরি URL (Google Drive / Imgur / Direct Link)</label>
             <div style="display:flex;gap:12px;align-items:center;">
@@ -4948,6 +4966,9 @@ function openAddTeacherModal() {
   document.getElementById('tm-slug').value = '';
   document.getElementById('tm-designation').value = 'হাফেজুল কুরআন ও মাওলানা';
   document.getElementById('tm-whatsapp').value = '8801733017521';
+  document.getElementById('tm-gender').value = 'male';
+  document.getElementById('tm-monthly-fee').value = 'আলোচনা সাপেক্ষে';
+  document.getElementById('tm-demo-url').value = '';
   document.getElementById('tm-photo-url').value = '';
   document.getElementById('tm-experience').value = '5';
   document.getElementById('tm-students').value = '200';
@@ -4983,6 +5004,9 @@ function openEditTeacherModal(id) {
   document.getElementById('tm-slug').value = teacher.slug || '';
   document.getElementById('tm-designation').value = teacher.designation || '';
   document.getElementById('tm-whatsapp').value = teacher.whatsapp || '8801733017521';
+  document.getElementById('tm-gender').value = teacher.gender || 'male';
+  document.getElementById('tm-monthly-fee').value = teacher.monthly_fee || 'আলোচনা সাপেক্ষে';
+  document.getElementById('tm-demo-url').value = teacher.demo_video_url || '';
   document.getElementById('tm-photo-url').value = teacher.photo_url || '';
   document.getElementById('tm-experience').value = teacher.experience_years || 0;
   document.getElementById('tm-students').value = teacher.students_taught || 0;
@@ -5022,6 +5046,9 @@ async function saveTeacherSubmit(event) {
   const slug = document.getElementById('tm-slug').value.trim().toLowerCase();
   const designation = document.getElementById('tm-designation').value.trim();
   const whatsapp = document.getElementById('tm-whatsapp').value.trim();
+  const gender = document.getElementById('tm-gender').value || 'male';
+  const monthlyFee = document.getElementById('tm-monthly-fee').value.trim() || 'আলোচনা সাপেক্ষে';
+  const demoUrl = document.getElementById('tm-demo-url').value.trim();
   const photoUrl = document.getElementById('tm-photo-url').value.trim();
   const experience = parseInt(document.getElementById('tm-experience').value) || 0;
   const students = parseInt(document.getElementById('tm-students').value) || 0;
@@ -5072,6 +5099,7 @@ async function saveTeacherSubmit(event) {
         // Direct REST fallback
         const { error } = await db.from('teachers').update({
           name, slug, photo_url: photoUrl, designation,
+          gender, monthly_fee: monthlyFee, demo_video_url: demoUrl,
           qualifications, bio, experience_years: experience,
           students_taught: students, specializations,
           weekly_schedule: modalScheduleState,
@@ -5106,6 +5134,7 @@ async function saveTeacherSubmit(event) {
         // Direct REST fallback
         const { error } = await db.from('teachers').insert([{
           name, slug, photo_url: photoUrl, designation,
+          gender, monthly_fee: monthlyFee, demo_video_url: demoUrl,
           qualifications, bio, experience_years: experience,
           students_taught: students, specializations,
           weekly_schedule: modalScheduleState,
@@ -5523,9 +5552,15 @@ function openAppDetailModal(appId) {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">📍 দেশ</div><div style="font-size:13px;color:#fff;font-weight:700;">${app.country || 'বাংলাদেশ'}</div></div>
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">🗣️ মাতৃভাষা</div><div style="font-size:13px;color:#fff;font-weight:700;">${app.native_language || 'বাংলা'}</div></div>
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">👤 জেন্ডার</div><div style="font-size:13px;color:#fff;font-weight:700;">${app.gender === 'female' ? '🧕 মহিলা শিক্ষিকা' : '👨‍🏫 পুরুষ শিক্ষক'}</div></div>
+        <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">💰 প্রত্যাশিত ফি</div><div style="font-size:13px;color:var(--green);font-weight:700;">${app.monthly_fee || 'আলোচনা সাপেক্ষে'}</div></div>
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">অভিজ্ঞতা</div><div style="font-size:13px;color:#fff;">${app.experience_years || 0} বছর</div></div>
         <div><div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">ছাত্র পড়িয়েছেন</div><div style="font-size:13px;color:#fff;">${app.students_taught || 0}+</div></div>
       </div>
+      ${app.demo_video_url ? `
+        <div style="margin-top:10px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">🎥 ডেমো তেলাওয়াত / ভিডিও লিংক</div>
+        <a href="${app.demo_video_url}" target="_blank" style="font-size:12px;color:var(--gold-light);text-decoration:underline;">▶️ ডেমো ভিডিও শুনুন / দেখুন</a></div>
+      ` : ''}
       ${app.languages && app.languages.length > 0 ? `
         <div style="margin-top:10px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">🌐 ক্লাসের ভাষা</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">${(app.languages||[]).map(l=>`<span style="background:rgba(58,134,200,0.15);color:var(--blue-light);font-size:11px;padding:3px 10px;border-radius:20px;">${l}</span>`).join('')}</div></div>
