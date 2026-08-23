@@ -6130,8 +6130,9 @@ const CMS_DEFAULT_DATA = {
 async function initCmsDashboard() {
   if (!cmsSiteContent) {
     try {
+      const cachedVer = localStorage.getItem('gic_site_content_ver');
       const cached = localStorage.getItem('gic_site_content');
-      if (cached) {
+      if (cached && cachedVer === '2026.08.23.v2') {
         cmsSiteContent = JSON.parse(cached);
       }
     } catch(e) {}
@@ -6152,7 +6153,10 @@ async function initCmsDashboard() {
           cmsSiteContent[r.key] = r.data;
         }
       });
-      localStorage.setItem('gic_site_content', JSON.stringify(cmsSiteContent));
+      try {
+        localStorage.setItem('gic_site_content', JSON.stringify(cmsSiteContent));
+        localStorage.setItem('gic_site_content_ver', '2026.08.23.v2');
+      } catch(e) {}
       populateCmsForms();
       updateCmsStatus('synced');
       setTimeout(updateLivePreview, 500);
@@ -6569,6 +6573,7 @@ async function saveAllCmsChanges() {
   // 1. Instant local persistence
   try {
     localStorage.setItem('gic_site_content', JSON.stringify(cmsSiteContent));
+    localStorage.setItem('gic_site_content_ver', '2026.08.23.v2');
   } catch(e) {}
 
   // 2. Real-time preview frame sync

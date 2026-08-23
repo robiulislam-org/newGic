@@ -303,6 +303,8 @@ const DEFAULT_SITE_CONTENT = {
   }
 };
 
+const GIC_CONTENT_VERSION = "2026.08.23.v2";
+
 // Global active site content instance
 window.GIC_SITE_CONTENT = { ...DEFAULT_SITE_CONTENT };
 
@@ -310,12 +312,16 @@ window.GIC_SITE_CONTENT = { ...DEFAULT_SITE_CONTENT };
 function initGicContent() {
   // 1. Try loading cached data instantly
   try {
+    const cachedVer = localStorage.getItem('gic_site_content_ver');
     const cached = localStorage.getItem('gic_site_content');
-    if (cached) {
+    if (cached && cachedVer === GIC_CONTENT_VERSION) {
       const parsed = JSON.parse(cached);
       window.GIC_SITE_CONTENT = { ...DEFAULT_SITE_CONTENT, ...parsed };
       applyDynamicContent(window.GIC_SITE_CONTENT);
     } else {
+      // Outdated or missing cache version -> clear old cache and use default
+      try { localStorage.removeItem('gic_site_content'); } catch (e) {}
+      window.GIC_SITE_CONTENT = { ...DEFAULT_SITE_CONTENT };
       applyDynamicContent(DEFAULT_SITE_CONTENT);
     }
   } catch (e) {
@@ -350,6 +356,7 @@ async function fetchCloudSiteContent() {
         window.GIC_SITE_CONTENT = cloudData;
         try {
           localStorage.setItem('gic_site_content', JSON.stringify(cloudData));
+          localStorage.setItem('gic_site_content_ver', GIC_CONTENT_VERSION);
         } catch (e) {}
         applyDynamicContent(cloudData);
       }
