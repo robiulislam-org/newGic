@@ -310,7 +310,7 @@ const DEFAULT_SITE_CONTENT = {
   }
 };
 
-const GIC_CONTENT_VERSION = "2026.08.24.v3";
+const GIC_CONTENT_VERSION = "2026.08.24.v4";
 
 // Global active site content instance
 window.GIC_SITE_CONTENT = { ...DEFAULT_SITE_CONTENT };
