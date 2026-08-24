@@ -2404,12 +2404,12 @@ function setCourseCategory(categoryName, elem) {
 
 // 5. EXPATRIATE CURRENCY & CONSULTATION SELECTOR
 const CURRENCY_RATES = {
-  BDT: { symbol: '৳', amount: '৫০০', note: 'বাংলাদেশী টাকায় ভর্তি ফি' },
-  SAR: { symbol: 'SAR', amount: '৩৫', note: 'সৌদি আরব প্রবাসীদের জন্য ফি' },
-  AED: { symbol: 'AED', amount: '৩৫', note: 'ইউএই/দুবাই প্রবাসীদের জন্য ফি' },
-  QAR: { symbol: 'QAR', amount: '৩৫', note: 'কাতার প্রবাসীদের জন্য ফি' },
-  USD: { symbol: '$', amount: '১০', note: 'ইউএসএ & ইউরোপ প্রবাসীদের জন্য ফি' },
-  GBP: { symbol: '£', amount: '৮', note: 'ইউকে প্রবাসীদের জন্য ফি' }
+  BDT: { symbol: '৳', amount: '', note: 'বাংলাদেশী টাকায় ফি' },
+  SAR: { symbol: 'SAR', amount: '', note: 'সৌদি আরব প্রবাসীদের জন্য ফি' },
+  AED: { symbol: 'AED', amount: '', note: 'ইউএই/দুবাই প্রবাসীদের জন্য ফি' },
+  QAR: { symbol: 'QAR', amount: '', note: 'কাতার প্রবাসীদের জন্য ফি' },
+  USD: { symbol: '$', amount: '', note: 'ইউএসএ & ইউরোপ প্রবাসীদের জন্য ফি' },
+  GBP: { symbol: '£', amount: '', note: 'ইউকে প্রবাসীদের জন্য ফি' }
 };
 
 function updateCurrencyRates(currCode) {
@@ -2417,13 +2417,13 @@ function updateCurrencyRates(currCode) {
 
   const feeElem = document.getElementById('hero-fee-display');
   if (feeElem) {
-    feeElem.innerHTML = `<strong>${data.symbol} ${data.amount}</strong> <small>(${data.note})</small>`;
+    feeElem.innerHTML = `<small>${data.note}</small>`;
   }
 
   // Update WhatsApp pre-filled link with selected currency details
   const waBtn = document.getElementById('consult-wa-btn');
   if (waBtn) {
-    const text = encodeURIComponent(`আসসালামু আলাইকুম, আমি ${currCode} কারেন্সিতে ফি দিয়ে ফ্রি পরামর্শ নিতে চাই।`);
+    const text = encodeURIComponent(`আসসালামু আলাইকুম, আমি ${currCode} কারেন্সিতে শিক্ষক ফি ও ক্লাস সংক্রান্ত পরামর্শ নিতে চাই।`);
     waBtn.href = `https://wa.me/8801733017521?text=${text}`;
   }
 }
