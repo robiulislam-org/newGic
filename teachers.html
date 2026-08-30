@@ -504,19 +504,7 @@
     <a class="nav-back" href="teachers.html" id="all-teachers-link">← সকল শিক্ষকবৃন্দ</a>
   </nav>
 
-  <!-- TOP TEACHER APPLY BANNER CTA -->
-  <div style="padding:0 16px;">
-    <a href="index.html?page=teachers" class="teacher-cta-banner">
-      <div class="cta-banner-content">
-        <div class="cta-banner-icon">🎓</div>
-        <div>
-          <div class="cta-banner-title">শিক্ষক হিসেবে যুক্ত হতে চাই (আবেদন করতে ক্লিক করুন) →</div>
-          <div class="cta-banner-sub">Global Islamic Care-এ একজন যোগ্য কোরআন শিক্ষক হিসেবে যুক্ত হওয়ার জন্য আবেদন করুন।</div>
-        </div>
-      </div>
-      <span class="cta-banner-btn">আবেদন করুন →</span>
-    </a>
-  </div>
+
 
   <!-- TEACHER DIRECTORY SECTION (List View) -->
   <div id="teacher-directory-section" class="directory-container" style="display:none;">
@@ -721,6 +709,9 @@
             <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
               <button class="btn btn-wa btn-full" id="wa-direct-btn" onclick="openWhatsApp()">
                 💬 WhatsApp-এ সরাসরি কথা বলুন
+              </button>
+              <button class="btn btn-full" id="sms-direct-btn" onclick="openSMS()" style="background:#2563eb;color:#fff;border:none;border-radius:12px;padding:10px 16px;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+                ✉️ সরাসরি SMS পাঠান
               </button>
               <button class="btn btn-navy btn-full" onclick="openBookingModal('sat', { label: 'সুবিধাজনক সময়', period: 'ট্রায়াল ক্লাস' })">
                 📅 ফ্রি ট্রায়াল রিকোয়েস্ট পাঠান
@@ -1402,6 +1393,14 @@ function openWhatsApp() {
   const rawWa = t.whatsapp || '8801733017521';
   const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
   window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`, '_blank');
+}
+
+function openSMS() {
+  const t = teacherData || {};
+  const rawNum = t.phone || t.whatsapp || '01733017521';
+  const cleanNum = rawNum.replace(/\D/g, '') || '01733017521';
+  const smsBody = `সালামুআলাইকুম, আমি GIC ওয়েবসাইট থেকে শিক্ষক ${t.name || ''}-এর সাথে কোরআন ক্লাসের জন্য যোগাযোগ করছি।`;
+  window.location.href = `sms:${cleanNum}?body=${encodeURIComponent(smsBody)}`;
 }
 
 // ── REVIEWS ──
