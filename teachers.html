@@ -499,14 +499,19 @@
 
   <!-- TOP NAV -->
   <nav class="top-nav">
-    <a class="nav-brand" href="index.html">
-      <img src="logo.jpg" alt="GIC" style="width:36px;height:36px;border-radius:10px;object-fit:cover;box-shadow:0 2px 8px rgba(0,43,128,0.3);">
-      <span class="nav-brand-text">GIC</span>
-    </a>
-    <a class="nav-back" href="teachers.html" id="all-teachers-link">← সকল শিক্ষকবৃন্দ</a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a class="nav-brand" href="index.html">
+        <img src="logo.jpg" alt="GIC" style="width:36px;height:36px;border-radius:10px;object-fit:cover;box-shadow:0 2px 8px rgba(0,43,128,0.3);">
+        <span class="nav-brand-text">GIC</span>
+      </a>
+      <a class="nav-back" href="teachers.html" id="all-teachers-link">← সকল শিক্ষকবৃন্দ</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <a href="index.html" style="text-decoration:none;color:var(--navy);font-weight:700;font-size:13px;">🏠 হোম</a>
+      <a href="library.html" style="text-decoration:none;color:var(--navy);font-weight:700;font-size:13px;">📖 লাইব্রেরি</a>
+      <a href="index.html?apply=teacher" class="btn btn-sm" style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;border:none;font-size:12px;padding:6px 14px;border-radius:10px;text-decoration:none;font-weight:800;box-shadow:0 2px 8px rgba(200,151,42,0.35);">✍️ শিক্ষক হিসেবে যোগ দিন</a>
+    </div>
   </nav>
-
-
 
   <!-- TEACHER DIRECTORY SECTION (List View) -->
   <div id="teacher-directory-section" class="directory-container" style="display:none;">
@@ -548,6 +553,14 @@
 
     <div class="teacher-grid-wrapper" id="teacher-grid">
       <!-- Cards rendered by JS -->
+    </div>
+
+    <!-- TEACHER RECRUITMENT BANNER -->
+    <div style="background:linear-gradient(135deg, #0f2744, #1e3d6e);border-radius:20px;padding:32px 24px;margin-top:40px;text-align:center;color:#fff;box-shadow:0 8px 30px rgba(15,39,68,0.15);">
+      <span style="font-size:36px;display:inline-block;margin-bottom:8px;">🕌</span>
+      <h3 style="margin-bottom:8px;font-size:20px;font-weight:800;color:#fff;">আপনি কি একজন দক্ষ হাফেজ, আলেম বা মহিলা কোরআন শিক্ষিকা?</h3>
+      <p style="color:rgba(255,255,255,0.85);font-size:14px;max-width:580px;margin:0 auto 20px;line-height:1.6;">Global Islamic Care প্ল্যাটফর্মে যুক্ত হয়ে বিশ্বজুড়ে দেশি ও প্রবাসী শিক্ষার্থীদের ঘরে বসে অনলাইনে কোরআন শিক্ষা দিন। সহজ আবেদন ও দ্রুত ভেরিফিকেশন।</p>
+      <a href="index.html?apply=teacher" class="btn btn-gold" style="padding:13px 32px;font-size:14.5px;font-weight:800;border-radius:12px;text-decoration:none;box-shadow:0 4px 16px rgba(200,151,42,0.4);">✍️ শিক্ষক হিসেবে আবেদন ফর্ম পূরণ করুন →</a>
     </div>
   </div>
 
