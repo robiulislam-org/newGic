@@ -423,22 +423,23 @@
   <a href="index.html?page=teachers" class="btn btn-navy" style="margin-top:8px;">← সকল শিক্ষক দেখুন</a>
 </div>
 
-<!-- ── BOOKING MODAL ── -->
+<!-- ── BOOKING & LEAD CONTACT MODAL ── -->
 <div class="modal-overlay" id="booking-modal">
   <div class="modal">
-    <div class="modal-title">📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট</div>
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">শিক্ষকের সাথে আপনার ক্লাস সমন্বয় করার জন্য ফর্মটি পূরণ করুন</p>
-    <div class="modal-slot-info" id="modal-slot-info">শনিবার, ০৭:০০ – ০৭:৫০</div>
+    <div class="modal-title" id="bk-modal-title">💬 শিক্ষকের সাথে WhatsApp-এ যোগাযোগের ফর্ম</div>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;" id="bk-modal-desc">শিক্ষকের সাথে কথা বলতে ও ডেমো ক্লাস সমন্বয় করতে আপনার নাম ও WhatsApp নম্বর দিন</p>
+    <div class="modal-slot-info" id="modal-slot-info">👨‍🏫 শিক্ষক: লোড হচ্ছে...</div>
     <div class="form-group">
-      <label class="form-label" for="bk-name">শিক্ষার্থী / অভিভাবকের নাম *</label>
-      <input class="form-inp" id="bk-name" type="text" placeholder="পূর্ণ নাম লিখুন" required>
+      <label class="form-label" for="bk-name">অভিভাবক / শিক্ষার্থীর নাম *</label>
+      <input class="form-inp" id="bk-name" type="text" placeholder="পূর্ণ নাম লিখুন (যেমন: রাহেলা বেগম / তানভীর)" required>
     </div>
     <div class="form-group">
-      <label class="form-label" for="bk-phone">ফোন নম্বর (WhatsApp সহ) *</label>
-      <input class="form-inp" id="bk-phone" type="tel" placeholder="+880 XXXXXXXXXX" required>
+      <label class="form-label" for="bk-phone">WhatsApp / মোবাইল নম্বর *</label>
+      <input class="form-inp" id="bk-phone" type="tel" placeholder="017XXXXXXXX" required>
+      <span style="font-size:11px;color:var(--text-muted);margin-top:3px;display:block;">💡 এই নম্বরে অ্যাডমিন ও শিক্ষক আপনার সাথে ক্লাসের জন্য যোগাযোগ করবেন</span>
     </div>
     <div class="form-group">
-      <label class="form-label" for="bk-course">কোন বিষয়ে পড়তে চান?</label>
+      <label class="form-label" for="bk-course">কোন বিষয়ে পড়তে আগ্রহী?</label>
       <select class="form-inp" id="bk-course" style="width:100%;background:#fff;">
         <option value="সহীহ কোরআন তেলাওয়াত ও তাজউইদ">📖 সহীহ কোরআন তেলাওয়াত ও তাজউইদ</option>
         <option value="নূরানী কায়দা ও আমপারা (বেসিক)">👶 নূরানী কায়দা ও আমপারা (বেসিক)</option>
@@ -450,12 +451,13 @@
       </select>
     </div>
     <div class="form-group">
-      <label class="form-label" for="bk-msg">অতিরিক্ত বার্তা (ঐচ্ছিক)</label>
+      <label class="form-label" for="bk-msg">শিক্ষার্থীর বয়স বা সংক্ষিপ্ত বার্তা (ঐচ্ছিক)</label>
       <textarea class="form-inp" id="bk-msg" placeholder="শিক্ষার্থীর বয়স, বর্তমান লেভেল বা কোনো বিশেষ চাওয়া থাকলে লিখুন..."></textarea>
     </div>
+    <div id="bk-modal-err" style="display:none;color:var(--red);font-size:13px;font-weight:600;margin-bottom:12px;"></div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeBookingModal()">বাতিল</button>
-      <button class="btn btn-wa" id="bk-submit-btn" onclick="submitBooking()">💬 রিকোয়েস্ট পাঠান (WhatsApp)</button>
+      <button type="button" class="btn btn-outline" onclick="closeBookingModal()">বাতিল</button>
+      <button type="button" class="btn btn-wa" id="bk-submit-btn" onclick="submitBooking()">💬 WhatsApp-এ শিক্ষকের সাথে যুক্ত হন →</button>
     </div>
   </div>
 </div>
@@ -992,6 +994,10 @@ function renderTeacherDirectory(list) {
     const photo = (t.photo_url && t.photo_url.trim() !== '')
       ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.parentElement.innerHTML=\`${customFallback.replace(/"/g, '\\"')}\`" />`
       : customFallback;
+    const isSenior = t.teacher_type !== 'fresher';
+    const tierBadge = isSenior
+      ? `<span style="display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(200,151,42,0.15),rgba(229,185,92,0.22));color:#854d0e;border:1px solid rgba(200,151,42,0.35);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">⭐ সিনিয়র শিক্ষক</span>`
+      : `<span style="display:inline-flex;align-items:center;gap:3px;background:rgba(20,184,166,0.12);color:#0f766e;border:1px solid rgba(20,184,166,0.25);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">🌱 ফ্রেশার শিক্ষক</span>`;
     const ratingVal = t.rating || 5.0;
     const ratingStr = `⭐ ${ratingVal} / 5.0`;
     const countryName = t.country || 'বাংলাদেশ';
@@ -1007,10 +1013,11 @@ function renderTeacherDirectory(list) {
         <div class="tc-name">${t.name}</div>
         <div class="tc-designation">${t.designation || 'কোরআন শিক্ষক'}</div>
         
-        <div style="display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 8px 0;">
+        <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 8px 0;">
+          ${tierBadge}
           <span class="tc-verified-badge">✅ ভেরিফাইড</span>
           <span class="tc-rating">${ratingStr}</span>
-          <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(15,39,68,0.06);color:var(--navy);padding:2px 8px;border-radius:12px;font-size:11.5px;font-weight:700;border:1px solid rgba(15,39,68,0.12);">📍 ${countryName}</span>
+          <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(15,39,68,0.06);color:var(--navy);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid rgba(15,39,68,0.12);">📍 ${countryName}</span>
         </div>
 
         <div class="tc-fee-badge">💰 ফি: ${feeDisplay}</div>
@@ -1082,7 +1089,7 @@ async function init() {
   // Load all teachers for directory roster (Active only)
   let allTeachers = Object.values(DEMO_TEACHERS_MAP);
   try {
-    const { data } = await db.from('teachers').select('*').eq('is_active', true).order('sort_order', { ascending: true });
+    const { data } = await db.from('teachers').select('*').eq('is_active', true).order('sort_order', { ascending: true }).order('created_at', { ascending: true });
     if (data && data.length > 0) {
       allTeachers = data;
     }
@@ -1336,11 +1343,69 @@ function showDay(day) {
   });
 }
 
-// ── BOOKING ──
+// ── BOOKING & LEAD CONTACT LOGIC ──
+let targetTeacherForModal = null;
+let currentContactType = 'whatsapp'; // 'whatsapp', 'trial', 'sms'
+
 function openBookingModal(day, slot) {
+  targetTeacherForModal = teacherData;
   selectedSlot = { day, slot };
+  currentContactType = 'trial';
+  
   const dayName = DAY_NAMES[day] || day;
-  document.getElementById('modal-slot-info').textContent = `${dayName}, ${slot.label} (${slot.period || 'ক্লাস'})`;
+  const slotStr = slot ? `${dayName}, ${slot.label} (${slot.period || 'ক্লাস'})` : 'সুবিধাজনক সময়';
+  
+  document.getElementById('bk-modal-title').textContent = '📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট';
+  document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের সাথে আপনার ক্লাস সমন্বয় ও যোগাযোগের জন্য তথ্য দিন';
+  document.getElementById('modal-slot-info').innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} &nbsp;|&nbsp; ⏰ <strong>স্লট:</strong> ${slotStr}`;
+  document.getElementById('bk-submit-btn').innerHTML = '📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট পাঠান (WhatsApp) →';
+  document.getElementById('bk-modal-err').style.display = 'none';
+
+  document.getElementById('booking-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openWhatsApp() {
+  targetTeacherForModal = teacherData;
+  selectedSlot = null;
+  currentContactType = 'whatsapp';
+
+  document.getElementById('bk-modal-title').textContent = '💬 শিক্ষকের সাথে WhatsApp-এ যোগাযোগের ফর্ম';
+  document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের সাথে সরাসরি WhatsApp-এ কথা বলতে ও ফি জানতে আপনার তথ্য দিন';
+  document.getElementById('modal-slot-info').innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} (${teacherData?.designation || 'কোরআন শিক্ষক'})`;
+  document.getElementById('bk-submit-btn').innerHTML = '💬 WhatsApp-এ শিক্ষকের সাথে চ্যাট শুরু করুন →';
+  document.getElementById('bk-modal-err').style.display = 'none';
+
+  document.getElementById('booking-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openSMS() {
+  targetTeacherForModal = teacherData;
+  selectedSlot = null;
+  currentContactType = 'sms';
+
+  document.getElementById('bk-modal-title').textContent = '✉️ শিক্ষকের সাথে SMS যোগাযোগের ফর্ম';
+  document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের নম্বরে সরাসরি SMS পাঠাতে আপনার তথ্য দিন';
+  document.getElementById('modal-slot-info').innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'}`;
+  document.getElementById('bk-submit-btn').innerHTML = '✉️ শিক্ষকের সাথে SMS শুরু করুন →';
+  document.getElementById('bk-modal-err').style.display = 'none';
+
+  document.getElementById('booking-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openLeadModalForTeacher(teacherObj, contactType = 'whatsapp') {
+  targetTeacherForModal = teacherObj;
+  selectedSlot = null;
+  currentContactType = contactType;
+
+  document.getElementById('bk-modal-title').textContent = '💬 শিক্ষকের সাথে যোগাযোগের ফর্ম';
+  document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের সাথে সরাসরি কথা বলতে আপনার নাম ও WhatsApp নম্বর দিন';
+  document.getElementById('modal-slot-info').innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherObj ? teacherObj.name : '—'} (${teacherObj?.designation || 'কোরআন শিক্ষক'})`;
+  document.getElementById('bk-submit-btn').innerHTML = '💬 WhatsApp-এ শিক্ষকের সাথে যুক্ত হন →';
+  document.getElementById('bk-modal-err').style.display = 'none';
+
   document.getElementById('booking-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1355,27 +1420,45 @@ async function submitBooking() {
   const phone  = document.getElementById('bk-phone').value.trim();
   const course = document.getElementById('bk-course') ? document.getElementById('bk-course').value : 'সহীহ কোরআন';
   const msg    = document.getElementById('bk-msg').value.trim();
-  const t      = teacherData;
+  const errEl  = document.getElementById('bk-modal-err');
+  const t      = targetTeacherForModal || teacherData || {};
 
-  if (!name || !phone) { alert('অনুগ্রহ করে নাম ও ফোন নম্বর দিন'); return; }
+  if (!name) {
+    errEl.textContent = '❌ অনুগ্রহ করে আপনার বা শিক্ষার্থীর পূর্ণ নাম লিখুন';
+    errEl.style.display = 'block';
+    document.getElementById('bk-name')?.focus();
+    return;
+  }
 
-  const dayName  = DAY_NAMES[selectedSlot.day] || selectedSlot.day;
-  const slotTime = `${selectedSlot.slot.label} (${selectedSlot.slot.period || 'ক্লাস'})`;
-  const waMsg = `সালামুআলাইকুম! আমি *${name}* আপনার প্ল্যাটফর্ম থেকে শিক্ষক *${t.name}*-এর সাথে ফ্রি ট্রায়াল ক্লাস করতে চাই।\n\n📖 বিষয়: ${course}\n📅 পছন্দের দিন: ${dayName}\n⏰ সময়: ${slotTime}\n📞 যোগাযোগ: ${phone}${msg ? '\n\n💬 বার্তা: ' + msg : ''}`;
-  const rawWa = t.whatsapp || '8801733017521';
-  const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
-  const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+  if (!phone || phone.length < 10) {
+    errEl.textContent = '❌ অনুগ্রহ করে একটি সঠিক WhatsApp / মোবাইল নম্বর দিন';
+    errEl.style.display = 'block';
+    document.getElementById('bk-phone')?.focus();
+    return;
+  }
 
-  // Save to database
+  errEl.style.display = 'none';
+  const submitBtn = document.getElementById('bk-submit-btn');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '⏳ তথ্য সংরক্ষণ হচ্ছে...';
+
+  const teacherName = t.name || 'শিক্ষক';
+  const teacherId = t.id || null;
+  const slotDay = selectedSlot ? selectedSlot.day : '';
+  const slotTime = selectedSlot ? (selectedSlot.slot?.label || '') : (currentContactType === 'whatsapp' ? 'সরাসরি WhatsApp' : (currentContactType === 'sms' ? 'সরাসরি SMS' : 'সাধারণ ট্রায়াল'));
+
+  // Save lead & booking directly to Supabase
   try {
-    if (db && t && t.id) {
+    if (db) {
       await db.from('teacher_bookings').insert([{
-        teacher_id: t.id,
-        slot_day: selectedSlot.day,
-        slot_time: selectedSlot.slot.label || slotTime,
+        teacher_id: teacherId,
+        teacher_name: teacherName,
         student_name: name,
         student_phone: phone,
         student_msg: `[বিষয়: ${course}] ` + (msg || ''),
+        slot_day: slotDay,
+        slot_time: slotTime,
+        contact_type: currentContactType || 'whatsapp_chat',
         status: 'pending'
       }]);
     }
@@ -1383,24 +1466,29 @@ async function submitBooking() {
     console.warn('Booking db sync notice:', err);
   }
 
-  window.open(waUrl, '_blank');
+  // Generate structured message for WhatsApp / SMS
+  if (currentContactType === 'sms') {
+    const rawNum = t.phone || t.whatsapp || '01733017521';
+    const cleanNum = rawNum.replace(/\D/g, '') || '01733017521';
+    const smsBody = `সালামুআলাইকুম! আমি ${name} (${phone}) GIC ওয়েবসাইট থেকে শিক্ষক ${teacherName}-এর সাথে কোরআন ক্লাসের জন্য যোগাযোগ করছি। বিষয়: ${course}${msg ? ' | ' + msg : ''}`;
+    window.location.href = `sms:${cleanNum}?body=${encodeURIComponent(smsBody)}`;
+  } else {
+    let waMsg = `সালামুআলাইকুম! আমি *${name}* GIC প্ল্যাটফর্ম থেকে শিক্ষক *${teacherName}*-এর সাথে যোগাযোগ করছি।\n\n📖 বিষয়: ${course}\n📱 আমার WhatsApp নম্বর: ${phone}${msg ? '\n💬 বার্তা: ' + msg : ''}`;
+    if (selectedSlot && selectedSlot.slot) {
+      const dayName = DAY_NAMES[selectedSlot.day] || selectedSlot.day;
+      waMsg += `\n📅 পছন্দের দিন: ${dayName}\n⏰ পছন্দের সময়: ${selectedSlot.slot.label || slotTime}`;
+    }
+    waMsg += `\n\n📌 আমি আপনার কাছে কোরআন ক্লাস ও সময়সূচি সম্পর্কে জানতে আগ্রহী।`;
+
+    const rawWa = t.whatsapp || '8801733017521';
+    const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
+    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+    window.open(waUrl, '_blank');
+  }
+
+  submitBtn.disabled = false;
+  submitBtn.innerHTML = '💬 WhatsApp-এ শিক্ষকের সাথে যুক্ত হন →';
   closeBookingModal();
-}
-
-function openWhatsApp() {
-  const t = teacherData;
-  const waMsg = `সালামুআলাইকুম! আমি শিক্ষক *${t.name}*-এর সাথে কোরআন ক্লাস ও ফি সম্পর্কে জানতে চাই।`;
-  const rawWa = t.whatsapp || '8801733017521';
-  const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
-  window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`, '_blank');
-}
-
-function openSMS() {
-  const t = teacherData || {};
-  const rawNum = t.phone || t.whatsapp || '01733017521';
-  const cleanNum = rawNum.replace(/\D/g, '') || '01733017521';
-  const smsBody = `সালামুআলাইকুম, আমি GIC ওয়েবসাইট থেকে শিক্ষক ${t.name || ''}-এর সাথে কোরআন ক্লাসের জন্য যোগাযোগ করছি।`;
-  window.location.href = `sms:${cleanNum}?body=${encodeURIComponent(smsBody)}`;
 }
 
 // ── REVIEWS ──

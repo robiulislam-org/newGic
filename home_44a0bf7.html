@@ -1,0 +1,255 @@
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-grid"></div>
+    <svg class="hero-geo" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+      <circle cx="200" cy="200" r="190" stroke="#d4a843" stroke-width="0.5"/>
+      <circle cx="200" cy="200" r="150" stroke="#d4a843" stroke-width="0.5"/>
+      <circle cx="200" cy="200" r="110" stroke="#d4a843" stroke-width="0.5"/>
+      <circle cx="200" cy="200" r="70" stroke="#d4a843" stroke-width="0.5"/>
+      <polygon points="200,20 370,110 370,290 200,380 30,290 30,110" fill="none" stroke="#d4a843" stroke-width="0.5"/>
+      <line x1="200" y1="10" x2="200" y2="390" stroke="#d4a843" stroke-width="0.3"/>
+      <line x1="10" y1="200" x2="390" y2="200" stroke="#d4a843" stroke-width="0.3"/>
+      <line x1="60" y1="60" x2="340" y2="340" stroke="#d4a843" stroke-width="0.3"/>
+      <line x1="340" y1="60" x2="60" y2="340" stroke="#d4a843" stroke-width="0.3"/>
+    </svg>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <div class="pulse"></div>
+          বিশ্বস্ত অনলাইন কোরআন শিক্ষক মার্কেটপ্লেস
+        </div>
+        <h1 class="hero-title">
+          <span class="gold">পছন্দের কোরআন শিক্ষক</span><br>
+          খুঁজুন ও <span class="blue">শিখুন</span>
+        </h1>
+        <span class="hero-arabic">وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا</span>
+        <p class="hero-desc">
+          দেশ-বিদেশের অভিজ্ঞ হাফেজ ও আলেম শিক্ষকদের প্রোফাইল, ডেমো তেলাওয়াত ও ফি দেখে সরাসরি পছন্দের শিক্ষক বেছে নিন। আপনার সুবিধাজনক সময়ে ঘরে বসে শিখুন সহীহ কোরআন।
+        </p>
+        <div class="hero-btns">
+          <a href="teachers.html" class="btn btn-wa btn-lg">🔍 শিক্ষক ডিরেক্টরি দেখুন →</a>
+          <a href="javascript:void(0)" onclick="openTeacherApplyModal()" class="btn btn-outline btn-lg">🎓 শিক্ষক হিসেবে আবেদন</a>
+        </div>
+        <div class="hero-points">
+          <div class="hero-point"><div class="hero-point-dot">✓</div>১০০% ভেরিফাইড সনদপ্রাপ্ত শিক্ষকবৃন্দ</div>
+          <div class="hero-point"><div class="hero-point-dot">✓</div>ফ্রি ট্রায়াল ক্লাস করার বিশেষ সুবিধা</div>
+          <div class="hero-point"><div class="hero-point-dot">✓</div>পছন্দমতো সময় ও সাশ্রয়ী নমনীয় ফি</div>
+          <div class="hero-point"><div class="hero-point-dot">✓</div>মা-বোন ও শিশুদের জন্য অভিজ্ঞ শিক্ষিকা</div>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-title">
+          <span class="icon">🌙</span>
+          <h3>ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট</h3>
+          <p>পছন্দের শিক্ষক বাছাই ও পরামর্শের জন্য</p>
+        </div>
+        <div class="form-field">
+          <input type="text" id="hName" placeholder="শিক্ষার্থী / অভিভাবকের নাম">
+        </div>
+        <div class="form-field">
+          <input type="tel" id="hPhone" placeholder="WhatsApp নম্বর">
+        </div>
+        <div class="form-field">
+          <select id="hCourse">
+            <option value="">আগ্রহী বিষয় বেছে নিন</option>
+            <option>📖 সহীহ কোরআন তেলাওয়াত ও তাজউইদ</option>
+            <option>👶 নূরানী কায়দা ও আমপারা (বেসিক)</option>
+            <option>🕌 হিফজুল কোরআন প্রোগ্রাম</option>
+            <option>🧕 মা-বোনদের ক্লাস (মহিলা শিক্ষিকা)</option>
+            <option>🧓 বয়স্কদের সহজ কোরআন শিক্ষা</option>
+            <option>💬 শিক্ষক বাছাইয়ে পরামর্শ চাই</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="bookTrial()">
+          💬 WhatsApp-এ পরামর্শ নিন
+        </button>
+        <p class="form-note">✓ সম্পূর্ণ বিনামূল্যে &nbsp;·&nbsp; <span>✓ কোনো বাধ্যবাধকতা নেই</span></p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track" id="ticker">
+      <span class="ticker-item"><span class="ticker-dot"></span>হাফেজ ও আলেম শিক্ষক</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>দেশ-বিদেশের বহুভাষী শিক্ষক</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>১-অন-১ লাইভ ব্যক্তিগত ক্লাস</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>পছন্দমতো সময় ও নমনীয় ফি</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>বিশ্বের যেকোনো দেশ থেকে</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>শিশু, নারী ও পুরুষ সবার জন্য</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>ফ্রি ট্রায়াল ক্লাসের সুবিধা</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>ভেরিফাইড শিক্ষক প্রোফাইল</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>হাফেজ ও আলেম শিক্ষক</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>দেশ-বিদেশের বহুভাষী শিক্ষক</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>১-অন-১ লাইভ ব্যক্তিগত ক্লাস</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>পছন্দমতো সময় ও নমনীয় ফি</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>বিশ্বের যেকোনো দেশ থেকে</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>শিশু, নারী ও পুরুষ সবার জন্য</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>ফ্রি ট্রায়াল ক্লাসের সুবিধা</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>ভেরিফাইড শিক্ষক প্রোফাইল</span>
+    </div>
+  </div>
+
+  <!-- WHY US -->
+  <section class="section why-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">কেন Global Islamic Care?</div>
+        <h2 class="section-title">বিশ্বস্ত শিক্ষক প্ল্যাটফর্মে কেন <span>শিখবেন?</span></h2>
+        <p class="section-sub">সনদপ্রাপ্ত শিক্ষক, ডেমো তেলাওয়াত ও ভিডিও প্রোফাইল এবং সরাসরি ১-অন-১ লাইভ ক্লাসের সুবিধা।</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal"><div class="why-icon">🎓</div><div class="why-title">যাচাইকৃত শিক্ষকবৃন্দ</div><p class="why-desc">আমাদের সকল শিক্ষক সনদপ্রাপ্ত ও NID যাচাইকৃত — তাজউইদে দক্ষ এবং আন্তর্জাতিক মানের পাঠদানে অভিজ্ঞ।</p></div>
+        <div class="why-card reveal" style="transition-delay:0.1s"><div class="why-icon">🌍</div><div class="why-title">যেকোনো দেশ থেকে</div><p class="why-desc">বাংলাদেশ, ইউকে, সৌদি আরব, মালয়েশিয়া বা বিশ্বের যেকোনো প্রান্ত থেকে ক্লাস করুন — শুধু ইন্টারনেট থাকলেই হবে।</p></div>
+        <div class="why-card reveal" style="transition-delay:0.2s"><div class="why-icon">🗣️</div><div class="why-title">বহুভাষী শিক্ষক ও পাঠদান</div><p class="why-desc">দেশ-বিদেশের অভিজ্ঞ শিক্ষকদের সাথে বাংলা, English, আরবি বা উর্দুতে আপনার পছন্দের ভাষায় ক্লাস করার সুযোগ।</p></div>
+        <div class="why-card reveal" style="transition-delay:0.1s"><div class="why-icon">👨‍👩‍👧‍👦</div><div class="why-title">পরিবারের সকলের জন্য</div><p class="why-desc">ছোট সোনামণি থেকে শুরু করে মা-বোন ও বয়স্কদের জন্য রয়েছে আলাদা আলাদা অভিজ্ঞ শিক্ষক ও শিক্ষিকা।</p></div>
+        <div class="why-card reveal" style="transition-delay:0.2s"><div class="why-icon">❤️</div><div class="why-title">কোরআনের প্রতি ভালোবাসা</div><p class="why-desc">আমরা চেষ্টা করি যেন আপনার ও আপনার সন্তানের মনে কোরআনের প্রতি গভীর ভালোবাসা ও সহীহ তেলাওয়াতের আগ্রহ তৈরি হয়।</p></div>
+        <div class="why-card reveal" style="transition-delay:0.3s"><div class="why-icon">📅</div><div class="why-title">নমনীয় সময় ও ফি</div><p class="why-desc">শিক্ষকের সাথে আলোচনা করে আপনার সুবিধাজনক দিন, সময় ও সাশ্রয়ী মাসিক ফিতে ক্লাস শুরু করতে পারবেন।</p></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TEACHING METHODOLOGY -->
+  <section class="section" style="background:linear-gradient(180deg, rgba(15,39,68,0.02) 0%, rgba(200,151,42,0.05) 100%); padding:70px 24px;">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">পাঠদানের বিষয়সমূহ</div>
+        <h2 class="section-title">পছন্দের বিষয়ে <span>বিশেষজ্ঞ শিক্ষক বেছে নিন</span></h2>
+        <p class="section-sub">শিশু থেকে বয়স্ক — প্রতিটি বিষয়ের জন্য আমাদের রয়েছে আলাদা আলাদা অভিজ্ঞ শিক্ষকবৃন্দ।</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:20px;max-width:1050px;margin:0 auto;" class="reveal">
+        <div class="card" style="background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:26px;box-shadow:var(--shadow);transition:transform 0.3s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(30,96,145,0.1);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;">👶</div>
+          <h3 style="font-size:18px;font-weight:800;color:var(--blue-dark);margin-bottom:8px;">নূরানী কায়দা ও আমপারা</h3>
+          <p style="color:var(--text);font-size:14px;line-height:1.75;margin-bottom:14px;">হরফ চেনা, সঠিক মাখরাজ ও ছোট ছোট সূরা দিয়ে আনন্দের সাথে শিশুদের কোরআন শিক্ষার ভিত্তি তৈরি।</p>
+          <a href="teachers.html" style="font-size:13px;font-weight:700;color:var(--blue);text-decoration:none;">শিক্ষক খুঁজুন →</a>
+        </div>
+
+        <div class="card" style="background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:26px;box-shadow:var(--shadow);transition:transform 0.3s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(200,151,42,0.12);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;">📖</div>
+          <h3 style="font-size:18px;font-weight:800;color:var(--blue-dark);margin-bottom:8px;">সহীহ তেলাওয়াত ও তাজউইদ</h3>
+          <p style="color:var(--text);font-size:14px;line-height:1.75;margin-bottom:14px;">তাজউইদের সকল নিয়ম মেনে মিষ্টি ও সুন্দর সুরে শুদ্ধ কোরআন তেলাওয়াত শিক্ষা।</p>
+          <a href="teachers.html" style="font-size:13px;font-weight:700;color:var(--gold-dark,#c8972a);text-decoration:none;">শিক্ষক খুঁজুন →</a>
+        </div>
+
+        <div class="card" style="background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:26px;box-shadow:var(--shadow);transition:transform 0.3s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;">🕌</div>
+          <h3 style="font-size:18px;font-weight:800;color:var(--blue-dark);margin-bottom:8px;">হিফজুল কোরআন প্রোগ্রাম</h3>
+          <p style="color:var(--text);font-size:14px;line-height:1.75;margin-bottom:14px;">হাফেজ শিক্ষকের নিবিড় তত্ত্বাবধানে সম্পূর্ণ কোরআন মুখস্থ ও নিয়মিত রিভিশন (দৌর)।</p>
+          <a href="teachers.html" style="font-size:13px;font-weight:700;color:var(--green,#10b981);text-decoration:none;">শিক্ষক খুঁজুন →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section process-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">কিভাবে শুরু করবেন</div>
+        <h2 class="section-title" style="color:#fff;">মাত্র <span style="color:var(--gold-light)">৩টি সহজ ধাপে</span> ক্লাস শুরু করুন</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.6)">শিক্ষক নির্বাচন থেকে সরাসরি ক্লাস শুরু — পুরো প্রক্রিয়া সহজ এবং ঝামেলামুক্ত।</p>
+      </div>
+      <div class="process-steps">
+        <div class="p-step reveal"><div class="p-step-num">১</div><div class="p-step-title">শিক্ষক পছন্দ করুন</div><p class="p-step-desc">শিক্ষকদের প্রোফাইল, যোগ্যতা, ডেমো তেলাওয়াত ও ফি দেখে পছন্দের শিক্ষক বেছে নিন।</p></div>
+        <div class="p-step reveal" style="transition-delay:0.1s"><div class="p-step-num">২</div><div class="p-step-title">ফ্রি ট্রায়াল বুক করুন</div><p class="p-step-desc">শিক্ষকের সাথে সুবিধাজনক সময়ে সম্পূর্ণ ফ্রিতে ১টি ট্রায়াল ক্লাস করে নিশ্চিত হোন।</p></div>
+        <div class="p-step reveal" style="transition-delay:0.2s"><div class="p-step-num">৩</div><div class="p-step-title">নিয়মিত পড়া শুরু!</div><p class="p-step-desc">শিক্ষকের সাথে ক্লাস শিডিউল ও ফি চূড়ান্ত করে নিয়মিত লাইভ ক্লাসে অংশ নিন।</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">শিক্ষার্থী ও অভিভাবকদের অভিজ্ঞতা</div>
+        <h2 class="section-title">তারা <span>কী বলছেন?</span></h2>
+      </div>
+      <div class="t-grid">
+        <div class="t-card reveal">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">আমার মেয়ে মাত্র দেড় মাসে সহি কোরআন পড়তে শিখেছে। ওস্তাদ অত্যন্ত যত্নসহকারে ও ধৈর্যের সাথে পড়ান। আলহামদুলিল্লাহ।</p>
+          <div class="t-author"><div class="t-avatar">র</div><div><div class="t-name">রুকাইয়া বেগম</div><div class="t-loc">ঢাকা, বাংলাদেশ</div></div></div>
+        </div>
+        <div class="t-card reveal" style="transition-delay:0.1s">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">UK থেকে পছন্দের ভাষায় অভিজ্ঞ শিক্ষকের কাছে কোরআন শেখা এক অসাধারণ অভিজ্ঞতা। শিক্ষক প্রোফাইল দেখে ডেমো নিয়েছিলাম, এখন পুরো পরিবার নিয়মিত পড়ছি।</p>
+          <div class="t-author"><div class="t-avatar">ফ</div><div><div class="t-name">ফারহান আহমেদ</div><div class="t-loc">লন্ডন, UK</div></div></div>
+        </div>
+        <div class="t-card reveal" style="transition-delay:0.2s">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">বয়স ৪৫ হলেও এখন মাশাআল্লাহ সহি কোরআন পড়তে পারছি। শিক্ষক খুবই আন্তরিক ও সহযোগী।</p>
+          <div class="t-author"><div class="t-avatar">স</div><div><div class="t-name">সালমা খানম</div><div class="t-loc">কুয়ালালামপুর, মালয়েশিয়া</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">সাধারণ প্রশ্ন</div>
+        <h2 class="section-title">প্রায়শই জিজ্ঞাসিত <span>প্রশ্নসমূহ</span></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>আমি কীভাবে আমার পছন্দের শিক্ষক খুঁজে পাবো?</span>
+            <div class="faq-icon">+</div>
+          </button>
+          <div class="faq-a">আমাদের "শিক্ষক ডিরেক্টরি" পেজে গিয়ে বিষয় (নূরানী, তাজউইদ, হিফজ), শিক্ষক টাইপ (পুরুষ শিক্ষক / মহিলা শিক্ষিকা), দেশ ও ভাষা অনুযায়ী ফিল্টার করে খুব সহজেই শিক্ষক খুঁজে নিতে পারবেন।</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>শিক্ষকের মাসিক ফি বা খরচ কেমন?</span>
+            <div class="faq-icon">+</div>
+          </button>
+          <div class="faq-a">আমাদের প্ল্যাটফর্মে শিক্ষকরা তাঁদের নিজস্ব যোগ্যতা ও অভিজ্ঞতা অনুযায়ী ফি নির্ধারণ করেন। প্রতিটি শিক্ষকের প্রোফাইলে ফি উল্লেখ থাকে এবং আপনি সরাসরি শিক্ষকের সাথে আলোচনা করেও ফি নির্ধারণ করতে পারেন।</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>ফ্রি ট্রায়াল ক্লাস কীভাবে করা যাবে?</span>
+            <div class="faq-icon">+</div>
+          </button>
+          <div class="faq-a">যেকোনো শিক্ষকের প্রোফাইলে গিয়ে "ফ্রি ট্রায়াল রিকোয়েস্ট" পাঠালে সরাসরি শিক্ষকের সাথে আপনার যোগাযোগ করিয়ে দেওয়া হবে এবং একটি ফ্রি ট্রায়াল ক্লাসে অংশ নিতে পারবেন।</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>বিদেশ থেকে কি পড়া সম্ভব?</span>
+            <div class="faq-icon">+</div>
+          </button>
+          <div class="faq-a">হ্যাঁ, বিশ্বের যেকোনো দেশ (UK, USA, কানাডা, মধ্যপ্রাচ্য, ইউরোপ ইত্যাদি) থেকে আপনার স্থানীয় সুবিধাজনক সময় অনুযায়ী অনলাইনে ১-অন-১ লাইভ ক্লাসে অংশ নিতে পারবেন।</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span>আমি একজন শিক্ষক, আমি কীভাবে যুক্ত হতে পারি?</span>
+            <div class="faq-icon">+</div>
+          </button>
+          <div class="faq-a">উপরে "শিক্ষক হিসেবে যুক্ত হোন" বাটনে ক্লিক করে আপনার যোগ্যতা, NID ও প্রয়োজনীয় তথ্য দিয়ে ২ মিনিটে সম্পূর্ণ ফ্রিতে আবেদন করতে পারবেন।</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="cta-inner">
+      <span class="cta-arabic">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</span>
+      <h2 class="cta-title">আজই আপনার <span style="color:var(--gold-light)">কোরআন শিক্ষার যাত্রা শুরু করুন</span></h2>
+      <p class="cta-desc">বিশ্বের সেরা কোরআন শিক্ষকদের প্রোফাইল দেখে সরাসরি ফ্রি ট্রায়াল বুক করুন।</p>
+      <div class="cta-btns">
+        <a href="teachers.html" class="btn btn-wa btn-lg">🔍 শিক্ষক খুঁজুন ও ডেমো নিন</a>
+        <a href="javascript:void(0)" onclick="openTeacherApplyModal()" class="btn btn-outline btn-lg">🎓 শিক্ষক হিসেবে আবেদন →</a>
+      </div>
+    </div>
+  </section>
+</div>

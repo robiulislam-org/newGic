@@ -3554,6 +3554,11 @@ _Global Islamic Care — সহীহ কোরআন শিক্ষার অ�
     const GIC_WA_NUMBER = '8801733017521';
     const waUrl = `https://wa.me/${GIC_WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
 
+    const isSenior = t.teacher_type !== 'fresher';
+    const tierBadge = isSenior
+      ? `<span style="display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(200,151,42,0.15),rgba(229,185,92,0.22));color:#854d0e;border:1px solid rgba(200,151,42,0.35);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">⭐ সিনিয়র শিক্ষক</span>`
+      : `<span style="display:inline-flex;align-items:center;gap:3px;background:rgba(20,184,166,0.12);color:#0f766e;border:1px solid rgba(20,184,166,0.25);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">🌱 ফ্রেশার শিক্ষক</span>`;
+
     return `
       <div class="pub-teacher-card reveal">
         <div>
@@ -3562,7 +3567,8 @@ _Global Islamic Care — সহীহ কোরআন শিক্ষার অ�
           <div class="pub-teacher-desig">${t.designation || 'কোরআন শিক্ষক'}</div>
           
           <!-- Country & Experience Badges -->
-          <div style="display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:8px 0 10px 0;">
+          <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:8px 0 10px 0;">
+            ${tierBadge}
             <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(15,39,68,0.06);color:var(--navy,#0f2744);padding:3px 10px;border-radius:12px;font-size:11.5px;font-weight:700;border:1px solid rgba(15,39,68,0.1);">📍 ${countryName}</span>
             <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(30,96,145,0.07);color:#1e6091;padding:3px 10px;border-radius:12px;font-size:11.5px;font-weight:700;border:1px solid rgba(30,96,145,0.15);">🕐 ${t.experience_years > 0 ? t.experience_years + ' বছর অভিজ্ঞ' : 'অভিজ্ঞ'}</span>
           </div>
@@ -3581,9 +3587,9 @@ _Global Islamic Care — সহীহ কোরআন শিক্ষার অ�
           <a href="${profileUrl}" class="btn btn-blue btn-full" style="padding:10px 16px;font-size:13.5px;font-weight:700;text-decoration:none;border-radius:12px;justify-content:center;box-shadow:none;">
             👨‍🏫 প্রোফাইল ও সময়সূচি দেখুন ↗
           </a>
-          <a href="${waUrl}" target="_blank" class="btn btn-wa btn-full" style="padding:9px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:12px;justify-content:center;box-shadow:none;">
+          <button type="button" onclick="openTeacherLeadModalFromHome('${t.slug || t.id}')" class="btn btn-wa btn-full" style="padding:9px 16px;font-size:13px;font-weight:700;border:none;cursor:pointer;border-radius:12px;justify-content:center;box-shadow:none;">
             💬 সরাসরি যোগাযোগ করুন
-          </a>
+          </button>
         </div>
       </div>
     `;
@@ -4115,11 +4121,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="font-size:56px;margin-bottom:16px;">✅</div>
         <h3 style="font-size:22px;font-weight:800;color:var(--blue-dark);margin-bottom:10px;">আলহামদুলিল্লাহ! আপনার আবেদন সফলভাবে জমা হয়েছে</h3>
         <p style="color:var(--text-muted);font-size:14.5px;max-width:480px;margin:0 auto 24px;line-height:1.7;">
-          আপনার শিক্ষক আবেদনটি আমরা পেয়েছি। আমাদের টিম তথ্য পর্যালোচনা করে দ্রুতই আপনার সাথে যোগাযোগ করবে। অনুমোদন সম্পন্ন হলে আপনার প্রোফাইল ওয়েবসাইটে প্রকাশিত হবে।
+          আপনার শিক্ষক আবেদনটি সিস্টেমে জমা হয়েছে। ড্যাশবোর্ডে অ্যাডমিন আপনার আবেদন যাচাই করে অনুমোদন সম্পন্ন করবেন। দ্রুত অনুমোদনের জন্য নিচের বাটনে ক্লিক করে সরাসরি অ্যাডমিনকে WhatsApp-এ জানিয়ে রাখুন।
         </p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-          <a href="https://wa.me/8801733017521" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(37,211,102,0.25);">
-            💬 WhatsApp-এ আমাদের সাথে যোগাযোগ করুন
+          <a id="apply-success-admin-wa-btn" href="https://wa.me/8801733017521" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(37,211,102,0.25);">
+            💬 অ্যাডমিনকে WhatsApp-এ জানান ও অনুমোদন নিশ্চিত করুন
           </a>
           <button type="button" onclick="resetTeacherApplyForm()" style="background:#f1f5f9;color:var(--blue-dark);border:1px solid #cbd5e1;padding:12px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;">
             🔄 নতুন আবেদন
@@ -4131,6 +4137,53 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
     </div>
+  </div>
+</div>
+
+<!-- Teacher Lead / Contact Modal for Home Page -->
+<div class="auth-modal" id="teacher-lead-modal" style="z-index:20001; padding:16px;">
+  <div class="modal-box" style="background:#fff; border-radius:24px; max-width:480px; width:100%; padding:28px; box-shadow:0 24px 80px rgba(0,0,0,0.35); position:relative; animation:slideUp 0.3s ease;">
+    <button type="button" onclick="closeTeacherLeadModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;color:#94a3b8;cursor:pointer;">✕</button>
+    <div style="text-align:center;margin-bottom:18px;">
+      <div style="font-size:36px;margin-bottom:6px;">💬</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--blue-dark,#0f2744);margin-bottom:4px;">শিক্ষকের সাথে WhatsApp-এ যোগাযোগের ফর্ম</h3>
+      <p style="font-size:13px;color:var(--text-muted);">শিক্ষকের সাথে সরাসরি কথা বলতে ও ক্লাস বুক করতে আপনার তথ্য দিন</p>
+      <div id="lead-teacher-info-banner" style="background:rgba(15,39,68,0.06);border:1px solid rgba(15,39,68,0.12);border-radius:10px;padding:8px 12px;margin-top:10px;font-size:13px;font-weight:700;color:var(--blue-dark,#0f2744);">
+        👨‍🏫 শিক্ষক: লোড হচ্ছে...
+      </div>
+    </div>
+    <form id="teacher-lead-form" onsubmit="submitTeacherLeadFromHome(event)">
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-size:13px;font-weight:700;color:var(--blue-dark,#0f2744);margin-bottom:5px;">অভিভাবক / শিক্ষার্থীর নাম *</label>
+        <input type="text" id="lead-parent-name" class="inp" placeholder="পূর্ণ নাম লিখুন (যেমন: রাহেলা বেগম / তানভীর)" required style="width:100%;padding:11px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:14px;background:#f8fafc;">
+      </div>
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-size:13px;font-weight:700;color:var(--blue-dark,#0f2744);margin-bottom:5px;">WhatsApp / মোবাইল নম্বর *</label>
+        <input type="tel" id="lead-parent-phone" class="inp" placeholder="017XXXXXXXX" required style="width:100%;padding:11px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:14px;background:#f8fafc;">
+        <span style="font-size:11px;color:var(--text-muted);margin-top:3px;display:block;">💡 এই নম্বরে অ্যাডমিন ও শিক্ষক আপনার সাথে ক্লাসের জন্য যোগাযোগ করবেন</span>
+      </div>
+      <div style="margin-bottom:14px;">
+        <label style="display:block;font-size:13px;font-weight:700;color:var(--blue-dark,#0f2744);margin-bottom:5px;">কোন বিষয়ে পড়তে আগ্রহী?</label>
+        <select id="lead-parent-course" class="inp" style="width:100%;padding:11px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:14px;background:#fff;">
+          <option value="সহীহ কোরআন তেলাওয়াত ও তাজউইদ">📖 সহীহ কোরআন তেলাওয়াত ও তাজউইদ</option>
+          <option value="নূরানী কায়দা ও আমপারা (বেসিক)">👶 নূরানী কায়দা ও আমপারা (বেসিক)</option>
+          <option value="হিফজুল কোরআন প্রোগ্রাম">🕌 হিফজুল কোরআন প্রোগ্রাম</option>
+          <option value="শিশু ও কিশোরদের স্পেশাল ক্লাস">🧒 শিশু ও কিশোরদের ক্লাস</option>
+          <option value="মা-বোনদের জন্য বিশেষ ক্লাস">🧕 মা-বোনদের ক্লাস</option>
+          <option value="বয়স্কদের সহজ কোরআন শিক্ষা">🧓 বয়স্কদের সহজ কোরআন শিক্ষা</option>
+          <option value="অন্যান্য / পরামর্শ সাপেক্ষে">💬 অন্যান্য / পরামর্শ সাপেক্ষে</option>
+        </select>
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-size:13px;font-weight:700;color:var(--blue-dark,#0f2744);margin-bottom:5px;">শিক্ষার্থীর বয়স বা সংক্ষিপ্ত বার্তা (ঐচ্ছিক)</label>
+        <textarea id="lead-parent-msg" class="inp" placeholder="শিক্ষার্থীর বয়স বা কোনো বিশেষ চাওয়া থাকলে লিখুন..." style="width:100%;padding:10px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:13.5px;min-height:70px;background:#f8fafc;"></textarea>
+      </div>
+      <div id="lead-modal-err" style="display:none;color:#dc2626;font-size:13px;font-weight:600;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:10px;">
+        <button type="button" onclick="closeTeacherLeadModal()" style="background:#f1f5f9;border:1px solid #cbd5e1;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;color:#475569;">বাতিল</button>
+        <button type="submit" id="lead-modal-submit-btn" style="flex:1;background:#25d366;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;">💬 WhatsApp-এ যুক্ত হন →</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -4757,6 +4810,18 @@ async function submitTeacherApplication(event) {
       document.getElementById('teacher-apply-form').style.display = 'none';
       document.getElementById('apply-success').style.display = 'block';
       document.getElementById('teacher-apply-modal-box')?.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Generate Admin WhatsApp Alert Notification
+      const adminWaMsg = `📢 *নতুন শিক্ষক নিবন্ধন আবেদন — Global Islamic Care*\n\n👤 *শিক্ষকের নাম:* ${name}\n📱 *ফোন:* ${phone}\n💬 *WhatsApp:* ${whatsapp}\n📜 *পদবী / ক্যাটাগরি:* ${designation || category}\n💰 *মাসিক ফি:* ${monthlyFee}\n📍 *ঠিকানা:* ${presentAddress || combinedAddress}\n\n📌 এই শিক্ষক সফলভাবে আবেদন ফরম পূরণ করেছেন। ড্যাশবোর্ড চেক করে অনুগ্রহ করে অনুমোদন বা যাচাই করুন।\n🔗 ড্যাশবোর্ড: https://globalislamiccare.com/dashboard.html`;
+      const adminWaUrl = `https://wa.me/8801733017521?text=${encodeURIComponent(adminWaMsg)}`;
+      
+      const adminBtn = document.getElementById('apply-success-admin-wa-btn');
+      if (adminBtn) adminBtn.href = adminWaUrl;
+
+      // Automatically open WhatsApp to notify admin
+      setTimeout(() => {
+        try { window.open(adminWaUrl, '_blank'); } catch(e) {}
+      }, 600);
     } else {
       errEl.textContent = '❌ ' + (errMsg || 'আবেদন জমা দিতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
       errEl.style.display = 'block';
@@ -4769,6 +4834,105 @@ async function submitTeacherApplication(event) {
     submitBtn.innerHTML = '📤 আবেদন জমা দিন';
   }
 }
+
+// ───── HOME PAGE TEACHER LEAD CAPTURE HANDLERS ─────
+let activeHomeTeacher = null;
+
+function openTeacherLeadModalFromHome(slugOrId) {
+  // Find teacher in public list or demo map
+  let t = null;
+  if (typeof DEMO_PUBLIC_TEACHERS !== 'undefined') {
+    t = DEMO_PUBLIC_TEACHERS.find(item => item.slug === slugOrId || item.id == slugOrId);
+  }
+  if (!t && window.DEMO_TEACHERS_MAP && window.DEMO_TEACHERS_MAP[slugOrId]) {
+    t = window.DEMO_TEACHERS_MAP[slugOrId];
+  }
+  if (!t) {
+    t = { name: 'কোরআন শিক্ষক', slug: slugOrId, whatsapp: '8801733017521', designation: 'কোরআন শিক্ষক' };
+  }
+
+  activeHomeTeacher = t;
+  const banner = document.getElementById('lead-teacher-info-banner');
+  if (banner) {
+    banner.innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${t.name} &nbsp;|&nbsp; 🏷️ ${t.designation || 'কোরআন শিক্ষক'}`;
+  }
+
+  const err = document.getElementById('lead-modal-err');
+  if (err) err.style.display = 'none';
+
+  const modal = document.getElementById('teacher-lead-modal');
+  if (modal) modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTeacherLeadModal() {
+  const modal = document.getElementById('teacher-lead-modal');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function submitTeacherLeadFromHome(e) {
+  if (e) e.preventDefault();
+  const name = (document.getElementById('lead-parent-name')?.value || '').trim();
+  const phone = (document.getElementById('lead-parent-phone')?.value || '').trim();
+  const course = document.getElementById('lead-parent-course')?.value || 'সহীহ কোরআন';
+  const msg = (document.getElementById('lead-parent-msg')?.value || '').trim();
+  const errEl = document.getElementById('lead-modal-err');
+  const t = activeHomeTeacher || { name: 'কোরআন শিক্ষক', whatsapp: '8801733017521' };
+
+  if (!name) {
+    if (errEl) { errEl.textContent = '❌ অনুগ্রহ করে আপনার পূর্ণ নাম দিন'; errEl.style.display = 'block'; }
+    document.getElementById('lead-parent-name')?.focus();
+    return;
+  }
+
+  if (!phone || phone.length < 10) {
+    if (errEl) { errEl.textContent = '❌ অনুগ্রহ করে একটি সঠিক WhatsApp নম্বর দিন'; errEl.style.display = 'block'; }
+    document.getElementById('lead-parent-phone')?.focus();
+    return;
+  }
+
+  if (errEl) errEl.style.display = 'none';
+  const btn = document.getElementById('lead-modal-submit-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ তথ্য সংরক্ষণ হচ্ছে...'; }
+
+  // Save to database teacher_bookings table
+  try {
+    if (!dbApp) {
+      try { dbApp = supabase.createClient(GIC_SUPA_URL_APP, GIC_SUPA_KEY_APP); } catch(ex) {}
+    }
+    if (dbApp) {
+      await dbApp.from('teacher_bookings').insert([{
+        teacher_id: t.id || null,
+        teacher_name: t.name || 'শিক্ষক',
+        student_name: name,
+        student_phone: phone,
+        student_msg: `[বিষয়: ${course}] ` + (msg || ''),
+        slot_day: '',
+        slot_time: 'হোম পেজ সরাসরি যোগাযোগ',
+        contact_type: 'whatsapp_chat',
+        status: 'pending'
+      }]);
+    }
+  } catch(err) {
+    console.warn('Teacher lead sync note:', err);
+  }
+
+  // Pre-fill WhatsApp message
+  const waMsg = `সালামুআলাইকুম! আমি *${name}* GIC ওয়েবসাইট থেকে শিক্ষক *${t.name}*-এর সাথে যোগাযোগ করছি।\n\n📖 বিষয়: ${course}\n📱 আমার WhatsApp নম্বর: ${phone}${msg ? '\n💬 বার্তা: ' + msg : ''}\n\n📌 আমি আপনার কাছে কোরআন ক্লাস ও ফি সম্পর্কে জানতে আগ্রহী।`;
+  const rawWa = t.whatsapp || '8801733017521';
+  const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
+  const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+
+  if (btn) { btn.disabled = false; btn.textContent = '💬 WhatsApp-এ যুক্ত হন →'; }
+  closeTeacherLeadModal();
+  window.open(waUrl, '_blank');
+}
+
+// Close lead modal on backdrop click
+document.getElementById('teacher-lead-modal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeTeacherLeadModal();
+});
 
 function validateDemoVideoLink(url) {
   const fb = document.getElementById('app-demo-feedback');

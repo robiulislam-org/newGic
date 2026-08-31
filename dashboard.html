@@ -1487,7 +1487,7 @@
     <div style="display:flex;gap:10px;margin-bottom:20px;border-bottom:1px solid var(--card-border);padding-bottom:12px;flex-wrap:wrap;">
       <button class="tc-tab-btn active" id="tc-subtab-btn-list" onclick="switchTeacherSubTab('list')">👨‍🏫 শিক্ষক তালিকা</button>
       <button class="tc-tab-btn" id="tc-subtab-btn-applications" onclick="switchTeacherSubTab('applications')">📋 শিক্ষক আবেদন <span id="tc-badge-applications" style="display:none;background:#f59e0b;color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
-      <button class="tc-tab-btn" id="tc-subtab-btn-bookings" onclick="switchTeacherSubTab('bookings')">📅 বুকিং অনুরোধসমূহ <span id="tc-badge-bookings" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
+      <button class="tc-tab-btn" id="tc-subtab-btn-bookings" onclick="switchTeacherSubTab('bookings')">📅 অভিভাবক-শিক্ষক যোগাযোগ (লিডস) <span id="tc-badge-bookings" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
       <button class="tc-tab-btn" id="tc-subtab-btn-reviews" onclick="switchTeacherSubTab('reviews')">⭐ শিক্ষক রিভিউ ও অনুমোদন <span id="tc-badge-pending-reviews" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
     </div>
 
@@ -1495,15 +1495,25 @@
     <div id="tc-view-list">
       <div class="card" style="margin-bottom:20px;padding:16px 20px;">
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;">
-          <div style="display:flex;gap:10px;flex:1;min-width:260px;">
-            <input type="text" id="tc-search-inp" class="inp" placeholder="🔍 শিক্ষক খুঁজুন (নাম, যোগ্যতা, পদবী)..." oninput="filterAdminTeachers()" style="margin-bottom:0;flex:1;">
+          <div style="display:flex;gap:10px;flex:1;min-width:280px;flex-wrap:wrap;">
+            <input type="text" id="tc-search-inp" class="inp" placeholder="🔍 শিক্ষক খুঁজুন (নাম, যোগ্যতা, পদবী, স্লাগ)..." oninput="filterAdminTeachers()" style="margin-bottom:0;flex:1;min-width:180px;">
+            <select id="tc-filter-type" class="inp" onchange="filterAdminTeachers()" style="margin-bottom:0;width:160px;cursor:pointer;">
+              <option value="all">সকল শিক্ষক স্তর</option>
+              <option value="senior">⭐ সিনিয়র শিক্ষক (Senior)</option>
+              <option value="fresher">🌱 ফ্রেশার শিক্ষক (Fresher)</option>
+            </select>
             <select id="tc-filter-status" class="inp" onchange="filterAdminTeachers()" style="margin-bottom:0;width:150px;cursor:pointer;">
-              <option value="all">সকল শিক্ষক</option>
-              <option value="active">শুধুমাত্র সক্রিয়</option>
-              <option value="inactive">শুধুমাত্র নিষ্ক্রিয়</option>
+              <option value="all">সকল স্ট্যাটাস</option>
+              <option value="active">✅ সক্রিয় (Active)</option>
+              <option value="inactive">🔒 লুকানো (Hidden)</option>
+            </select>
+            <select id="tc-sort-by" class="inp" onchange="filterAdminTeachers()" style="margin-bottom:0;width:170px;cursor:pointer;">
+              <option value="serial">🔢 ক্রম অনুযায়ী (১,২,৩...)</option>
+              <option value="name">🔤 নাম অনুযায়ী (A-Z)</option>
+              <option value="exp">🏆 সর্বোচ্চ অভিজ্ঞতা</option>
             </select>
           </div>
-          <div style="font-size:13px;color:var(--text-muted);" id="tc-count-lbl">মোট ০ জন শিক্ষক</div>
+          <div style="font-size:13px;color:var(--text-muted);font-weight:600;" id="tc-count-lbl">মোট ০ জন শিক্ষক</div>
         </div>
       </div>
 
@@ -1549,30 +1559,51 @@
         </div>
         <div id="tc-app-detail-content" style="max-height:70vh;overflow-y:auto;padding-right:8px;"></div>
         <div id="tc-app-approve-form" style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);">
-          <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:10px;">✅ অনুমোদন করতে URL Slug দিন (unique হতে হবে):</div>
-          <div style="display:grid;grid-template-columns:1fr 120px;gap:10px;margin-bottom:12px;">
-            <input type="text" id="tc-app-slug-inp" class="inp" placeholder="যেমন: hafez-abdur-rahman" style="margin-bottom:0;" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/--+/g,'-')">
-            <input type="number" id="tc-app-sort-inp" class="inp" placeholder="ক্রম (0)" value="0" style="margin-bottom:0;" min="0">
+          <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:10px;">✅ অনুমোদন ও লাইভ করার সেটিংস:</div>
+          <div style="display:grid;grid-template-columns:1fr 140px 100px;gap:10px;margin-bottom:12px;">
+            <div>
+              <label style="display:block;font-size:11px;color:var(--text-muted);margin-bottom:3px;">URL স্লাগ *</label>
+              <input type="text" id="tc-app-slug-inp" class="inp" placeholder="যেমন: hafez-abdur-rahman" style="margin-bottom:0;" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/--+/g,'-')">
+            </div>
+            <div>
+              <label style="display:block;font-size:11px;color:var(--text-muted);margin-bottom:3px;">শিক্ষক স্তর</label>
+              <select id="tc-app-type-inp" class="inp" style="margin-bottom:0;">
+                <option value="senior">⭐ সিনিয়র</option>
+                <option value="fresher" selected>🌱 ফ্রেশার</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:11px;color:var(--text-muted);margin-bottom:3px;">ক্রম নম্বর</label>
+              <input type="number" id="tc-app-sort-inp" class="inp" placeholder="ক্রম (0)" value="0" style="margin-bottom:0;" min="0">
+            </div>
           </div>
-          <div style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">💡 ক্রম নম্বর দিয়ে ওয়েবসাইটে শিক্ষকের সাজানোর অবস্থান নির্ধারণ করুন (ছোট সংখ্যা = উপরে)</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">💡 ক্রম নম্বর দিয়ে ওয়েবসাইটে শিক্ষকের সাজানোর অবস্থান নির্ধারণ করুন (ছোট সংখ্যা = সবার উপরে থাকবে)</div>
           <div id="tc-app-action-btns" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
           <div id="tc-app-form-err" style="color:var(--red);font-size:13px;margin-top:10px;display:none;"></div>
         </div>
       </div>
     </div>
 
-    <!-- ── VIEW 2: BOOKINGS LIST ── -->
-
+    <!-- ── VIEW 2: BOOKINGS & TEACHER LEADS LIST ── -->
     <div id="tc-view-bookings" style="display:none;">
       <div class="card">
-        <div class="card-title">
-          <span>📅 ক্লাস বুকিং অনুরোধ তালিকা</span>
-          <select id="tc-bk-filter-status" class="inp" onchange="renderBookingsTable()" style="margin-bottom:0;width:160px;padding:8px 12px;font-size:13px;">
-            <option value="all">সকল বুকিং</option>
-            <option value="pending">অপেক্ষমাণ (Pending)</option>
-            <option value="confirmed">নিশ্চিত (Confirmed)</option>
-            <option value="cancelled">বাতিল (Cancelled)</option>
-          </select>
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div>
+            <span style="font-size:16px;font-weight:800;color:#fff;">📅 অভিভাবক-শিক্ষক যোগাযোগ ও লিড তালিকা</span>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">কোন অভিভাবক কোন শিক্ষকের প্রোফাইল থেকে যোগাযোগ করেছেন তা যাচাই ও ফলোআপ করুন</p>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <select id="tc-bk-filter-status" class="inp" onchange="renderBookingsTable()" style="margin-bottom:0;width:180px;padding:8px 12px;font-size:13px;">
+              <option value="all">সকল যোগাযোগ (All)</option>
+              <option value="pending">⏳ নতুন লিড (Pending)</option>
+              <option value="whatsapp_opened">💬 WhatsApp শুরু করেছে</option>
+              <option value="contacted">📞 কথা হয়েছে</option>
+              <option value="hired">🎉 শিক্ষক হায়ার করেছে</option>
+              <option value="not_hired">❌ হায়ার করেনি</option>
+              <option value="cancelled">🚫 বাতিল</option>
+            </select>
+            <button class="btn btn-sm" onclick="loadTeachersAdmin()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);padding:8px 12px;">🔄</button>
+          </div>
         </div>
         <div class="tbl-wrap">
           <table>
@@ -1580,11 +1611,11 @@
               <tr>
                 <th>#</th>
                 <th>শিক্ষক</th>
-                <th>দিন ও সময়সূচি</th>
-                <th>শিক্ষার্থী / অভিভাবক</th>
-                <th>ফোন নম্বর</th>
-                <th>বার্তা</th>
+                <th>অভিভাবক / শিক্ষার্থী</th>
+                <th>WhatsApp ও কল</th>
+                <th>বার্তা ও বিষয়</th>
                 <th>স্ট্যাটাস</th>
+                <th>স্ট্যাটাস পরিবর্তন</th>
                 <th>অ্যাকশন</th>
               </tr>
             </thead>
@@ -1666,12 +1697,26 @@
 
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:14px;">
             <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষক স্তর / ক্যাটাগরি *</label>
+              <select id="tm-teacher-type" class="inp" style="margin-bottom:0;">
+                <option value="senior">⭐ সিনিয়র শিক্ষক (Senior Teacher)</option>
+                <option value="fresher">🌱 ফ্রেশার শিক্ষক (Fresher Teacher)</option>
+              </select>
+            </div>
+            <div>
               <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ক্যাটাগরি / জেন্ডার</label>
               <select id="tm-gender" class="inp" style="margin-bottom:0;">
                 <option value="male">👨‍🏫 পুরুষ শিক্ষক (Male)</option>
                 <option value="female">🧕 মহিলা শিক্ষিকা (Female)</option>
               </select>
             </div>
+            <div>
+              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ওয়েবসাইটে সিরিয়াল ক্রম (Sort) *</label>
+              <input type="number" id="tm-sort" class="inp" placeholder="0" value="0" min="0" style="margin-bottom:0;">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
             <div>
               <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মাসিক ফি (টাকা বা টেক্সট)</label>
               <input type="text" id="tm-monthly-fee" class="inp" placeholder="যেমন: ৳১,৫০০/মাস বা আলোচনা সাপেক্ষে" style="margin-bottom:0;">
@@ -1690,7 +1735,7 @@
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
             <div>
               <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">অভিজ্ঞতা (বছর)</label>
               <input type="number" id="tm-experience" class="inp" placeholder="যেমন: 5" min="0" style="margin-bottom:0;">
@@ -1698,10 +1743,6 @@
             <div>
               <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মোট ছাত্র পড়িয়েছেন</label>
               <input type="number" id="tm-students" class="inp" placeholder="যেমন: 250" min="0" style="margin-bottom:0;">
-            </div>
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">সাজানোর ক্রম (Sort)</label>
-              <input type="number" id="tm-sort" class="inp" placeholder="0" value="0" style="margin-bottom:0;">
             </div>
           </div>
 
@@ -4704,7 +4745,7 @@ async function loadTeachersAdmin() {
         if (!error && Array.isArray(data)) {
           bookingsData = data.map(b => ({
             ...b,
-            teacher_name: b.teachers ? b.teachers.name : '—'
+            teacher_name: b.teacher_name || (b.teachers ? b.teachers.name : '—')
           }));
         }
       } catch(e) {}
@@ -4786,11 +4827,14 @@ function switchTeacherSubTab(subTab) {
 function filterAdminTeachers() {
   const q = (document.getElementById('tc-search-inp')?.value || '').toLowerCase().trim();
   const f = document.getElementById('tc-filter-status')?.value || 'all';
+  const typeFilter = document.getElementById('tc-filter-type')?.value || 'all';
+  const sortBy = document.getElementById('tc-sort-by')?.value || 'serial';
   const grid = document.getElementById('admin-teachers-grid');
   const empty = document.getElementById('tc-empty');
 
   let list = allAdminTeachers.filter(t => {
     const nameMatch = (t.name || '').toLowerCase().includes(q) ||
+                      (t.slug || '').toLowerCase().includes(q) ||
                       (t.designation || '').toLowerCase().includes(q) ||
                       (t.bio || '').toLowerCase().includes(q) ||
                       ((t.qualifications || []).join(' ')).toLowerCase().includes(q) ||
@@ -4798,11 +4842,38 @@ function filterAdminTeachers() {
     let statusOk = true;
     if (f === 'active')   statusOk = (t.is_active !== false);
     if (f === 'inactive') statusOk = (t.is_active === false);
-    return nameMatch && statusOk;
+
+    let typeOk = true;
+    const isFresher = t.teacher_type === 'fresher';
+    if (typeFilter === 'senior') typeOk = !isFresher;
+    if (typeFilter === 'fresher') typeOk = isFresher;
+
+    return nameMatch && statusOk && typeOk;
   });
 
+  // Sorting
+  if (sortBy === 'serial') {
+    list.sort((a, b) => {
+      const ordA = (a.sort_order !== undefined && a.sort_order !== null) ? a.sort_order : 9999;
+      const ordB = (b.sort_order !== undefined && b.sort_order !== null) ? b.sort_order : 9999;
+      if (ordA !== ordB) return ordA - ordB;
+      return (a.id || 0) - (b.id || 0);
+    });
+  } else if (sortBy === 'name') {
+    list.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  } else if (sortBy === 'exp') {
+    list.sort((a, b) => (b.experience_years || 0) - (a.experience_years || 0));
+  }
+
+  const totalCount = allAdminTeachers.length;
+  const seniorCount = allAdminTeachers.filter(t => t.teacher_type !== 'fresher').length;
+  const fresherCount = allAdminTeachers.filter(t => t.teacher_type === 'fresher').length;
+  const hiddenCount = allAdminTeachers.filter(t => t.is_active === false).length;
+
   const countLbl = document.getElementById('tc-count-lbl');
-  if (countLbl) countLbl.textContent = `মোট ${list.length} জন শিক্ষক`;
+  if (countLbl) {
+    countLbl.innerHTML = `মোট <strong>${list.length}</strong> জন <span style="font-size:11px;opacity:0.85;">(⭐ সিনিয়র: ${seniorCount} | 🌱 ফ্রেশার: ${fresherCount} | 🔒 লুকানো: ${hiddenCount})</span>`;
+  }
 
   if (!list || list.length === 0) {
     if (grid) grid.innerHTML = '';
@@ -4818,8 +4889,9 @@ function renderAdminTeachersGrid(list) {
   const grid = document.getElementById('admin-teachers-grid');
   if (!grid) return;
 
-  grid.innerHTML = list.map(t => {
+  grid.innerHTML = list.map((t, idx) => {
     const isActive = t.is_active !== false;
+    const isSenior = t.teacher_type !== 'fresher';
     const schedule = t.weekly_schedule || {};
     let totalSlots = 0;
     Object.keys(schedule).forEach(k => {
@@ -4834,7 +4906,42 @@ function renderAdminTeachersGrid(list) {
       : '👨‍🏫';
 
     return `
-    <div class="teacher-card ${isActive ? '' : 'inactive'}" id="tc-card-${t.id}">
+    <div class="teacher-card ${isActive ? '' : 'inactive'}" id="tc-card-${t.id}" style="position:relative;border:1px solid ${isActive ? 'rgba(255,255,255,0.08)' : 'rgba(244,63,94,0.3)'};">
+      
+      <!-- Top Serial & Tier Ribbon -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <!-- Serial Badge -->
+          <div style="background:linear-gradient(135deg,#0284c7,#0369a1);color:#fff;font-weight:800;font-size:12px;padding:3px 9px;border-radius:8px;display:flex;align-items:center;gap:4px;box-shadow:0 2px 8px rgba(2,132,199,0.3);" title="সিরিয়াল পজিশন #${idx + 1}">
+            <span>#${idx + 1}</span>
+            <span style="font-size:10px;opacity:0.85;border-left:1px solid rgba(255,255,255,0.3);padding-left:4px;">ক্রম ${t.sort_order ?? 0}</span>
+          </div>
+
+          <!-- Quick Move Up / Down Buttons -->
+          <div style="display:flex;gap:3px;align-items:center;">
+            <button type="button" class="btn btn-sm" onclick="moveTeacherUp(${t.id})" style="padding:2px 7px;font-size:11px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:6px;cursor:pointer;" title="সিরিয়ালে উপরে নিন">⬆️</button>
+            <button type="button" class="btn btn-sm" onclick="moveTeacherDown(${t.id})" style="padding:2px 7px;font-size:11px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:6px;cursor:pointer;" title="সিরিয়ালে নিচে নিন">⬇️</button>
+          </div>
+
+          <!-- Direct Serial Input -->
+          <input type="number" value="${t.sort_order ?? 0}" min="0" onchange="quickUpdateTeacherSerial(${t.id}, this.value)" style="width:48px;padding:2px 4px;font-size:11px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:6px;text-align:center;" title="সরাসরি ক্রম নম্বর লিখে এন্টার চাপুন">
+        </div>
+
+        <div style="display:flex;align-items:center;gap:6px;">
+          <!-- Tier (Senior vs Fresher) Quick Select -->
+          <select onchange="quickUpdateTeacherType(${t.id}, this.value)" style="background:${isSenior ? 'rgba(200,151,42,0.18)' : 'rgba(20,184,166,0.15)'};color:${isSenior ? 'var(--gold-light)' : 'var(--teal)'};border:1px solid ${isSenior ? 'rgba(200,151,42,0.4)' : 'rgba(20,184,166,0.3)'};border-radius:20px;font-size:11px;font-weight:700;padding:2px 8px;cursor:pointer;" title="শিক্ষকের স্তর পরিবর্তন করুন">
+            <option value="senior" ${isSenior ? 'selected' : ''}>⭐ সিনিয়র শিক্ষক</option>
+            <option value="fresher" ${!isSenior ? 'selected' : ''}>🌱 ফ্রেশার শিক্ষক</option>
+          </select>
+
+          <!-- Status Badge -->
+          <span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700;background:${isActive ? 'rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)' : 'rgba(244,63,94,0.15);color:var(--red);border:1px solid rgba(244,63,94,0.3)'};">
+            ${isActive ? '● সক্রিয়' : '🔒 লুকানো'}
+          </span>
+        </div>
+      </div>
+
+      <!-- Main Info Row -->
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
         <div style="display:flex;align-items:center;gap:14px;">
           <div class="tc-avatar">${avatarHtml}</div>
@@ -4845,16 +4952,13 @@ function renderAdminTeachersGrid(list) {
           </div>
         </div>
         <div>
-          <span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:${isActive ? 'rgba(16,185,129,0.15);color:var(--green)' : 'rgba(244,63,94,0.15);color:var(--red)'};">
-            ${isActive ? '● সক্রিয়' : '○ নিষ্ক্রিয়'}
-          </span>
-          ${isAdmin ? `<button class="btn btn-outline btn-sm edit-teacher" data-id="${t.id}" onclick="openEditTeacherModal(${t.id})">✏️ সম্পাদনা</button>` : ''}
+          ${isAdmin ? `<button class="btn btn-outline btn-sm edit-teacher" data-id="${t.id}" onclick="openEditTeacherModal(${t.id})" style="padding:4px 10px;font-size:11px;">✏️ এডিট</button>` : ''}
         </div>
       </div>
 
-      ${qualBadges || specBadges ? `<div style="display:flex;gap:6px;flex-wrap:wrap;">${qualBadges} ${specBadges}</div>` : ''}
+      ${qualBadges || specBadges ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;">${qualBadges} ${specBadges}</div>` : ''}
 
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:10px 12px;text-align:center;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:10px 12px;text-align:center;margin-top:10px;">
         <div>
           <div style="font-size:14px;font-weight:800;color:var(--gold-light);">${t.experience_years || 0} বছর+</div>
           <div style="font-size:10px;color:var(--text-muted);">অভিজ্ঞতা</div>
@@ -4869,26 +4973,122 @@ function renderAdminTeachersGrid(list) {
         </div>
       </div>
 
-      ${t.bio ? `<div style="font-size:12px;color:var(--text-muted);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${t.bio}</div>` : ''}
+      ${t.bio ? `<div style="font-size:12px;color:var(--text-muted);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-top:10px;">${t.bio}</div>` : ''}
 
-      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;flex-wrap:wrap;">
+      <!-- Bottom Action Bar -->
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;margin-top:12px;flex-wrap:wrap;">
         <a href="teachers.html?id=${t.slug}" target="_blank" class="btn btn-sm" style="background:rgba(58,134,200,0.15);color:var(--blue-light);border:1px solid rgba(58,134,200,0.3);text-decoration:none;font-size:12px;padding:6px 12px;">
           🔗 প্রোফাইল দেখুন
         </a>
-        <div style="display:flex;gap:6px;">
-          <button class="btn btn-sm" onclick="toggleTeacherActiveStatus(${t.id}, ${isActive})" title="${isActive ? 'নিষ্ক্রিয় করুন' : 'সক্রিয় করুন'}" style="padding:6px 10px;font-size:12px;background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.12);">
-            ${isActive ? '👁️ অফ' : '👁️ অন'}
+        <div style="display:flex;gap:6px;align-items:center;">
+          <!-- 1-Click Hide/Unhide Toggle Button -->
+          <button class="btn btn-sm" onclick="toggleTeacherActiveStatus(${t.id}, ${isActive})" title="${isActive ? 'ওয়েবসাইটে প্রোফাইল লুকান (হাইড করুন)' : 'ওয়েবসাইটে প্রোফাইল দৃশ্যমান করুন (আনহাইড)'}" style="padding:6px 12px;font-size:12px;background:${isActive ? 'rgba(244,63,94,0.12);color:var(--red);border:1px solid rgba(244,63,94,0.25)' : 'rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)'};cursor:pointer;">
+            ${isActive ? '👁️ হাইড করুন' : '👁️ আনহাইড (সক্রিয়)'}
           </button>
-          <button class="btn btn-sm" onclick="openEditTeacherModal(${t.id})" style="padding:6px 12px;font-size:12px;background:rgba(20,184,166,0.15);color:var(--teal);border:1px solid rgba(20,184,166,0.3);">
+          <button class="btn btn-sm" onclick="openEditTeacherModal(${t.id})" style="padding:6px 12px;font-size:12px;background:rgba(20,184,166,0.15);color:var(--teal);border:1px solid rgba(20,184,166,0.3);cursor:pointer;">
             ✏️ এডিট
           </button>
-          <button class="btn btn-sm btn-red" onclick="openDeleteTeacherModal(${t.id})" style="padding:6px 10px;font-size:12px;">
+          <button class="btn btn-sm btn-red" onclick="openDeleteTeacherModal(${t.id})" style="padding:6px 10px;font-size:12px;cursor:pointer;" title="প্রোফাইল মুছে ফেলুন">
             🗑️
           </button>
         </div>
       </div>
     </div>`;
   }).join('');
+}
+
+async function quickUpdateTeacherSerial(id, newSerial) {
+  const serial = parseInt(newSerial) || 0;
+  try {
+    const { error } = await db.from('teachers').update({ sort_order: serial }).eq('id', id);
+    if (error) throw error;
+    const t = allAdminTeachers.find(item => item.id === id);
+    if (t) t.sort_order = serial;
+    allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+    filterAdminTeachers();
+    toast(`✅ ক্রম নম্বর পরিবর্তন করে ${serial} করা হয়েছে!`, 'ok');
+  } catch(err) {
+    console.error('Update serial error:', err);
+    toast('❌ ক্রম নম্বর আপডেট করতে সমস্যা হয়েছে', 'err');
+  }
+}
+
+async function moveTeacherUp(id) {
+  allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+  const idx = allAdminTeachers.findIndex(t => t.id === id);
+  if (idx <= 0) {
+    toast('ℹ️ শিক্ষকটি ইতিমধ্যেই সবার উপরে রয়েছে', 'info');
+    return;
+  }
+  const currentT = allAdminTeachers[idx];
+  const prevT = allAdminTeachers[idx - 1];
+
+  let newCurrentSort = (prevT.sort_order !== undefined ? prevT.sort_order : idx - 1);
+  let newPrevSort = (currentT.sort_order !== undefined ? currentT.sort_order : idx);
+
+  if (newCurrentSort === newPrevSort || newCurrentSort >= newPrevSort) {
+    newCurrentSort = Math.max(0, newPrevSort - 1);
+  }
+
+  currentT.sort_order = newCurrentSort;
+  prevT.sort_order = newPrevSort;
+
+  try {
+    await db.from('teachers').update({ sort_order: newCurrentSort }).eq('id', currentT.id);
+    await db.from('teachers').update({ sort_order: newPrevSort }).eq('id', prevT.id);
+    allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+    filterAdminTeachers();
+    toast(`⬆️ "${currentT.name}" কে সিরিয়ালে উপরে নেওয়া হয়েছে!`, 'ok');
+  } catch(e) {
+    console.error('Move up error:', e);
+    filterAdminTeachers();
+  }
+}
+
+async function moveTeacherDown(id) {
+  allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+  const idx = allAdminTeachers.findIndex(t => t.id === id);
+  if (idx < 0 || idx >= allAdminTeachers.length - 1) {
+    toast('ℹ️ শিক্ষকটি ইতিমধ্যেই সবার নিচে রয়েছে', 'info');
+    return;
+  }
+  const currentT = allAdminTeachers[idx];
+  const nextT = allAdminTeachers[idx + 1];
+
+  let newCurrentSort = (nextT.sort_order !== undefined ? nextT.sort_order : idx + 1);
+  let newNextSort = (currentT.sort_order !== undefined ? currentT.sort_order : idx);
+
+  if (newCurrentSort === newNextSort || newCurrentSort <= newNextSort) {
+    newCurrentSort = newNextSort + 1;
+  }
+
+  currentT.sort_order = newCurrentSort;
+  nextT.sort_order = newNextSort;
+
+  try {
+    await db.from('teachers').update({ sort_order: newCurrentSort }).eq('id', currentT.id);
+    await db.from('teachers').update({ sort_order: newNextSort }).eq('id', nextT.id);
+    allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+    filterAdminTeachers();
+    toast(`⬇️ "${currentT.name}" কে সিরিয়ালে নিচে নেওয়া হয়েছে!`, 'ok');
+  } catch(e) {
+    console.error('Move down error:', e);
+    filterAdminTeachers();
+  }
+}
+
+async function quickUpdateTeacherType(id, newType) {
+  try {
+    const { error } = await db.from('teachers').update({ teacher_type: newType }).eq('id', id);
+    if (error) throw error;
+    const t = allAdminTeachers.find(item => item.id === id);
+    if (t) t.teacher_type = newType;
+    filterAdminTeachers();
+    toast(`✅ শিক্ষক স্তর পরিবর্তন করা হয়েছে: ${newType === 'senior' ? '⭐ সিনিয়র শিক্ষক' : '🌱 ফ্রেশার শিক্ষক'}`, 'ok');
+  } catch(err) {
+    console.error('Update teacher_type error:', err);
+    toast('❌ শিক্ষক স্তর পরিবর্তন ব্যর্থ হয়েছে', 'err');
+  }
 }
 
 function autoGenSlug() {
@@ -4964,6 +5164,7 @@ function openAddTeacherModal() {
   document.getElementById('tm-id').value = '';
   document.getElementById('tm-name').value = '';
   document.getElementById('tm-slug').value = '';
+  document.getElementById('tm-teacher-type').value = 'senior';
   document.getElementById('tm-designation').value = 'হাফেজুল কুরআন ও মাওলানা';
   document.getElementById('tm-whatsapp').value = '8801733017521';
   document.getElementById('tm-gender').value = 'male';
@@ -4972,14 +5173,13 @@ function openAddTeacherModal() {
   document.getElementById('tm-photo-url').value = '';
   document.getElementById('tm-experience').value = '5';
   document.getElementById('tm-students').value = '200';
-  document.getElementById('tm-sort').value = '0';
+  document.getElementById('tm-sort').value = allAdminTeachers.length > 0 ? (Math.max(...allAdminTeachers.map(t => (t.sort_order || 0))) + 1) : 1;
   document.getElementById('tm-qualifications').value = 'হাফেজ, মাওলানা';
   document.getElementById('tm-specializations').value = 'সহীহ তেলাওয়াত, তাজউইদ, হেফজ';
   document.getElementById('tm-bio').value = '';
   document.getElementById('tm-is-active').checked = true;
   document.getElementById('tm-form-err').style.display = 'none';
 
-  // default schedule: slots 1 to 16 available on sat to wed (07:00 to 22:50)
   modalScheduleState = {
     sat: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
     sun: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
@@ -5002,6 +5202,7 @@ function openEditTeacherModal(id) {
   document.getElementById('tm-id').value = teacher.id;
   document.getElementById('tm-name').value = teacher.name || '';
   document.getElementById('tm-slug').value = teacher.slug || '';
+  document.getElementById('tm-teacher-type').value = teacher.teacher_type || 'senior';
   document.getElementById('tm-designation').value = teacher.designation || '';
   document.getElementById('tm-whatsapp').value = teacher.whatsapp || '8801733017521';
   document.getElementById('tm-gender').value = teacher.gender || 'male';
@@ -5010,7 +5211,7 @@ function openEditTeacherModal(id) {
   document.getElementById('tm-photo-url').value = teacher.photo_url || '';
   document.getElementById('tm-experience').value = teacher.experience_years || 0;
   document.getElementById('tm-students').value = teacher.students_taught || 0;
-  document.getElementById('tm-sort').value = teacher.sort_order || 0;
+  document.getElementById('tm-sort').value = (teacher.sort_order !== undefined && teacher.sort_order !== null) ? teacher.sort_order : 0;
   document.getElementById('tm-qualifications').value = (teacher.qualifications || []).join(', ');
   document.getElementById('tm-specializations').value = (teacher.specializations || []).join(', ');
   document.getElementById('tm-bio').value = teacher.bio || '';
@@ -5044,6 +5245,7 @@ async function saveTeacherSubmit(event) {
   const id = document.getElementById('tm-id').value;
   const name = document.getElementById('tm-name').value.trim();
   const slug = document.getElementById('tm-slug').value.trim().toLowerCase();
+  const teacherType = document.getElementById('tm-teacher-type').value || 'senior';
   const designation = document.getElementById('tm-designation').value.trim();
   const whatsapp = document.getElementById('tm-whatsapp').value.trim();
   const gender = document.getElementById('tm-gender').value || 'male';
@@ -5095,18 +5297,18 @@ async function saveTeacherSubmit(event) {
         if (!error && data && data.success) updateOk = true;
       } catch(e) {}
 
-      if (!updateOk) {
-        // Direct REST fallback
-        const { error } = await db.from('teachers').update({
-          name, slug, photo_url: photoUrl, designation,
-          gender, monthly_fee: monthlyFee, demo_video_url: demoUrl,
-          qualifications, bio, experience_years: experience,
-          students_taught: students, specializations,
-          weekly_schedule: modalScheduleState,
-          whatsapp, sort_order: sortOrder, is_active: isActive
-        }).eq('id', id);
-        if (error) throw error;
-      }
+      // Direct REST update (always ensures teacher_type and other fields are updated)
+      const { error } = await db.from('teachers').update({
+        name, slug, photo_url: photoUrl, designation,
+        gender, monthly_fee: monthlyFee, demo_video_url: demoUrl,
+        qualifications, bio, experience_years: experience,
+        students_taught: students, specializations,
+        weekly_schedule: modalScheduleState,
+        whatsapp, sort_order: sortOrder, is_active: isActive,
+        teacher_type: teacherType
+      }).eq('id', id);
+      if (error && !updateOk) throw error;
+
       toast('✅ শিক্ষকের তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
     } else {
       // INSERT
@@ -5131,16 +5333,21 @@ async function saveTeacherSubmit(event) {
       } catch(e) {}
 
       if (!insertOk) {
-        // Direct REST fallback
         const { error } = await db.from('teachers').insert([{
           name, slug, photo_url: photoUrl, designation,
           gender, monthly_fee: monthlyFee, demo_video_url: demoUrl,
           qualifications, bio, experience_years: experience,
           students_taught: students, specializations,
           weekly_schedule: modalScheduleState,
-          whatsapp, sort_order: sortOrder, is_active: isActive
+          whatsapp, sort_order: sortOrder, is_active: isActive,
+          teacher_type: teacherType
         }]);
         if (error) throw error;
+      } else {
+        // Also update teacher_type for the newly created teacher
+        try {
+          await db.from('teachers').update({ teacher_type: teacherType }).eq('slug', slug);
+        } catch(e) {}
       }
       toast('✅ নতুন শিক্ষক সফলভাবে যুক্ত হয়েছে!', 'ok');
     }
@@ -5164,7 +5371,7 @@ async function toggleTeacherActiveStatus(id, currentStatus) {
     if (error) throw error;
     const t = allAdminTeachers.find(item => item.id === id);
     if (t) t.is_active = newStatus;
-    toast(`✅ প্রোফাইল ${newStatus ? 'সক্রিয়' : 'নিষ্ক্রিয়'} করা হয়েছে!`, 'ok');
+    toast(`✅ প্রোফাইল ${newStatus ? 'সক্রিয় (ওয়েবসাইটে দৃশ্যমান)' : 'হাইড (ওয়েবসাইটে বন্ধ)'} করা হয়েছে!`, 'ok');
     filterAdminTeachers();
   } catch(err) {
     console.error('Toggle status error:', err);
@@ -5222,38 +5429,78 @@ function renderBookingsTable() {
   if (filter !== 'all') list = list.filter(b => b.status === filter);
 
   if (list.length === 0) {
-    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">কোনো বুকিং অনুরোধ নেই</td></tr>';
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted);">📋 কোনো যোগাযোগ বা বুকিং অনুরোধ পাওয়া যায়নি</td></tr>';
     return;
   }
 
+  const statusConfig = {
+    pending: { label: '⏳ নতুন লিড', color: '#f59e0b', bg: 'rgba(245,158,11,0.15)' },
+    whatsapp_opened: { label: '💬 WhatsApp শুরু করেছে', color: '#38bdf8', bg: 'rgba(56,189,248,0.15)' },
+    contacted: { label: '📞 কথা হয়েছে', color: '#818cf8', bg: 'rgba(129,140,248,0.15)' },
+    hired: { label: '🎉 শিক্ষক হায়ার করেছে', color: '#10b981', bg: 'rgba(16,185,129,0.15)' },
+    not_hired: { label: '❌ হায়ার করেনি', color: '#f43f5e', bg: 'rgba(244,63,94,0.15)' },
+    confirmed: { label: '✅ নিশ্চিত', color: '#10b981', bg: 'rgba(16,185,129,0.15)' },
+    cancelled: { label: '🚫 বাতিল', color: '#94a3b8', bg: 'rgba(148,163,184,0.15)' }
+  };
+
   tbody.innerHTML = list.map((b, i) => {
-    const dayName = TC_DAYS[b.day_of_week] || b.day_of_week;
-    const statusColor = b.status === 'confirmed' ? 'var(--green)' : (b.status === 'cancelled' ? 'var(--red)' : 'var(--gold-light)');
-    const statusLabel = b.status === 'confirmed' ? '✅ নিশ্চিত' : (b.status === 'cancelled' ? '❌ বাতিল' : '⏳ অপেক্ষমাণ');
-    const waMsg = `সালামুআলাইকুম! আপনার GIC শিক্ষক বুকিং সম্পর্কে যোগাযোগ করছি।`;
-    const waLink = b.student_phone ? `https://wa.me/${b.student_phone.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(waMsg)}` : '#';
+    const tName = b.teacher_name || (b.teachers ? b.teachers.name : 'কোরআন শিক্ষক');
+    const sName = b.student_name || 'এক অভিভাবক';
+    const sPhone = b.student_phone || '';
+    const cleanPhone = sPhone.replace(/[^0-9]/g, '');
+    const date = b.created_at ? new Date(b.created_at).toLocaleString('bn-BD', { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
+    const st = statusConfig[b.status] || statusConfig.pending;
+    
+    const parentWaMsg = `সালামুআলাইকুম ${sName}! Global Islamic Care থেকে যোগাযোগ করছি। আপনি আমাদের প্ল্যাটফর্মে শিক্ষক ${tName}-এর সাথে যোগাযোগের জন্য রিকোয়েস্ট দিয়েছিলেন। আপনি কি ওস্তাদের সাথে কথা বলে উনাকে আপনার সন্তানের জন্য হায়ার করেছেন বা কোনো বিষয়ে আমাদের সহায়তা প্রয়োজন?`;
+    const parentWaUrl = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(parentWaMsg)}` : '#';
+
+    const teacherWaMsg = `সালামুআলাইকুম ওস্তাদ ${tName}! অভিভাবক ${sName} (ফোন: ${sPhone}) আপনার প্রোফাইল থেকে যোগাযোগ করেছিলেন। উনার সাথে কি আপনার কথা হয়েছে এবং ক্লাস কি শুরু করেছেন?`;
+    const teacherWaUrl = `https://wa.me/8801733017521?text=${encodeURIComponent(teacherWaMsg)}`;
 
     return `
       <tr>
         <td>${i+1}</td>
-        <td><strong>${b.teacher_name || '—'}</strong></td>
-        <td><span class="tc-qual-badge">📅 ${dayName}</span> <strong style="color:#fff;">${b.slot_start}</strong></td>
-        <td>${b.student_name || '—'}</td>
         <td>
-          <a href="${waLink}" target="_blank" class="phone-chip" style="text-decoration:none;">
-            💬 ${b.student_phone || '—'}
-          </a>
-        </td>
-        <td style="font-size:12px;max-width:200px;color:var(--text-muted);">${b.message || '—'}</td>
-        <td>
-          <span style="font-size:11px;font-weight:700;color:${statusColor};">${statusLabel}</span>
+          <div style="font-weight:800;color:var(--gold-light);font-size:13.5px;">👨‍🏫 ${tName}</div>
+          <div style="font-size:11px;color:var(--text-muted);">${b.slot_day ? `📅 ${b.slot_day} (${b.slot_time})` : (b.contact_type === 'whatsapp_chat' ? '💬 WhatsApp চ্যাট' : (b.slot_time || 'সরাসরি যোগাযোগ'))}</div>
         </td>
         <td>
-          <select onchange="updateBookingStatusSubmit(${b.id}, this.value)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;">
-            <option value="pending" ${b.status==='pending'?'selected':''}>অপেক্ষমাণ</option>
-            <option value="confirmed" ${b.status==='confirmed'?'selected':''}>নিশ্চিত</option>
-            <option value="cancelled" ${b.status==='cancelled'?'selected':''}>বাতিল</option>
+          <div style="font-weight:700;color:#fff;font-size:13px;">👤 ${sName}</div>
+          <div style="font-size:11px;color:var(--text-muted);">${date}</div>
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <a href="${parentWaUrl}" target="_blank" class="phone-chip" style="text-decoration:none;background:rgba(37,211,102,0.15);color:#25d366;border:1px solid rgba(37,211,102,0.3);font-size:12px;padding:3px 8px;border-radius:6px;font-weight:700;">
+              💬 ${sPhone}
+            </a>
+            ${cleanPhone ? `<a href="tel:${cleanPhone}" style="color:var(--text-muted);font-size:11px;text-decoration:none;" title="কল করুন">📞 কল</a>` : ''}
+          </div>
+        </td>
+        <td>
+          <div style="font-size:12px;color:#cbd5e1;max-width:220px;line-height:1.4;">${b.student_msg || b.message || '—'}</div>
+        </td>
+        <td>
+          <span style="font-size:11px;font-weight:700;background:${st.bg};color:${st.color};padding:4px 8px;border-radius:12px;display:inline-block;">${st.label}</span>
+        </td>
+        <td>
+          <select onchange="updateBookingStatusSubmit(${b.id}, this.value)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer;">
+            <option value="pending" ${b.status==='pending'?'selected':''}>⏳ নতুন লিড</option>
+            <option value="whatsapp_opened" ${b.status==='whatsapp_opened'?'selected':''}>💬 WhatsApp শুরু করেছে</option>
+            <option value="contacted" ${b.status==='contacted'?'selected':''}>📞 কথা হয়েছে</option>
+            <option value="hired" ${b.status==='hired' || b.status==='confirmed'?'selected':''}>🎉 শিক্ষক হায়ার করেছে</option>
+            <option value="not_hired" ${b.status==='not_hired'?'selected':''}>❌ হায়ার করেনি</option>
+            <option value="cancelled" ${b.status==='cancelled'?'selected':''}>🚫 বাতিল</option>
           </select>
+        </td>
+        <td>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;">
+            <a href="${parentWaUrl}" target="_blank" class="btn btn-sm" style="background:#25d366;color:#fff;font-size:10.5px;padding:4px 8px;border-radius:6px;text-decoration:none;font-weight:700;" title="অভিভাবককে WhatsApp-এ ফলোআপ করুন">
+              💬 ফলোআপ
+            </a>
+            <button onclick="deleteBookingSubmit(${b.id})" class="btn btn-sm btn-red" style="font-size:10px;padding:4px 7px;border-radius:6px;" title="মুছে ফেলুন">
+              🗑️
+            </button>
+          </div>
         </td>
       </tr>
     `;
@@ -5272,11 +5519,23 @@ async function updateBookingStatusSubmit(id, newStatus) {
     }
     const b = allAdminBookings.find(item => item.id === id);
     if (b) b.status = newStatus;
-    toast('✅ বুকিং স্ট্যাটাস আপডেট হয়েছে!', 'ok');
+    toast('✅ বুকিং ও লিড স্ট্যাটাস আপডেট হয়েছে!', 'ok');
     renderBookingsTable();
   } catch(err) {
     console.error(err);
     toast('❌ স্ট্যাটাস আপডেট ব্যর্থ হয়েছে', 'err');
+  }
+}
+
+async function deleteBookingSubmit(id) {
+  if (!confirm('আপনি কি এই লিড/যোগাযোগ রেকর্ডটি মুছে ফেলতে চান?')) return;
+  try {
+    await db.from('teacher_bookings').delete().eq('id', id);
+    allAdminBookings = allAdminBookings.filter(b => b.id !== id);
+    toast('✅ রেকর্ড মুছে ফেলা হয়েছে', 'ok');
+    renderBookingsTable();
+  } catch(e) {
+    toast('❌ ডিলিট ব্যর্থ', 'err');
   }
 }
 
@@ -5700,6 +5959,7 @@ function closeAppDetailModal() {
 async function submitApproveApp(appId) {
   const slug = (document.getElementById('tc-app-slug-inp')?.value || '').trim();
   const sortOrder = parseInt(document.getElementById('tc-app-sort-inp')?.value || '0') || 0;
+  const teacherType = document.getElementById('tc-app-type-inp')?.value || 'fresher';
   const errEl = document.getElementById('tc-app-form-err');
 
   if (!slug) {
@@ -5725,10 +5985,52 @@ async function submitApproveApp(appId) {
         p_app_id: appId,
         p_slug: slug,
         p_whatsapp: '8801733017521',
-        p_sort_order: sortOrder
+        p_sort_order: sortOrder,
+        p_teacher_type: teacherType
       });
-      if (!error) result = data;
-    } catch(e) { console.warn('RPC failed', e); }
+      if (!error && data) result = data;
+    } catch(e) { console.warn('RPC failed, trying fallback', e); }
+
+    // Fallback: direct table operations if RPC unavailable
+    if (!result || !result.success) {
+      const app = allAdminApplications.find(a => a.id === appId);
+      if (app) {
+        const ins = await db.from('teachers').insert([{
+          name: app.name,
+          slug: slug,
+          photo_url: app.photo_url || '',
+          designation: app.designation || '',
+          qualifications: app.qualifications || [],
+          specializations: app.specializations || [],
+          languages: app.languages || ['বাংলা'],
+          country: app.country || 'বাংলাদেশ',
+          native_language: app.native_language || 'বাংলা',
+          bio: app.bio || '',
+          experience_years: app.experience_years || 0,
+          students_taught: app.students_taught || 0,
+          weekly_schedule: app.weekly_schedule || { sat: [], sun: [], mon: [], tue: [], wed: [] },
+          whatsapp: app.whatsapp_number || '8801733017521',
+          is_active: true,
+          sort_order: sortOrder || 0,
+          gender: app.gender || 'male',
+          monthly_fee: app.monthly_fee || 'আলোচনা সাপেক্ষে',
+          demo_video_url: app.demo_video_url || '',
+          is_verified: true,
+          teacher_type: teacherType
+        }]).select('id').single();
+
+        if (ins.data) {
+          await db.from('teacher_applications').update({
+            status: 'approved',
+            reviewed_at: new Date().toISOString(),
+            approved_teacher_id: ins.data.id
+          }).eq('id', appId);
+          result = { success: true };
+        } else if (ins.error) {
+          throw ins.error;
+        }
+      }
+    }
 
     if (result && result.success) {
       toast(`✅ শিক্ষক অনুমোদিত! প্রোফাইল ওয়েবসাইটে যুক্ত হয়েছে।`, 'ok');
@@ -5754,19 +6056,61 @@ async function quickApproveApp(appId, suggestedSlug) {
   const cleanSlug = slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/--+/g, '-');
 
   try {
-    const { data } = await db.rpc('approve_teacher_application', {
-      pass_code: authPwd,
-      p_app_id: appId,
-      p_slug: cleanSlug,
-      p_whatsapp: '8801733017521',
-      p_sort_order: 0
-    });
-    if (data && data.success) {
+    let ok = false;
+    try {
+      const { data } = await db.rpc('approve_teacher_application', {
+        pass_code: authPwd,
+        p_app_id: appId,
+        p_slug: cleanSlug,
+        p_whatsapp: '8801733017521',
+        p_sort_order: 0
+      });
+      if (data && data.success) ok = true;
+    } catch(e) {}
+
+    if (!ok) {
+      const app = allAdminApplications.find(a => a.id === appId);
+      if (app) {
+        const ins = await db.from('teachers').insert([{
+          name: app.name,
+          slug: cleanSlug,
+          photo_url: app.photo_url || '',
+          designation: app.designation || '',
+          qualifications: app.qualifications || [],
+          specializations: app.specializations || [],
+          languages: app.languages || ['বাংলা'],
+          country: app.country || 'বাংলাদেশ',
+          native_language: app.native_language || 'বাংলা',
+          bio: app.bio || '',
+          experience_years: app.experience_years || 0,
+          students_taught: app.students_taught || 0,
+          weekly_schedule: app.weekly_schedule || { sat: [], sun: [], mon: [], tue: [], wed: [] },
+          whatsapp: app.whatsapp_number || '8801733017521',
+          is_active: true,
+          sort_order: 0,
+          gender: app.gender || 'male',
+          monthly_fee: app.monthly_fee || 'আলোচনা সাপেক্ষে',
+          demo_video_url: app.demo_video_url || '',
+          is_verified: true
+        }]).select('id').single();
+
+        if (ins.data) {
+          await db.from('teacher_applications').update({
+            status: 'approved',
+            reviewed_at: new Date().toISOString(),
+            approved_teacher_id: ins.data.id
+          }).eq('id', appId);
+          ok = true;
+        }
+      }
+    }
+
+    if (ok) {
       toast(`✅ শিক্ষক অনুমোদিত! ওয়েবসাইটে প্রোফাইল যুক্ত হয়েছে।`, 'ok');
       loadTeacherApplications();
       loadTeachersAdmin();
     } else {
-      toast('❌ ' + (data?.message || 'অনুমোদন ব্যর্থ'), 'err');
+      toast('❌ অনুমোদন ব্যর্থ হয়েছে', 'err');
     }
   } catch(err) {
     toast('❌ সমস্যা হয়েছে: ' + err.message, 'err');
