@@ -35,11 +35,57 @@ ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS languages text[] DEFAULT '{
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS country text DEFAULT 'বাংলাদেশ';
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS native_language text DEFAULT 'বাংলা';
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS teacher_type text DEFAULT 'senior';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS is_demo boolean DEFAULT false;
 
 -- 3. Update public RLS policies for teachers
 ALTER TABLE public.teachers ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "teachers_public_read" ON public.teachers;
 CREATE POLICY "teachers_public_read" ON public.teachers FOR SELECT USING (true);
+DROP POLICY IF EXISTS "teachers_public_insert" ON public.teachers;
+CREATE POLICY "teachers_public_insert" ON public.teachers FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "teachers_public_update" ON public.teachers;
+CREATE POLICY "teachers_public_update" ON public.teachers FOR UPDATE USING (true);
+DROP POLICY IF EXISTS "teachers_public_delete" ON public.teachers;
+CREATE POLICY "teachers_public_delete" ON public.teachers FOR DELETE USING (true);
+
+-- Seed 3 initial demo teachers if not exists
+INSERT INTO public.teachers (
+  name, slug, designation, gender, monthly_fee, hourly_rate, photo_url,
+  qualifications, bio, experience_years, students_taught, specializations,
+  weekly_schedule, whatsapp, country, native_language, languages,
+  sort_order, is_active, is_verified, rating, teacher_type, is_demo
+)
+VALUES
+(
+  'হাফেজ মাওলানা তানভীর আহমেদ', 'hafez-tanvir-ahmed', 'হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক', 'male', '৳১,৫০০/মাস', '$5/hr',
+  'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
+  ARRAY['দাওরায়ে হাদিস', 'হিফজুল কুরআন', 'সনদে তাজবীদ'],
+  'দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন শিক্ষা দিচ্ছেন।',
+  7, 180, ARRAY['সহীহ তেলাওয়াত', 'তাজউইদ ও মাখরাজ', 'শিশু শিক্ষা'],
+  '{"sat":[10,11,14],"sun":[10,14],"mon":[10,11],"tue":[10,14],"wed":[10,11,14]}'::jsonb,
+  '8801733017521', 'বাংলাদেশ', 'বাংলা', ARRAY['বাংলা', 'English', 'العربية'],
+  1, true, true, 5.0, 'senior', true
+),
+(
+  'মুফতি সালমান ফারিস', 'mufti-salman-faris', 'মুফতি ও হেফজুল কোরআন মেন্টর', 'male', '৳২,০০০/মাস', '$7/hr',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+  ARRAY['মুফতি (ইফতা)', 'দাওরায়ে হাদিস', 'হিফজুল কুরআন ৩০ পারা'],
+  'আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ ও দ্রুত হেফজ সম্পন্ন করায় অভিজ্ঞ।',
+  9, 240, ARRAY['হিফজুল কোরআন', 'তাজউইদ ও সুর', 'বয়স্কদের শিক্ষা'],
+  '{"sat":[11,13,15],"sun":[11,15],"mon":[11,13],"tue":[11,15],"wed":[11,13,15]}'::jsonb,
+  '8801733017521', 'বাংলাদেশ', 'বাংলা', ARRAY['বাংলা', 'English', 'Urdu'],
+  2, true, true, 5.0, 'senior', true
+),
+(
+  'হাফেজা উম্মে কুলসুম', 'hafeza-umme-kulsum', 'সিনিয়র মহিলা কোরআন শিক্ষক', 'female', '৳১,২০০/মাস', '$4/hr', '',
+  ARRAY['হাফেজা', 'আলেমা', 'তাজবীদ সার্টিফাইড'],
+  'ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা ও সহীহ তেলাওয়াত শেখান।',
+  5, 150, ARRAY['মা-বোনদের ক্লাস', 'নূরানী কায়দা', 'শিশু শিক্ষা', 'দৈনিক দোয়া ও মাসায়েল'],
+  '{"sat":[9,10,12],"sun":[9,12],"mon":[9,10],"tue":[9,12],"wed":[9,10,12]}'::jsonb,
+  '8801733017521', 'বাংলাদেশ', 'বাংলা', ARRAY['বাংলা', 'English'],
+  3, true, true, 5.0, 'senior', true
+)
+ON CONFLICT (slug) DO NOTHING;
 
 -- 4. Upgrade teacher_bookings table for comprehensive Lead & Contact tracking
 CREATE TABLE IF NOT EXISTS public.teacher_bookings (

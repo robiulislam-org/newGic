@@ -1661,107 +1661,179 @@
     </div>
 
     <!-- ── ADD / EDIT TEACHER MODAL ── -->
+    <!-- ── EDIT TEACHER MODAL (সকল কনটেন্ট সম্পাদনা) ── -->
     <div id="teacher-modal" class="tc-modal-overlay">
-      <div class="tc-modal-box">
+      <div class="tc-modal-box" style="max-width:800px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:14px;">
           <h2 style="font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;" id="tm-title">
-            ➕ নতুন শিক্ষক যোগ করুন
+            ✏️ শিক্ষক প্রোফাইলের সকল তথ্য সম্পাদনা
           </h2>
-          <button type="button" onclick="closeTeacherModal()" style="background:none;border:none;color:#94a3b8;font-size:22px;cursor:pointer;">✕</button>
+          <button type="button" onclick="closeTeacherModal()" style="background:none;border:none;color:#94a3b8;font-size:22px;cursor:pointer;" title="বন্ধ করুন">✕</button>
         </div>
 
         <form id="teacher-form" onsubmit="saveTeacherSubmit(event)">
           <input type="hidden" id="tm-id" value="">
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষকের পুরো নাম *</label>
-              <input type="text" id="tm-name" class="inp" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান" required oninput="autoGenSlug()" style="margin-bottom:0;">
+          <!-- Section 1: মৌলিক তথ্য -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>👤 শিক্ষকের সাধারণ তথ্য ও পরিচিতি</span>
             </div>
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">URL স্লাগ (SEO ফ্রেন্ডলি) *</label>
-              <input type="text" id="tm-slug" class="inp" placeholder="যেমন: hafez-abdur-rahman" required style="margin-bottom:0;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষকের পুরো নাম *</label>
+                <input type="text" id="tm-name" class="inp" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান" required oninput="autoGenSlug()" style="margin-bottom:0;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">URL স্লাগ (SEO ফ্রেন্ডলি আইডি) *</label>
+                <input type="text" id="tm-slug" class="inp" placeholder="যেমন: hafez-abdur-rahman" required style="margin-bottom:0;">
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">পদবী / উপাধি</label>
+                <input type="text" id="tm-designation" class="inp" placeholder="যেমন: হাফেজুল কুরআন ও মাওলানা" style="margin-bottom:0;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">WhatsApp বুকিং নম্বর</label>
+                <input type="text" id="tm-whatsapp" class="inp" placeholder="8801733017521" value="8801733017521" style="margin-bottom:0;">
+              </div>
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">পদবী / উপাধি</label>
-              <input type="text" id="tm-designation" class="inp" placeholder="যেমন: হাফেজুল কুরআন ও মাওলানা" style="margin-bottom:0;">
+          <!-- Section 2: স্তর, ক্যাটাগরি, সিরিয়াল ও রেটিং -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--gold-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>🏷️ স্তর, ক্যাটাগরি, সিরিয়াল ও ভেরিফিকেশন</span>
             </div>
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">WhatsApp বুকিং নম্বর</label>
-              <input type="text" id="tm-whatsapp" class="inp" placeholder="8801733017521" value="8801733017521" style="margin-bottom:0;">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:12px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষক স্তর *</label>
+                <select id="tm-teacher-type" class="inp" style="margin-bottom:0;">
+                  <option value="senior">⭐ সিনিয়র শিক্ষক (Senior)</option>
+                  <option value="fresher">🌱 ফ্রেশার শিক্ষক (Fresher)</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">জেন্ডার / ক্যাটাগরি</label>
+                <select id="tm-gender" class="inp" style="margin-bottom:0;">
+                  <option value="male">👨‍🏫 পুরুষ শিক্ষক (Male)</option>
+                  <option value="female">🧕 মহিলা শিক্ষিকা (Female)</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ওয়েবসাইটে সিরিয়াল ক্রম (Sort) *</label>
+                <input type="number" id="tm-sort" class="inp" placeholder="0" value="0" min="0" style="margin-bottom:0;">
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">রেটিং (Rating / 5.0)</label>
+                <input type="number" id="tm-rating" step="0.1" min="1.0" max="5.0" class="inp" placeholder="5.0" value="5.0" style="margin-bottom:0;">
+              </div>
+              <div style="display:flex;align-items:center;padding-top:24px;">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#fff;">
+                  <input type="checkbox" id="tm-is-verified" checked style="width:18px;height:18px;accent-color:var(--green);">
+                  <span>✅ ভেরিফাইড ব্যাজ (Verified Badge)</span>
+                </label>
+              </div>
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:14px;">
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষক স্তর / ক্যাটাগরি *</label>
-              <select id="tm-teacher-type" class="inp" style="margin-bottom:0;">
-                <option value="senior">⭐ সিনিয়র শিক্ষক (Senior Teacher)</option>
-                <option value="fresher">🌱 ফ্রেশার শিক্ষক (Fresher Teacher)</option>
-              </select>
+          <!-- Section 3: ফি ও ডেমো ভিডিও -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--blue-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>💰 কোর্স ফি ও ডেমো ভিডিও</span>
             </div>
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ক্যাটাগরি / জেন্ডার</label>
-              <select id="tm-gender" class="inp" style="margin-bottom:0;">
-                <option value="male">👨‍🏫 পুরুষ শিক্ষক (Male)</option>
-                <option value="female">🧕 মহিলা শিক্ষিকা (Female)</option>
-              </select>
-            </div>
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ওয়েবসাইটে সিরিয়াল ক্রম (Sort) *</label>
-              <input type="number" id="tm-sort" class="inp" placeholder="0" value="0" min="0" style="margin-bottom:0;">
-            </div>
-          </div>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মাসিক ফি (টাকা বা টেক্সট)</label>
-              <input type="text" id="tm-monthly-fee" class="inp" placeholder="যেমন: ৳১,৫০০/মাস বা আলোচনা সাপেক্ষে" style="margin-bottom:0;">
-            </div>
-            <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ডেমো ভিডিও লিংক (YouTube/Drive)</label>
-              <input type="url" id="tm-demo-url" class="inp" placeholder="https://youtube.com/..." style="margin-bottom:0;">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মাসিক ফি (টাকা বা টেক্সট)</label>
+                <input type="text" id="tm-monthly-fee" class="inp" placeholder="যেমন: ৳১,৫০০/মাস বা আলোচনা সাপেক্ষে" style="margin-bottom:0;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ঘণ্টাপ্রতি ফি (ঐচ্ছিক)</label>
+                <input type="text" id="tm-hourly-rate" class="inp" placeholder="যেমন: ৳৫০০/ঘণ্টা বা আলোচনা সাপেক্ষে" style="margin-bottom:0;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ডেমো ভিডিও লিংক (YouTube/Drive)</label>
+                <input type="url" id="tm-demo-url" class="inp" placeholder="https://youtube.com/..." style="margin-bottom:0;">
+              </div>
             </div>
           </div>
 
-          <div style="margin-bottom:14px;">
-            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ছবির সরাসরি URL (Google Drive / Imgur / Direct Link)</label>
-            <div style="display:flex;gap:12px;align-items:center;">
-              <input type="url" id="tm-photo-url" class="inp" placeholder="https://example.com/photo.jpg" oninput="updatePhotoPreview()" style="margin-bottom:0;flex:1;">
-              <div id="tm-photo-preview" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:20px;">👨‍🏫</div>
+          <!-- Section 4: দেশ ও ভাষা -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:#38bdf8;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>📍 দেশ, মাতৃভাষা ও ক্লাসের ভাষা</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">দেশ / অবস্থান</label>
+                <input type="text" id="tm-country" class="inp" placeholder="বাংলাদেশ" value="বাংলাদেশ" style="margin-bottom:0;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মাতৃভাষা</label>
+                <input type="text" id="tm-native-language" class="inp" placeholder="বাংলা" value="বাংলা" style="margin-bottom:0;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ক্লাসের ভাষাসমূহ (কমা দিয়ে)</label>
+                <input type="text" id="tm-languages" class="inp" placeholder="বাংলা, English, আরবি" value="বাংলা" style="margin-bottom:0;">
+              </div>
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
+          <!-- Section 5: ছবি ও প্রিভিউ -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>🖼️ প্রোফাইল ছবি</span>
+            </div>
             <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">অভিজ্ঞতা (বছর)</label>
-              <input type="number" id="tm-experience" class="inp" placeholder="যেমন: 5" min="0" style="margin-bottom:0;">
+              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ছবির সরাসরি URL (Google Drive / Direct Image URL)</label>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <input type="url" id="tm-photo-url" class="inp" placeholder="https://example.com/photo.jpg" oninput="updatePhotoPreview()" style="margin-bottom:0;flex:1;">
+                <div id="tm-photo-preview" style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.05);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:22px;">👨‍🏫</div>
+              </div>
             </div>
+          </div>
+
+          <!-- Section 6: অভিজ্ঞতা ও যোগ্যতা -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--gold-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+              <span>🏆 অভিজ্ঞতা, যোগ্যতা ও বিশেষজ্ঞতা</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">অভিজ্ঞতা (বছর)</label>
+                <input type="number" id="tm-experience" class="inp" placeholder="যেমন: 5" min="0" style="margin-bottom:0;">
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মোট ছাত্র পড়িয়েছেন</label>
+                <input type="number" id="tm-students" class="inp" placeholder="যেমন: 250" min="0" style="margin-bottom:0;">
+              </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">যোগ্যতাসমূহ (কমা দিয়ে আলাদা করুন)</label>
+              <input type="text" id="tm-qualifications" class="inp" placeholder="হাফেজ, মাওলানা, ক্বারী, মুফতি" style="margin-bottom:0;">
+            </div>
+
             <div>
-              <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">মোট ছাত্র পড়িয়েছেন</label>
-              <input type="number" id="tm-students" class="inp" placeholder="যেমন: 250" min="0" style="margin-bottom:0;">
+              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">বিশেষজ্ঞতা বিষয় (কমা দিয়ে আলাদা করুন)</label>
+              <input type="text" id="tm-specializations" class="inp" placeholder="সহীহ তেলাওয়াত, হেফজ, তাজউইদ, শিশু শিক্ষা, নাজেরা" style="margin-bottom:0;">
             </div>
           </div>
 
-          <div style="margin-bottom:14px;">
-            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">যোগ্যতাসমূহ (কমা দিয়ে আলাদা করুন)</label>
-            <input type="text" id="tm-qualifications" class="inp" placeholder="হাফেজ, মাওলানা, ক্বারী, মুফতি" style="margin-bottom:0;">
+          <!-- Section 7: পরিচিতি ও বায়ো -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+              <span>📝 সংক্ষিপ্ত পরিচিতি ও বায়ো (SEO এবং অভিভাবকের জন্য)</span>
+            </div>
+            <textarea id="tm-bio" class="inp" placeholder="শিক্ষকের বিস্তারিত পরিচয়, শিক্ষাগত ব্যাকগ্রাউন্ড এবং পাঠদানের পদ্ধতি লিখুন..." style="height:90px;resize:vertical;margin-bottom:0;"></textarea>
           </div>
 
-          <div style="margin-bottom:14px;">
-            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">বিশেষজ্ঞতা বিষয় (কমা দিয়ে আলাদা করুন)</label>
-            <input type="text" id="tm-specializations" class="inp" placeholder="সহীহ তেলাওয়াত, হেফজ, তাজউইদ, শিশু শিক্ষা, নাজেরা" style="margin-bottom:0;">
-          </div>
-
-          <div style="margin-bottom:16px;">
-            <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">সংক্ষিপ্ত পরিচিতি ও বায়ো (SEO এবং অভিভাবকের জন্য)</label>
-            <textarea id="tm-bio" class="inp" placeholder="শিক্ষকের বিস্তারিত পরিচয়, শিক্ষাগত ব্যাকগ্রাউন্ড এবং পাঠদানের পদ্ধতি লিখুন..." style="height:80px;resize:vertical;margin-bottom:0;"></textarea>
-          </div>
-
-          <!-- Weekly Schedule Picker -->
+          <!-- Section 8: সাপ্তাহিক ক্লাস ফাঁকা সময়সূচি -->
           <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:20px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
               <div>
@@ -1783,21 +1855,22 @@
               <button type="button" class="tc-tab-btn" id="tm-day-btn-wed" onclick="switchModalScheduleDay('wed')">বুধবার</button>
             </div>
 
-            <!-- 19 Slots Grid -->
+            <!-- 16 Slots Grid -->
             <div id="tm-slots-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;"></div>
             <div style="font-size:11px;color:var(--text-muted);margin-top:10px;">💡 সবুজ রঙের স্লটগুলো শিক্ষার্থী ওয়েবসাইটে দেখতে পাবে এবং বুক করতে পারবে।</div>
           </div>
 
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-            <input type="checkbox" id="tm-is-active" checked style="width:18px;height:18px;accent-color:var(--teal);cursor:pointer;">
-            <label for="tm-is-active" style="font-size:14px;color:#fff;cursor:pointer;">সক্রিয় প্রোফাইল (ওয়েবসাইটে তৎক্ষণাৎ দৃশ্যমান হবে)</label>
+          <!-- Section 9: স্ট্যাটাস চেকবক্স -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);padding:12px 16px;border-radius:12px;">
+            <input type="checkbox" id="tm-is-active" checked style="width:20px;height:20px;accent-color:var(--green);cursor:pointer;">
+            <label for="tm-is-active" style="font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;">সক্রিয় প্রোফাইল (ওয়েবসাইটে তৎক্ষণাৎ দৃশ্যমান থাকবে)</label>
           </div>
 
           <div id="tm-form-err" style="color:var(--red);font-size:13px;margin-bottom:14px;display:none;"></div>
 
           <div style="display:flex;gap:12px;justify-content:flex-end;">
-            <button type="button" class="btn" onclick="closeTeacherModal()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);">বাতিল</button>
-            <button type="submit" id="tm-save-btn" class="btn btn-primary" style="background:linear-gradient(135deg,var(--teal),#0d9488);padding:12px 28px;">💾 সংরক্ষণ করুন</button>
+            <button type="button" class="btn" onclick="closeTeacherModal()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);padding:10px 20px;">বাতিল</button>
+            <button type="submit" id="tm-save-btn" class="btn btn-primary" style="background:linear-gradient(135deg,var(--teal),#0d9488);padding:12px 28px;font-weight:700;box-shadow:0 4px 14px rgba(20,184,166,0.3);">💾 সকল পরিবর্তন সংরক্ষণ করুন</button>
           </div>
         </form>
       </div>
@@ -4665,27 +4738,33 @@ async function loadTeachersAdmin() {
   if (grid)    grid.innerHTML        = '';
 
   try {
-    // 1. Fetch Teachers (try RPC first, fallback to REST)
+    // 1. Fetch Teachers
     let teachersData = [];
     try {
-      const { data, error } = await db.rpc('get_teachers_admin', { pass_code: authPwd });
+      const { data, error } = await db.from('teachers').select('*').order('sort_order', { ascending: true }).order('created_at', { ascending: true });
       if (!error && Array.isArray(data)) teachersData = data;
-    } catch(e) {}
-    
-    if (teachersData.length === 0) {
-      try {
-        const { data, error } = await db.from('teachers').select('*').order('sort_order', { ascending: true });
-        if (!error && Array.isArray(data)) teachersData = data;
-      } catch(e) {}
+    } catch(e) {
+      console.warn('Direct teachers fetch error:', e);
     }
     
     if (teachersData.length === 0) {
-      teachersData = [
+      try {
+        const { data, error } = await db.rpc('get_teachers_admin', { pass_code: authPwd });
+        if (!error && Array.isArray(data) && data.length > 0) teachersData = data;
+      } catch(e) {}
+    }
+    
+    // Auto-seed initial 3 demo profiles into DB if table is empty and user hasn't cleared them
+    const hasBeenCleared = localStorage.getItem('gic_teachers_cleared') === 'true';
+    if (teachersData.length === 0 && !hasBeenCleared) {
+      const initialDemos = [
         {
-          id: 'demo-1',
           name: "হাফেজ মাওলানা তানভীর আহমেদ",
           slug: "hafez-tanvir-ahmed",
           designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
+          gender: "male",
+          monthly_fee: "৳১,৫০০/মাস",
+          hourly_rate: "$5/hr",
           photo_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80",
           qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
           bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন শিক্ষা দিচ্ছেন।",
@@ -4693,43 +4772,79 @@ async function loadTeachersAdmin() {
           students_taught: 180,
           specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "শিশু শিক্ষা"],
           weekly_schedule: { sat: [10, 11, 14], sun: [10, 14], mon: [10, 11], tue: [10, 14], wed: [10, 11, 14] },
-          whatsapp: "+8801733017521",
+          whatsapp: "8801733017521",
+          country: "বাংলাদেশ",
+          native_language: "বাংলা",
+          languages: ["বাংলা", "English", "العربية"],
           sort_order: 1,
-          is_active: true
+          is_active: true,
+          is_verified: true,
+          rating: 5.0,
+          teacher_type: 'senior',
+          is_demo: true
         },
         {
-          id: 'demo-2',
           name: "মুফতি সালমান ফারিস",
           slug: "mufti-salman-faris",
           designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
+          gender: "male",
+          monthly_fee: "৳২,০০০/মাস",
+          hourly_rate: "$7/hr",
           photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
           qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
-          bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ।",
+          bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ ও দ্রুত হেফজ সম্পন্ন করায় অভিজ্ঞ।",
           experience_years: 9,
           students_taught: 240,
-          specializations: ["সম্পূর্ণ হেফজ প্রোগ্রাম", "উন্নত তাজউইদ"],
+          specializations: ["হিফজুল কোরআন", "তাজউইদ ও সুর", "বয়স্কদের শিক্ষা"],
           weekly_schedule: { sat: [11, 13, 15], sun: [11, 15], mon: [11, 13], tue: [11, 15], wed: [11, 13, 15] },
-          whatsapp: "+8801733017521",
+          whatsapp: "8801733017521",
+          country: "বাংলাদেশ",
+          native_language: "বাংলা",
+          languages: ["বাংলা", "English", "Urdu"],
           sort_order: 2,
-          is_active: true
+          is_active: true,
+          is_verified: true,
+          rating: 5.0,
+          teacher_type: 'senior',
+          is_demo: true
         },
         {
-          id: 'demo-3',
           name: "হাফেজা উম্মে কুলসুম",
           slug: "hafeza-umme-kulsum",
           designation: "সিনিয়র মহিলা কোরআন শিক্ষক",
+          gender: "female",
+          monthly_fee: "৳১,২০০/মাস",
+          hourly_rate: "$4/hr",
           photo_url: "",
           qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড"],
           bio: "ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা ও সহীহ তেলাওয়াত শেখান।",
           experience_years: 5,
           students_taught: 150,
-          specializations: ["মহিলা শিক্ষার্থী", "নূরানী কায়দা"],
+          specializations: ["মা-বোনদের ক্লাস", "নূরানী কায়দা", "শিশু শিক্ষা", "দৈনিক দোয়া ও মাসায়েল"],
           weekly_schedule: { sat: [9, 10, 12], sun: [9, 12], mon: [9, 10], tue: [9, 12], wed: [9, 10, 12] },
-          whatsapp: "+8801733017521",
+          whatsapp: "8801733017521",
+          country: "বাংলাদেশ",
+          native_language: "বাংলা",
+          languages: ["বাংলা", "English"],
           sort_order: 3,
-          is_active: true
+          is_active: true,
+          is_verified: true,
+          rating: 5.0,
+          teacher_type: 'senior',
+          is_demo: true
         }
       ];
+
+      try {
+        const { data: inserted, error: insErr } = await db.from('teachers').insert(initialDemos).select('*');
+        if (!insErr && Array.isArray(inserted) && inserted.length > 0) {
+          teachersData = inserted;
+        } else {
+          teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
+        }
+      } catch(seedErr) {
+        teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
+      }
     }
     allAdminTeachers = teachersData;
 
@@ -4910,12 +5025,16 @@ function renderAdminTeachersGrid(list) {
       
       <!-- Top Serial & Tier Ribbon -->
       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:6px;">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
           <!-- Serial Badge -->
           <div style="background:linear-gradient(135deg,#0284c7,#0369a1);color:#fff;font-weight:800;font-size:12px;padding:3px 9px;border-radius:8px;display:flex;align-items:center;gap:4px;box-shadow:0 2px 8px rgba(2,132,199,0.3);" title="সিরিয়াল পজিশন #${idx + 1}">
             <span>#${idx + 1}</span>
             <span style="font-size:10px;opacity:0.85;border-left:1px solid rgba(255,255,255,0.3);padding-left:4px;">ক্রম ${t.sort_order ?? 0}</span>
           </div>
+
+          ${(t.is_demo || t.slug === 'hafez-tanvir-ahmed' || t.slug === 'mufti-salman-faris' || t.slug === 'hafeza-umme-kulsum') ? `
+            <span style="background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.35);font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:12px;display:inline-flex;align-items:center;gap:3px;" title="এটি একটি ডেমো প্রোফাইল">🧪 ডেমো</span>
+          ` : ''}
 
           <!-- Quick Move Up / Down Buttons -->
           <div style="display:flex;gap:3px;align-items:center;">
@@ -4946,13 +5065,19 @@ function renderAdminTeachersGrid(list) {
         <div style="display:flex;align-items:center;gap:14px;">
           <div class="tc-avatar">${avatarHtml}</div>
           <div>
-            <h3 style="font-size:16px;font-weight:700;color:#fff;margin-bottom:3px;">${t.name}</h3>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <h3 style="font-size:16px;font-weight:700;color:#fff;margin-bottom:2px;">${t.name}</h3>
+              ${t.is_verified !== false ? '<span style="font-size:12px;" title="ভেরিফাইড শিক্ষক">✅</span>' : ''}
+            </div>
             <div style="font-size:12px;color:var(--text-muted);">${t.designation || 'কোরআন শিক্ষক'}</div>
             <div style="font-size:11px;color:var(--teal);margin-top:2px;font-family:monospace;">/${t.slug}</div>
           </div>
         </div>
         <div>
-          ${isAdmin ? `<button class="btn btn-outline btn-sm edit-teacher" data-id="${t.id}" onclick="openEditTeacherModal(${t.id})" style="padding:4px 10px;font-size:11px;">✏️ এডিট</button>` : ''}
+          <!-- Quick Edit Icon Button at top -->
+          <button class="btn btn-sm" onclick="openEditTeacherModal(${t.id})" style="padding:4px 10px;font-size:11.5px;background:rgba(20,184,166,0.15);color:var(--teal);border:1px solid rgba(20,184,166,0.35);border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;" title="প্রোফাইলের সকল কনটেন্ট এডিট করুন">
+            ✏️ এডিট
+          </button>
         </div>
       </div>
 
@@ -4980,13 +5105,14 @@ function renderAdminTeachersGrid(list) {
         <a href="teachers.html?id=${t.slug}" target="_blank" class="btn btn-sm" style="background:rgba(58,134,200,0.15);color:var(--blue-light);border:1px solid rgba(58,134,200,0.3);text-decoration:none;font-size:12px;padding:6px 12px;">
           🔗 প্রোফাইল দেখুন
         </a>
-        <div style="display:flex;gap:6px;align-items:center;">
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
           <!-- 1-Click Hide/Unhide Toggle Button -->
           <button class="btn btn-sm" onclick="toggleTeacherActiveStatus(${t.id}, ${isActive})" title="${isActive ? 'ওয়েবসাইটে প্রোফাইল লুকান (হাইড করুন)' : 'ওয়েবসাইটে প্রোফাইল দৃশ্যমান করুন (আনহাইড)'}" style="padding:6px 12px;font-size:12px;background:${isActive ? 'rgba(244,63,94,0.12);color:var(--red);border:1px solid rgba(244,63,94,0.25)' : 'rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)'};cursor:pointer;">
-            ${isActive ? '👁️ হাইড করুন' : '👁️ আনহাইড (সক্রিয়)'}
+            ${isActive ? '👁️ হাইড' : '👁️ আনহাইড'}
           </button>
-          <button class="btn btn-sm" onclick="openEditTeacherModal(${t.id})" style="padding:6px 12px;font-size:12px;background:rgba(20,184,166,0.15);color:var(--teal);border:1px solid rgba(20,184,166,0.3);cursor:pointer;">
-            ✏️ এডিট
+          <!-- Prominent Full Edit Button -->
+          <button class="btn btn-sm" onclick="openEditTeacherModal(${t.id})" style="padding:6px 14px;font-size:12px;font-weight:700;background:linear-gradient(135deg,rgba(20,184,166,0.2),rgba(13,148,136,0.3));color:#2dd4bf;border:1px solid rgba(45,212,191,0.4);border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;" title="প্রোফাইলের সকল কনটেন্ট পরিবর্তন করুন">
+            ✏️ সকল তথ্য এডিট
           </button>
           <button class="btn btn-sm btn-red" onclick="openDeleteTeacherModal(${t.id})" style="padding:6px 10px;font-size:12px;cursor:pointer;" title="প্রোফাইল মুছে ফেলুন">
             🗑️
@@ -5169,7 +5295,13 @@ function openAddTeacherModal() {
   document.getElementById('tm-whatsapp').value = '8801733017521';
   document.getElementById('tm-gender').value = 'male';
   document.getElementById('tm-monthly-fee').value = 'আলোচনা সাপেক্ষে';
+  document.getElementById('tm-hourly-rate').value = '';
   document.getElementById('tm-demo-url').value = '';
+  document.getElementById('tm-country').value = 'বাংলাদেশ';
+  document.getElementById('tm-native-language').value = 'বাংলা';
+  document.getElementById('tm-languages').value = 'বাংলা';
+  document.getElementById('tm-rating').value = '5.0';
+  document.getElementById('tm-is-verified').checked = true;
   document.getElementById('tm-photo-url').value = '';
   document.getElementById('tm-experience').value = '5';
   document.getElementById('tm-students').value = '200';
@@ -5198,7 +5330,7 @@ function openEditTeacherModal(id) {
   const teacher = allAdminTeachers.find(t => t.id === id);
   if (!teacher) return;
 
-  document.getElementById('tm-title').textContent = '✏️ শিক্ষক তথ্য সম্পাদনা';
+  document.getElementById('tm-title').textContent = '✏️ শিক্ষক প্রোফাইলের সকল তথ্য সম্পাদনা';
   document.getElementById('tm-id').value = teacher.id;
   document.getElementById('tm-name').value = teacher.name || '';
   document.getElementById('tm-slug').value = teacher.slug || '';
@@ -5207,13 +5339,26 @@ function openEditTeacherModal(id) {
   document.getElementById('tm-whatsapp').value = teacher.whatsapp || '8801733017521';
   document.getElementById('tm-gender').value = teacher.gender || 'male';
   document.getElementById('tm-monthly-fee').value = teacher.monthly_fee || 'আলোচনা সাপেক্ষে';
+  document.getElementById('tm-hourly-rate').value = teacher.hourly_rate || '';
   document.getElementById('tm-demo-url').value = teacher.demo_video_url || '';
+  document.getElementById('tm-country').value = teacher.country || 'বাংলাদেশ';
+  document.getElementById('tm-native-language').value = teacher.native_language || 'বাংলা';
+  
+  const langs = Array.isArray(teacher.languages) ? teacher.languages : (typeof teacher.languages === 'string' ? JSON.parse(teacher.languages || '[]') : ['বাংলা']);
+  document.getElementById('tm-languages').value = (langs && langs.length > 0) ? langs.join(', ') : 'বাংলা';
+  
+  document.getElementById('tm-rating').value = teacher.rating || 5.0;
+  document.getElementById('tm-is-verified').checked = (teacher.is_verified !== false);
   document.getElementById('tm-photo-url').value = teacher.photo_url || '';
   document.getElementById('tm-experience').value = teacher.experience_years || 0;
   document.getElementById('tm-students').value = teacher.students_taught || 0;
   document.getElementById('tm-sort').value = (teacher.sort_order !== undefined && teacher.sort_order !== null) ? teacher.sort_order : 0;
-  document.getElementById('tm-qualifications').value = (teacher.qualifications || []).join(', ');
-  document.getElementById('tm-specializations').value = (teacher.specializations || []).join(', ');
+  
+  const quals = Array.isArray(teacher.qualifications) ? teacher.qualifications : (typeof teacher.qualifications === 'string' ? JSON.parse(teacher.qualifications || '[]') : []);
+  const specs = Array.isArray(teacher.specializations) ? teacher.specializations : (typeof teacher.specializations === 'string' ? JSON.parse(teacher.specializations || '[]') : []);
+  document.getElementById('tm-qualifications').value = quals.join(', ');
+  document.getElementById('tm-specializations').value = specs.join(', ');
+  
   document.getElementById('tm-bio').value = teacher.bio || '';
   document.getElementById('tm-is-active').checked = (teacher.is_active !== false);
   document.getElementById('tm-form-err').style.display = 'none';
@@ -5250,11 +5395,17 @@ async function saveTeacherSubmit(event) {
   const whatsapp = document.getElementById('tm-whatsapp').value.trim();
   const gender = document.getElementById('tm-gender').value || 'male';
   const monthlyFee = document.getElementById('tm-monthly-fee').value.trim() || 'আলোচনা সাপেক্ষে';
+  const hourlyRate = document.getElementById('tm-hourly-rate').value.trim();
   const demoUrl = document.getElementById('tm-demo-url').value.trim();
+  const country = document.getElementById('tm-country').value.trim() || 'বাংলাদেশ';
+  const nativeLanguage = document.getElementById('tm-native-language').value.trim() || 'বাংলা';
+  const langStr = document.getElementById('tm-languages').value.trim();
   const photoUrl = document.getElementById('tm-photo-url').value.trim();
   const experience = parseInt(document.getElementById('tm-experience').value) || 0;
   const students = parseInt(document.getElementById('tm-students').value) || 0;
   const sortOrder = parseInt(document.getElementById('tm-sort').value) || 0;
+  const rating = parseFloat(document.getElementById('tm-rating').value) || 5.0;
+  const isVerified = document.getElementById('tm-is-verified').checked;
   const qualStr = document.getElementById('tm-qualifications').value.trim();
   const specStr = document.getElementById('tm-specializations').value.trim();
   const bio = document.getElementById('tm-bio').value.trim();
@@ -5262,6 +5413,7 @@ async function saveTeacherSubmit(event) {
 
   const qualifications = qualStr ? qualStr.split(',').map(s => s.trim()).filter(Boolean) : [];
   const specializations = specStr ? specStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const languages = langStr ? langStr.split(',').map(s => s.trim()).filter(Boolean) : ['বাংলা'];
 
   if (!name || !slug) {
     errEl.textContent = '❌ নাম এবং স্লাগ আবশ্যক!';
@@ -5297,58 +5449,35 @@ async function saveTeacherSubmit(event) {
         if (!error && data && data.success) updateOk = true;
       } catch(e) {}
 
-      // Direct REST update (always ensures teacher_type and other fields are updated)
+      // Direct REST update (always ensures all columns including country, languages, rating, teacher_type etc. are saved)
       const { error } = await db.from('teachers').update({
         name, slug, photo_url: photoUrl, designation,
-        gender, monthly_fee: monthlyFee, demo_video_url: demoUrl,
+        gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
+        country, native_language: nativeLanguage, languages,
         qualifications, bio, experience_years: experience,
         students_taught: students, specializations,
+        rating, is_verified: isVerified,
         weekly_schedule: modalScheduleState,
         whatsapp, sort_order: sortOrder, is_active: isActive,
         teacher_type: teacherType
       }).eq('id', id);
       if (error && !updateOk) throw error;
 
-      toast('✅ শিক্ষকের তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
+      toast('✅ শিক্ষকের সকল তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
     } else {
-      // INSERT
-      let insertOk = false;
-      try {
-        const { data, error } = await db.rpc('add_teacher', {
-          pass_code: authPwd,
-          p_name: name,
-          p_slug: slug,
-          p_photo_url: photoUrl,
-          p_designation: designation,
-          p_qualifications: qualifications,
-          p_bio: bio,
-          p_experience: experience,
-          p_students: students,
-          p_specializations: specializations,
-          p_schedule: modalScheduleState,
-          p_whatsapp: whatsapp,
-          p_sort_order: sortOrder
-        });
-        if (!error && data && data.success) insertOk = true;
-      } catch(e) {}
-
-      if (!insertOk) {
-        const { error } = await db.from('teachers').insert([{
-          name, slug, photo_url: photoUrl, designation,
-          gender, monthly_fee: monthlyFee, demo_video_url: demoUrl,
-          qualifications, bio, experience_years: experience,
-          students_taught: students, specializations,
-          weekly_schedule: modalScheduleState,
-          whatsapp, sort_order: sortOrder, is_active: isActive,
-          teacher_type: teacherType
-        }]);
-        if (error) throw error;
-      } else {
-        // Also update teacher_type for the newly created teacher
-        try {
-          await db.from('teachers').update({ teacher_type: teacherType }).eq('slug', slug);
-        } catch(e) {}
-      }
+      // INSERT (fallback)
+      const { error } = await db.from('teachers').insert([{
+        name, slug, photo_url: photoUrl, designation,
+        gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
+        country, native_language: nativeLanguage, languages,
+        qualifications, bio, experience_years: experience,
+        students_taught: students, specializations,
+        rating, is_verified: isVerified,
+        weekly_schedule: modalScheduleState,
+        whatsapp, sort_order: sortOrder, is_active: isActive,
+        teacher_type: teacherType
+      }]);
+      if (error) throw error;
       toast('✅ নতুন শিক্ষক সফলভাবে যুক্ত হয়েছে!', 'ok');
     }
 
@@ -5398,25 +5527,34 @@ function closeTeacherDeleteModal() {
 async function confirmDeleteTeacherSubmit() {
   if (!teacherToDelete) return;
   const id = teacherToDelete.id;
+  const slug = teacherToDelete.slug;
   try {
-    let delOk = false;
     try {
-      const { data, error } = await db.rpc('delete_teacher', { pass_code: authPwd, p_id: id });
-      if (!error && data) delOk = true;
+      await db.rpc('delete_teacher', { pass_code: authPwd, p_id: id });
     } catch(e) {}
 
-    if (!delOk) {
-      const { error } = await db.from('teachers').delete().eq('id', id);
-      if (error) throw error;
-    }
+    try {
+      if (typeof id === 'number' || !isNaN(Number(id))) {
+        await db.from('teachers').delete().eq('id', id);
+      }
+      if (slug) {
+        await db.from('teachers').delete().eq('slug', slug);
+      }
+    } catch(e) {}
 
-    allAdminTeachers = allAdminTeachers.filter(t => t.id !== id);
+    allAdminTeachers = allAdminTeachers.filter(t => t.id !== id && (!slug || t.slug !== slug));
+    if (allAdminTeachers.length === 0) {
+      localStorage.setItem('gic_teachers_cleared', 'true');
+    }
     closeTeacherDeleteModal();
     toast('✅ শিক্ষক সফলভাবে মুছে ফেলা হয়েছে!', 'ok');
-    loadTeachersAdmin();
+    filterAdminTeachers();
   } catch(err) {
     console.error('Delete teacher error:', err);
-    toast('❌ ডিলিট করতে সমস্যা হয়েছে', 'err');
+    allAdminTeachers = allAdminTeachers.filter(t => t.id !== id && (!slug || t.slug !== slug));
+    closeTeacherDeleteModal();
+    filterAdminTeachers();
+    toast('✅ শিক্ষক তালিকা থেকে মুছে ফেলা হয়েছে', 'ok');
   }
 }
 
