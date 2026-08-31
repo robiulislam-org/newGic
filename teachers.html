@@ -384,6 +384,313 @@
     }
     .page-footer a { color: var(--navy); text-decoration: none; font-weight: 600; }
 
+    /* ── TEACHER DIRECTORY GRID & CARDS ── */
+    .directory-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    .directory-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .directory-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .directory-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .mkt-filter-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+    }
+    .mkt-search-row { margin-bottom: 14px; }
+    .mkt-search-input-wrap {
+      position: relative;
+      width: 100%;
+    }
+    .mkt-search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+    .mkt-search-input {
+      width: 100%;
+      padding: 12px 14px 12px 42px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: var(--font);
+      background: var(--surface2);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .mkt-search-input:focus {
+      border-color: var(--navy);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(15,39,68,0.08);
+    }
+    .mkt-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 600;
+      font-family: var(--font);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mkt-chip:hover {
+      background: var(--border);
+      color: var(--navy);
+    }
+    .mkt-chip.active {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+    .mkt-chip-gender-male.active {
+      background: #1e3d6e;
+      border-color: #1e3d6e;
+    }
+    .mkt-chip-gender-female.active {
+      background: #86198f;
+      border-color: #86198f;
+    }
+    .mkt-filter-chips-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .teacher-grid-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+    @media (max-width: 980px) {
+      .teacher-grid-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+    @media (max-width: 600px) {
+      .teacher-grid-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .teacher-card-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .teacher-card-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(200,151,42,0.4);
+    }
+    .tc-photo-wrap {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(200,151,42,0.2);
+      flex-shrink: 0;
+    }
+    .tc-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .tc-name {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .tc-designation {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      min-height: 18px;
+    }
+    .tc-verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--green-soft);
+      color: var(--green);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid rgba(26,158,95,0.25);
+    }
+    .tc-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(200,151,42,0.1);
+      color: #92400e;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid rgba(200,151,42,0.25);
+    }
+    .tc-fee-badge {
+      display: inline-block;
+      background: rgba(16,185,129,0.08);
+      color: #047857;
+      border: 1px solid rgba(16,185,129,0.25);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      margin: 4px 0 10px;
+    }
+    .tc-qualifications {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .tc-tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--navy);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .tc-action-btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: auto;
+      transition: all 0.2s;
+    }
+    .tc-action-btn:hover {
+      background: var(--navy-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(15,39,68,0.25);
+    }
+    .tc-admin-tools {
+      display: flex;
+      gap: 6px;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .tc-admin-btn {
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tc-admin-edit { background: rgba(56,189,248,0.1); color: #0284c7; border-color: rgba(56,189,248,0.3); }
+    .tc-admin-delete { background: rgba(244,63,94,0.1); color: #e11d48; border-color: rgba(244,63,94,0.3); }
+
+    /* Custom Distinct Avatar Placeholders for Male & Female */
+    .tc-avatar-custom {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+    .tc-avatar-male {
+      background: linear-gradient(145deg, #0b2239 0%, #15395b 55%, #1d4e78 100%);
+      color: #fff;
+      border: 2px solid #e5b95c;
+      box-shadow: inset 0 0 14px rgba(229,185,92,0.3);
+    }
+    .tc-avatar-female {
+      background: linear-gradient(145deg, #380b3d 0%, #581c61 55%, #86198f 100%);
+      color: #fff;
+      border: 2px solid #f472b6;
+      box-shadow: inset 0 0 14px rgba(244,114,182,0.3);
+    }
+    .tc-avatar-icon {
+      font-size: 36px;
+      line-height: 1;
+      margin-top: -6px;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+      transition: transform 0.25s ease;
+    }
+    .teacher-card-item:hover .tc-avatar-icon {
+      transform: scale(1.1);
+    }
+    .tc-avatar-role-pill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 9.5px;
+      font-weight: 800;
+      text-align: center;
+      padding: 2px 0 3px;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+    .tc-avatar-male .tc-avatar-role-pill {
+      background: linear-gradient(90deg, #c8972a, #b8831e);
+      color: #ffffff;
+    }
+    .tc-avatar-female .tc-avatar-role-pill {
+      background: linear-gradient(90deg, #db2777, #9d174d);
+      color: #ffffff;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 720px) {
       .hero-layout { flex-direction: column; align-items: center; text-align: center; gap: 16px; }

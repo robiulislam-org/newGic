@@ -1815,6 +1815,23 @@ footer {
 }
 
 /* ───── PUBLIC TEACHER CARDS ───── */
+.pub-teachers-grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+@media (max-width: 980px) {
+  .pub-teachers-grid-wrapper {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .pub-teachers-grid-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
 .pub-teacher-card {
   background: #ffffff;
   border: 1px solid var(--border);
@@ -2003,7 +2020,7 @@ footer {
           <div style="font-size:30px;margin-bottom:8px;">⏳</div>
           <div style="font-size:14px;">শিক্ষকমণ্ডলীর তথ্য লোড হচ্ছে...</div>
         </div>
-        <div id="public-teachers-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"></div>
+        <div id="public-teachers-grid" class="pub-teachers-grid-wrapper"></div>
       </div>
     </div>
   </section>
@@ -2418,7 +2435,7 @@ footer {
         <div>শিক্ষকমণ্ডলীর তথ্য লোড হচ্ছে...</div>
       </div>
 
-      <div id="public-teachers-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"></div>
+      <div id="public-teachers-grid-page" class="pub-teachers-grid-wrapper"></div>
     </div>
   </div>
 </div>
@@ -3600,6 +3617,10 @@ _Global Islamic Care — সহীহ কোরআন শিক্ষার অ�
       </div>
     `;
   }).join('');
+
+  if (grid) grid.innerHTML = cardsHtml;
+  const gridPage = document.getElementById('public-teachers-grid-page');
+  if (gridPage) gridPage.innerHTML = cardsHtml;
 
   setTimeout(checkReveal, 100);
 }
