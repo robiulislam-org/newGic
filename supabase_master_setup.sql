@@ -26,6 +26,7 @@ DROP POLICY IF EXISTS "admin_settings_no_public" ON public.admin_settings;
 CREATE POLICY "admin_settings_no_public" ON public.admin_settings FOR ALL USING (false);
 
 -- Helper Auth function used by all admin RPCs
+DROP FUNCTION IF EXISTS public.get_admin_auth(text);
 CREATE OR REPLACE FUNCTION get_admin_auth(pass_code text)
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE stored_pwd text;
@@ -35,6 +36,7 @@ BEGIN
   RETURN (pass_code = stored_pwd OR pass_code = 'admin123');
 END; $$;
 
+DROP FUNCTION IF EXISTS public.change_admin_password(text, text);
 CREATE OR REPLACE FUNCTION change_admin_password(pass_code text, new_pass text)
 RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean;
@@ -401,6 +403,11 @@ CREATE POLICY "visitor_log_read" ON public.visitor_log FOR SELECT USING (true);
 -- ══════════════════════════════════════════════════════════════════════
 
 -- A. TEACHER APPLICATION APPROVAL WITH FULL FIELD MIGRATION
+DROP FUNCTION IF EXISTS public.approve_teacher_application(text, bigint, text, text, integer, text);
+DROP FUNCTION IF EXISTS public.approve_teacher_application(text, bigint, text, text, integer);
+DROP FUNCTION IF EXISTS public.approve_teacher_application(text, bigint, text, text);
+DROP FUNCTION IF EXISTS public.approve_teacher_application(text, bigint, text);
+
 CREATE OR REPLACE FUNCTION approve_teacher_application(
   pass_code text, p_app_id bigint, p_slug text,
   p_whatsapp text DEFAULT '8801733017521', p_sort_order integer DEFAULT 0,
@@ -451,6 +458,9 @@ BEGIN
 END; $$;
 
 -- B. REJECT TEACHER APPLICATION
+DROP FUNCTION IF EXISTS public.reject_teacher_application(text, bigint, text);
+DROP FUNCTION IF EXISTS public.reject_teacher_application(text, bigint);
+
 CREATE OR REPLACE FUNCTION reject_teacher_application(pass_code text, p_app_id bigint, p_reason text DEFAULT '')
 RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean;
@@ -462,6 +472,8 @@ BEGIN
 END; $$;
 
 -- C. DELETE TEACHER APPLICATION
+DROP FUNCTION IF EXISTS public.delete_teacher_application(text, bigint);
+
 CREATE OR REPLACE FUNCTION delete_teacher_application(pass_code text, p_app_id bigint)
 RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean;
@@ -473,6 +485,9 @@ BEGIN
 END; $$;
 
 -- D. GET TEACHER APPLICATIONS
+DROP FUNCTION IF EXISTS public.get_teacher_applications(text, text);
+DROP FUNCTION IF EXISTS public.get_teacher_applications(text);
+
 CREATE OR REPLACE FUNCTION get_teacher_applications(pass_code text, p_status text DEFAULT 'all')
 RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE
@@ -490,6 +505,8 @@ BEGIN
 END; $$;
 
 -- E. GET ALL TEACHERS ADMIN
+DROP FUNCTION IF EXISTS public.get_teachers_admin(text);
+
 CREATE OR REPLACE FUNCTION get_teachers_admin(pass_code text)
 RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean; result json;
@@ -502,6 +519,8 @@ BEGIN
 END; $$;
 
 -- F. DELETE TEACHER
+DROP FUNCTION IF EXISTS public.delete_teacher(text, bigint);
+
 CREATE OR REPLACE FUNCTION delete_teacher(pass_code text, p_id bigint)
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean;
@@ -513,6 +532,8 @@ BEGIN
 END; $$;
 
 -- G. GET TEACHER BOOKINGS
+DROP FUNCTION IF EXISTS public.get_teacher_bookings(text);
+
 CREATE OR REPLACE FUNCTION get_teacher_bookings(pass_code text)
 RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean; result json;
@@ -534,6 +555,9 @@ BEGIN
 END; $$;
 
 -- H. UPDATE BOOKING STATUS
+DROP FUNCTION IF EXISTS public.update_booking_status(text, bigint, text, text);
+DROP FUNCTION IF EXISTS public.update_booking_status(text, bigint, text);
+
 CREATE OR REPLACE FUNCTION update_booking_status(pass_code text, p_id bigint, p_status text, p_notes text DEFAULT '')
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean;
@@ -547,6 +571,8 @@ BEGIN
 END; $$;
 
 -- I. GET TEACHER REVIEWS ADMIN
+DROP FUNCTION IF EXISTS public.get_teacher_reviews_admin(text);
+
 CREATE OR REPLACE FUNCTION get_teacher_reviews_admin(pass_code text)
 RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean; result json;
@@ -566,6 +592,8 @@ BEGIN
 END; $$;
 
 -- J. APPROVE / DELETE TEACHER REVIEW
+DROP FUNCTION IF EXISTS public.approve_teacher_review(text, bigint);
+
 CREATE OR REPLACE FUNCTION approve_teacher_review(pass_code text, p_id bigint)
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean;
@@ -575,6 +603,8 @@ BEGIN
   UPDATE public.teacher_reviews SET is_approved = true WHERE id = p_id;
   RETURN true;
 END; $$;
+
+DROP FUNCTION IF EXISTS public.delete_teacher_review(text, bigint);
 
 CREATE OR REPLACE FUNCTION delete_teacher_review(pass_code text, p_id bigint)
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $$
@@ -587,6 +617,8 @@ BEGIN
 END; $$;
 
 -- K. DELETE INSTITUTION REVIEW & COMMENT
+DROP FUNCTION IF EXISTS public.delete_institution_review(text, bigint);
+
 CREATE OR REPLACE FUNCTION delete_institution_review(pass_code text, p_id bigint)
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean;
@@ -596,6 +628,8 @@ BEGIN
   DELETE FROM public.institution_reviews WHERE id = p_id;
   RETURN true;
 END; $$;
+
+DROP FUNCTION IF EXISTS public.delete_course_comment(text, bigint);
 
 CREATE OR REPLACE FUNCTION delete_course_comment(pass_code text, p_id bigint)
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $$
@@ -608,6 +642,8 @@ BEGIN
 END; $$;
 
 -- L. SAVE SITE CONTENT (CMS)
+DROP FUNCTION IF EXISTS public.save_site_content(text, text, jsonb);
+
 CREATE OR REPLACE FUNCTION save_site_content(pass_code text, p_key text, p_content jsonb)
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE auth_ok boolean;
