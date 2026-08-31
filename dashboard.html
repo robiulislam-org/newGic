@@ -1454,7 +1454,7 @@
         <p>শিক্ষকদের প্রোফাইল, যোগ্যতা, অভিজ্ঞতা, সময়সূচি ও অভিভাবক রিভিউ নিয়ন্ত্রণ করুন</p>
       </div>
       <div class="hdr-actions">
-        <button class="btn btn-primary" onclick="openAddTeacherModal()" style="background:linear-gradient(135deg,var(--teal),#0d9488);">➕ নতুন শিক্ষক যোগ করুন</button>
+        <a href="teachers.html#apply-section" target="_blank" class="btn" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);text-decoration:none;display:inline-flex;align-items:center;gap:6px;">🌐 শিক্ষক আবেদন ফরম ↗</a>
         <button class="btn" onclick="loadTeachersAdmin()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);">🔄 রিফ্রেশ</button>
       </div>
     </div>
@@ -1521,9 +1521,9 @@
       <div id="tc-loading" class="center-text" style="display:none;">⏳ শিক্ষকদের তথ্য লোড হচ্ছে...</div>
       <div id="tc-empty" class="center-text" style="display:none;background:var(--card-bg);border:1px dashed var(--card-border);border-radius:16px;padding:40px;">
         <div style="font-size:44px;margin-bottom:12px;">👨‍🏫</div>
-        <h3 style="font-size:16px;color:#fff;margin-bottom:6px;">এখনো কোনো শিক্ষক যোগ করা হয়নি</h3>
-        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">প্রথম শিক্ষক যুক্ত করতে নিচের বাটনে ক্লিক করুন</p>
-        <button class="btn btn-primary" onclick="openAddTeacherModal()">➕ শিক্ষক যোগ করুন</button>
+        <h3 style="font-size:16px;color:#fff;margin-bottom:6px;">এখনো কোনো শিক্ষক লাইভ তালিকায় নেই</h3>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">ওয়েবসাইট থেকে শিক্ষকরা আবেদন করলে "📋 শিক্ষক আবেদন" ট্যাব থেকে তাঁদের যাচাই ও অনুমোদন করে লাইভ করতে পারবেন।</p>
+        <button class="btn btn-primary" onclick="switchTeacherSubTab('applications')" style="background:linear-gradient(135deg,var(--teal),#0d9488);">📋 শিক্ষক আবেদনসমূহ দেখুন</button>
       </div>
       <div id="admin-teachers-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;"></div>
     </div>
