@@ -452,7 +452,7 @@ BEGIN
   SET status = 'approved', reviewed_at = now()
   WHERE id = p_app_id;
 
-  RETURN json_build_object('success', true, 'message', 'শিক্ষক সফলভাবে অনুমোদিত এবং মার্কেটপ্লেসে যুক্ত হয়েছে', 'teacher_id', new_teacher_id, 'slug', p_slug);
+  RETURN json_build_object('success', true, 'message', 'শিক্ষক সফলভাবে অনুমোদিত এবং প্ল্যাটফর্মে যুক্ত হয়েছে', 'teacher_id', new_teacher_id, 'slug', p_slug);
 END; $$;
 
 -- B. REJECT TEACHER APPLICATION

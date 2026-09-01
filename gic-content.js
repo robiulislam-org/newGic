@@ -13,7 +13,7 @@ const GIC_SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const DEFAULT_SITE_CONTENT = {
   general: {
     site_name: "Global Islamic Care",
-    site_sub: "Online Quran Teachers & Marketplace",
+    site_sub: "Online Quran Teachers & Platform",
     logo_url: "logo.jpg",
     favicon_url: "favicon.png",
     phone_primary: "+880 1733-017521",
@@ -21,7 +21,7 @@ const DEFAULT_SITE_CONTENT = {
     whatsapp_number: "8801733017521",
     whatsapp_default_msg: "আসসালামু আলাইকুম! আমি Global Islamic Care-এ কোরআন শিক্ষক ও ক্লাস সম্পর্কে বিস্তারিত জানতে চাই।",
     email: "globalislamiccare@gmail.com",
-    address: "ঢাকা, বাংলাদেশ (বিশ্বব্যাপী অনলাইন শিক্ষক মার্কেটপ্লেস)",
+    address: "ঢাকা, বাংলাদেশ (বিশ্বব্যাপী অনলাইন শিক্ষক প্ল্যাটফর্ম)",
     office_hours: "শনি – বৃহস্পতি: সকাল ৯:০০ – রাত ১০:০০",
     social_facebook: "https://facebook.com/globalislamiccare",
     social_youtube: "https://youtube.com/@globalislamiccare",
@@ -33,7 +33,7 @@ const DEFAULT_SITE_CONTENT = {
     announcement_link: "teachers.html"
   },
   hero: {
-    badge: "বিশ্বস্ত কোরআন শিক্ষক মার্কেটপ্লেস",
+    badge: "বিশ্বস্ত কোরআন শিক্ষক প্ল্যাটফর্ম",
     title_line1: "পছন্দের কোরআন শিক্ষক",
     title_line2: "খুঁজুন ও শিখুন",
     arabic_ayah: "وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا",
@@ -279,7 +279,7 @@ const DEFAULT_SITE_CONTENT = {
     subtitle: "Global Islamic Care বিশ্বের বিভিন্ন প্রান্তের শিক্ষার্থী ও অভিজ্ঞ শিক্ষকদের মাঝে একটি নির্ভরযোগ্য অনলাইন প্ল্যাটফর্ম।",
     story: "আমাদের লক্ষ্য বিশ্বব্যাপী মুসলিমদের কাছে বিশুদ্ধ কোরআনের শিক্ষা সহজে পৌঁছে দেওয়া। দেশ-বিদেশের বিভিন্ন ভাষাভাষী অভিজ্ঞ ও যোগ্য শিক্ষকদের প্রোফাইল ও ডেমো দেখে শিক্ষার্থীরা সরাসরি পছন্দের শিক্ষকের কাছে ১-অন-১ লাইভ ক্লাসে কোরআন শিখতে পারেন।",
     mission: "প্রতিটি ঘরে ঘরে সহীহ শুদ্ধ কোরআনের শিক্ষা পৌঁছে দেওয়া এবং যোগ্য শিক্ষকদের জন্য বিশ্বমানের সম্মানজনক শিক্ষকতার সুযোগ তৈরি করা।",
-    vision: "বিশ্বের সবচেয়ে বিশ্বস্ত ও আধুনিক অনলাইন ইসলামিক টিচার মার্কেটপ্লেস ও শিক্ষাকেন্দ্র হিসেবে শিক্ষার্থীদের দ্বীনি শিক্ষায় সহায়তা করা।",
+    vision: "বিশ্বের সবচেয়ে বিশ্বস্ত ও আধুনিক অনলাইন ইসলামিক টিচার প্ল্যাটফর্ম ও শিক্ষাকেন্দ্র হিসেবে শিক্ষার্থীদের দ্বীনি শিক্ষায় সহায়তা করা।",
     stats: [
       { num: "৫,০০০+", label: "সফল শিক্ষার্থী" },
       { num: "১০০+", label: "যোগ্য ও অভিজ্ঞ শিক্ষক" },
@@ -304,7 +304,7 @@ const DEFAULT_SITE_CONTENT = {
     terms_conditions: "সকল শিক্ষার্থী ও শিক্ষককে ক্লাসের সময়সূচি মেনে চলতে হবে। পারস্পরিক বোঝাপড়ার মাধ্যমে সুবিধাজনক সময়ে ১-অন-১ লাইভ ক্লাস সম্পন্ন করতে হবে।"
   },
   footer: {
-    about_text: "Global Islamic Care — দেশ ও বিদেশের শিক্ষার্থীদের জন্য বিশ্বস্ত অনলাইন কোরআন শিক্ষক মার্কেটপ্লেস ও প্ল্যাটফর্ম।",
+    about_text: "Global Islamic Care — দেশ ও বিদেশের শিক্ষার্থীদের জন্য বিশ্বস্ত অনলাইন কোরআন শিক্ষক প্ল্যাটফর্ম।",
     copyright: "© ২০২৬ Global Islamic Care. সর্বস্বত্ব সংরক্ষিত।",
     developer_credit: "Powered by Global Islamic Care Tech"
   }
