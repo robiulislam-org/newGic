@@ -3695,6 +3695,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const sessionPage = sessionStorage.getItem('gic_open_page');
 
   if (isApply) {
+    // Immediately clean the URL so that refreshing the page never auto-reopens the modal
+    try {
+      const cleanUrl = new URL(window.location.href);
+      cleanUrl.searchParams.delete('apply');
+      if (cleanUrl.searchParams.get('page') === 'apply') cleanUrl.searchParams.delete('page');
+      window.history.replaceState({}, document.title, cleanUrl.pathname + (cleanUrl.search ? cleanUrl.search : ''));
+    } catch (e) {}
+
     setTimeout(() => {
       if (typeof openTeacherApplyModal === 'function') openTeacherApplyModal();
     }, 250);
@@ -4697,6 +4705,14 @@ function closeTeacherApplyModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
   }
+  try {
+    const cleanUrl = new URL(window.location.href);
+    if (cleanUrl.searchParams.has('apply') || cleanUrl.searchParams.get('page') === 'apply') {
+      cleanUrl.searchParams.delete('apply');
+      if (cleanUrl.searchParams.get('page') === 'apply') cleanUrl.searchParams.delete('page');
+      window.history.replaceState({}, document.title, cleanUrl.pathname + (cleanUrl.search ? cleanUrl.search : ''));
+    }
+  } catch (e) {}
 }
 
 function resetTeacherApplyForm() {
