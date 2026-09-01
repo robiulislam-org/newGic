@@ -1209,9 +1209,6 @@
               <button class="btn btn-wa btn-full" id="wa-direct-btn" onclick="openWhatsApp()">
                 💬 WhatsApp-এ সরাসরি কথা বলুন
               </button>
-              <button class="btn btn-full" id="sms-direct-btn" onclick="openSMS()" style="background:#2563eb;color:#fff;border:none;border-radius:12px;padding:10px 16px;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-                ✉️ সরাসরি SMS পাঠান
-              </button>
               <button class="btn btn-navy btn-full" onclick="openBookingModal()">
                 📅 ফ্রি ট্রায়াল রিকোয়েস্ট পাঠান
               </button>
@@ -2030,22 +2027,6 @@ function openWhatsApp() {
   document.body.style.overflow = 'hidden';
 }
 
-function openSMS() {
-  targetTeacherForModal = teacherData;
-  selectedSlot = null;
-  currentContactType = 'sms';
-
-  const modalTitle = document.getElementById('bk-modal-title');
-  if (modalTitle) modalTitle.textContent = 'শিক্ষকের সাথে সরাসরি SMS যোগাযোগ';
-  const infoEl = document.getElementById('modal-slot-info');
-  if (infoEl) infoEl.innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'}`;
-  const errEl = document.getElementById('bk-modal-err');
-  if (errEl) errEl.style.display = 'none';
-  
-  document.getElementById('booking-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
 function openLeadModalForTeacher(teacherObj, contactType = 'whatsapp') {
   targetTeacherForModal = teacherObj;
   selectedSlot = null;
@@ -2121,20 +2102,13 @@ async function submitBooking() {
     console.warn('Booking db sync notice:', err);
   }
 
-  // Generate structured message for WhatsApp / SMS
-  if (currentContactType === 'sms') {
-    const rawNum = t.phone || t.whatsapp || '01733017521';
-    const cleanNum = rawNum.replace(/\D/g, '') || '01733017521';
-    const smsBody = `সালামুআলাইকুম! আমি ${leadDisplayName} (${phone}) GIC ওয়েবসাইট থেকে শিক্ষক ${teacherName}-এর সাথে সরাসরি ক্লাসের জন্য যোগাযোগ করছি। কোর্স: ${course}${msg ? ' | ' + msg : ''}`;
-    window.location.href = `sms:${cleanNum}?body=${encodeURIComponent(smsBody)}`;
-  } else {
-    let waMsg = `সালামুআলাইকুম ওস্তাদ/শিক্ষক *${teacherName}*!\nআমি Global Islamic Care প্ল্যাটফর্ম থেকে আপনার সাথে সরাসরি ক্লাসের জন্য যোগাযোগ করছি।\n\n📖 পড়ার কোর্স/বিষয়: ${course}\n📱 আমার WhatsApp নম্বর: ${phone}${name ? `\n👤 নাম: ${name}` : ''}${msg ? `\n💬 বার্তা / পড়ার সময়: ${msg}` : ''}\n\n📌 আমি আপনার কাছে ১-অন-১ ফ্রি ট্রায়াল ক্লাস এবং পড়ার সময়সূচি নিয়ে কথা বলতে আগ্রহী।`;
+  // Generate structured message for WhatsApp
+  let waMsg = `সালামুআলাইকুম ওস্তাদ/শিক্ষক *${teacherName}*!\nআমি Global Islamic Care প্ল্যাটফর্ম থেকে আপনার সাথে সরাসরি ক্লাসের জন্য যোগাযোগ করছি।\n\n📖 পড়ার কোর্স/বিষয়: ${course}\n📱 আমার WhatsApp নম্বর: ${phone}${name ? `\n👤 নাম: ${name}` : ''}${msg ? `\n💬 বার্তা / পড়ার সময়: ${msg}` : ''}\n\n📌 আমি আপনার কাছে ১-অন-১ ফ্রি ট্রায়াল ক্লাস এবং পড়ার সময়সূচি নিয়ে কথা বলতে আগ্রহী।`;
 
-    const rawWa = t.whatsapp || '8801733017521';
-    const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
-    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
-    window.open(waUrl, '_blank');
-  }
+  const rawWa = t.whatsapp || '8801733017521';
+  const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
+  const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+  window.open(waUrl, '_blank');
 
   if (submitBtn) {
     submitBtn.disabled = false;
