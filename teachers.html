@@ -579,7 +579,85 @@
       border-radius: 20px;
       font-size: 12px;
       font-weight: 800;
-      margin: 4px 0 10px;
+      margin: 4px 0 8px;
+    }
+    /* Structured Teacher Profile Info Box (Qualifications, Experience, Specializations) */
+    .tc-profile-structured-box {
+      background: rgba(15,39,68,0.035);
+      border: 1px solid rgba(15,39,68,0.08);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 6px 0 10px 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .tc-structured-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .tc-s-lbl {
+      font-weight: 800;
+      color: var(--navy, #0f2744);
+      white-space: nowrap;
+      font-size: 11.5px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-top: 1px;
+    }
+    .tc-s-val {
+      color: #334155;
+      font-size: 11.5px;
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+    }
+    .tc-s-text {
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .tc-s-badge-qual {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      padding: 1.5px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+      line-height: 1.35;
+    }
+    .tc-s-badge-spec {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+      padding: 1.5px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+      line-height: 1.35;
+    }
+    .tc-s-badge-exp {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      padding: 1.5px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      display: inline-block;
+      line-height: 1.35;
     }
     .tc-qualifications {
       display: flex;
@@ -730,42 +808,80 @@
   <a href="index.html?page=teachers" class="btn btn-navy" style="margin-top:8px;">← সকল শিক্ষক দেখুন</a>
 </div>
 
-<!-- ── BOOKING & LEAD CONTACT MODAL ── -->
+<!-- ── BOOKING & DIRECT TEACHER CONTACT MODAL (SINGLE UNIFIED FORM) ── -->
 <div class="modal-overlay" id="booking-modal">
-  <div class="modal">
-    <div class="modal-title" id="bk-modal-title">💬 শিক্ষকের সাথে WhatsApp-এ যোগাযোগের ফর্ম</div>
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;" id="bk-modal-desc">শিক্ষকের সাথে কথা বলতে ও ডেমো ক্লাস সমন্বয় করতে আপনার নাম ও WhatsApp নম্বর দিন</p>
-    <div class="modal-slot-info" id="modal-slot-info">👨‍🏫 শিক্ষক: লোড হচ্ছে...</div>
-    <div class="form-group">
-      <label class="form-label" for="bk-name">অভিভাবক / শিক্ষার্থীর নাম *</label>
-      <input class="form-inp" id="bk-name" type="text" placeholder="পূর্ণ নাম লিখুন (যেমন: রাহেলা বেগম / তানভীর)" required>
+  <div class="modal" style="max-width:490px;border-radius:24px;padding:24px;background:#ffffff;box-shadow:0 24px 80px rgba(15,39,68,0.35);border:1px solid rgba(15,39,68,0.1);max-height:92vh;overflow-y:auto;">
+    
+    <!-- Modal Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;border-bottom:1px solid #f1f5f9;padding-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(37,211,102,0.15),rgba(37,211,102,0.25));color:#047857;display:flex;align-items:center;justify-content:center;font-size:22px;">💬</div>
+        <div>
+          <div class="modal-title" id="bk-modal-title" style="margin-bottom:2px;font-size:17.5px;font-weight:800;color:var(--navy,#0f2744);">শিক্ষকের সাথে সরাসরি যোগাযোগ</div>
+          <div style="font-size:11.5px;color:#0f766e;font-weight:700;">Global Islamic Care · ভেরিফাইড শিক্ষক সেবা</div>
+        </div>
+      </div>
+      <button type="button" onclick="closeBookingModal()" style="background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:8px;line-height:1;" title="বন্ধ করুন">✕</button>
     </div>
-    <div class="form-group">
-      <label class="form-label" for="bk-phone">WhatsApp / মোবাইল নম্বর *</label>
-      <input class="form-inp" id="bk-phone" type="tel" placeholder="017XXXXXXXX" required>
-      <span style="font-size:11px;color:var(--text-muted);margin-top:3px;display:block;">💡 এই নম্বরে অ্যাডমিন ও শিক্ষক আপনার সাথে ক্লাসের জন্য যোগাযোগ করবেন</span>
+
+    <!-- Active Teacher Info Badge -->
+    <div class="modal-slot-info" id="modal-slot-info" style="margin-bottom:12px;background:rgba(15,39,68,0.05);border:1px solid rgba(15,39,68,0.1);border-radius:10px;padding:8px 12px;font-size:12.5px;font-weight:700;color:var(--navy,#0f2744);text-align:left;">
+      👨‍🏫 শিক্ষক: লোড হচ্ছে...
     </div>
-    <div class="form-group">
-      <label class="form-label" for="bk-course">কোন বিষয়ে পড়তে আগ্রহী?</label>
-      <select class="form-inp" id="bk-course" style="width:100%;background:#fff;">
-        <option value="সহীহ কোরআন তেলাওয়াত ও তাজউইদ">📖 সহীহ কোরআন তেলাওয়াত ও তাজউইদ</option>
-        <option value="নূরানী কায়দা ও আমপারা (বেসিক)">👶 নূরানী কায়দা ও আমপারা (বেসিক)</option>
-        <option value="হিফজুল কোরআন প্রোগ্রাম">🕌 হিফজুল কোরআন প্রোগ্রাম</option>
-        <option value="শিশু ও কিশোরদের স্পেশাল ক্লাস">🧒 শিশু ও কিশোরদের ক্লাস</option>
-        <option value="মা-বোনদের জন্য বিশেষ ক্লাস">🧕 মা-বোনদের ক্লাস</option>
-        <option value="বয়স্কদের সহজ কোরআন শিক্ষা">🧓 বয়স্কদের সহজ কোরআন শিক্ষা</option>
-        <option value="অন্যান্য / পরামর্শ সাপেক্ষে">💬 অন্যান্য / পরামর্শ সাপেক্ষে</option>
-      </select>
+
+    <!-- Transparency & Assurance Notice -->
+    <div style="background:rgba(15,39,68,0.03);border:1px solid rgba(15,39,68,0.1);border-radius:12px;padding:10px 12px;margin-bottom:14px;font-size:11.5px;color:#334155;line-height:1.45;text-align:left;">
+      🛡️ <strong>প্রশাসনিক নিশ্চয়তা:</strong> অ্যাডমিন প্যানেল যেন সঠিক শিক্ষক নিশ্চিতকরণ ও যেকোনো প্রয়োজনে দ্রুত যোগাযোগ করতে পারে সেজন্য তথ্যগুলো দিন। তথ্য জমা হওয়ামাত্রই সরাসরি শিক্ষকের সাথে WhatsApp চ্যাট ওপেন হবে।
     </div>
-    <div class="form-group">
-      <label class="form-label" for="bk-msg">শিক্ষার্থীর বয়স বা সংক্ষিপ্ত বার্তা (ঐচ্ছিক)</label>
-      <textarea class="form-inp" id="bk-msg" placeholder="শিক্ষার্থীর বয়স, বর্তমান লেভেল বা কোনো বিশেষ চাওয়া থাকলে লিখুন..."></textarea>
-    </div>
-    <div id="bk-modal-err" style="display:none;color:var(--red);font-size:13px;font-weight:600;margin-bottom:12px;"></div>
-    <div class="modal-actions">
-      <button type="button" class="btn btn-outline" onclick="closeBookingModal()">বাতিল</button>
-      <button type="button" class="btn btn-wa" id="bk-submit-btn" onclick="submitBooking()">💬 WhatsApp-এ শিক্ষকের সাথে যুক্ত হন →</button>
-    </div>
+
+    <form id="bk-form" onsubmit="event.preventDefault(); submitBooking();">
+      
+      <!-- Field 1: WhatsApp Number (Mandatory) -->
+      <div style="margin-bottom:12px;text-align:left;">
+        <label class="form-label" for="bk-phone" style="font-size:12.5px;font-weight:800;color:#047857;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;">
+          <span>WhatsApp / মোবাইল নম্বর * (অবশ্যই দিন)</span>
+          <span style="font-size:11px;font-weight:600;color:#e11d48;">আবশ্যক</span>
+        </label>
+        <input class="form-inp" id="bk-phone" type="tel" placeholder="017XXXXXXXX বা আন্তর্জাতিক WhatsApp নম্বর" required style="padding:10px 12px;font-size:14px;border:1.5px solid rgba(16,185,129,0.5);border-radius:8px;background:#ffffff;width:100%;">
+        <span style="font-size:11px;color:var(--text-muted,#64748b);margin-top:3px;display:block;">💡 এই নম্বরে শিক্ষক ও অ্যাডমিন ক্লাসের সমন্বয়ের জন্য যোগাযোগ করবেন</span>
+      </div>
+
+      <!-- Field 2: Name (Optional) -->
+      <div style="margin-bottom:12px;text-align:left;">
+        <label class="form-label" for="bk-name" style="font-size:12px;font-weight:700;margin-bottom:4px;color:#334155;">আপনার / শিক্ষার্থীর নাম (ঐচ্ছিক)</label>
+        <input class="form-inp" id="bk-name" type="text" placeholder="যেমন: তানভীর আহমেদ / রাহেলা বেগম" style="padding:9px 12px;font-size:13.5px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;width:100%;">
+      </div>
+
+      <!-- Field 3: Course Selection -->
+      <div style="margin-bottom:12px;text-align:left;">
+        <label class="form-label" for="bk-course" style="font-size:12px;font-weight:700;margin-bottom:4px;color:#334155;">পড়ার কোর্স / বিষয় *</label>
+        <select class="form-inp" id="bk-course" style="width:100%;background:#ffffff;padding:9px 12px;font-size:13px;border:1px solid #cbd5e1;border-radius:8px;">
+          <option value="সহীহ কোরআন তেলাওয়াত ও তাজউইদ">📖 সহীহ কোরআন তেলাওয়াত ও তাজউইদ</option>
+          <option value="নূরানী কায়দা ও আমপারা (শুরু থেকে)">👶 নূরানী কায়দা ও আমপারা (শুরু থেকে)</option>
+          <option value="হিফজুল কোরআন প্রোগ্রাম">🕌 হিফজুল কোরআন প্রোগ্রাম</option>
+          <option value="শিশু ও কিশোরদের স্পেশাল ক্লাস">🧒 শিশু ও কিশোরদের স্পেশাল ক্লাস</option>
+          <option value="মা-বোনদের জন্য বিশেষ কোরআন শিক্ষা">🧕 মা-বোনদের জন্য বিশেষ ক্লাস</option>
+          <option value="বয়স্কদের জন্য সহজ কোরআন শিক্ষা">🧓 বয়স্কদের সহজ কোরআন শিক্ষা</option>
+          <option value="অন্যান্য / শিক্ষকের সাথে পরামর্শ সাপেক্ষে">💬 অন্যান্য / পরামর্শ সাপেক্ষে</option>
+        </select>
+      </div>
+
+      <!-- Field 4: Extra Message / Time -->
+      <div style="margin-bottom:14px;text-align:left;">
+        <label class="form-label" for="bk-msg" style="font-size:12px;font-weight:700;margin-bottom:4px;color:#334155;">সুবিধাজনক সময় বা সংক্ষিপ্ত বার্তা (ঐচ্ছিক)</label>
+        <textarea class="form-inp" id="bk-msg" placeholder="যেমন: সুবিধাজনক পড়ার সময়, শিক্ষার্থীর বয়স বা বিশেষ কোনো কথা..." style="padding:9px 12px;font-size:12.5px;min-height:50px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;width:100%;"></textarea>
+      </div>
+
+      <div id="bk-modal-err" style="display:none;color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:12px;background:rgba(239,68,68,0.1);padding:8px 12px;border-radius:8px;border:1px solid rgba(239,68,68,0.25);text-align:left;"></div>
+
+      <!-- Action Buttons -->
+      <div class="modal-actions" style="margin-top:6px;display:flex;gap:8px;">
+        <button type="button" class="btn btn-outline" onclick="closeBookingModal()" style="padding:10px 16px;font-size:13px;border-radius:10px;">বাতিল</button>
+        <button type="submit" class="btn btn-wa" id="bk-submit-btn" style="flex:1;padding:12px 18px;font-size:13.5px;font-weight:800;justify-content:center;border-radius:10px;box-shadow:0 4px 14px rgba(37,211,102,0.35);border:none;cursor:pointer;display:flex;align-items:center;gap:6px;">
+          💬 সরাসরি শিক্ষকের WhatsApp-এ বার্তা পাঠান →
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -914,16 +1030,45 @@
       <!-- LEFT COLUMN -->
       <div class="left-col">
 
-        <!-- BIO CARD -->
+        <!-- BIO & QUALIFICATIONS CARD -->
         <div class="card" id="bio-card" style="display:none;">
           <div class="card-header">
-            <div class="card-icon">👤</div>
+            <div class="card-icon">🎓</div>
             <div>
-              <div class="card-title">পরিচয়</div>
+              <div class="card-title">শিক্ষকের যোগ্যতা, অভিজ্ঞতা ও পরিচয়</div>
+              <div class="card-subtitle">শিক্ষাগত সনদ, পাঠদানের বিষয় ও সংক্ষিপ্ত পরিচিতি</div>
             </div>
           </div>
-          <p class="bio-text" id="teacher-bio"></p>
-          <div class="spec-tags" id="spec-tags"></div>
+          
+          <!-- 1. যোগ্যতা -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+              <span>🎓 শিক্ষাগত যোগ্যতা ও সনদ:</span>
+            </div>
+            <div id="bio-quals-list" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+          </div>
+
+          <!-- 2. অভিজ্ঞতা -->
+          <div style="margin-bottom:14px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);padding:10px 14px;border-radius:10px;">
+            <div style="font-size:13px;font-weight:700;color:#047857;margin-bottom:3px;display:flex;align-items:center;gap:6px;">
+              <span>⏱️ শিক্ষাদানের অভিজ্ঞতা:</span>
+            </div>
+            <div id="bio-exp-text" style="font-size:13px;color:#1e293b;font-weight:600;"></div>
+          </div>
+
+          <!-- 3. পারদর্শী / পাঠদান -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+              <span>🎯 পাঠদানের বিষয় ও পারদর্শিতা:</span>
+            </div>
+            <div class="spec-tags" id="spec-tags" style="margin-top:0;"></div>
+          </div>
+
+          <!-- 4. পরিচিতি -->
+          <div id="bio-desc-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;">
+            <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;">📝 শিক্ষকের সংক্ষিপ্ত পরিচয়:</div>
+            <p class="bio-text" id="teacher-bio"></p>
+          </div>
         </div>
 
         <!-- DEMO MEDIA CARD -->
@@ -938,31 +1083,63 @@
           <div id="demo-media-container" style="padding:4px 0;"></div>
         </div>
 
-        <!-- SCHEDULE CARD -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">📅</div>
+        <!-- CLASS TIMING & FREE TRIAL CARD -->
+        <div class="card" style="border:1.5px solid rgba(16,185,129,0.25);background:linear-gradient(180deg,#ffffff 0%,rgba(16,185,129,0.03) 100%);">
+          <div class="card-header" style="border-bottom:1px solid rgba(16,185,129,0.15);padding-bottom:12px;margin-bottom:14px;">
+            <div class="card-icon" style="background:rgba(16,185,129,0.15);color:#047857;font-size:22px;">📅</div>
             <div>
-              <div class="card-title">পড়ার সুবিধাজনক সময়সূচি</div>
-              <div class="card-subtitle">ফাঁকা স্লটে ক্লিক করে সরাসরি ফ্রি ট্রায়াল বুক করুন</div>
+              <div class="card-title" style="color:var(--navy);font-size:16px;">ক্লাসের সময়সূচি ও ফ্রি ট্রায়াল</div>
+              <div class="card-subtitle" style="color:#047857;font-weight:600;">আপনার সুবিধাজনক দিন ও সময়ে ১-অন-১ লাইভ ক্লাস</div>
             </div>
           </div>
 
-          <div class="schedule-legend">
-            <div class="legend-item"><div class="legend-dot available"></div> ফাঁকা (বুক করুন)</div>
-            <div class="legend-item"><div class="legend-dot booked"></div> বুকড</div>
-            <div class="legend-item"><div class="legend-dot off"></div> নেই</div>
+          <div style="background:rgba(15,39,68,0.03);border:1px solid rgba(15,39,68,0.08);border-radius:12px;padding:16px 18px;margin-bottom:16px;text-align:left;">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="font-size:24px;line-height:1;margin-top:2px;">💬</div>
+              <div>
+                <h4 style="margin:0 0 6px 0;font-size:14.5px;font-weight:800;color:var(--navy,#0f2744);">
+                  সরাসরি কথা বলে ফ্রি ট্রায়াল ক্লাসের সময় নির্ধারণ করুন
+                </h4>
+                <p style="margin:0;font-size:13px;line-height:1.65;color:var(--text-muted,#475569);">
+                  আপনি বা আপনার সন্তানের পড়ার সুবিধাজনক দিন ও সময় শিক্ষকের সাথে সরাসরি আলোচনা করে খুব সহজেই নির্ধারণ করে নিতে পারেন। প্রথমে একটি ফ্রি ট্রায়াল ক্লাসে অংশ নিয়ে শিক্ষকের পাঠদান পদ্ধতি দেখুন এবং নিশ্চিত হয়ে নিয়মিত ক্লাস শুরু করুন।
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div class="day-tabs" id="day-tabs">
-            <div class="day-tab active" onclick="showDay('sat')" id="dtab-sat">শনি</div>
-            <div class="day-tab" onclick="showDay('sun')" id="dtab-sun">রবি</div>
-            <div class="day-tab" onclick="showDay('mon')" id="dtab-mon">সোম</div>
-            <div class="day-tab" onclick="showDay('tue')" id="dtab-tue">মঙ্গল</div>
-            <div class="day-tab" onclick="showDay('wed')" id="dtab-wed">বুধ</div>
+          <!-- Key Highlights Grid -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px;">
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+              <span style="font-size:20px;">⏱️</span>
+              <div>
+                <div style="font-size:11px;color:var(--text-muted);font-weight:600;">ক্লাসের সময়</div>
+                <div style="font-size:13px;font-weight:800;color:var(--navy);">পছন্দমাফিক সুবিধাজনক সময়ে</div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+              <span style="font-size:20px;">🎯</span>
+              <div>
+                <div style="font-size:11px;color:var(--text-muted);font-weight:600;">ক্লাস পদ্ধতি</div>
+                <div style="font-size:13px;font-weight:800;color:var(--navy);">১-অন-১ পার্সোনাল লাইভ ক্লাস</div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+              <span style="font-size:20px;">🎁</span>
+              <div>
+                <div style="font-size:11px;color:var(--text-muted);font-weight:600;">প্রথম ক্লাস</div>
+                <div style="font-size:13px;font-weight:800;color:#047857;">সম্পূর্ণ ফ্রি ডেমো / ট্রায়াল</div>
+              </div>
+            </div>
           </div>
-          <div class="slots-grid" id="slots-grid">
-            <div style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:20px;">লোড হচ্ছে...</div>
+
+          <!-- Action CTA Buttons -->
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button type="button" onclick="openWhatsApp()" class="btn btn-wa" style="flex:1;min-width:200px;padding:11px 18px;font-size:13.5px;font-weight:800;justify-content:center;border-radius:12px;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(37,211,102,0.25);">
+              💬 WhatsApp-এ কথা বলুন ও সময় ঠিক করুন
+            </button>
+            <button type="button" onclick="openBookingModal()" class="btn btn-navy" style="flex:1;min-width:180px;padding:11px 18px;font-size:13.5px;font-weight:800;justify-content:center;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:8px;">
+              📅 ফ্রি ট্রায়াল ক্লাসের আবেদন করুন
+            </button>
           </div>
         </div>
 
@@ -1035,39 +1212,43 @@
               <button class="btn btn-full" id="sms-direct-btn" onclick="openSMS()" style="background:#2563eb;color:#fff;border:none;border-radius:12px;padding:10px 16px;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
                 ✉️ সরাসরি SMS পাঠান
               </button>
-              <button class="btn btn-navy btn-full" onclick="openBookingModal('sat', { label: 'সুবিধাজনক সময়', period: 'ট্রায়াল ক্লাস' })">
+              <button class="btn btn-navy btn-full" onclick="openBookingModal()">
                 📅 ফ্রি ট্রায়াল রিকোয়েস্ট পাঠান
               </button>
-              <p class="wa-note">সময়সূচি থেকে নির্দিষ্ট স্লটে ক্লিক করেও সরাসরি বুক করতে পারেন</p>
+              <p class="wa-note">শিক্ষকের সাথে কথা বলে আপনার সুবিধাজনক সময়ে ফ্রি ট্রায়াল ক্লাস শুরু করুন</p>
             </div>
           </div>
 
           <!-- QUICK STATS CARD -->
           <div class="card" style="margin-top:0;">
-            <div style="font-weight:700; font-size:14px; color:var(--navy); margin-bottom:14px;">📊 দ্রুত তথ্য</div>
+            <div style="font-weight:700; font-size:14px; color:var(--navy); margin-bottom:14px;">📊 শিক্ষকের তথ্য ও যোগ্যতা</div>
             <div class="bc-info-row">
-              <span class="bc-info-lbl">দেশ (Country)</span>
-              <span class="bc-info-val" id="qs-country">—</span>
+              <span class="bc-info-lbl">🎓 যোগ্যতা</span>
+              <span class="bc-info-val" id="qs-quals" style="text-align:right; max-width:180px;">—</span>
             </div>
             <div class="bc-info-row">
-              <span class="bc-info-lbl">মাতৃভাষা</span>
-              <span class="bc-info-val" id="qs-native-lang">—</span>
-            </div>
-            <div class="bc-info-row">
-              <span class="bc-info-lbl">পাঠদানের ভাষা</span>
-              <span class="bc-info-val" id="qs-teach-langs" style="text-align:right; max-width:150px;">—</span>
-            </div>
-            <div class="bc-info-row">
-              <span class="bc-info-lbl">অভিজ্ঞতা</span>
+              <span class="bc-info-lbl">⏱️ অভিজ্ঞতা</span>
               <span class="bc-info-val" id="qs-exp">—</span>
             </div>
             <div class="bc-info-row">
-              <span class="bc-info-lbl">মোট ছাত্র</span>
-              <span class="bc-info-val" id="qs-students">—</span>
+              <span class="bc-info-lbl">🎯 পাঠদানের বিষয়</span>
+              <span class="bc-info-val" id="qs-specs" style="text-align:right; max-width:180px;">—</span>
             </div>
             <div class="bc-info-row">
-              <span class="bc-info-lbl">বিষয়</span>
-              <span class="bc-info-val" id="qs-specs" style="text-align:right; max-width:150px;">—</span>
+              <span class="bc-info-lbl">📍 দেশ</span>
+              <span class="bc-info-val" id="qs-country">—</span>
+            </div>
+            <div class="bc-info-row">
+              <span class="bc-info-lbl">🗣️ মাতৃভাষা</span>
+              <span class="bc-info-val" id="qs-native-lang">—</span>
+            </div>
+            <div class="bc-info-row">
+              <span class="bc-info-lbl">🌐 পাঠদানের ভাষা</span>
+              <span class="bc-info-val" id="qs-teach-langs" style="text-align:right; max-width:180px;">—</span>
+            </div>
+            <div class="bc-info-row">
+              <span class="bc-info-lbl">👨‍🎓 মোট শিক্ষার্থী</span>
+              <span class="bc-info-val" id="qs-students">—</span>
             </div>
           </div>
 
@@ -1282,6 +1463,19 @@ function filterAndRenderTeachers() {
   renderTeacherDirectory(list);
 }
 
+function parseTeacherArray(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  if (typeof val === 'string') {
+    val = val.trim();
+    if (val.startsWith('[') && val.endsWith(']')) {
+      try { return JSON.parse(val); } catch(e) {}
+    }
+    return val.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
 // ── DIRECTORY RENDER ──
 function renderTeacherDirectory(list) {
   const container = document.getElementById('teacher-grid');
@@ -1312,7 +1506,7 @@ function renderTeacherDirectory(list) {
       : `<div class="tc-avatar-custom tc-avatar-male" title="পুরুষ শিক্ষক"><div class="tc-avatar-icon">👨‍🏫</div><div class="tc-avatar-role-pill">পুরুষ শিক্ষক</div></div>`;
 
     const photo = (t.photo_url && t.photo_url.trim() !== '')
-      ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.parentElement.innerHTML=\`${customFallback.replace(/"/g, '\\"')}\`" />`
+      ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" /><div style="display:none;width:100%;height:100%;">${customFallback}</div>`
       : customFallback;
     const isDemo = t.is_demo || t.slug === 'hafez-tanvir-ahmed' || t.slug === 'mufti-salman-faris' || t.slug === 'hafeza-umme-kulsum';
     const demoBadge = isDemo
@@ -1328,8 +1522,23 @@ function renderTeacherDirectory(list) {
     const countryName = t.country || 'বাংলাদেশ';
     const nativeLang = t.native_language || 'বাংলা';
     const teachLangs = (t.languages && t.languages.length > 0) ? t.languages : ['বাংলা'];
-    const quals = Array.isArray(t.qualifications) ? t.qualifications : (typeof t.qualifications === 'string' ? JSON.parse(t.qualifications || '[]') : []);
-    const qualTags = quals.map(q => `<span class="tc-tag">${q}</span>`).join('');
+    
+    // Structured data: 1. যোগ্যতা, 2. অভিজ্ঞতা, 3. পারদর্শী
+    const quals = parseTeacherArray(t.qualifications);
+    const specs = parseTeacherArray(t.specializations);
+    const expYears = parseInt(t.experience_years, 10);
+    const expText = (expYears && expYears > 0) ? `${expYears} বছর+ অভিজ্ঞতা` : 'অভিজ্ঞ শিক্ষক';
+    const studentsTaught = parseInt(t.students_taught, 10);
+    const studentText = (studentsTaught && studentsTaught > 0) ? `${studentsTaught}+ ছাত্র` : '';
+
+    const qualBadgesHtml = quals.length > 0
+      ? quals.map(q => `<span class="tc-s-badge-qual">📜 ${q}</span>`).join('')
+      : `<span class="tc-s-badge-qual">📜 ${t.designation || 'সনদপ্রাপ্ত শিক্ষক'}</span>`;
+
+    const specBadgesHtml = specs.length > 0
+      ? specs.map(s => `<span class="tc-s-badge-spec">📖 ${s}</span>`).join('')
+      : `<span class="tc-s-badge-spec">📖 সহীহ কোরআন ও তাজউইদ</span>`;
+
     const feeDisplay = t.monthly_fee || 'আলোচনা সাপেক্ষে';
     
     return `
@@ -1339,7 +1548,7 @@ function renderTeacherDirectory(list) {
         <div class="tc-name">${t.name}</div>
         <div class="tc-designation">${t.designation || 'কোরআন শিক্ষক'}</div>
         
-        <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 8px 0;">
+        <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 6px 0;">
           ${tierBadge}
           <span class="tc-verified-badge">✅ ভেরিফাইড</span>
           <span class="tc-rating">${ratingStr}</span>
@@ -1348,23 +1557,47 @@ function renderTeacherDirectory(list) {
 
         <div class="tc-fee-badge">💰 ফি: ${feeDisplay}</div>
 
-        <div class="tc-qualifications">${qualTags}</div>
-
-        <!-- Language Info Box -->
-        <div style="background:rgba(15,39,68,0.035);border:1px solid rgba(15,39,68,0.08);border-radius:8px;padding:6px 8px;margin:4px 0 12px 0;width:100%;box-sizing:border-box;text-align:left;font-size:11.5px;line-height:1.4;">
-          <div style="margin-bottom:3px;display:flex;align-items:center;gap:4px;">
-            <span style="color:var(--text-muted);font-weight:600;">🗣️ মাতৃভাষা:</span>
-            <strong style="color:var(--navy);font-weight:700;">${nativeLang}</strong>
+        <!-- 1. যোগ্যতা, 2. অভিজ্ঞতা, 3. পারদর্শী (Structured Info Box) -->
+        <div class="tc-profile-structured-box">
+          <div class="tc-structured-row">
+            <span class="tc-s-lbl">🎓 যোগ্যতা:</span>
+            <div class="tc-s-val">
+              ${qualBadgesHtml}
+            </div>
           </div>
-          <div style="display:flex;align-items:flex-start;gap:4px;flex-wrap:wrap;">
-            <span style="color:var(--text-muted);font-weight:600;">🌐 ক্লাসের ভাষা:</span>
-            <span style="display:inline-flex;gap:3px;flex-wrap:wrap;">
-              ${teachLangs.map(l => `<span style="background:#fff;border:1px solid #cbd5e1;color:var(--navy);font-size:10.5px;padding:1px 5px;border-radius:4px;font-weight:700;">${l}</span>`).join('')}
-            </span>
+          <div class="tc-structured-row">
+            <span class="tc-s-lbl">⏱️ অভিজ্ঞতা:</span>
+            <div class="tc-s-val">
+              <span class="tc-s-badge-exp">${expText}</span>
+              ${studentText ? `<span style="font-size:10.5px;color:var(--text-muted,#64748b);font-weight:700;margin-left:2px;">(${studentText})</span>` : ''}
+            </div>
+          </div>
+          <div class="tc-structured-row">
+            <span class="tc-s-lbl">🎯 পারদর্শী:</span>
+            <div class="tc-s-val">
+              ${specBadgesHtml}
+            </div>
           </div>
         </div>
 
-        <a href="teachers.html?id=${t.slug || t.id}" class="tc-action-btn">বিস্তারিত প্রোফাইল ও ডেমো বুক করুন →</a>
+        <!-- Language & Location Box -->
+        <div style="background:rgba(15,39,68,0.03);border:1px solid rgba(15,39,68,0.07);border-radius:8px;padding:5px 8px;margin:0 0 10px 0;width:100%;box-sizing:border-box;text-align:left;font-size:11px;line-height:1.4;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;">
+            <div><span style="color:var(--text-muted);font-weight:600;">🗣️ মাতৃভাষা:</span> <strong style="color:var(--navy);font-weight:700;">${nativeLang}</strong></div>
+            <div style="display:flex;align-items:center;gap:3px;"><span style="color:var(--text-muted);font-weight:600;">🌐 ক্লাস:</span> ${teachLangs.map(l => `<span style="background:#fff;border:1px solid #cbd5e1;color:var(--navy);font-size:10px;padding:1px 5px;border-radius:4px;font-weight:700;">${l}</span>`).join('')}</div>
+          </div>
+        </div>
+
+        <!-- Two Action Buttons -->
+        <div class="tc-actions-wrapper" style="width:100%;display:flex;flex-direction:column;gap:8px;margin-top:auto;">
+          <a href="teachers.html?id=${t.slug || t.id}" class="tc-action-btn" style="margin-top:0;display:flex;align-items:center;justify-content:center;gap:6px;">
+            👨‍🏫 বিস্তারিত প্রোফাইল দেখুন ↗
+          </a>
+          <button type="button" onclick="openLeadModalForTeacherById('${t.slug || t.id}')" class="btn btn-wa" style="width:100%;padding:9px 14px;font-size:13px;font-weight:700;border-radius:12px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:none;">
+            💬 সরাসরি যোগাযোগ করুন
+          </button>
+        </div>
+
         ${isAdmin ? `
           <div class="tc-admin-tools">
             <button class="tc-admin-btn tc-admin-edit" onclick="editTeacherCard('${t.slug || t.id}')">✏️ এডিট</button>
@@ -1446,7 +1679,30 @@ async function init() {
       return;
     }
   } catch(e) {
-    console.warn('DB lookup failed, checking demo roster:', e);
+    console.warn('DB RPC lookup failed, trying direct query fallback:', e);
+  }
+
+  // Direct table query fallback for newly added dynamic teachers
+  try {
+    let foundTeacher = (rawTeachersList || []).find(item => item.slug === slug || String(item.id) === String(slug));
+    if (!foundTeacher) {
+      const { data: dbT } = await db.from('teachers').select('*').or(`slug.eq.${slug},id.eq.${slug}`).maybeSingle();
+      if (dbT) foundTeacher = dbT;
+    }
+    if (foundTeacher) {
+      teacherData = foundTeacher;
+      try {
+        const { data: revs } = await db.from('teacher_reviews').select('*').eq('teacher_id', foundTeacher.id).eq('is_approved', true);
+        reviewsData = revs || [];
+      } catch(re) {
+        reviewsData = [];
+      }
+      renderPage();
+      hideLoader();
+      return;
+    }
+  } catch(err) {
+    console.warn('Direct teacher query failed:', err);
   }
 
   if (DEMO_TEACHERS_MAP[slug]) {
@@ -1527,8 +1783,14 @@ function renderPage() {
     : `<div class="tc-avatar-custom tc-avatar-male" style="border:none;" title="পুরুষ শিক্ষক"><div class="tc-avatar-icon" style="font-size:26px;margin-top:0;">👨‍🏫</div></div>`;
 
   if (t.photo_url && t.photo_url.trim() !== '') {
-    document.getElementById('hero-avatar').innerHTML = `<img src="${t.photo_url}" alt="${t.name}" loading="eager" onerror="this.parentElement.innerHTML=\`${heroFallback.replace(/"/g, '\\"')}\`">`;
-    document.getElementById('bc-avatar').innerHTML   = `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.parentElement.innerHTML=\`${bcFallback.replace(/"/g, '\\"')}\`">`;
+    document.getElementById('hero-avatar').innerHTML = `
+      <img src="${t.photo_url}" alt="${t.name}" loading="eager" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" style="width:100%;height:100%;object-fit:cover;">
+      <div style="display:none;width:100%;height:100%;">${heroFallback}</div>
+    `;
+    document.getElementById('bc-avatar').innerHTML   = `
+      <img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" style="width:100%;height:100%;object-fit:cover;">
+      <div style="display:none;width:100%;height:100%;">${bcFallback}</div>
+    `;
   } else {
     document.getElementById('hero-avatar').innerHTML = heroFallback;
     document.getElementById('bc-avatar').innerHTML   = bcFallback;
@@ -1537,14 +1799,22 @@ function renderPage() {
   const countryName = t.country || 'বাংলাদেশ';
   const nativeLang = t.native_language || 'বাংলা';
   const teachLangs = (t.languages && t.languages.length > 0) ? t.languages : ['বাংলা'];
+  
+  // Parse qualifications, specializations, and experience
+  const quals = parseTeacherArray(t.qualifications);
+  const specs = parseTeacherArray(t.specializations);
+  const expYears = parseInt(t.experience_years, 10);
+  const expText = (expYears && expYears > 0) ? `${expYears} বছর+ শিক্ষকতা` : 'অভিজ্ঞ শিক্ষক';
+  const studentsTaught = parseInt(t.students_taught, 10);
+  const studentText = (studentsTaught && studentsTaught > 0) ? `${studentsTaught}+ শিক্ষার্থী` : '';
 
   const heroCountryEl = document.getElementById('hero-country');
   if (heroCountryEl) heroCountryEl.textContent = '📍 ' + countryName;
 
   document.getElementById('hero-name').textContent        = t.name;
   document.getElementById('hero-designation').textContent = t.designation || '';
-  document.getElementById('stat-exp').textContent         = t.experience_years > 0 ? t.experience_years + '+' : '—';
-  document.getElementById('stat-students').textContent    = t.students_taught > 0 ? t.students_taught + '+' : '—';
+  document.getElementById('stat-exp').textContent         = expYears > 0 ? expYears + '+' : '—';
+  document.getElementById('stat-students').textContent    = studentsTaught > 0 ? studentsTaught + '+' : '—';
   document.getElementById('stat-rating').textContent      = avgRating !== '—' ? avgRating + ' ⭐' : '—';
   document.getElementById('bc-name').textContent          = t.name;
   document.getElementById('bc-desig').textContent         = t.designation || '';
@@ -1553,47 +1823,84 @@ function renderPage() {
   const bcFeeEl = document.getElementById('bc-fee-val');
   if (bcFeeEl) bcFeeEl.textContent = t.monthly_fee || 'আলোচনা সাপেক্ষে';
 
-  // Quick stats card elements
+  // Quick stats card elements (Ordered: 1. যোগ্যতা, 2. অভিজ্ঞতা, 3. বিষয়/পারদর্শী, etc.)
+  const qsQuals = document.getElementById('qs-quals');
+  if (qsQuals) qsQuals.textContent = quals.length > 0 ? quals.join(', ') : (t.designation || 'কোরআন শিক্ষক');
+
+  const qsExp = document.getElementById('qs-exp');
+  if (qsExp) qsExp.textContent = expYears > 0 ? `${expYears} বছর+` : 'অভিজ্ঞ';
+
+  const qsSpecs = document.getElementById('qs-specs');
+  if (qsSpecs) qsSpecs.textContent = specs.length > 0 ? specs.join(', ') : 'সহীহ কোরআন শিক্ষা';
+
   const qsCountry = document.getElementById('qs-country');
   if (qsCountry) qsCountry.textContent = countryName;
+
   const qsNative = document.getElementById('qs-native-lang');
   if (qsNative) qsNative.textContent = nativeLang;
+
   const qsTeach = document.getElementById('qs-teach-langs');
   if (qsTeach) qsTeach.textContent = teachLangs.join(', ');
 
-  document.getElementById('qs-exp').textContent           = t.experience_years > 0 ? t.experience_years + ' বছর+' : '—';
-  document.getElementById('qs-students').textContent      = t.students_taught > 0 ? t.students_taught + '+' : '—';
-  document.getElementById('qs-specs').textContent         = (t.specializations || []).join(', ') || '—';
+  const qsStudents = document.getElementById('qs-students');
+  if (qsStudents) qsStudents.textContent = studentsTaught > 0 ? studentsTaught + '+' : '—';
 
-  // Qual tags - clear container first to prevent duplication
+  // Qual tags in Hero (Clear container first to prevent duplication)
   const qualEl = document.getElementById('qual-tags');
   if (qualEl) {
     qualEl.innerHTML = '';
 
-    // Mother tongue tag
+    // 1. যোগ্যতা Tags
+    if (quals.length > 0) {
+      quals.forEach(q => {
+        const el = document.createElement('span');
+        el.className = 'qual-tag';
+        el.style.background = 'rgba(200,151,42,0.2)';
+        el.style.color = '#fef08a';
+        el.style.borderColor = 'rgba(200,151,42,0.45)';
+        el.textContent = '🎓 যোগ্যতা: ' + q;
+        qualEl.appendChild(el);
+      });
+    } else {
+      const el = document.createElement('span');
+      el.className = 'qual-tag';
+      el.textContent = '🎓 যোগ্যতা: সনদপ্রাপ্ত শিক্ষক';
+      qualEl.appendChild(el);
+    }
+
+    // 2. অভিজ্ঞতা Tag
+    const expTagEl = document.createElement('span');
+    expTagEl.className = 'qual-tag';
+    expTagEl.style.background = 'rgba(16,185,129,0.2)';
+    expTagEl.style.color = '#a7f3d0';
+    expTagEl.style.borderColor = 'rgba(16,185,129,0.4)';
+    expTagEl.textContent = '⏱️ অভিজ্ঞতা: ' + expText;
+    qualEl.appendChild(expTagEl);
+
+    // 3. পারদর্শী / বিষয় Tags
+    if (specs.length > 0) {
+      specs.slice(0, 3).forEach(s => {
+        const el = document.createElement('span');
+        el.className = 'qual-tag';
+        el.style.background = 'rgba(56,189,248,0.18)';
+        el.style.color = '#bae6fd';
+        el.style.borderColor = 'rgba(56,189,248,0.35)';
+        el.textContent = '🎯 পারদর্শী: ' + s;
+        qualEl.appendChild(el);
+      });
+    }
+
+    // 4. মাতৃভাষা ও ক্লাসের ভাষা
     const nativeEl = document.createElement('span');
     nativeEl.className = 'qual-tag';
-    nativeEl.style.background = 'rgba(200,151,42,0.15)';
-    nativeEl.style.color = '#92400e';
-    nativeEl.style.borderColor = 'rgba(200,151,42,0.35)';
     nativeEl.textContent = '🗣️ মাতৃভাষা: ' + nativeLang;
     qualEl.appendChild(nativeEl);
 
-    // Qualifications
-    (t.qualifications || []).forEach(q => {
-      const el = document.createElement('span');
-      el.className = 'qual-tag';
-      el.textContent = '📜 ' + q;
-      qualEl.appendChild(el);
-    });
-
-    // Teaching Languages
     teachLangs.forEach(l => {
       const el = document.createElement('span');
       el.className = 'qual-tag';
-      el.style.background = 'rgba(58,134,200,0.15)';
-      el.style.color = '#3a86c8';
-      el.style.borderColor = 'rgba(58,134,200,0.3)';
+      el.style.background = 'rgba(255,255,255,0.08)';
+      el.style.color = 'rgba(255,255,255,0.85)';
       el.textContent = '🌐 ক্লাস: ' + l;
       qualEl.appendChild(el);
     });
@@ -1613,32 +1920,45 @@ function renderPage() {
     demoCard.style.display = 'none';
   }
 
-  // Bio - clear spec tags first to prevent duplication
-  if (t.bio) {
-    document.getElementById('teacher-bio').textContent = t.bio;
-    document.getElementById('bio-card').style.display = 'block';
+  // Bio & Structured Qualifications Card
+  const bioCard = document.getElementById('bio-card');
+  if (bioCard) {
+    bioCard.style.display = 'block';
+
+    // 1. Qualifications in Bio Card
+    const qualsListEl = document.getElementById('bio-quals-list');
+    if (qualsListEl) {
+      qualsListEl.innerHTML = quals.length > 0
+        ? quals.map(q => `<span class="tc-s-badge-qual" style="font-size:12px;padding:3px 10px;">📜 ${q}</span>`).join('')
+        : `<span class="tc-s-badge-qual" style="font-size:12px;padding:3px 10px;">📜 ${t.designation || 'সনদপ্রাপ্ত কোরআন শিক্ষক'}</span>`;
+    }
+
+    // 2. Experience in Bio Card
+    const expTextEl = document.getElementById('bio-exp-text');
+    if (expTextEl) {
+      expTextEl.textContent = `${expYears > 0 ? `দীর্ঘ ${expYears} বছর+ সফলতার সাথে দেশ-বিদেশের শিক্ষার্থীদের পাঠদান করছেন` : 'অভিজ্ঞ শিক্ষক'}${studentsTaught > 0 ? ` এবং ইতোমধ্যে ${studentsTaught}+ শিক্ষার্থীকে পাঠদান করিয়েছেন।` : '।'}`;
+    }
+
+    // 3. Specializations in Bio Card
     const specEl = document.getElementById('spec-tags');
     if (specEl) {
-      specEl.innerHTML = '';
-      (t.specializations || []).forEach(s => {
-        const el = document.createElement('span');
-        el.className = 'spec-tag';
-        el.textContent = s;
-        specEl.appendChild(el);
-      });
+      specEl.innerHTML = specs.length > 0
+        ? specs.map(s => `<span class="spec-tag" style="font-size:12px;padding:4px 12px;border-radius:18px;">🎯 ${s}</span>`).join('')
+        : '<span class="spec-tag" style="font-size:12px;padding:4px 12px;border-radius:18px;">🎯 সহীহ কোরআন ও তাজউইদ</span>';
     }
-  } else {
-    document.getElementById('bio-card').style.display = 'none';
-  }
 
-  // Schedule
-  showDay('sat');
+    // 4. Bio Text
+    const bioTextEl = document.getElementById('teacher-bio');
+    if (bioTextEl) {
+      bioTextEl.textContent = t.bio || 'যাচাইকৃত ও অভিজ্ঞ শিক্ষক। সঠিক মাখরাজ ও তাজউইদের সাথে যত্নসহকারে অনলাইনে কোরআন শিক্ষা দেন।';
+    }
+  }
 
   // Reviews
   renderReviews();
 }
 
-// ── SCHEDULE ──
+// ── SCHEDULE (Helper if needed) ──
 function showDay(day) {
   currentDay = day;
   document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
@@ -1647,6 +1967,7 @@ function showDay(day) {
   const schedule = teacherData?.weekly_schedule || {};
   const available = schedule[day] || [];
   const grid = document.getElementById('slots-grid');
+  if (!grid) return;
   grid.innerHTML = '';
 
   if (SLOTS.length === 0) {
@@ -1673,17 +1994,19 @@ function showDay(day) {
 let targetTeacherForModal = null;
 let currentContactType = 'whatsapp'; // 'whatsapp', 'trial', 'sms'
 
-function openBookingModal(day, slot) {
+function openBookingModal(day = null, slot = null) {
   targetTeacherForModal = teacherData;
-  selectedSlot = { day, slot };
+  selectedSlot = slot ? { day, slot } : null;
   currentContactType = 'trial';
   
-  const dayName = DAY_NAMES[day] || day;
-  const slotStr = slot ? `${dayName}, ${slot.label} (${slot.period || 'ক্লাস'})` : 'সুবিধাজনক সময়';
+  const dayName = (day && DAY_NAMES[day]) ? DAY_NAMES[day] : day;
+  const slotStr = slot ? `${dayName}, ${slot.label} (${slot.period || 'ক্লাস'})` : 'সুবিধাজনক সময়ে';
   
   document.getElementById('bk-modal-title').textContent = '📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট';
   document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের সাথে আপনার ক্লাস সমন্বয় ও যোগাযোগের জন্য তথ্য দিন';
-  document.getElementById('modal-slot-info').innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} &nbsp;|&nbsp; ⏰ <strong>স্লট:</strong> ${slotStr}`;
+  document.getElementById('modal-slot-info').innerHTML = slot 
+    ? `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} &nbsp;|&nbsp; ⏰ <strong>সময়:</strong> ${slotStr}`
+    : `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} (${teacherData?.designation || 'কোরআন শিক্ষক'})`;
   document.getElementById('bk-submit-btn').innerHTML = '📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট পাঠান (WhatsApp) →';
   document.getElementById('bk-modal-err').style.display = 'none';
 
@@ -1696,12 +2019,13 @@ function openWhatsApp() {
   selectedSlot = null;
   currentContactType = 'whatsapp';
 
-  document.getElementById('bk-modal-title').textContent = '💬 শিক্ষকের সাথে WhatsApp-এ যোগাযোগের ফর্ম';
-  document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের সাথে সরাসরি WhatsApp-এ কথা বলতে ও ফি জানতে আপনার তথ্য দিন';
-  document.getElementById('modal-slot-info').innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} (${teacherData?.designation || 'কোরআন শিক্ষক'})`;
-  document.getElementById('bk-submit-btn').innerHTML = '💬 WhatsApp-এ শিক্ষকের সাথে চ্যাট শুরু করুন →';
-  document.getElementById('bk-modal-err').style.display = 'none';
-
+  const modalTitle = document.getElementById('bk-modal-title');
+  if (modalTitle) modalTitle.textContent = 'শিক্ষকের সাথে সরাসরি যোগাযোগ';
+  const infoEl = document.getElementById('modal-slot-info');
+  if (infoEl) infoEl.innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} (${teacherData?.designation || 'কোরআন শিক্ষক'})`;
+  const errEl = document.getElementById('bk-modal-err');
+  if (errEl) errEl.style.display = 'none';
+  
   document.getElementById('booking-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1711,12 +2035,13 @@ function openSMS() {
   selectedSlot = null;
   currentContactType = 'sms';
 
-  document.getElementById('bk-modal-title').textContent = '✉️ শিক্ষকের সাথে SMS যোগাযোগের ফর্ম';
-  document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের নম্বরে সরাসরি SMS পাঠাতে আপনার তথ্য দিন';
-  document.getElementById('modal-slot-info').innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'}`;
-  document.getElementById('bk-submit-btn').innerHTML = '✉️ শিক্ষকের সাথে SMS শুরু করুন →';
-  document.getElementById('bk-modal-err').style.display = 'none';
-
+  const modalTitle = document.getElementById('bk-modal-title');
+  if (modalTitle) modalTitle.textContent = 'শিক্ষকের সাথে সরাসরি SMS যোগাযোগ';
+  const infoEl = document.getElementById('modal-slot-info');
+  if (infoEl) infoEl.innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'}`;
+  const errEl = document.getElementById('bk-modal-err');
+  if (errEl) errEl.style.display = 'none';
+  
   document.getElementById('booking-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1726,14 +2051,22 @@ function openLeadModalForTeacher(teacherObj, contactType = 'whatsapp') {
   selectedSlot = null;
   currentContactType = contactType;
 
-  document.getElementById('bk-modal-title').textContent = '💬 শিক্ষকের সাথে যোগাযোগের ফর্ম';
-  document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের সাথে সরাসরি কথা বলতে আপনার নাম ও WhatsApp নম্বর দিন';
-  document.getElementById('modal-slot-info').innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherObj ? teacherObj.name : '—'} (${teacherObj?.designation || 'কোরআন শিক্ষক'})`;
-  document.getElementById('bk-submit-btn').innerHTML = '💬 WhatsApp-এ শিক্ষকের সাথে যুক্ত হন →';
-  document.getElementById('bk-modal-err').style.display = 'none';
-
+  const modalTitle = document.getElementById('bk-modal-title');
+  if (modalTitle) modalTitle.textContent = 'শিক্ষকের সাথে সরাসরি যোগাযোগ';
+  const infoEl = document.getElementById('modal-slot-info');
+  if (infoEl) infoEl.innerHTML = `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherObj ? teacherObj.name : '—'} (${teacherObj?.designation || 'কোরআন শিক্ষক'})`;
+  const errEl = document.getElementById('bk-modal-err');
+  if (errEl) errEl.style.display = 'none';
+  
   document.getElementById('booking-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+function openLeadModalForTeacherById(idOrSlug) {
+  let t = (rawTeachersList || []).find(item => item.slug === idOrSlug || String(item.id) === String(idOrSlug));
+  if (!t && DEMO_TEACHERS_MAP && DEMO_TEACHERS_MAP[idOrSlug]) t = DEMO_TEACHERS_MAP[idOrSlug];
+  if (!t) t = { name: 'কোরআন শিক্ষক', slug: idOrSlug, whatsapp: '8801733017521', designation: 'কোরআন শিক্ষক' };
+  openLeadModalForTeacher(t, 'whatsapp');
 }
 
 function closeBookingModal() {
@@ -1742,36 +2075,32 @@ function closeBookingModal() {
 }
 
 async function submitBooking() {
-  const name   = document.getElementById('bk-name').value.trim();
-  const phone  = document.getElementById('bk-phone').value.trim();
-  const course = document.getElementById('bk-course') ? document.getElementById('bk-course').value : 'সহীহ কোরআন';
-  const msg    = document.getElementById('bk-msg').value.trim();
-  const errEl  = document.getElementById('bk-modal-err');
-  const t      = targetTeacherForModal || teacherData || {};
-
-  if (!name) {
-    errEl.textContent = '❌ অনুগ্রহ করে আপনার বা শিক্ষার্থীর পূর্ণ নাম লিখুন';
-    errEl.style.display = 'block';
-    document.getElementById('bk-name')?.focus();
-    return;
-  }
+  const phone       = (document.getElementById('bk-phone')?.value || '').trim();
+  const name        = (document.getElementById('bk-name')?.value || '').trim();
+  const course      = document.getElementById('bk-course') ? document.getElementById('bk-course').value : 'সহীহ কোরআন';
+  const msg         = (document.getElementById('bk-msg')?.value || '').trim();
+  const errEl       = document.getElementById('bk-modal-err');
+  const t           = targetTeacherForModal || teacherData || {};
 
   if (!phone || phone.length < 10) {
-    errEl.textContent = '❌ অনুগ্রহ করে একটি সঠিক WhatsApp / মোবাইল নম্বর দিন';
-    errEl.style.display = 'block';
+    if (errEl) {
+      errEl.textContent = '❌ অনুগ্রহ করে আপনার সঠিক WhatsApp / মোবাইল নম্বরটি লিখুন';
+      errEl.style.display = 'block';
+    }
     document.getElementById('bk-phone')?.focus();
     return;
   }
 
-  errEl.style.display = 'none';
+  if (errEl) errEl.style.display = 'none';
   const submitBtn = document.getElementById('bk-submit-btn');
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '⏳ তথ্য সংরক্ষণ হচ্ছে...';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '⏳ তথ্য সংরক্ষণ ও শিক্ষক সংযোগ হচ্ছে...';
+  }
 
   const teacherName = t.name || 'শিক্ষক';
   const teacherId = t.id || null;
-  const slotDay = selectedSlot ? selectedSlot.day : '';
-  const slotTime = selectedSlot ? (selectedSlot.slot?.label || '') : (currentContactType === 'whatsapp' ? 'সরাসরি WhatsApp' : (currentContactType === 'sms' ? 'সরাসরি SMS' : 'সাধারণ ট্রায়াল'));
+  const leadDisplayName = name || 'এক শিক্ষার্থী/অভিভাবক';
 
   // Save lead & booking directly to Supabase
   try {
@@ -1779,11 +2108,11 @@ async function submitBooking() {
       await db.from('teacher_bookings').insert([{
         teacher_id: teacherId,
         teacher_name: teacherName,
-        student_name: name,
+        student_name: leadDisplayName,
         student_phone: phone,
-        student_msg: `[বিষয়: ${course}] ` + (msg || ''),
-        slot_day: slotDay,
-        slot_time: slotTime,
+        student_msg: `[কোর্স: ${course}] ` + (msg ? `[নোট: ${msg}]` : ''),
+        slot_day: '',
+        slot_time: 'সরাসরি WhatsApp যোগাযোগ',
         contact_type: currentContactType || 'whatsapp_chat',
         status: 'pending'
       }]);
@@ -1796,15 +2125,10 @@ async function submitBooking() {
   if (currentContactType === 'sms') {
     const rawNum = t.phone || t.whatsapp || '01733017521';
     const cleanNum = rawNum.replace(/\D/g, '') || '01733017521';
-    const smsBody = `সালামুআলাইকুম! আমি ${name} (${phone}) GIC ওয়েবসাইট থেকে শিক্ষক ${teacherName}-এর সাথে কোরআন ক্লাসের জন্য যোগাযোগ করছি। বিষয়: ${course}${msg ? ' | ' + msg : ''}`;
+    const smsBody = `সালামুআলাইকুম! আমি ${leadDisplayName} (${phone}) GIC ওয়েবসাইট থেকে শিক্ষক ${teacherName}-এর সাথে সরাসরি ক্লাসের জন্য যোগাযোগ করছি। কোর্স: ${course}${msg ? ' | ' + msg : ''}`;
     window.location.href = `sms:${cleanNum}?body=${encodeURIComponent(smsBody)}`;
   } else {
-    let waMsg = `সালামুআলাইকুম! আমি *${name}* GIC প্ল্যাটফর্ম থেকে শিক্ষক *${teacherName}*-এর সাথে যোগাযোগ করছি।\n\n📖 বিষয়: ${course}\n📱 আমার WhatsApp নম্বর: ${phone}${msg ? '\n💬 বার্তা: ' + msg : ''}`;
-    if (selectedSlot && selectedSlot.slot) {
-      const dayName = DAY_NAMES[selectedSlot.day] || selectedSlot.day;
-      waMsg += `\n📅 পছন্দের দিন: ${dayName}\n⏰ পছন্দের সময়: ${selectedSlot.slot.label || slotTime}`;
-    }
-    waMsg += `\n\n📌 আমি আপনার কাছে কোরআন ক্লাস ও সময়সূচি সম্পর্কে জানতে আগ্রহী।`;
+    let waMsg = `সালামুআলাইকুম ওস্তাদ/শিক্ষক *${teacherName}*!\nআমি Global Islamic Care প্ল্যাটফর্ম থেকে আপনার সাথে সরাসরি ক্লাসের জন্য যোগাযোগ করছি।\n\n📖 পড়ার কোর্স/বিষয়: ${course}\n📱 আমার WhatsApp নম্বর: ${phone}${name ? `\n👤 নাম: ${name}` : ''}${msg ? `\n💬 বার্তা / পড়ার সময়: ${msg}` : ''}\n\n📌 আমি আপনার কাছে ১-অন-১ ফ্রি ট্রায়াল ক্লাস এবং পড়ার সময়সূচি নিয়ে কথা বলতে আগ্রহী।`;
 
     const rawWa = t.whatsapp || '8801733017521';
     const waNumber = rawWa.replace(/\D/g, '') || '8801733017521';
@@ -1812,8 +2136,10 @@ async function submitBooking() {
     window.open(waUrl, '_blank');
   }
 
-  submitBtn.disabled = false;
-  submitBtn.innerHTML = '💬 WhatsApp-এ শিক্ষকের সাথে যুক্ত হন →';
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '💬 সরাসরি শিক্ষকের WhatsApp-এ বার্তা পাঠান →';
+  }
   closeBookingModal();
 }
 

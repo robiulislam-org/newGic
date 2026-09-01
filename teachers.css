@@ -252,7 +252,93 @@
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 600;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
+}
+
+/* Structured Teacher Profile Info Box (Qualifications, Experience, Specializations) */
+.tc-profile-structured-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin: 8px 0 12px 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tc-structured-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.tc-s-lbl {
+  font-weight: 800;
+  color: var(--navy, #0f2744);
+  white-space: nowrap;
+  font-size: 11.5px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 1px;
+}
+
+.tc-s-val {
+  color: #334155;
+  font-size: 11.5px;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.tc-s-text {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.tc-s-badge-qual {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  padding: 1.5px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-block;
+  line-height: 1.35;
+}
+
+.tc-s-badge-spec {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  padding: 1.5px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-block;
+  line-height: 1.35;
+}
+
+.tc-s-badge-exp {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  padding: 1.5px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-block;
+  line-height: 1.35;
 }
 
 .tc-qualifications {
@@ -260,7 +346,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .tc-tag {
