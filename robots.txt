@@ -1,6 +1,81 @@
+# Global Islamic Care — robots.txt
+# https://globalislamiccare.com
+
+# ── General Crawlers ──────────────────────────────────────────
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /sitemap.xml
+Allow: /.well-known/
+Allow: /services/
+Allow: /teachers.html
+Allow: /library.html
+
+# Block private/admin pages
+Disallow: /dashboard.html
+Disallow: /dashboard/
+
+# Block raw script & patch files (not useful for indexing)
 Disallow: /*.sql$
 Disallow: /*.py$
+Disallow: /patch_
+Disallow: /fix_
+Disallow: /upgrade_
+Disallow: /setup_
+Disallow: /apply_
+Disallow: /verify.py
+Disallow: /emergency_login_fix.sql
+Disallow: /supabase_master_setup.sql
+Disallow: /home_44a0bf7.html
 
+# ── Google ────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Allow: /llms.txt
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /og-image.jpg
+Allow: /logo.png
+Allow: /logo.jpg
+Allow: /favicon.png
+
+# ── AI Crawlers — allow full access ──────────────────────────
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+
+User-agent: Claude-Web
+Allow: /
+Allow: /llms.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: Applebot
+Allow: /
+Allow: /llms.txt
+
+User-agent: Bingbot
+Allow: /
+Allow: /llms.txt
+
+User-agent: DuckDuckBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: Yandex
+Allow: /
+Allow: /llms.txt
+
+# ── Sitemap ───────────────────────────────────────────────────
 Sitemap: https://globalislamiccare.com/sitemap.xml

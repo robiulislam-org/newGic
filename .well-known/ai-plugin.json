@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Global Islamic Care",
+  "name_for_model": "global_islamic_care",
+  "description_for_human": "অনলাইন কোরআন শিক্ষক খুঁজুন — সহীহ কোরআন, হেফজ, নাজেরা, তাফসীর, আরবি ভাষা, মাসলা-মাসায়েল ও ইসলামিক শিক্ষার জন্য যোগ্য ও যাচাইকৃত শিক্ষকদের প্রোফাইল দেখুন।",
+  "description_for_model": "Global Islamic Care (GIC) is an online Islamic teacher platform based in Bangladesh. It connects verified qualified Quran and Islamic studies teachers (Hafez, Alim, Mufti) with students worldwide for 1-on-1 live classes. Services: Sahih Quran recitation, Hifz (memorization), Nazera (fluent reading), Tafseer (exegesis), Arabic language, Islamic jurisprudence (Masla-Masayel), Islamic ethics, and Duas. Students browse teacher profiles at globalislamiccare.com/teachers.html and contact teachers directly via WhatsApp. No commission, no middleman. Free Digital Islamic Library available at globalislamiccare.com/library.html.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://globalislamiccare.com/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://globalislamiccare.com/logo.png",
+  "contact_email": "contact@globalislamiccare.com",
+  "legal_info_url": "https://globalislamiccare.com/"
+}
