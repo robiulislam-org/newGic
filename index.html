@@ -4322,28 +4322,61 @@ let modalCurriculum = 'all';
 
 // 6 Comprehensive Verified Demo Teachers (3 Quran / Islamic, 3 General Academic)
 const DEMO_PUBLIC_TEACHERS = [
-  // ── 1. Quran Teachers (Spotlight / Primary Focus) ──
+  // ── 1. Verified Real Quran Teachers (Spotlight / Primary Focus) ──
   {
-    name: "হাফেজ মাওলানা তানভীর আহমেদ",
-    slug: "hafez-tanvir-ahmed",
-    designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
+    name: "হাঃ মাওঃ মোহাঃ মুজাহিদুল ইসলাম",
+    slug: "md-mujahidul-islam",
+    designation: "হাফেজুল কুরআন ও মাওলানা (দাওরায়ে হাদিস)",
     track: "quran",
     teaching_mode: "both",
-    offline_areas: "উত্তরা, মিরপুর ও বিমানবন্দর, ঢাকা",
+    offline_areas: "মিরপুর, পল্লবী ও উত্তরা, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
-    photo_url: "",
-    qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন (৩০ পারা)", "সনদে তাজবীদ ও ক্বিরাআত"],
-    languages: ["বাংলা", "English", "العربية"],
-    category: "hafez",
+    photo_url: "images/teachers/md-mujahidul-islam.jpg",
+    qualifications: ["হিফজুল কুরআন (৩০ পারা)", "দাওরায়ে হাদিস (তাকমীল)"],
+    languages: ["বাংলা", "العربية"],
+    category: "alem",
     gender: "male",
-    bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী (UK, USA, কানাডা) শিক্ষার্থীদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন, মাখরাজ ও তাজউইদ শিক্ষা দিচ্ছেন।",
-    experience_years: 7,
-    students_taught: 180,
-    specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "শিশু শিক্ষা", "নূরানী কায়দা"],
-    monthly_fee: "৳১,৫০০/মাস",
+    bio: "আলহামদুলিল্লাহ, আমি দাওরায়ে হাদিস সম্পন্নকারী মাওলানা এবং সনদপ্রাপ্ত হাফেজুল কুরআন। অত্যন্ত যত্ন ও স্নেহের সাথে শিশু এবং বড়দের বিশুদ্ধ তাজবীদ ও মাখরাজ অনুযায়ী সহীহ কুরআন শিক্ষা ও হিফজ করিয়ে থাকি।",
+    experience_years: 5,
+    students_taught: 100,
+    specializations: ["হিফজুল কুরআন (৩০ পারা)", "সহীহ কুরআন তেলাওয়াত", "তাজউইদ ও মাখরাজ", "মাসয়ালা-মাসায়েল ও প্রয়োজনীয় দোয়া"],
+    monthly_fee: "আলোচনা সাপেক্ষে",
     hourly_rate: "$5/hr",
     sort_order: 1,
+    is_verified: true,
+    is_demo: false,
+    weekly_schedule: {
+      saturday: [10, 11, 15],
+      sunday: [10, 15],
+      monday: [10, 11],
+      tuesday: [10, 15],
+      wednesday: [10, 11, 15]
+    }
+  },
+  {
+    name: "হাফেজ রবিউল ইসলাম",
+    slug: "hafez-robiul-islam",
+    designation: "হাফেজুল কুরআন",
+    track: "quran",
+    teaching_mode: "both",
+    offline_areas: "মিরপুর, পল্লবী ও উত্তরা, ঢাকা",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
+    photo_url: "images/teachers/hafez-robiul-islam.jpg",
+    qualifications: ["হিফজুল কুরআন (৩০ পারা)", "তাজবীদ ও ক্বিরাআত"],
+    languages: ["বাংলা"],
+    category: "hafez",
+    gender: "male",
+    bio: "আলহামদুলিল্লাহ, আমি একজন সনদপ্রাপ্ত হাফেজুল কুরআন। বিগত কয়েক বছর ধরে তাজউইদ ও সুন্দর উচ্চারণে শিশুদের এবং বয়স্কদের সহীহ কুরআন শিক্ষা দিয়ে আসছি। অত্যন্ত যত্ন ও ধৈর্যের সাথে ছাত্র-ছাত্রীদের হিফজ ও নাজেরা পড়াতে আগ্রহী।",
+    experience_years: 7,
+    students_taught: 100,
+    specializations: ["সহীহ কুরআন তেলাওয়াত", "হিফজ কোর্স (মুখস্থ)", "নাজেরা কুরআন", "মাসয়ালা-মাসায়েল ও প্রয়োজনীয় দোয়া"],
+    monthly_fee: "৳৫,০০০/মাস",
+    hourly_rate: "$6/hr",
+    sort_order: 2,
+    is_verified: true,
+    is_demo: false,
     weekly_schedule: {
       saturday: [10, 11, 14],
       sunday: [10, 14],
@@ -4353,65 +4386,38 @@ const DEMO_PUBLIC_TEACHERS = [
     }
   },
   {
-    name: "মুফতি সালমান ফারিস",
-    slug: "mufti-salman-faris",
-    designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
-    track: "quran",
-    teaching_mode: "online",
-    offline_areas: "",
-    country: "বাংলাদেশ",
-    native_language: "বাংলা",
-    photo_url: "",
-    qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
-    languages: ["বাংলা", "English", "Urdu"],
-    category: "alem",
-    gender: "male",
-    bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ ও দ্রুত হেফজ সম্পন্ন করায় অভিজ্ঞ।",
-    experience_years: 9,
-    students_taught: 240,
-    specializations: ["সম্পূর্ণ হেফজ প্রোগ্রাম", "উন্নত তাজউইদ", "বড়দের কোরআন", "কোরআন তাফসীর"],
-    monthly_fee: "৳২,০০০/মাস",
-    hourly_rate: "$7/hr",
-    sort_order: 2,
-    weekly_schedule: {
-      saturday: [11, 13, 15],
-      sunday: [11, 15],
-      monday: [11, 13],
-      tuesday: [11, 15],
-      wednesday: [11, 13, 15]
-    }
-  },
-  {
-    name: "হাফেজা উম্মে কুলসুম",
-    slug: "hafeza-umme-kulsum",
-    designation: "সিনিয়র মহিলা কোরআন শিক্ষিকা",
+    name: "ক্বারী মো আল আমিন",
+    slug: "md-al-amin",
+    designation: "ক্বারী ও তাজবীদ শিক্ষক",
     track: "quran",
     teaching_mode: "both",
-    offline_areas: "মোহাম্মদপুর, ধানমন্ডি ও লালমাটিয়া, ঢাকা (মা-বোন ও শিশু)",
+    offline_areas: "মোহাম্মদপুর, ধানমন্ডি ও লালমাটিয়া, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
-    photo_url: "",
-    qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড", "নূরানী মুয়াল্লিমা সনদ"],
-    languages: ["বাংলা", "English"],
-    category: "female",
-    gender: "female",
-    bio: "ছোট সোনামণি এবং পর্দানশীন মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা, সহীহ তেলাওয়াত ও জরুরি মাসায়েল শিক্ষা দেন।",
+    photo_url: "images/teachers/md-al-amin.jpg",
+    qualifications: ["দাওয়রায়ে হাদীস+ক্বারী", "তাজবীদ ও ক্বিরাআত সনদ"],
+    languages: ["বাংলা", "العربية"],
+    category: "qari",
+    gender: "male",
+    bio: "তাজবীদ ও ক্বিরাআতে বিশেষ পারদর্শী। প্রতিটি হরফের সহীহ মাখরাজ, সিফাত এবং বিশুদ্ধ লাহনে কুরআনুল কারিম তিলাওয়াত শিক্ষাদানে দক্ষ। তিলাওয়াত সুন্দর ও বিশুদ্ধ করাই আমার মূল লক্ষ্য।",
     experience_years: 5,
-    students_taught: 150,
-    specializations: ["মা-বোনদের ক্লাস", "নূরানী কায়দা", "শিশু শিক্ষা", "দৈনিক দোয়া ও মাসায়েল"],
-    monthly_fee: "৳১,২০০/মাস",
-    hourly_rate: "$4/hr",
+    students_taught: 100,
+    specializations: ["সহীহ তেলাওয়াত", "তাজবীদ ও মাখরাজ", "নাজেরা", "তাজউইদ নিয়মাবলী"],
+    monthly_fee: "আলোচনা সাপেক্ষে",
+    hourly_rate: "$5/hr",
     sort_order: 3,
+    is_verified: true,
+    is_demo: false,
     weekly_schedule: {
-      saturday: [9, 10, 12],
-      sunday: [9, 12],
-      monday: [9, 10],
-      tuesday: [9, 12],
-      wednesday: [9, 10, 12]
+      saturday: [9, 11, 14],
+      sunday: [9, 14],
+      monday: [9, 11],
+      tuesday: [9, 14],
+      wednesday: [9, 11, 14]
     }
   },
 
-  // ── 2. General Academic Muslim Teachers ──
+  // ── 2. General Academic Muslim Teachers (Sample Profiles) ──
   {
     name: "ইঞ্জিনিয়ার মো: তানজিল হাসান",
     slug: "engr-tanzil-hasan",
@@ -4433,6 +4439,8 @@ const DEMO_PUBLIC_TEACHERS = [
     monthly_fee: "৳২,৫০০/মাস",
     hourly_rate: "$8/hr",
     sort_order: 4,
+    is_verified: true,
+    is_demo: true,
     weekly_schedule: {
       saturday: [16, 18, 20],
       sunday: [18, 20],
@@ -4451,21 +4459,23 @@ const DEMO_PUBLIC_TEACHERS = [
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
-    qualifications: ["বিএ অনার্স ও মাস্টার্স (ইংরেজি বিভাগ, ঢাবি)", "আইইএলটিএস সার্টিফাইড", "বিএড সনদ"],
+    qualifications: ["বিএ ও এমএ (ইংরেজি সাহিত্য, ঢাবি)", "আইইএলটিএস ব্যান্ড ৭.৫", "৪ বছরের শিক্ষকতা"],
     languages: ["বাংলা", "English"],
     category: "female",
     gender: "female",
-    bio: "ঢাকা বিশ্ববিদ্যালয়ের মেধাবী গ্র্যাজুয়েট ও পর্দানশীন মুসলিম শিক্ষিকা। ছোট সোনামণি এবং মা-বোনদের খুব যত্নসহকারে আধুনিক পদ্ধতিতে ইংরেজি ও বাংলা পড়িয়ে থাকেন।",
-    experience_years: 5,
+    bio: "ঢাকা বিশ্ববিদ্যালয়ের মেধাবী শিক্ষার্থী ও পর্দানশীন শিক্ষিকা। শিশু ও ছাত্রীদের অত্যন্ত যত্ন ও স্নেহের সাথে একাডেমিক ইংরেজি ও শুদ্ধ বাংলা ভাষা শিক্ষা দেন।",
+    experience_years: 4,
     students_taught: 210,
-    specializations: ["ইংরেজি গ্রামার ও স্পোকেন", "বাংলা প্রথম ও দ্বিতীয় পত্র", "১ম-৫ম শ্রেণি সকল বিষয়", "মা-বোনদের ক্লাস"],
+    specializations: ["ইংরেজি ১ম ও ২য় পত্র (১ম-১০ম)", "বেসিক গ্রামার ও স্পোকেন", "বাংলা সাহিত্য ও ব্যাকরণ", "শিশু শিক্ষা"],
     monthly_fee: "৳২,০০০/মাস",
     hourly_rate: "$7/hr",
     sort_order: 5,
+    is_verified: true,
+    is_demo: true,
     weekly_schedule: {
       saturday: [10, 15, 17],
       sunday: [15, 17],
-      monday: [10, 15],
+      monday: [10, 15, 17],
       tuesday: [15, 17],
       wednesday: [10, 15, 17]
     }
@@ -4473,10 +4483,10 @@ const DEMO_PUBLIC_TEACHERS = [
   {
     name: "মো: সাজিদুর রহমান",
     slug: "sajidur-rahman",
-    designation: "সাধারণ বিজ্ঞান ও পদার্থবিজ্ঞান শিক্ষক (ঢাবি)",
+    designation: "পদার্থবিজ্ঞান ও সাধারণ বিজ্ঞান শিক্ষক (ঢাবি)",
     track: "general",
-    teaching_mode: "online",
-    offline_areas: "",
+    teaching_mode: "both",
+    offline_areas: "উত্তরা ১-১৪ নম্বর সেক্টর ও বিমানবন্দর, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
@@ -4491,6 +4501,8 @@ const DEMO_PUBLIC_TEACHERS = [
     monthly_fee: "৳১,৮০০/মাস",
     hourly_rate: "$6/hr",
     sort_order: 6,
+    is_verified: true,
+    is_demo: true,
     weekly_schedule: {
       saturday: [17, 19, 21],
       sunday: [19, 21],
@@ -4572,11 +4584,40 @@ async function loadPublicTeachers(force = false) {
 
   if (loading) loading.style.display = 'none';
 
-  // If DB returned records, check if we need to supplement with demo general teachers if none in DB
+  const localMap = {};
+  DEMO_PUBLIC_TEACHERS.forEach(t => { localMap[t.slug] = t; });
+
   if (!data || data.length === 0) {
-    data = DEMO_PUBLIC_TEACHERS;
+    data = DEMO_PUBLIC_TEACHERS.slice();
   } else {
-    // Check if general teachers exist in DB, if not append demo general teachers so parents can test both tracks
+    // Enhance DB records with local curated details (clean Bangla names, offline tuition areas, bio, fallback photo)
+    data = data.map(dbT => {
+      const local = localMap[dbT.slug];
+      if (!local) return dbT;
+      return {
+        ...local,
+        ...dbT,
+        name: local.name || dbT.name,
+        teaching_mode: dbT.teaching_mode || local.teaching_mode || 'both',
+        offline_areas: dbT.offline_areas || local.offline_areas || '',
+        photo_url: (dbT.photo_url && dbT.photo_url.trim() !== '') ? dbT.photo_url : local.photo_url,
+        specializations: (Array.isArray(dbT.specializations) && dbT.specializations.length > 0) ? dbT.specializations : local.specializations,
+        qualifications: (Array.isArray(dbT.qualifications) && dbT.qualifications.length > 0) ? dbT.qualifications : local.qualifications,
+        bio: (dbT.bio && dbT.bio.trim() !== '') ? dbT.bio : local.bio,
+        is_verified: true,
+        is_demo: false
+      };
+    });
+
+    // Ensure all 3 real verified teachers are present
+    const realSlugs = ['md-mujahidul-islam', 'hafez-robiul-islam', 'md-al-amin'];
+    realSlugs.forEach(slug => {
+      if (!data.some(t => t.slug === slug) && localMap[slug]) {
+        data.push(localMap[slug]);
+      }
+    });
+
+    // Append demo general academic teachers if not already present in DB
     const hasGeneral = data.some(t => isTeacherGeneral(t));
     if (!hasGeneral) {
       const demoGen = DEMO_PUBLIC_TEACHERS.filter(t => t.track === 'general');
@@ -4779,10 +4820,10 @@ function renderPublicTeacherCards(data) {
 
     const profileUrl = `teachers.html?id=${t.slug || t.id}`;
 
-    const isDemo = t.is_demo || t.slug === 'hafez-tanvir-ahmed' || t.slug === 'mufti-salman-faris' || t.slug === 'hafeza-umme-kulsum' || t.slug === 'engr-tanzil-hasan' || t.slug === 'maryam-akhter' || t.slug === 'sajidur-rahman';
+    const isDemo = t.is_demo === true || t.slug === 'engr-tanzil-hasan' || t.slug === 'maryam-akhter' || t.slug === 'sajidur-rahman';
     const demoBadge = isDemo
-      ? `<div style="position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.1);color:#dc2626;border:1.5px solid rgba(239,68,68,0.3);padding:3px 9px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;z-index:3;" title="এটি একটি নমুনা / ভেরিফায়েড প্রোফাইল">🧪 ডেমো প্রোফাইল</div>`
-      : '';
+      ? `<div style="position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.1);color:#dc2626;border:1.5px solid rgba(239,68,68,0.3);padding:3px 9px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;z-index:3;" title="এটি একটি নমুনা প্রোফাইল">🧪 ডেমো প্রোফাইল</div>`
+      : `<div style="position:absolute;top:12px;right:12px;background:rgba(16,185,129,0.12);color:#047857;border:1.5px solid rgba(16,185,129,0.4);padding:3px 10px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;z-index:3;box-shadow:0 2px 6px rgba(16,185,129,0.12);" title="জিআইসি কর্তৃক ১০০% সনদ ও পরিচয় যাচাইকৃত শিক্ষক">✅ যাচাইকৃত শিক্ষক · GIC</div>`;
 
     const isSenior = t.teacher_type !== 'fresher';
     const tierBadge = isSenior

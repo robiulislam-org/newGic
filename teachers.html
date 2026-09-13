@@ -1467,29 +1467,62 @@ let activeSubjectFilter = 'all';
 let currentSearchQuery = '';
 
 const DEMO_TEACHERS_MAP = {
-  'hafez-tanvir-ahmed': {
-    name: "হাফেজ মাওলানা তানভীর আহমেদ",
-    slug: "hafez-tanvir-ahmed",
-    designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
+  'md-mujahidul-islam': {
+    name: "হাঃ মাওঃ মোহাঃ মুজাহিদুল ইসলাম",
+    slug: "md-mujahidul-islam",
+    designation: "হাফেজুল কুরআন ও মাওলানা (দাওরায়ে হাদিস)",
     teaching_track: "quran",
     track: "quran",
     teaching_mode: "both",
-    offline_areas: "উত্তরা, মিরপুর ও বিমানবন্দর, ঢাকা",
+    offline_areas: "মিরপুর, পল্লবী ও উত্তরা, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "male",
-    monthly_fee: "৳১,৫০০/মাস",
+    monthly_fee: "আলোচনা সাপেক্ষে",
     hourly_rate: "$5/hr",
-    photo_url: "",
-    qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
-    languages: ["বাংলা", "English", "العربية"],
+    photo_url: "images/teachers/md-mujahidul-islam.jpg",
+    qualifications: ["হিফজুল কুরআন (৩০ পারা)", "দাওরায়ে হাদিস (তাকমীল)"],
+    languages: ["বাংলা", "العربية"],
+    category: "alem",
+    is_verified: true,
+    is_demo: false,
+    bio: "আলহামদুলিল্লাহ, আমি দাওরায়ে হাদিস সম্পন্নকারী মাওলানা এবং সনদপ্রাপ্ত হাফেজুল কুরআন। অত্যন্ত যত্ন ও স্নেহের সাথে শিশু এবং বড়দের বিশুদ্ধ তাজবীদ ও মাখরাজ অনুযায়ী সহীহ কুরআন শিক্ষা ও হিফজ করিয়ে থাকি।",
+    experience_years: 5,
+    students_taught: 100,
+    specializations: ["হিফজুল কুরআন (৩০ পারা)", "সহীহ কুরআন তেলাওয়াত", "তাজউইদ ও মাখরাজ", "মাসয়ালা-মাসায়েল ও প্রয়োজনীয় দোয়া"],
+    sort_order: 1,
+    weekly_schedule: {
+      sat: [10, 11, 15],
+      sun: [10, 15],
+      mon: [10, 11],
+      tue: [10, 15],
+      wed: [10, 11, 15]
+    }
+  },
+  'hafez-robiul-islam': {
+    name: "হাফেজ রবিউল ইসলাম",
+    slug: "hafez-robiul-islam",
+    designation: "হাফেজুল কুরআন",
+    teaching_track: "quran",
+    track: "quran",
+    teaching_mode: "both",
+    offline_areas: "মিরপুর, পল্লবী ও উত্তরা, ঢাকা",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
+    gender: "male",
+    monthly_fee: "৳৫,০০০/মাস",
+    hourly_rate: "$6/hr",
+    photo_url: "images/teachers/hafez-robiul-islam.jpg",
+    qualifications: ["হিফজুল কুরআন (৩০ পারা)", "তাজবীদ ও ক্বিরাআত"],
+    languages: ["বাংলা"],
     category: "hafez",
     is_verified: true,
-    bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী (UK, USA) শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন ও তাজউইদ শিক্ষা দিচ্ছেন।",
+    is_demo: false,
+    bio: "আলহামদুলিল্লাহ, আমি একজন সনদপ্রাপ্ত হাফেজুল কুরআন। বিগত কয়েক বছর ধরে তাজউইদ ও সুন্দর উচ্চারণে শিশুদের এবং বয়স্কদের সহীহ কুরআন শিক্ষা দিয়ে আসছি। অত্যন্ত যত্ন ও ধৈর্যের সাথে ছাত্র-ছাত্রীদের হিফজ ও নাজেরা পড়াতে আগ্রহী।",
     experience_years: 7,
-    students_taught: 180,
-    specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "শিশু শিক্ষা"],
-    sort_order: 1,
+    students_taught: 100,
+    specializations: ["সহীহ কুরআন তেলাওয়াত", "হিফজ কোর্স (মুখস্থ)", "নাজেরা কুরআন", "মাসয়ালা-মাসায়েল ও প্রয়োজনীয় দোয়া"],
+    sort_order: 2,
     weekly_schedule: {
       sat: [10, 11, 14],
       sun: [10, 14],
@@ -1498,66 +1531,36 @@ const DEMO_TEACHERS_MAP = {
       wed: [10, 11, 14]
     }
   },
-  'mufti-salman-faris': {
-    name: "মুফতি সালমান ফারিস",
-    slug: "mufti-salman-faris",
-    designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
-    teaching_track: "quran",
-    track: "quran",
-    teaching_mode: "online",
-    offline_areas: "",
-    country: "বাংলাদেশ",
-    native_language: "বাংলা",
-    gender: "male",
-    monthly_fee: "৳২,০০০/মাস",
-    hourly_rate: "$7/hr",
-    photo_url: "",
-    qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
-    languages: ["বাংলা", "English", "Urdu"],
-    category: "alem",
-    is_verified: true,
-    bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ ও দ্রুত হেফজ সম্পন্ন করায় অভিজ্ঞ।",
-    experience_years: 9,
-    students_taught: 240,
-    specializations: ["হিফজুল কোরআন", "তাজউইদ ও সুর", "বয়স্কদের শিক্ষা"],
-    sort_order: 2,
-    weekly_schedule: {
-      sat: [11, 13, 15],
-      sun: [11, 15],
-      mon: [11, 13],
-      tue: [11, 15],
-      wed: [11, 13, 15]
-    }
-  },
-  'hafeza-umme-kulsum': {
-    name: "হাফেজা উম্মে কুলসুম",
-    slug: "hafeza-umme-kulsum",
-    designation: "সিনিয়র মহিলা কোরআন শিক্ষিকা",
+  'md-al-amin': {
+    name: "ক্বারী মো আল আমিন",
+    slug: "md-al-amin",
+    designation: "ক্বারী ও তাজবীদ শিক্ষক",
     teaching_track: "quran",
     track: "quran",
     teaching_mode: "both",
-    offline_areas: "মোহাম্মদপুর, ধানমন্ডি ও লালমাটিয়া, ঢাকা (মা-বোন ও শিশু)",
+    offline_areas: "মোহাম্মদপুর, ধানমন্ডি ও লালমাটিয়া, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
-    gender: "female",
-    monthly_fee: "৳১,২০০/মাস",
-    hourly_rate: "$4/hr",
-    photo_url: "",
-    qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড"],
-    languages: ["বাংলা", "English"],
-    category: "female",
+    gender: "male",
+    monthly_fee: "আলোচনা সাপেক্ষে",
+    hourly_rate: "$5/hr",
+    photo_url: "images/teachers/md-al-amin.jpg",
+    qualifications: ["দাওয়রায়ে হাদীস+ক্বারী", "তাজবীদ ও ক্বিরাআত সনদ"],
+    languages: ["বাংলা", "العربية"],
+    category: "qari",
     is_verified: true,
-    bio: "ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা, সহীহ তেলাওয়াত ও তাজউইদ শিক্ষা দেন।",
+    is_demo: false,
+    bio: "তাজবীদ ও ক্বিরাআতে বিশেষ পারদর্শী। প্রতিটি হরফের সহীহ মাখরাজ, সিফাত এবং বিশুদ্ধ লাহনে কুরআনুল কারিম তিলাওয়াত শিক্ষাদানে দক্ষ। তিলাওয়াত সুন্দর ও বিশুদ্ধ করাই আমার মূল লক্ষ্য।",
     experience_years: 5,
-    students_taught: 150,
-    specializations: ["মা-বোনদের ক্লাস", "নূরানী কায়দা", "শিশু শিক্ষা", "দৈনিক দোয়া ও মাসায়েল"],
+    students_taught: 100,
+    specializations: ["সহীহ তেলাওয়াত", "তাজবীদ ও মাখরাজ", "নাজেরা", "তাজউইদ নিয়মাবলী"],
     sort_order: 3,
     weekly_schedule: {
-      sat: [9, 10, 12],
-      sun: [9, 12],
-      mon: [9, 10],
-      tue: [9, 12],
-      wed: [9, 10, 12]
+      sat: [9, 11, 14],
+      sun: [9, 14],
+      mon: [9, 11],
+      tue: [9, 14],
+      wed: [9, 11, 14]
     }
   },
   'engr-tanzil-hasan': {
@@ -1578,6 +1581,7 @@ const DEMO_TEACHERS_MAP = {
     languages: ["বাংলা", "English"],
     category: "general",
     is_verified: true,
+    is_demo: true,
     bio: "বুয়েট গ্র্যাজুয়েট ও নিষ্ঠাবান মুসলিম শিক্ষক। বাস্তবধর্মী লজিক্যাল পদ্ধতিতে গণিতের ভয় দূর করে এবং শিক্ষার্থীদের নৈতিক ও দ্বীনি মূল্যবোধ চর্চায় উৎসাহিত করেন।",
     experience_years: 6,
     students_taught: 320,
@@ -1605,19 +1609,20 @@ const DEMO_TEACHERS_MAP = {
     monthly_fee: "৳২,০০০/মাস",
     hourly_rate: "$7/hr",
     photo_url: "",
-    qualifications: ["বিএ অনার্স ও মাস্টার্স (ইংরেজি বিভাগ, ঢাবি)", "আইইএলটিএস সার্টিফাইড", "বিএড সনদ"],
+    qualifications: ["বিএ ও এমএ (ইংরেজি সাহিত্য, ঢাবি)", "আইইএলটিএস ব্যান্ড ৭.৫", "৪ বছরের শিক্ষকতা"],
     languages: ["বাংলা", "English"],
     category: "female",
     is_verified: true,
-    bio: "ঢাকা বিশ্ববিদ্যালয়ের মেধাবী গ্র্যাজুয়েট ও পর্দানশীন মুসলিম শিক্ষিকা। ছোট সোনামণি এবং মা-বোনদের খুব যত্নসহকারে আধুনিক পদ্ধতিতে ইংরেজি ও বাংলা পড়িয়ে থাকেন।",
-    experience_years: 5,
+    is_demo: true,
+    bio: "ঢাকা বিশ্ববিদ্যালয়ের মেধাবী শিক্ষার্থী ও পর্দানশীন শিক্ষিকা। শিশু ও ছাত্রীদের অত্যন্ত যত্ন ও স্নেহের সাথে একাডেমিক ইংরেজি ও শুদ্ধ বাংলা ভাষা শিক্ষা দেন।",
+    experience_years: 4,
     students_taught: 210,
-    specializations: ["ইংরেজি গ্রামার ও স্পোকেন", "বাংলা প্রথম ও দ্বিতীয় পত্র", "১ম-৫ম শ্রেণি সকল বিষয়", "মা-বোনদের ক্লাস"],
+    specializations: ["ইংরেজি ১ম ও ২য় পত্র (১ম-১০ম)", "বেসিক গ্রামার ও স্পোকেন", "বাংলা সাহিত্য ও ব্যাকরণ", "শিশু শিক্ষা"],
     sort_order: 5,
     weekly_schedule: {
       sat: [10, 15, 17],
       sun: [15, 17],
-      mon: [10, 15],
+      mon: [10, 15, 17],
       tue: [15, 17],
       wed: [10, 15, 17]
     }
@@ -1625,11 +1630,11 @@ const DEMO_TEACHERS_MAP = {
   'sajidur-rahman': {
     name: "মো: সাজিদুর রহমান",
     slug: "sajidur-rahman",
-    designation: "সাধারণ বিজ্ঞান ও পদার্থবিজ্ঞান শিক্ষক (ঢাবি)",
+    designation: "পদার্থবিজ্ঞান ও সাধারণ বিজ্ঞান শিক্ষক (ঢাবি)",
     teaching_track: "general",
     track: "general",
-    teaching_mode: "online",
-    offline_areas: "",
+    teaching_mode: "both",
+    offline_areas: "উত্তরা ১-১৪ নম্বর সেক্টর ও বিমানবন্দর, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "male",
@@ -1640,6 +1645,7 @@ const DEMO_TEACHERS_MAP = {
     languages: ["বাংলা", "English"],
     category: "general",
     is_verified: true,
+    is_demo: true,
     bio: "ঢাকা বিশ্ববিদ্যালয়ের পদার্থবিজ্ঞান বিভাগের নিষ্ঠাবান মুসলিম শিক্ষক। বাস্তব জীবনের উদাহরণ ও হাতে-কলমে সহজ পদ্ধতিতে বিজ্ঞান ও গণিতকে আনন্দদায়ক করে তোলেন।",
     experience_years: 4,
     students_taught: 175,
@@ -1858,10 +1864,10 @@ function renderTeacherDirectory(list) {
     const photo = (t.photo_url && t.photo_url.trim() !== '')
       ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" /><div style="display:none;width:100%;height:100%;">${customFallback}</div>`
       : customFallback;
-    const isDemo = t.is_demo || t.slug === 'hafez-tanvir-ahmed' || t.slug === 'mufti-salman-faris' || t.slug === 'hafeza-umme-kulsum' || t.slug === 'engr-tanzil-hasan' || t.slug === 'maryam-akhter' || t.slug === 'sajidur-rahman';
+    const isDemo = t.is_demo === true || t.slug === 'engr-tanzil-hasan' || t.slug === 'maryam-akhter' || t.slug === 'sajidur-rahman';
     const demoBadge = isDemo
       ? `<div style="position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.12);color:#dc2626;border:1.5px solid rgba(239,68,68,0.35);padding:3px 9px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(239,68,68,0.1);z-index:3;" title="এটি একটি নমুনা / ডেমো প্রোফাইল">🧪 ডেমো প্রোফাইল</div>`
-      : '';
+      : `<div style="position:absolute;top:12px;right:12px;background:rgba(16,185,129,0.12);color:#047857;border:1.5px solid rgba(16,185,129,0.4);padding:3px 10px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(16,185,129,0.12);z-index:3;" title="জিআইসি কর্তৃক ১০০% সনদ ও পরিচয় যাচাইকৃত শিক্ষক">✅ যাচাইকৃত শিক্ষক · GIC</div>`;
 
     const isQuran = isTeacherQuran(t);
     const trackBadge = isQuran
@@ -2031,9 +2037,34 @@ async function init() {
   try {
     const { data } = await db.from('teachers').select('*').eq('is_active', true).order('sort_order', { ascending: true }).order('created_at', { ascending: true });
     if (data && data.length > 0) {
-      allTeachers = data;
+      allTeachers = data.map(dbT => {
+        const local = DEMO_TEACHERS_MAP[dbT.slug];
+        if (!local) return dbT;
+        return {
+          ...local,
+          ...dbT,
+          name: local.name || dbT.name,
+          teaching_mode: dbT.teaching_mode || local.teaching_mode || 'both',
+          offline_areas: dbT.offline_areas || local.offline_areas || '',
+          photo_url: (dbT.photo_url && dbT.photo_url.trim() !== '') ? dbT.photo_url : local.photo_url,
+          specializations: (Array.isArray(dbT.specializations) && dbT.specializations.length > 0) ? dbT.specializations : local.specializations,
+          qualifications: (Array.isArray(dbT.qualifications) && dbT.qualifications.length > 0) ? dbT.qualifications : local.qualifications,
+          bio: (dbT.bio && dbT.bio.trim() !== '') ? dbT.bio : local.bio,
+          is_verified: true,
+          is_demo: false
+        };
+      });
+
+      // Ensure all 3 real verified teachers exist
+      const realSlugs = ['md-mujahidul-islam', 'hafez-robiul-islam', 'md-al-amin'];
+      realSlugs.forEach(s => {
+        if (!allTeachers.some(t => t.slug === s) && DEMO_TEACHERS_MAP[s]) {
+          allTeachers.push(DEMO_TEACHERS_MAP[s]);
+        }
+      });
+
       // If DB has no general teachers yet, merge demo general teachers so parents can filter them
-      const hasGen = data.some(t => isTeacherGeneral(t));
+      const hasGen = allTeachers.some(t => isTeacherGeneral(t));
       if (!hasGen) {
         const demoGens = Object.values(DEMO_TEACHERS_MAP).filter(t => isTeacherGeneral(t));
         allTeachers = allTeachers.concat(demoGens);
@@ -2056,20 +2087,12 @@ async function init() {
   document.getElementById('teacher-directory-section').style.display = 'none';
   document.getElementById('teacher-detail-section').style.display = 'block';
 
-  try {
-    const { data, error } = await db.rpc('get_teacher_by_slug', { p_slug: slug });
-    if (!error && data && data.teacher) {
-      teacherData = data.teacher;
-      reviewsData = data.reviews || [];
-      renderPage();
-      hideLoader();
-      return;
-    }
-  } catch(e) {
-    console.warn('DB RPC lookup failed, trying direct query fallback:', e);
+  // Instant pre-population from local cache so user never sees blank or 404
+  if (DEMO_TEACHERS_MAP[slug]) {
+    teacherData = DEMO_TEACHERS_MAP[slug];
   }
 
-  // Direct table query fallback for newly added dynamic teachers
+  // Look up in loaded rawTeachersList or DB table directly
   try {
     let foundTeacher = (rawTeachersList || []).find(item => item.slug === slug || String(item.id) === String(slug));
     if (!foundTeacher) {
@@ -2077,7 +2100,17 @@ async function init() {
       if (dbT) foundTeacher = dbT;
     }
     if (foundTeacher) {
-      teacherData = foundTeacher;
+      const local = DEMO_TEACHERS_MAP[foundTeacher.slug] || {};
+      teacherData = {
+        ...local,
+        ...foundTeacher,
+        name: local.name || foundTeacher.name,
+        teaching_mode: foundTeacher.teaching_mode || local.teaching_mode || 'both',
+        offline_areas: foundTeacher.offline_areas || local.offline_areas || '',
+        photo_url: (foundTeacher.photo_url && foundTeacher.photo_url.trim() !== '') ? foundTeacher.photo_url : (local.photo_url || ''),
+        is_verified: true,
+        is_demo: false
+      };
       try {
         const { data: revs } = await db.from('teacher_reviews').select('*').eq('teacher_id', foundTeacher.id).eq('is_approved', true);
         reviewsData = revs || [];
@@ -2092,8 +2125,7 @@ async function init() {
     console.warn('Direct teacher query failed:', err);
   }
 
-  if (DEMO_TEACHERS_MAP[slug]) {
-    teacherData = DEMO_TEACHERS_MAP[slug];
+  if (teacherData) {
     reviewsData = [
       { reviewer_name: "রাহেলা বেগম (ঢাকা)", rating: 5, message: "মাশাআল্লাহ ওস্তাদ অত্যন্ত যত্নসহকারে ও ধৈর্যের সাথে আমার সন্তানকে তাজউইদ শেখাচ্ছেন।", created_at: new Date().toISOString() },
       { reviewer_name: "ফারহান আহমেদ (UK)", rating: 5, message: "দেড় মাসেই আমার ছেলের তেলাওয়াতে চমৎকার উন্নতি হয়েছে। জাজাকাল্লাহ খায়রান।", created_at: new Date().toISOString() }
