@@ -2329,6 +2329,447 @@ footer {
 .pub-tc-actions {
   display: flex; gap: 8px; flex-direction: column;
 }
+
+/* ───── HOMEPAGE TEACHER FILTER & TRUST STYLES ───── */
+.pub-trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #065f46;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 12.5px;
+  font-weight: 700;
+  margin: 8px auto 0;
+  max-width: 95%;
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.08);
+}
+.pub-trust-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.pub-filter-container {
+  background: #ffffff;
+  border: 1px solid rgba(15, 39, 68, 0.1);
+  border-radius: 20px;
+  padding: 20px 22px;
+  margin: 0 auto 30px auto;
+  max-width: 960px;
+  box-shadow: 0 8px 30px rgba(15, 39, 68, 0.06);
+}
+
+/* Track Switcher */
+.pub-track-tabs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(15, 39, 68, 0.08);
+}
+.pub-track-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 9px 18px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--blue-dark, #0f2744);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  position: relative;
+}
+.pub-track-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+.pub-track-btn.active {
+  background: linear-gradient(135deg, #0f2744 0%, #1e3d6e 100%);
+  color: #ffffff;
+  border-color: #0f2744;
+  box-shadow: 0 4px 14px rgba(15, 39, 68, 0.2);
+}
+.pub-track-btn.active .pub-track-spotlight-badge {
+  background: linear-gradient(135deg, #c8972a, #e5b95c);
+  color: #0f2744;
+}
+.pub-track-spotlight-badge {
+  background: rgba(200, 151, 42, 0.15);
+  color: #9c6e14;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid rgba(200, 151, 42, 0.3);
+  letter-spacing: 0.02em;
+}
+.pub-track-gen-badge {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0369a1;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid rgba(14, 165, 233, 0.25);
+}
+.pub-track-btn.active .pub-track-gen-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #e0f2fe;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Search & Filter Row */
+.pub-search-filter-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.pub-search-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.pub-search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 16px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+.pub-search-wrap input {
+  width: 100%;
+  padding: 11px 40px 11px 42px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s;
+  background: #f8fafc;
+  color: var(--blue-dark, #0f2744);
+  box-sizing: border-box;
+}
+.pub-search-wrap input:focus {
+  background: #ffffff;
+  border-color: var(--blue, #1A5F9E);
+  box-shadow: 0 0 0 3px rgba(26, 95, 158, 0.12);
+}
+.pub-search-clear-btn {
+  position: absolute;
+  right: 12px;
+  background: #e2e8f0;
+  border: none;
+  color: #64748b;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+.pub-filter-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0f2744, #1e3d6e);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 11px 18px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(15, 39, 68, 0.15);
+}
+.pub-filter-open-btn:hover {
+  background: linear-gradient(135deg, #16365c, #264d88);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15, 39, 68, 0.22);
+}
+.pub-filter-count-badge {
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pub-filter-reset-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.pub-filter-reset-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Quick Chips */
+.pub-quick-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.pub-chips-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--blue-dark, #0f2744);
+  margin-right: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.pub-chip {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  user-select: none;
+}
+.pub-chip:hover {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+.pub-chip.active {
+  background: rgba(30, 96, 145, 0.12);
+  border-color: rgba(30, 96, 145, 0.4);
+  color: var(--blue-dark, #0f2744);
+  font-weight: 800;
+}
+.pub-chip-gender-female.active {
+  background: rgba(236, 72, 153, 0.12);
+  border-color: rgba(236, 72, 153, 0.4);
+  color: #be185d;
+}
+
+/* Active Filter Summary Bar */
+.pub-active-summary-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+  font-size: 12px;
+  color: #64748b;
+}
+.pub-result-count-text strong {
+  color: var(--blue-dark, #0f2744);
+}
+
+/* Parent Advanced Filter Modal */
+.pfilter-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 22, 40, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 25000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.pfilter-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.pfilter-modal-box {
+  background: #ffffff;
+  border-radius: 24px;
+  max-width: 760px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  transform: translateY(20px);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+.pfilter-modal-overlay.open .pfilter-modal-box {
+  transform: translateY(0);
+}
+.pfilter-header {
+  background: linear-gradient(135deg, #0f2744, #1e3d6e);
+  color: #ffffff;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pfilter-body {
+  padding: 22px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.pfilter-group-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--blue-dark, #0f2744);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pfilter-chips-grid {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.pfilter-pill {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  color: #334155;
+  padding: 7px 14px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  user-select: none;
+}
+.pfilter-pill:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+.pfilter-pill.active {
+  background: #0f2744;
+  color: #ffffff;
+  border-color: #0f2744;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 39, 68, 0.2);
+}
+.pfilter-footer {
+  padding: 16px 24px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Badges for Cards */
+.tc-track-badge-quran {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, rgba(200, 151, 42, 0.18), rgba(229, 185, 92, 0.28));
+  color: #854d0e;
+  border: 1px solid rgba(200, 151, 42, 0.4);
+  padding: 2.5px 9px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.tc-track-badge-gen {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(14, 165, 233, 0.12);
+  color: #0369a1;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  padding: 2.5px 9px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.tc-muslim-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(16, 185, 129, 0.1);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+/* Empty State */
+.pub-teachers-empty {
+  text-align: center;
+  padding: 48px 20px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1.5px dashed #cbd5e1;
+  grid-column: 1 / -1;
+  max-width: 650px;
+  margin: 10px auto;
+}
+
+@media (max-width: 680px) {
+  .pub-search-filter-bar {
+    flex-wrap: wrap;
+  }
+  .pub-filter-open-btn, .pub-filter-reset-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .pub-track-btn {
+    flex: 1 1 calc(50% - 10px);
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 12.5px;
+  }
+}
 </style>
 </head>
 <body>
@@ -2391,13 +2832,86 @@ footer {
   </section>
 
   <!-- ── TEACHER PROFILES ── -->
-  <section class="section" style="padding: 32px 20px 56px; background: var(--cream);">
+  <section class="section" style="padding: 36px 20px 60px; background: var(--cream);" id="home-teachers-section">
     <div class="container">
-      <div style="text-align:center;margin-bottom:28px;" class="reveal">
-        <div class="section-label" style="margin:0 auto 10px;display:inline-flex;background:rgba(30,96,145,0.1);border-color:rgba(30,96,145,0.25);color:var(--blue-dark);">👨‍🏫 শিক্ষক প্রোফাইল ও সময়সূচি</div>
-        <h2 style="font-size:clamp(20px,3.5vw,30px);font-weight:800;color:var(--blue-dark);margin-bottom:0;">আমাদের সম্মানিত শিক্ষকবৃন্দ</h2>
+      <!-- Section Header -->
+      <div style="text-align:center;margin-bottom:24px;" class="reveal">
+        <div class="section-label" style="margin:0 auto 10px;display:inline-flex;background:rgba(30,96,145,0.1);border-color:rgba(30,96,145,0.25);color:var(--blue-dark);gap:6px;align-items:center;">
+          <span>👨‍🏫</span> <span>অভিভাবকদের পছন্দের শিক্ষক প্ল্যাটফর্ম</span>
+        </div>
+        <h2 style="font-size:clamp(22px,3.8vw,34px);font-weight:900;color:var(--blue-dark);margin-bottom:8px;line-height:1.25;">
+          কোরআন ও সকল বিষয়ে <span style="background:linear-gradient(135deg,#c8972a,#e5b95c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">সেরা মুসলিম শিক্ষক</span> নির্বাচন করুন
+        </h2>
+        <p style="max-width:680px;margin:0 auto 12px;font-size:14px;color:var(--text-muted);line-height:1.6;">
+          সহীহ কোরআন ও তাজউইদের অভিজ্ঞ হাফেজ-আলেমদের পাশাপাশি বাংলা, অংক, ইংরেজি সহ সকল বিষয়ে পাঠদানের জন্য শতভাগ যাচাইকৃত ও দ্বীনি মূল্যবোধসম্পন্ন শিক্ষকবৃন্দ।
+        </p>
+        <!-- Trust Badge -->
+        <div class="pub-trust-pill">
+          <span class="pub-trust-dot"></span>
+          <span>🛡️ <strong>১০০% ভেরিফায়েড মুসলিম শিক্ষক নেটওয়ার্ক</strong> — দ্বীনি শিষ্টাচার ও নৈতিক মূল্যবোধের সাথে কোরআন ও সাধারণ শিক্ষার নির্ভরযোগ্য পাঠদান</span>
+        </div>
       </div>
 
+      <!-- FILTER & SEARCH SUITE -->
+      <div class="pub-filter-container reveal">
+        <!-- 1. Track Switcher -->
+        <div class="pub-track-tabs">
+          <button type="button" class="pub-track-btn active" id="pt-track-all" onclick="setPublicTeacherTrack('all')">
+            <span style="font-size:16px;">👥</span>
+            <span>সকল শিক্ষক</span>
+          </button>
+          <button type="button" class="pub-track-btn" id="pt-track-quran" onclick="setPublicTeacherTrack('quran')">
+            <span style="font-size:16px;">🌟</span>
+            <span>কোরআন ও ইসলামিক শিক্ষা</span>
+            <span class="pub-track-spotlight-badge">⭐ প্রধান ফোকাস</span>
+          </button>
+          <button type="button" class="pub-track-btn" id="pt-track-general" onclick="setPublicTeacherTrack('general')">
+            <span style="font-size:16px;">🎓</span>
+            <span>জেনারেল একাডেমি</span>
+            <span class="pub-track-gen-badge">বাংলা, অংক, ইংরেজি...</span>
+          </button>
+        </div>
+
+        <!-- 2. Search Bar + Filter Modal Button + Reset -->
+        <div class="pub-search-filter-bar">
+          <div class="pub-search-wrap">
+            <span class="pub-search-icon">🔍</span>
+            <input type="text" id="pub-teacher-search" placeholder="শিক্ষকের নাম, বিষয় (যেমন: গণিত, ইংরেজি, তাজউইদ, নূরানী) বা শ্রেণি..." oninput="handlePublicTeacherSearch()">
+            <button type="button" id="pub-search-clear" class="pub-search-clear-btn" style="display:none;" onclick="clearPublicTeacherSearch()">✕</button>
+          </div>
+          <button type="button" class="pub-filter-open-btn" onclick="openParentFilterModal()" id="pub-filter-toggle-btn" title="বিস্তারিত ফিল্টার করুন">
+            <span style="font-size:16px;">⚙️</span>
+            <span>ফিল্টার করুন</span>
+            <span id="pub-filter-badge" class="pub-filter-count-badge" style="display:none;">0</span>
+          </button>
+          <button type="button" class="pub-filter-reset-btn" onclick="resetAllPublicFilters()" id="pub-filter-reset-btn" style="display:none;" title="সব ফিল্টার মুছে ফেলুন">
+            <span>🔄 রিসেট</span>
+          </button>
+        </div>
+
+        <!-- 3. Quick Chips Row: Gender & Popular Subjects -->
+        <div class="pub-quick-chips-row" style="margin-bottom:6px;">
+          <span class="pub-chips-label">ক্যাটাগরি:</span>
+          <button type="button" class="pub-chip active" id="pchip-gender-all" onclick="setPublicTeacherGender('all')">👥 যে কোনো শিক্ষক</button>
+          <button type="button" class="pub-chip" id="pchip-gender-male" onclick="setPublicTeacherGender('male')">👨‍🏫 পুরুষ শিক্ষক</button>
+          <button type="button" class="pub-chip pub-chip-gender-female" id="pchip-gender-female" onclick="setPublicTeacherGender('female')">🧕 মহিলা শিক্ষিকা (মা-বোন ও শিশু)</button>
+        </div>
+
+        <!-- 4. Dynamic Subject Chips (Populated based on Active Track) -->
+        <div class="pub-quick-chips-row" id="pub-subject-chips-wrap">
+          <!-- Dynamically managed in JS -->
+        </div>
+
+        <!-- 5. Active Filter Summary & Result Count Bar -->
+        <div class="pub-active-summary-bar" id="pub-active-summary-bar">
+          <div class="pub-result-count-text" id="pub-result-count-text">
+            <span>ফলাফল: <strong id="pub-count-num">৩</strong> জন শিক্ষক তালিকাভুক্ত (কোরআন শিক্ষক অগ্রাধিকারপ্রাপ্ত)</span>
+          </div>
+          <div id="pub-active-filter-tags" style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;"></div>
+        </div>
+      </div>
+
+      <!-- TEACHERS GRID & LOADER -->
       <div id="public-teachers-section">
         <div id="public-teachers-loading" style="text-align:center;padding:32px;color:var(--text-muted);">
           <div style="font-size:30px;margin-bottom:8px;">⏳</div>
@@ -2405,6 +2919,19 @@ footer {
         </div>
         <div id="public-teachers-grid" class="pub-teachers-grid-wrapper"></div>
       </div>
+
+      <!-- RECRUITMENT CTA / FOOTER BANNER FOR TEACHERS -->
+      <div style="margin-top:36px;background:linear-gradient(135deg, #0f2744 0%, #1e3d6e 100%);border-radius:20px;padding:26px 24px;text-align:center;color:#fff;border:1px solid rgba(200,151,42,0.3);box-shadow:0 10px 30px rgba(15,39,68,0.12);" class="reveal">
+        <div style="font-size:32px;margin-bottom:8px;">🕌</div>
+        <h3 style="font-size:19px;font-weight:800;color:#fff;margin-bottom:8px;">আপনি কি কোরআন বা সাধারণ বিষয়ে অভিজ্ঞ একজন মুসলিম শিক্ষক?</h3>
+        <p style="color:rgba(255,255,255,0.85);font-size:13.5px;max-width:620px;margin:0 auto 16px;line-height:1.6;">
+          হাফেজ, আলেম ও মহিলা শিক্ষিকাদের পাশাপাশি বাংলা, ইংরেজি, গণিত ও বিজ্ঞানের নিষ্ঠাবান মুসলিম শিক্ষকদের জন্য আমাদের প্ল্যাটফর্মে সম্মানজনক টিউশনির সুযোগ রয়েছে।
+        </p>
+        <button type="button" onclick="openTeacherApplyModal()" class="btn btn-gold" style="padding:11px 26px;font-size:14px;font-weight:800;border-radius:12px;cursor:pointer;border:none;box-shadow:0 4px 16px rgba(200,151,42,0.4);">
+          ✍️ শিক্ষক হিসেবে বিনামূল্যে আবেদন করুন →
+        </button>
+      </div>
+
     </div>
   </section>
 
@@ -3742,24 +4269,48 @@ async function submitRvpReview() {
   }
 }
 
-// ───── PUBLIC TEACHERS LOADER ─────
+// ───── PUBLIC TEACHERS & FILTER ENGINE ─────
 let publicTeachersLoaded = false;
+let loadedPublicTeachersList = [];
 
+// Filter States for Homepage
+let homeActiveTrack = 'all';       // 'all' | 'quran' | 'general'
+let homeActiveGender = 'all';      // 'all' | 'male' | 'female'
+let homeActiveSubject = 'all';     // string or 'all'
+let homeModalSubjects = new Set(); // multi-select subjects from modal
+let homeActiveLevel = 'all';       // 'all' | 'শিশু' | 'প্রাথমিক' | '৬ষ্ঠ-৮ম' | 'মাধ্যমিক' | 'উচ্চ-মাধ্যমিক' | 'বয়স্ক'
+let homeActiveCurriculum = 'all';  // 'all' | 'বাংলা মাধ্যম' | 'ইংলিশ মিডিয়াম' | 'মাদরাসা'
+let homeSearchQuery = '';
+
+// Modal Staged States
+let modalTrack = 'all';
+let modalGender = 'all';
+let modalSubjects = new Set();
+let modalLevel = 'all';
+let modalCurriculum = 'all';
+
+// 6 Comprehensive Verified Demo Teachers (3 Quran / Islamic, 3 General Academic)
 const DEMO_PUBLIC_TEACHERS = [
+  // ── 1. Quran Teachers (Spotlight / Primary Focus) ──
   {
     name: "হাফেজ মাওলানা তানভীর আহমেদ",
     slug: "hafez-tanvir-ahmed",
     designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
+    track: "quran",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
-    qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
+    qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন (৩০ পারা)", "সনদে তাজবীদ ও ক্বিরাআত"],
     languages: ["বাংলা", "English", "العربية"],
     category: "hafez",
-    bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী (UK, USA) শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন ও তাজউইদ শিক্ষা দিচ্ছেন।",
+    gender: "male",
+    bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী (UK, USA, কানাডা) শিক্ষার্থীদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন, মাখরাজ ও তাজউইদ শিক্ষা দিচ্ছেন।",
     experience_years: 7,
     students_taught: 180,
-    specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "শিশু শিক্ষা"],
+    specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "শিশু শিক্ষা", "নূরানী কায়দা"],
+    monthly_fee: "৳১,৫০০/মাস",
+    hourly_rate: "$5/hr",
+    sort_order: 1,
     weekly_schedule: {
       saturday: [10, 11, 14],
       sunday: [10, 14],
@@ -3772,16 +4323,21 @@ const DEMO_PUBLIC_TEACHERS = [
     name: "মুফতি সালমান ফারিস",
     slug: "mufti-salman-faris",
     designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
+    track: "quran",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
     qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
     languages: ["বাংলা", "English", "Urdu"],
     category: "alem",
+    gender: "male",
     bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ ও দ্রুত হেফজ সম্পন্ন করায় অভিজ্ঞ।",
     experience_years: 9,
     students_taught: 240,
-    specializations: ["সম্পূর্ণ হেফজ প্রোগ্রাম", "উন্নত তাজউইদ", "বড়দের কোরআন"],
+    specializations: ["সম্পূর্ণ হেফজ প্রোগ্রাম", "উন্নত তাজউইদ", "বড়দের কোরআন", "কোরআন তাফসীর"],
+    monthly_fee: "৳২,০০০/মাস",
+    hourly_rate: "$7/hr",
+    sort_order: 2,
     weekly_schedule: {
       saturday: [11, 13, 15],
       sunday: [11, 15],
@@ -3793,17 +4349,22 @@ const DEMO_PUBLIC_TEACHERS = [
   {
     name: "হাফেজা উম্মে কুলসুম",
     slug: "hafeza-umme-kulsum",
-    designation: "সিনিয়র মহিলা কোরআন শিক্ষক",
+    designation: "সিনিয়র মহিলা কোরআন শিক্ষিকা",
+    track: "quran",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
-    qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড"],
+    qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড", "নূরানী মুয়াল্লিমা সনদ"],
     languages: ["বাংলা", "English"],
     category: "female",
-    bio: "ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা, সহীহ তেলাওয়াত ও তাজউইদ শিক্ষা দেন।",
+    gender: "female",
+    bio: "ছোট সোনামণি এবং পর্দানশীন মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা, সহীহ তেলাওয়াত ও জরুরি মাসায়েল শিক্ষা দেন।",
     experience_years: 5,
     students_taught: 150,
-    specializations: ["মহিলা শিক্ষার্থী", "নূরানী কায়দা", "দৈনিক দোয়া ও মাসায়েল"],
+    specializations: ["মা-বোনদের ক্লাস", "নূরানী কায়দা", "শিশু শিক্ষা", "দৈনিক দোয়া ও মাসায়েল"],
+    monthly_fee: "৳১,২০০/মাস",
+    hourly_rate: "$4/hr",
+    sort_order: 3,
     weekly_schedule: {
       saturday: [9, 10, 12],
       sunday: [9, 12],
@@ -3811,11 +4372,134 @@ const DEMO_PUBLIC_TEACHERS = [
       tuesday: [9, 12],
       wednesday: [9, 10, 12]
     }
+  },
+
+  // ── 2. General Academic Muslim Teachers ──
+  {
+    name: "ইঞ্জিনিয়ার মো: তানজিল হাসান",
+    slug: "engr-tanzil-hasan",
+    designation: "গণিত ও উচ্চতর গণিত বিশেষজ্ঞ (বিএসসি, BUET)",
+    track: "general",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
+    photo_url: "",
+    qualifications: ["বিএসসি ইন ইঞ্জিনিয়ারিং (BUET)", "গণিত অলিম্পিয়াড মেন্টর", "৬ বছরের শিক্ষকতা"],
+    languages: ["বাংলা", "English"],
+    category: "general",
+    gender: "male",
+    bio: "বুয়েট গ্র্যাজুয়েট ও নিষ্ঠাবান মুসলিম শিক্ষক। বাস্তবধর্মী লজিক্যাল পদ্ধতিতে গণিতের ভয় দূর করে এবং শিক্ষার্থীদের নৈতিক ও দ্বীনি মূল্যবোধ চর্চায় উৎসাহিত করেন।",
+    experience_years: 6,
+    students_taught: 320,
+    specializations: ["গণিত (৬ষ্ঠ-১০ম)", "উচ্চতর গণিত (SSC/HSC)", "জ্যামিতি ও বীজগণিত", "বাংলা ও ইংলিশ ভার্সন"],
+    monthly_fee: "৳২,৫০০/মাস",
+    hourly_rate: "$8/hr",
+    sort_order: 4,
+    weekly_schedule: {
+      saturday: [16, 18, 20],
+      sunday: [18, 20],
+      monday: [16, 18, 20],
+      tuesday: [18, 20],
+      wednesday: [16, 18, 20]
+    }
+  },
+  {
+    name: "মরিয়ম আক্তার",
+    slug: "maryam-akhter",
+    designation: "ইংরেজি গ্রামার, স্পোকেন ও বাংলা শিক্ষিকা (ঢাবি)",
+    track: "general",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
+    photo_url: "",
+    qualifications: ["বিএ অনার্স ও মাস্টার্স (ইংরেজি বিভাগ, ঢাবি)", "আইইএলটিএস সার্টিফাইড", "বিএড সনদ"],
+    languages: ["বাংলা", "English"],
+    category: "female",
+    gender: "female",
+    bio: "ঢাকা বিশ্ববিদ্যালয়ের মেধাবী গ্র্যাজুয়েট ও পর্দানশীন মুসলিম শিক্ষিকা। ছোট সোনামণি এবং মা-বোনদের খুব যত্নসহকারে আধুনিক পদ্ধতিতে ইংরেজি ও বাংলা পড়িয়ে থাকেন।",
+    experience_years: 5,
+    students_taught: 210,
+    specializations: ["ইংরেজি গ্রামার ও স্পোকেন", "বাংলা প্রথম ও দ্বিতীয় পত্র", "১ম-৫ম শ্রেণি সকল বিষয়", "মা-বোনদের ক্লাস"],
+    monthly_fee: "৳২,০০০/মাস",
+    hourly_rate: "$7/hr",
+    sort_order: 5,
+    weekly_schedule: {
+      saturday: [10, 15, 17],
+      sunday: [15, 17],
+      monday: [10, 15],
+      tuesday: [15, 17],
+      wednesday: [10, 15, 17]
+    }
+  },
+  {
+    name: "মো: সাজিদুর রহমান",
+    slug: "sajidur-rahman",
+    designation: "সাধারণ বিজ্ঞান ও পদার্থবিজ্ঞান শিক্ষক (ঢাবি)",
+    track: "general",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
+    photo_url: "",
+    qualifications: ["বিএসসি ও এমএসসি (পদার্থবিজ্ঞান, ঢাবি)", "অভিজ্ঞ অনলাইন সায়েন্স টিউটর"],
+    languages: ["বাংলা", "English"],
+    category: "general",
+    gender: "male",
+    bio: "ঢাকা বিশ্ববিদ্যালয়ের পদার্থবিজ্ঞান বিভাগের নিষ্ঠাবান মুসলিম শিক্ষক। বাস্তব জীবনের উদাহরণ ও হাতে-কলমে সহজ পদ্ধতিতে বিজ্ঞান ও গণিতকে আনন্দদায়ক করে তোলেন।",
+    experience_years: 4,
+    students_taught: 175,
+    specializations: ["সাধারণ বিজ্ঞান (১ম-৮ম)", "পদার্থবিজ্ঞান (SSC)", "গণিত ও বিজ্ঞান", "প্রাথমিক সকল বিষয়"],
+    monthly_fee: "৳১,৮০০/মাস",
+    hourly_rate: "$6/hr",
+    sort_order: 6,
+    weekly_schedule: {
+      saturday: [17, 19, 21],
+      sunday: [19, 21],
+      monday: [17, 19],
+      tuesday: [19, 21],
+      wednesday: [17, 19, 21]
+    }
   }
 ];
 
-let loadedPublicTeachersList = [];
+// Helper to check if a teacher belongs to Quran & Islamic Track
+function isTeacherQuran(t) {
+  if (t.track === 'quran') return true;
+  if (t.track === 'general') return false;
+  const text = [
+    t.name || '',
+    t.designation || '',
+    (Array.isArray(t.qualifications) ? t.qualifications.join(' ') : String(t.qualifications || '')),
+    (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+    t.bio || '',
+    t.category || ''
+  ].join(' ').toLowerCase();
 
+  return text.includes('কোরআন') || text.includes('কুরআন') || text.includes('হিফজ') || 
+         text.includes('হেফজ') || text.includes('তাজউইদ') || text.includes('তাজবীদ') || 
+         text.includes('নূরানী') || text.includes('নাজেরা') || text.includes('হাফেজ') || 
+         text.includes('হাফেজা') || text.includes('আলেম') || text.includes('আলেমা') || 
+         text.includes('মুফতি') || text.includes('ক্বারী') || text.includes('ক্বারিয়া') || 
+         text.includes('আরবি') || text.includes('হাদিস') || text.includes('ইসলামিক');
+}
+
+// Helper to check if a teacher belongs to General Track
+function isTeacherGeneral(t) {
+  if (t.track === 'general') return true;
+  if (t.track === 'quran') return false;
+  const text = [
+    t.name || '',
+    t.designation || '',
+    (Array.isArray(t.qualifications) ? t.qualifications.join(' ') : String(t.qualifications || '')),
+    (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+    t.bio || '',
+    t.category || ''
+  ].join(' ').toLowerCase();
+
+  return text.includes('গণিত') || text.includes('অংক') || text.includes('ইংরেজি') || 
+         text.includes('english') || text.includes('বাংলা') || text.includes('বিজ্ঞান') || 
+         text.includes('পদার্থ') || text.includes('রসায়ন') || text.includes('আইসিটি') || 
+         text.includes('কম্পিউটার') || text.includes('বুয়েট') || text.includes('ঢাবি') || 
+         text.includes('অল সাবজেক্ট') || text.includes('সাধারণ');
+}
+
+// ── INITIAL PUBLIC TEACHERS LOADER ──
 async function loadPublicTeachers(force = false) {
   if (publicTeachersLoaded && !force) return;
   const grid = document.getElementById('public-teachers-grid');
@@ -3845,16 +4529,175 @@ async function loadPublicTeachers(force = false) {
 
   if (loading) loading.style.display = 'none';
 
+  // If DB returned records, check if we need to supplement with demo general teachers if none in DB
   if (!data || data.length === 0) {
     data = DEMO_PUBLIC_TEACHERS;
+  } else {
+    // Check if general teachers exist in DB, if not append demo general teachers so parents can test both tracks
+    const hasGeneral = data.some(t => isTeacherGeneral(t));
+    if (!hasGeneral) {
+      const demoGen = DEMO_PUBLIC_TEACHERS.filter(t => t.track === 'general');
+      data = data.concat(demoGen);
+    }
   }
 
   loadedPublicTeachersList = data;
   publicTeachersLoaded = true;
+
+  updateSubjectChipsBar();
+  filterAndRenderPublicTeachers();
+}
+
+// ── FILTERING & RENDERING ENGINE ──
+function filterAndRenderPublicTeachers() {
+  let list = loadedPublicTeachersList.slice();
+
+  // 1. Track Filter
+  if (homeActiveTrack === 'quran') {
+    list = list.filter(t => isTeacherQuran(t));
+  } else if (homeActiveTrack === 'general') {
+    list = list.filter(t => isTeacherGeneral(t));
+  }
+
+  // 2. Gender Filter
+  if (homeActiveGender !== 'all') {
+    list = list.filter(t => {
+      const isFemale = t.gender === 'female' || t.category === 'female' || 
+                       (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
+                       (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
+      return homeActiveGender === 'female' ? isFemale : !isFemale;
+    });
+  }
+
+  // 3. Subject Filter (Quick Chip or Modal Multi-select)
+  if (homeActiveSubject !== 'all') {
+    list = list.filter(t => {
+      const combined = [
+        (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+        (Array.isArray(t.qualifications) ? t.qualifications.join(' ') : String(t.qualifications || '')),
+        t.designation || '',
+        t.bio || ''
+      ].join(' ').toLowerCase();
+      return combined.includes(homeActiveSubject.toLowerCase());
+    });
+  } else if (homeModalSubjects.size > 0) {
+    list = list.filter(t => {
+      const combined = [
+        (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+        (Array.isArray(t.qualifications) ? t.qualifications.join(' ') : String(t.qualifications || '')),
+        t.designation || '',
+        t.bio || ''
+      ].join(' ').toLowerCase();
+      for (let sub of homeModalSubjects) {
+        if (combined.includes(sub.toLowerCase())) return true;
+      }
+      return false;
+    });
+  }
+
+  // 4. Class / Level Filter
+  if (homeActiveLevel !== 'all') {
+    list = list.filter(t => {
+      const combined = [
+        (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+        t.designation || '',
+        t.bio || ''
+      ].join(' ').toLowerCase();
+      return combined.includes(homeActiveLevel.toLowerCase());
+    });
+  }
+
+  // 5. Curriculum / Medium Filter
+  if (homeActiveCurriculum !== 'all') {
+    list = list.filter(t => {
+      const combined = [
+        (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+        (Array.isArray(t.languages) ? t.languages.join(' ') : String(t.languages || '')),
+        (Array.isArray(t.qualifications) ? t.qualifications.join(' ') : String(t.qualifications || '')),
+        t.bio || ''
+      ].join(' ').toLowerCase();
+      return combined.includes(homeActiveCurriculum.toLowerCase());
+    });
+  }
+
+  // 6. Search Query Filter
+  if (homeSearchQuery) {
+    const q = homeSearchQuery.toLowerCase();
+    list = list.filter(t => {
+      const combined = [
+        t.name || '',
+        t.designation || '',
+        (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+        (Array.isArray(t.qualifications) ? t.qualifications.join(' ') : String(t.qualifications || '')),
+        t.country || '',
+        t.bio || ''
+      ].join(' ').toLowerCase();
+      return combined.includes(q);
+    });
+  }
+
+  // 7. HIGHLIGHT & PRIORITY RULE: Quran & Arabic Teachers Displayed First!
+  list.sort((a, b) => {
+    const aQuran = isTeacherQuran(a);
+    const bQuran = isTeacherQuran(b);
+    if (aQuran && !bQuran) return -1;
+    if (!aQuran && bQuran) return 1;
+    return (a.sort_order || 0) - (b.sort_order || 0);
+  });
+
+  renderPublicTeacherCards(list);
+  updatePublicFilterUI(list.length);
+}
+
+// ── RENDER CARDS TO DOM ──
+function renderPublicTeacherCards(data) {
+  const grid = document.getElementById('public-teachers-grid');
+  const gridPage = document.getElementById('public-teachers-grid-page');
+  if (!grid && !gridPage) return;
+
+  if (!data || data.length === 0) {
+    const emptyHtml = `
+      <div class="pub-teachers-empty">
+        <div style="font-size:46px;margin-bottom:12px;">🔍</div>
+        <h4 style="font-size:18px;font-weight:800;color:var(--blue-dark);margin-bottom:8px;">আপনার ফিল্টারে কোনো শিক্ষক পাওয়া যায়নি</h4>
+        <p style="font-size:13.5px;color:var(--text-muted);line-height:1.6;margin-bottom:20px;">
+          তবে চিন্তা নেই! আমাদের কাছে বহু অভিজ্ঞ ও নিষ্ঠাবান মুসলিম শিক্ষক নিবন্ধিত রয়েছেন। আপনার সন্তানের জন্য কাঙ্ক্ষিত বিষয়ের শিক্ষক প্রয়োজন হলে আমাদের হোয়াটসঅ্যাপে জানান, আমরা দ্রুত ব্যবস্থা করে দেব ইনশাআল্লাহ।
+        </p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a href="https://wa.me/8801733017521?text=${encodeURIComponent('আসসালামু আলাইকুম, আমি আমার সন্তানের জন্য একজন বিশ্বস্ত মুসলিম শিক্ষক খুঁজছি।')}" target="_blank" class="btn btn-wa" style="padding:10px 20px;border-radius:12px;font-size:13.5px;text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:6px;">
+            💬 হোয়াটসঅ্যাপে শিক্ষক রিকোয়েস্ট করুন
+          </a>
+          <button type="button" onclick="resetAllPublicFilters()" class="btn btn-blue" style="padding:10px 20px;border-radius:12px;font-size:13.5px;cursor:pointer;font-weight:700;">
+            🔄 ফিল্টার রিসেট করুন
+          </button>
+        </div>
+      </div>
+    `;
+    if (grid) grid.innerHTML = emptyHtml;
+    if (gridPage) gridPage.innerHTML = emptyHtml;
+    return;
+  }
+
+  // Parse helper
+  const parseField = (v) => {
+    if (!v) return [];
+    if (Array.isArray(v)) return v;
+    if (typeof v === 'string') {
+      v = v.trim();
+      if (v.startsWith('[') && v.endsWith(']')) {
+        try { return JSON.parse(v); } catch(e) {}
+      }
+      return v.split(',').map(s => s.trim()).filter(Boolean);
+    }
+    return [];
+  };
+
   const cardsHtml = data.map(t => {
     const isFemale = t.gender === 'female' || t.category === 'female' || 
                      (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
                      (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
+
+    const isQuranTeacher = isTeacherQuran(t);
 
     const customFallback = isFemale
       ? `<div class="tc-avatar-custom tc-avatar-female" title="মহিলা শিক্ষিকা"><div class="tc-avatar-icon">🧕</div><div class="tc-avatar-role-pill">মহিলা শিক্ষিকা</div></div>`
@@ -3864,20 +4707,6 @@ async function loadPublicTeachers(force = false) {
       ? `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" style="width:100%;height:100%;object-fit:cover;"><div style="display:none;width:100%;height:100%;">${customFallback}</div>`
       : customFallback;
 
-    // Helper parser
-    const parseField = (v) => {
-      if (!v) return [];
-      if (Array.isArray(v)) return v;
-      if (typeof v === 'string') {
-        v = v.trim();
-        if (v.startsWith('[') && v.endsWith(']')) {
-          try { return JSON.parse(v); } catch(e) {}
-        }
-        return v.split(',').map(s => s.trim()).filter(Boolean);
-      }
-      return [];
-    };
-
     const quals = parseField(t.qualifications);
     const specs = parseField(t.specializations);
     const expYears = parseInt(t.experience_years, 10);
@@ -3886,12 +4715,12 @@ async function loadPublicTeachers(force = false) {
     const studentText = (studentsTaught && studentsTaught > 0) ? `${studentsTaught}+ ছাত্র` : '';
 
     const qualBadgesHtml = quals.length > 0
-      ? quals.map(q => `<span class="tc-s-badge-qual">📜 ${q}</span>`).join('')
+      ? quals.slice(0, 3).map(q => `<span class="tc-s-badge-qual">📜 ${q}</span>`).join('')
       : `<span class="tc-s-badge-qual">📜 ${t.designation || 'সনদপ্রাপ্ত শিক্ষক'}</span>`;
 
     const specBadgesHtml = specs.length > 0
-      ? specs.map(s => `<span class="tc-s-badge-spec">📖 ${s}</span>`).join('')
-      : `<span class="tc-s-badge-spec">📖 সহীহ কোরআন ও তাজউইদ</span>`;
+      ? specs.slice(0, 3).map(s => `<span class="tc-s-badge-spec">📖 ${s}</span>`).join('')
+      : `<span class="tc-s-badge-spec">📖 ${isQuranTeacher ? 'সহীহ কোরআন ও তাজউইদ' : 'একাডেমিক বিষয়'}</span>`;
 
     const countryName = t.country || 'বাংলাদেশ';
     const nativeLang = t.native_language || 'বাংলা';
@@ -3899,9 +4728,9 @@ async function loadPublicTeachers(force = false) {
 
     const profileUrl = `teachers.html?id=${t.slug || t.id}`;
 
-    const isDemo = t.is_demo || t.slug === 'hafez-tanvir-ahmed' || t.slug === 'mufti-salman-faris' || t.slug === 'hafeza-umme-kulsum';
+    const isDemo = t.is_demo || t.slug === 'hafez-tanvir-ahmed' || t.slug === 'mufti-salman-faris' || t.slug === 'hafeza-umme-kulsum' || t.slug === 'engr-tanzil-hasan' || t.slug === 'maryam-akhter' || t.slug === 'sajidur-rahman';
     const demoBadge = isDemo
-      ? `<div style="position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.12);color:#dc2626;border:1.5px solid rgba(239,68,68,0.35);padding:3px 9px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(239,68,68,0.1);z-index:3;" title="এটি একটি নমুনা / ডেমো প্রোফাইল">🧪 ডেমো প্রোফাইল</div>`
+      ? `<div style="position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.1);color:#dc2626;border:1.5px solid rgba(239,68,68,0.3);padding:3px 9px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;z-index:3;" title="এটি একটি নমুনা / ভেরিফায়েড প্রোফাইল">🧪 ডেমো প্রোফাইল</div>`
       : '';
 
     const isSenior = t.teacher_type !== 'fresher';
@@ -3909,16 +4738,26 @@ async function loadPublicTeachers(force = false) {
       ? `<span style="display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(200,151,42,0.15),rgba(229,185,92,0.22));color:#854d0e;border:1px solid rgba(200,151,42,0.35);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">⭐ সিনিয়র শিক্ষক</span>`
       : `<span style="display:inline-flex;align-items:center;gap:3px;background:rgba(20,184,166,0.12);color:#0f766e;border:1px solid rgba(20,184,166,0.25);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">🌱 ফ্রেশার শিক্ষক</span>`;
 
+    // Highlight Badges
+    const trackHighlightBadge = isQuranTeacher
+      ? `<span class="tc-track-badge-quran">⭐ পবিত্র কোরআন ও আরবি বিশেষজ্ঞ</span>`
+      : `<span class="tc-track-badge-gen">🎓 জেনারেল একাডেমি</span><span class="tc-muslim-badge">🕌 নিষ্ঠাবান মুসলিম শিক্ষক</span>`;
+
     return `
-      <div class="pub-teacher-card reveal" style="position:relative;">
+      <div class="pub-teacher-card reveal" style="position:relative;${isQuranTeacher ? 'border: 1.5px solid rgba(200,151,42,0.35);' : ''}">
         ${demoBadge}
         <div>
-          <div class="pub-teacher-avatar">${avatarHtml}</div>
+          <div class="pub-teacher-avatar" style="${isQuranTeacher ? 'border-color:var(--gold);' : 'border-color:#38bdf8;'}">${avatarHtml}</div>
           <h3 class="pub-teacher-name">${t.name}</h3>
-          <div class="pub-teacher-desig">${t.designation || 'কোরআন শিক্ষক'}</div>
+          <div class="pub-teacher-desig">${t.designation || (isQuranTeacher ? 'কোরআন শিক্ষক' : 'জেনারেল শিক্ষক')}</div>
           
-          <!-- Badges -->
-          <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 6px 0;">
+          <!-- Track & Category Badge -->
+          <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 8px 0;">
+            ${trackHighlightBadge}
+          </div>
+
+          <!-- Secondary Badges -->
+          <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:0 0 10px 0;">
             ${tierBadge}
             <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(15,39,68,0.06);color:var(--navy,#0f2744);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid rgba(15,39,68,0.1);">📍 ${countryName}</span>
             <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(16,185,129,0.08);color:#047857;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:800;border:1px solid rgba(16,185,129,0.25);">💰 ${t.monthly_fee || 'আলোচনা সাপেক্ষে'}</span>
@@ -3969,10 +4808,429 @@ async function loadPublicTeachers(force = false) {
   }).join('');
 
   if (grid) grid.innerHTML = cardsHtml;
-  const gridPage = document.getElementById('public-teachers-grid-page');
   if (gridPage) gridPage.innerHTML = cardsHtml;
 
   setTimeout(checkReveal, 100);
+}
+
+// ── UI EVENT HANDLERS ──
+function setPublicTeacherTrack(track) {
+  homeActiveTrack = track;
+  ['all', 'quran', 'general'].forEach(t => {
+    const el = document.getElementById(`pt-track-${t}`);
+    if (el) el.classList.toggle('active', t === track);
+  });
+  // Reset subject filter when switching tracks
+  homeActiveSubject = 'all';
+  homeModalSubjects.clear();
+  updateSubjectChipsBar();
+  filterAndRenderPublicTeachers();
+}
+
+function setPublicTeacherGender(gender) {
+  homeActiveGender = gender;
+  ['all', 'male', 'female'].forEach(g => {
+    const el = document.getElementById(`pchip-gender-${g}`);
+    if (el) el.classList.toggle('active', g === gender);
+  });
+  filterAndRenderPublicTeachers();
+}
+
+function setPublicTeacherSubject(subKey) {
+  homeActiveSubject = (homeActiveSubject === subKey) ? 'all' : subKey;
+  homeModalSubjects.clear();
+  updateSubjectChipsBar();
+  filterAndRenderPublicTeachers();
+}
+
+function handlePublicTeacherSearch() {
+  const inp = document.getElementById('pub-teacher-search');
+  const clearBtn = document.getElementById('pub-search-clear');
+  homeSearchQuery = inp ? inp.value.trim() : '';
+  if (clearBtn) clearBtn.style.display = homeSearchQuery ? 'flex' : 'none';
+  filterAndRenderPublicTeachers();
+}
+
+function clearPublicTeacherSearch() {
+  const inp = document.getElementById('pub-teacher-search');
+  const clearBtn = document.getElementById('pub-search-clear');
+  if (inp) inp.value = '';
+  homeSearchQuery = '';
+  if (clearBtn) clearBtn.style.display = 'none';
+  filterAndRenderPublicTeachers();
+}
+
+function resetAllPublicFilters() {
+  homeActiveTrack = 'all';
+  homeActiveGender = 'all';
+  homeActiveSubject = 'all';
+  homeModalSubjects.clear();
+  homeActiveLevel = 'all';
+  homeActiveCurriculum = 'all';
+  homeSearchQuery = '';
+
+  const inp = document.getElementById('pub-teacher-search');
+  if (inp) inp.value = '';
+  const clearBtn = document.getElementById('pub-search-clear');
+  if (clearBtn) clearBtn.style.display = 'none';
+
+  ['all', 'quran', 'general'].forEach(t => {
+    const el = document.getElementById(`pt-track-${t}`);
+    if (el) el.classList.toggle('active', t === 'all');
+  });
+
+  ['all', 'male', 'female'].forEach(g => {
+    const el = document.getElementById(`pchip-gender-${g}`);
+    if (el) el.classList.toggle('active', g === 'all');
+  });
+
+  updateSubjectChipsBar();
+  filterAndRenderPublicTeachers();
+}
+
+// Update the dynamic quick chips row
+function updateSubjectChipsBar() {
+  const wrap = document.getElementById('pub-subject-chips-wrap');
+  if (!wrap) return;
+
+  let chips = [];
+  if (homeActiveTrack === 'quran') {
+    chips = [
+      { key: 'all', label: 'সব বিষয়' },
+      { key: 'নূরানী', label: 'নূরানী কায়দা' },
+      { key: 'তাজউইদ', label: 'সহীহ তেলাওয়াত ও তাজউইদ' },
+      { key: 'হিফজ', label: 'হিফজুল কোরআন' },
+      { key: 'আরবি', label: 'আরবি ভাষা' },
+      { key: 'শিশু', label: 'শিশু ও কিশোর' },
+      { key: 'মহিলা', label: 'মা-বোনদের ক্লাস' },
+      { key: 'বয়স্ক', label: 'বয়স্কদের শিক্ষা' }
+    ];
+  } else if (homeActiveTrack === 'general') {
+    chips = [
+      { key: 'all', label: 'সব বিষয়' },
+      { key: 'গণিত', label: 'গণিত / অংক' },
+      { key: 'ইংরেজি', label: 'ইংরেজি (English)' },
+      { key: 'বাংলা', label: 'বাংলা ও ব্যাকরণ' },
+      { key: 'বিজ্ঞান', label: 'সাধারণ বিজ্ঞান' },
+      { key: 'পদার্থ', label: 'পদার্থবিজ্ঞান' },
+      { key: 'আইসিটি', label: 'আইসিটি ও কম্পিউটার' },
+      { key: 'সকল বিষয়', label: '১ম-৫ম সকল বিষয়' }
+    ];
+  } else {
+    // All tracks
+    chips = [
+      { key: 'all', label: 'সব বিষয়' },
+      { key: 'নূরানী', label: 'নূরানী কায়দা' },
+      { key: 'তাজউইদ', label: 'সহীহ তাজউইদ' },
+      { key: 'হিফজ', label: 'হিফজুল কোরআন' },
+      { key: 'গণিত', label: 'গণিত / অংক' },
+      { key: 'ইংরেজি', label: 'ইংরেজি (English)' },
+      { key: 'বাংলা', label: 'বাংলা' },
+      { key: 'বিজ্ঞান', label: 'বিজ্ঞান' },
+      { key: 'শিশু', label: 'শিশু শিক্ষা' },
+      { key: 'মহিলা', label: 'মা-বোনদের ক্লাস' }
+    ];
+  }
+
+  wrap.innerHTML = `
+    <span class="pub-chips-label">বিষয়:</span>
+    ${chips.map(c => `
+      <button type="button" class="pub-chip ${homeActiveSubject === c.key ? 'active' : ''}" onclick="setPublicTeacherSubject('${c.key}')">
+        ${c.label}
+      </button>
+    `).join('')}
+  `;
+}
+
+// Update Active Filter Badges, Summary text, and Reset button visibility
+function updatePublicFilterUI(matchCount) {
+  const countNum = document.getElementById('pub-count-num');
+  const countText = document.getElementById('pub-result-count-text');
+  const badge = document.getElementById('pub-filter-badge');
+  const resetBtn = document.getElementById('pub-filter-reset-btn');
+  const tagsWrap = document.getElementById('pub-active-filter-tags');
+
+  let activeCount = 0;
+  let activeTags = [];
+
+  if (homeActiveTrack !== 'all') {
+    activeCount++;
+    const trackName = homeActiveTrack === 'quran' ? 'কোরআন ও ইসলামিক' : 'জেনারেল একাডেমি';
+    activeTags.push(`<span class="sugg-chip-sm" onclick="setPublicTeacherTrack('all')">${trackName} ✕</span>`);
+  }
+  if (homeActiveGender !== 'all') {
+    activeCount++;
+    const gName = homeActiveGender === 'male' ? 'পুরুষ শিক্ষক' : 'মহিলা শিক্ষিকা';
+    activeTags.push(`<span class="sugg-chip-sm" onclick="setPublicTeacherGender('all')">${gName} ✕</span>`);
+  }
+  if (homeActiveSubject !== 'all') {
+    activeCount++;
+    activeTags.push(`<span class="sugg-chip-sm" onclick="setPublicTeacherSubject('all')">${homeActiveSubject} ✕</span>`);
+  }
+  if (homeModalSubjects.size > 0) {
+    activeCount += homeModalSubjects.size;
+    homeModalSubjects.forEach(s => {
+      activeTags.push(`<span class="sugg-chip-sm" onclick="removeModalSubjectTag('${s}')">${s} ✕</span>`);
+    });
+  }
+  if (homeActiveLevel !== 'all') {
+    activeCount++;
+    activeTags.push(`<span class="sugg-chip-sm" onclick="homeActiveLevel='all';filterAndRenderPublicTeachers();">${homeActiveLevel} ✕</span>`);
+  }
+  if (homeActiveCurriculum !== 'all') {
+    activeCount++;
+    activeTags.push(`<span class="sugg-chip-sm" onclick="homeActiveCurriculum='all';filterAndRenderPublicTeachers();">${homeActiveCurriculum} ✕</span>`);
+  }
+  if (homeSearchQuery) {
+    activeCount++;
+    activeTags.push(`<span class="sugg-chip-sm" onclick="clearPublicTeacherSearch()">"${homeSearchQuery}" ✕</span>`);
+  }
+
+  if (countNum) countNum.textContent = matchCount;
+  if (countText) {
+    countText.innerHTML = `ফলাফল: <strong id="pub-count-num">${matchCount}</strong> জন সম্মানিত শিক্ষক তালিকাভুক্ত (কোরআন শিক্ষক অগ্রাধিকারপ্রাপ্ত)`;
+  }
+
+  if (badge) {
+    if (activeCount > 0) {
+      badge.textContent = activeCount;
+      badge.style.display = 'inline-flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  if (resetBtn) {
+    resetBtn.style.display = activeCount > 0 ? 'inline-flex' : 'none';
+  }
+
+  if (tagsWrap) {
+    tagsWrap.innerHTML = activeTags.join('');
+  }
+}
+
+function removeModalSubjectTag(sub) {
+  homeModalSubjects.delete(sub);
+  filterAndRenderPublicTeachers();
+}
+
+// ── ADVANCED PARENT FILTER MODAL LOGIC ──
+function openParentFilterModal() {
+  modalTrack = homeActiveTrack;
+  modalGender = homeActiveGender;
+  modalSubjects = new Set(homeModalSubjects);
+  if (homeActiveSubject !== 'all') modalSubjects.add(homeActiveSubject);
+  modalLevel = homeActiveLevel;
+  modalCurriculum = homeActiveCurriculum;
+
+  // Sync UI in modal
+  ['all', 'quran', 'general'].forEach(t => {
+    const el = document.getElementById(`modal-track-${t}`);
+    if (el) el.classList.toggle('active', t === modalTrack);
+  });
+  ['all', 'male', 'female'].forEach(g => {
+    const el = document.getElementById(`modal-gender-${g}`);
+    if (el) el.classList.toggle('active', g === modalGender);
+  });
+  ['all', 'kids', 'primary', 'middle', 'ssc', 'hsc', 'adult'].forEach(lvl => {
+    const el = document.getElementById(`modal-level-${lvl}`);
+    if (el) {
+      const matchKey = lvl === 'all' ? 'all' : (lvl === 'kids' ? 'শিশু' : (lvl === 'primary' ? 'প্রাথমিক' : (lvl === 'middle' ? '৬ষ্ঠ-৮ম' : (lvl === 'ssc' ? 'মাধ্যমিক' : (lvl === 'hsc' ? 'উচ্চ-মাধ্যমিক' : 'বয়স্ক')))));
+      el.classList.toggle('active', matchKey === modalLevel);
+    }
+  });
+  ['all', 'bangla', 'english', 'madrasah'].forEach(c => {
+    const el = document.getElementById(`modal-curriculum-${c}`);
+    if (el) {
+      const matchKey = c === 'all' ? 'all' : (c === 'bangla' ? 'বাংলা মাধ্যম' : (c === 'english' ? 'ইংলিশ মিডিয়াম' : 'মাদরাসা'));
+      el.classList.toggle('active', matchKey === modalCurriculum);
+    }
+  });
+
+  // Sync subject pills
+  document.querySelectorAll('.modal-sub-pill').forEach(btn => {
+    const sub = btn.getAttribute('data-sub');
+    btn.classList.toggle('active', modalSubjects.has(sub));
+  });
+
+  updateModalLiveCount();
+
+  const modal = document.getElementById('parent-filter-modal');
+  if (modal) modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeParentFilterModal() {
+  const modal = document.getElementById('parent-filter-modal');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function setModalTrack(track) {
+  modalTrack = track;
+  ['all', 'quran', 'general'].forEach(t => {
+    const el = document.getElementById(`modal-track-${t}`);
+    if (el) el.classList.toggle('active', t === track);
+  });
+  updateModalLiveCount();
+}
+
+function setModalGender(gender) {
+  modalGender = gender;
+  ['all', 'male', 'female'].forEach(g => {
+    const el = document.getElementById(`modal-gender-${g}`);
+    if (el) el.classList.toggle('active', g === gender);
+  });
+  updateModalLiveCount();
+}
+
+function toggleModalSubject(btn, subject) {
+  if (modalSubjects.has(subject)) {
+    modalSubjects.delete(subject);
+    btn.classList.remove('active');
+  } else {
+    modalSubjects.add(subject);
+    btn.classList.add('active');
+  }
+  updateModalLiveCount();
+}
+
+function setModalLevel(lvl) {
+  modalLevel = lvl;
+  const map = {
+    'all': 'modal-level-all',
+    'শিশু': 'modal-level-kids',
+    'প্রাথমিক': 'modal-level-primary',
+    '৬ষ্ঠ-৮ম': 'modal-level-middle',
+    'মাধ্যমিক': 'modal-level-ssc',
+    'উচ্চ-মাধ্যমিক': 'modal-level-hsc',
+    'বয়স্ক': 'modal-level-adult'
+  };
+  Object.keys(map).forEach(k => {
+    const el = document.getElementById(map[k]);
+    if (el) el.classList.toggle('active', k === lvl);
+  });
+  updateModalLiveCount();
+}
+
+function setModalCurriculum(curr) {
+  modalCurriculum = curr;
+  const map = {
+    'all': 'modal-curriculum-all',
+    'বাংলা মাধ্যম': 'modal-curriculum-bangla',
+    'ইংলিশ মিডিয়াম': 'modal-curriculum-english',
+    'মাদরাসা': 'modal-curriculum-madrasah'
+  };
+  Object.keys(map).forEach(k => {
+    const el = document.getElementById(map[k]);
+    if (el) el.classList.toggle('active', k === curr);
+  });
+  updateModalLiveCount();
+}
+
+function resetModalFilters() {
+  modalTrack = 'all';
+  modalGender = 'all';
+  modalSubjects.clear();
+  modalLevel = 'all';
+  modalCurriculum = 'all';
+
+  ['all', 'quran', 'general'].forEach(t => {
+    const el = document.getElementById(`modal-track-${t}`);
+    if (el) el.classList.toggle('active', t === 'all');
+  });
+  ['all', 'male', 'female'].forEach(g => {
+    const el = document.getElementById(`modal-gender-${g}`);
+    if (el) el.classList.toggle('active', g === 'all');
+  });
+  setModalLevel('all');
+  setModalCurriculum('all');
+  document.querySelectorAll('.modal-sub-pill').forEach(b => b.classList.remove('active'));
+  updateModalLiveCount();
+}
+
+function updateModalLiveCount() {
+  let list = loadedPublicTeachersList.slice();
+  if (modalTrack === 'quran') list = list.filter(t => isTeacherQuran(t));
+  else if (modalTrack === 'general') list = list.filter(t => isTeacherGeneral(t));
+
+  if (modalGender !== 'all') {
+    list = list.filter(t => {
+      const isFemale = t.gender === 'female' || t.category === 'female' || 
+                       (t.designation && (t.designation.includes('মহিলা') || t.designation.includes('হাফেজা') || t.designation.includes('আলেমা') || t.designation.includes('ক্বারিয়া'))) || 
+                       (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
+      return modalGender === 'female' ? isFemale : !isFemale;
+    });
+  }
+
+  if (modalSubjects.size > 0) {
+    list = list.filter(t => {
+      const combined = [
+        (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+        (Array.isArray(t.qualifications) ? t.qualifications.join(' ') : String(t.qualifications || '')),
+        t.designation || '',
+        t.bio || ''
+      ].join(' ').toLowerCase();
+      for (let s of modalSubjects) {
+        if (combined.includes(s.toLowerCase())) return true;
+      }
+      return false;
+    });
+  }
+
+  if (modalLevel !== 'all') {
+    list = list.filter(t => {
+      const combined = [
+        (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+        t.designation || '',
+        t.bio || ''
+      ].join(' ').toLowerCase();
+      return combined.includes(modalLevel.toLowerCase());
+    });
+  }
+
+  if (modalCurriculum !== 'all') {
+    list = list.filter(t => {
+      const combined = [
+        (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
+        (Array.isArray(t.languages) ? t.languages.join(' ') : String(t.languages || '')),
+        t.bio || ''
+      ].join(' ').toLowerCase();
+      return combined.includes(modalCurriculum.toLowerCase());
+    });
+  }
+
+  const countEl = document.getElementById('pfilter-live-match-count');
+  if (countEl) countEl.textContent = list.length;
+}
+
+function applyParentModalFilters() {
+  homeActiveTrack = modalTrack;
+  homeActiveGender = modalGender;
+  homeModalSubjects = new Set(modalSubjects);
+  homeActiveSubject = 'all'; // reset single chip
+  homeActiveLevel = modalLevel;
+  homeActiveCurriculum = modalCurriculum;
+
+  // Sync main track tabs
+  ['all', 'quran', 'general'].forEach(t => {
+    const el = document.getElementById(`pt-track-${t}`);
+    if (el) el.classList.toggle('active', t === homeActiveTrack);
+  });
+
+  // Sync main gender chips
+  ['all', 'male', 'female'].forEach(g => {
+    const el = document.getElementById(`pchip-gender-${g}`);
+    if (el) el.classList.toggle('active', g === homeActiveGender);
+  });
+
+  updateSubjectChipsBar();
+  filterAndRenderPublicTeachers();
+  closeParentFilterModal();
+
+  // Smooth scroll to teacher section
+  const sec = document.getElementById('home-teachers-section');
+  if (sec) sec.scrollIntoView({ behavior: 'smooth' });
 }
 
 // ───── URL ROUTING & SPA HISTORY NAVIGATION ─────
@@ -4031,10 +5289,10 @@ document.addEventListener('DOMContentLoaded', () => {
     <!-- Modal Header (Sticky) -->
     <div style="background:linear-gradient(135deg, #0f2744, #1e3d6e); padding:20px 24px; border-radius:24px 24px 0 0; position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;">
       <div>
-        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(200,151,42,0.25);border:1px solid rgba(200,151,42,0.4);color:var(--gold-light);font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:4px;">✨ শিক্ষক হিসেবে যোগ দিন</div>
-        <h3 style="color:#fff; font-weight:800; font-size:18px; margin:0;">GIC-তে কোরআন শিক্ষক হিসেবে আবেদন ফর্ম</h3>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(200,151,42,0.25);border:1px solid rgba(200,151,42,0.4);color:var(--gold-light);font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:4px;">✨ শিক্ষক হিসেবে যোগ দিন (কোরআন ও জেনারেল)</div>
+        <h3 style="color:#fff; font-weight:800; font-size:18px; margin:0;">GIC-তে নিষ্ঠাবান মুসলিম শিক্ষক হিসেবে আবেদন ফর্ম</h3>
       </div>
-      <button onclick="closeTeacherApplyModal()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:20px; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">×</button>
+      <button onclick="closeTeacherApplyModal()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:20px; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">✕</button>
     </div>
 
     <!-- Modal Body -->
@@ -4056,11 +5314,15 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- STEP 1: PUBLIC PROFILE INFO -->
         <div id="apply-step-1">
 
-          <!-- Full Name & Gender Row -->
-          <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:18px;">
+          <!-- Teaching Track & Gender Row -->
+          <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:18px;">
             <div>
-              <label style="display:block;font-size:13.5px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">আপনার পুরো নাম *</label>
-              <input type="text" id="app-name" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান / মোসাম্মাৎ খাদিজা আক্তার" required style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              <label style="display:block;font-size:13.5px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">পাঠদানের বিষয় বিভাগ (Teaching Track) *</label>
+              <select id="app-track-val" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13.5px;font-family:inherit;background:#fff;outline:none;box-sizing:border-box;">
+                <option value="quran">🌟 পবিত্র কোরআন ও ইসলামিক শিক্ষা</option>
+                <option value="general">🎓 জেনারেল একাডেমিক বিষয়সমূহ (বাংলা, অংক, ইংরেজি...)</option>
+                <option value="both">🌐 উভয় বিষয় (কোরআন ও জেনারেল বিষয়)</option>
+              </select>
             </div>
             <div>
               <label style="display:block;font-size:13.5px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">ক্যাটাগরি / জেন্ডার *</label>
@@ -4071,25 +5333,31 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
+          <!-- Full Name -->
+          <div style="margin-bottom:18px;">
+            <label style="display:block;font-size:13.5px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">আপনার পুরো নাম *</label>
+            <input type="text" id="app-name" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান / ইঞ্জিনিয়ার তানজিল / মরিয়ম আক্তার" required style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+
           <!-- Title / Designation with Suggestions -->
           <div style="margin-bottom:20px;">
             <label style="display:block;font-size:13.5px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">
               আপনার মূল পদবী / উপাধি * 
               <span style="font-size:11.5px;font-weight:normal;color:var(--text-muted);">(নিচের সাজেশনে ক্লিক করে সহজে বেছে নিন)</span>
             </label>
-            <input type="text" id="app-designation" placeholder="যেমন: হাফেজুল কুরআন ও মাওলানা / হাফেজা ও ক্বারিয়া" required style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;margin-bottom:8px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+            <input type="text" id="app-designation" placeholder="যেমন: হাফেজুল কুরআন ও মাওলানা / গণিত শিক্ষক (বুয়েট) / ইংরেজি শিক্ষিকা (ঢাবি)" required style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;margin-bottom:8px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
             
             <!-- Designation Suggestion Chips -->
             <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
               <span style="font-size:11px;font-weight:700;color:var(--gold-dark, #c8972a);">⚡ সাজেশন:</span>
-              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'হাফেজুল কুরআন')">📜 হাফেজুল কুরআন</button>
-              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'সিনিয়র কোরআন শিক্ষক')">🎓 সিনিয়র কোরআন শিক্ষক</button>
-              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'মুফতি ও মুহাদ্দিস')">🕌 মুফতি ও মুহাদ্দিস</button>
-              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'ক্বারী ও তাজবীদ শিক্ষক')">📖 ক্বারী ও তাজবীদ শিক্ষক</button>
-              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'হাফেজা ও আলেমা')">🧕 হাফেজা ও আলেমা</button>
-              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'হাফেজা ও ক্বারিয়া')">👩‍🏫 হাফেজা ও ক্বারিয়া</button>
-              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'মাওলানা (দাওরায়ে হাদিস)')">🎓 মাওলানা (দাওরায়ে হাদিস)</button>
-              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'সিনিয়র কোরআন শিক্ষক')">👨‍🏫 সিনিয়র কোরআন শিক্ষক</button>
+              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক')">📜 হাফেজুল কুরআন</button>
+              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'মুফতি ও হেফজুল কোরআন মেন্টর')">🕌 মুফতি ও হেফজ মেন্টর</button>
+              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'হাফেজা ও সিনিয়র আলেমা')">🧕 হাফেজা ও আলেমা</button>
+              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'গণিত ও উচ্চতর গণিত বিশেষজ্ঞ শিক্ষক')">📐 গণিত ও উচ্চতর গণিত</button>
+              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'ইংরেজি গ্রামার ও স্পোকেন বিশেষজ্ঞ')">🇬🇧 ইংরেজি গ্রামার ও স্পোকেন</button>
+              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'পদার্থবিজ্ঞান ও সাধারণ বিজ্ঞান শিক্ষক')">🔬 বিজ্ঞান ও পদার্থবিজ্ঞান</button>
+              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', 'বাংলা ও ব্যাকরণ বিশেষজ্ঞ শিক্ষক')">🇧🇩 বাংলা ও ব্যাকরণ</button>
+              <button type="button" class="sugg-chip" onclick="setFieldVal('app-designation', '১ম-৫ম শ্রেণি অল সাবজেক্ট মেন্টর')">🎒 ১ম-৫ম সকল বিষয়</button>
             </div>
           </div>
 
@@ -4115,16 +5383,18 @@ document.addEventListener('DOMContentLoaded', () => {
               শিক্ষাগত যোগ্যতাসমূহ 
               <span style="font-size:11.5px;font-weight:normal;color:var(--text-muted);">(ক্লিক করে যোগ করুন বা কমা দিয়ে লিখুন)</span>
             </label>
-            <input type="text" id="app-qualifications" placeholder="যেমন: দাওরায়ে হাদিস, হিফজুল কুরআন, তাজবীদ ও ক্বিরাআত" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;margin-bottom:8px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+            <input type="text" id="app-qualifications" placeholder="যেমন: দাওরায়ে হাদিস, হিফজুল কুরআন, বিএসসি (গণিত), বিএ (ইংরেজি)" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;margin-bottom:8px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
             
             <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
               <span style="font-size:11px;font-weight:700;color:var(--gold-dark, #c8972a);">⚡ সাজেশন:</span>
               <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'দাওরায়ে হাদিস (তাকমীল)')">➕ দাওরায়ে হাদিস</button>
               <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'হিফজুল কুরআন (৩০ পারা)')">➕ হিফজুল কুরআন</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'তাজবীদ ও ক্বিরাআত সনদ')">➕ তাজবীদ ও ক্বিরাআত</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'তাজবীদ ও ক্বিরাআত সনদ')">➕ তাজবীদ সনদ</button>
               <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'ইফতা (মুফতি)')">➕ ইফতা (মুফতি)</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'কামিল / ফাজিল')">➕ কামিল / ফাজিল</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'মাস্টার্স ইন ইসলামিক স্টাডিজ')">➕ মাস্টার্স (ইসলামিক স্টাডিজ)</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'বিএসসি ইন ইঞ্জিনিয়ারিং (BUET)')">➕ বিএসসি (BUET)</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'বিএ অনার্স ও মাস্টার্স (ঢাবি)')">➕ অনার্স/মাস্টার্স (ঢাবি)</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'বিএসসি (গণিত / বিজ্ঞান)')">➕ বিএসসি (গণিত/বিজ্ঞান)</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'বিএ অনার্স (ইংরেজি বিভাগ)')">➕ বিএ অনার্স (ইংরেজি)</button>
               <button type="button" class="sugg-chip" onclick="appendCommaVal('app-qualifications', 'নূরানী মুয়াল্লিম ট্রেনিং')">➕ নূরানী ট্রেনিং</button>
             </div>
           </div>
@@ -4182,20 +5452,22 @@ document.addEventListener('DOMContentLoaded', () => {
               বিশেষজ্ঞতা / কী কী কোর্স শেখাতে পারবেন? 
               <span style="font-size:11.5px;font-weight:normal;color:var(--text-muted);">(ক্লিক করে যোগ করুন)</span>
             </label>
-            <input type="text" id="app-specializations" placeholder="যেমন: সহীহ তেলাওয়াত, তাজউইদ, হিফজ কোর্স, নাজেরা, শিশু শিক্ষা" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;margin-bottom:8px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+            <input type="text" id="app-specializations" placeholder="যেমন: সহীহ তেলাওয়াত, তাজউইদ, হিফজ, গণিত, ইংরেজি গ্রামার, বিজ্ঞান" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;margin-bottom:8px;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
             
             <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
               <span style="font-size:11px;font-weight:700;color:var(--gold-dark, #c8972a);">⚡ সাজেশন:</span>
               <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'সহীহ কুরআন তেলাওয়াত')">➕ সহীহ তেলাওয়াত</button>
               <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'তাজউইদ নিয়মাবলী')">➕ তাজউইদ</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'হিফজ কোর্স (মুখস্থ)')">➕ হিফজ কোর্স</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'হিফজ রিভিশন ও দোর')">➕ হিফজ রিভিশন</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'নাজেরা কুরআন')">➕ নাজেরা</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'হিফজুল কুরআন')">➕ হিফজুল কুরআন</button>
               <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'নূরানী কায়দা ও আমপারা')">➕ নূরানী কায়দা</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'শিশু ও কিশোরদের কুরআন শিক্ষা')">➕ শিশু ও কিশোর</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'গণিত (১ম-১০ম শ্রেণি)')">➕ গণিত (১ম-১০ম)</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'উচ্চতর গণিত (SSC/HSC)')">➕ উচ্চতর গণিত</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'ইংরেজি গ্রামার ও স্পোকেন')">➕ ইংরেজি গ্রামার ও স্পোকেন</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'সাধারণ বিজ্ঞান ও পদার্থ')">➕ বিজ্ঞান ও পদার্থ</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'বাংলা ১ম ও ২য় পত্র')">➕ বাংলা ১ম ও ২য় পত্র</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', '১ম-৫ম শ্রেণি সকল বিষয়')">➕ ১ম-৫ম সকল বিষয়</button>
+              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'আইসিটি ও কম্পিউটার')">➕ আইসিটি</button>
               <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'মা-বোনদের জন্য বিশেষ ক্লাস')">➕ মা-বোনদের ক্লাস</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'বয়স্কদের সহজ কুরআন শিক্ষা')">➕ বয়স্কদের কুরআন</button>
-              <button type="button" class="sugg-chip" onclick="appendCommaVal('app-specializations', 'মাসয়ালা-মাসায়েল ও প্রয়োজনীয় দোয়া')">➕ দোয়া ও মাসয়ালা</button>
             </div>
           </div>
 
@@ -4473,11 +5745,20 @@ document.addEventListener('DOMContentLoaded', () => {
               </ol>
             </div>
 
+            <!-- Muslim Teacher Ethos Notice -->
+            <div style="background:#ecfdf5;border:1.5px solid #a7f3d0;border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px;">
+              <span style="font-size:20px;">🛡️</span>
+              <div style="font-size:12.5px;color:#065f46;line-height:1.6;">
+                <strong style="display:block;margin-bottom:2px;color:#047857;">আমাদের অঙ্গীকার — শতভাগ মুসলিম শিক্ষক নেটওয়ার্ক:</strong>
+                Global Islamic Care একটি বিশ্বস্ত দ্বীনি প্ল্যাটফর্ম। এখানে কোরআন ও জেনারেল (বাংলা, গণিত, ইংরেজি, বিজ্ঞান) সকল বিষয়ের শিক্ষকগণ হবেন নিষ্ঠাবান মুসলিম, যারা শিক্ষার্থীদের সিলেবাস পড়ানোর পাশাপাশি নৈতিক শিষ্টাচার ও দ্বীনি মূল্যবোধ শিক্ষা দিতে প্রতিশ্রুতিবদ্ধ।
+              </div>
+            </div>
+
             <!-- Mandatory Consent Checkbox -->
             <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;background:#fff;padding:12px 14px;border-radius:10px;border:1.5px solid #a855f7;box-shadow:0 2px 6px rgba(168,85,247,0.1);">
               <input type="checkbox" id="app-terms-agreed" required style="width:18px;height:18px;margin-top:2px;accent-color:#7e22ce;flex-shrink:0;cursor:pointer;">
               <span style="font-size:13px;font-weight:700;color:#581c87;line-height:1.5;">
-                আমি Global Islamic Care-এর ওপরের সকল পেশাদার নীতিমালা ও মাসিক ১০০ টাকা প্ল্যাটফর্ম রক্ষণাবেক্ষণ ফি প্রদান সহ সকল শর্তাবলী মনোযোগ দিয়ে পড়েছি, বুঝেছি এবং তা শতভাগ মেনে চলতে সম্পূর্ণ সম্মত ও অঙ্গীকারাবদ্ধ। *
+                আমি একজন দায়িত্বশীল মুসলিম শিক্ষক হিসেবে Global Islamic Care-এর ওপরের সকল পেশাদার নীতিমালা ও মাসিক ১০০ টাকা প্ল্যাটফর্ম রক্ষণাবেক্ষণ ফি প্রদান সহ সকল শর্তাবলী মনোযোগ দিয়ে পড়েছি, বুঝেছি এবং তা শতভাগ মেনে চলতে সম্পূর্ণ সম্মত ও অঙ্গীকারাবদ্ধ। *
               </span>
             </label>
           </div>
@@ -4600,6 +5881,132 @@ document.addEventListener('DOMContentLoaded', () => {
         </button>
       </div>
     </form>
+  </div>
+</div>
+
+<!-- ─────────── PARENTS' ADVANCED TEACHER FILTER MODAL ─────────── -->
+<div class="pfilter-modal-overlay" id="parent-filter-modal" onclick="if(event.target===this)closeParentFilterModal()">
+  <div class="pfilter-modal-box">
+    <!-- Header -->
+    <div class="pfilter-header">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(200,151,42,0.25);border:1px solid rgba(200,151,42,0.4);color:var(--gold-light);font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:4px;">
+          👨‍👩‍👧 অভিভাবক ফিল্টার ও শিক্ষক বাছাই
+        </div>
+        <h3 style="color:#fff; font-weight:800; font-size:18px; margin:0;">আপনার সন্তানের জন্য সেরা শিক্ষক খুঁজুন</h3>
+      </div>
+      <button type="button" onclick="closeParentFilterModal()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:20px; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">✕</button>
+    </div>
+
+    <!-- Body -->
+    <div class="pfilter-body">
+      
+      <!-- 1. Track Selection -->
+      <div>
+        <div class="pfilter-group-title">
+          <span>📚 শিক্ষার বিভাগ (ক্যাটাগরি):</span>
+        </div>
+        <div class="pfilter-chips-grid">
+          <button type="button" class="pfilter-pill active" id="modal-track-all" onclick="setModalTrack('all')">🌐 উভয় বিভাগ / সকল শিক্ষক</button>
+          <button type="button" class="pfilter-pill" id="modal-track-quran" onclick="setModalTrack('quran')">🌟 পবিত্র কোরআন ও ইসলামিক শিক্ষা (প্রধান ফোকাস)</button>
+          <button type="button" class="pfilter-pill" id="modal-track-general" onclick="setModalTrack('general')">🎓 জেনারেল একাডেমি (বাংলা, অংক, ইংরেজি, বিজ্ঞান)</button>
+        </div>
+      </div>
+
+      <!-- 2. Teacher Gender Preference -->
+      <div>
+        <div class="pfilter-group-title">
+          <span>👥 শিক্ষকের জেন্ডার পছন্দ:</span>
+        </div>
+        <div class="pfilter-chips-grid">
+          <button type="button" class="pfilter-pill active" id="modal-gender-all" onclick="setModalGender('all')">👥 যে কোনো শিক্ষক</button>
+          <button type="button" class="pfilter-pill" id="modal-gender-male" onclick="setModalGender('male')">👨‍🏫 পুরুষ শিক্ষক</button>
+          <button type="button" class="pfilter-pill" id="modal-gender-female" onclick="setModalGender('female')">🧕 মহিলা শিক্ষিকা (মা-বোন ও শিশুদের জন্য)</button>
+        </div>
+      </div>
+
+      <!-- 3. Quran & Islamic Subjects -->
+      <div id="modal-quran-subjects-section">
+        <div class="pfilter-group-title" style="color:#b45309;">
+          <span>📖 কোরআন ও ইসলামিক বিষয়সমূহ:</span>
+        </div>
+        <div class="pfilter-chips-grid">
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="নূরানী" onclick="toggleModalSubject(this, 'নূরানী')">নূরানী কায়দা ও আমপারা</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="তাজউইদ" onclick="toggleModalSubject(this, 'তাজউইদ')">সহীহ তেলাওয়াত ও তাজউইদ</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="হিফজ" onclick="toggleModalSubject(this, 'হিফজ')">হিফজুল কোরআন (মুখস্থ)</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="আরবি" onclick="toggleModalSubject(this, 'আরবি')">আরবি ভাষা ও ব্যাকরণ</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="দোয়া" onclick="toggleModalSubject(this, 'দোয়া')">প্রয়োজনীয় দোয়া ও মাসায়েল</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="নাজেরা" onclick="toggleModalSubject(this, 'নাজেরা')">নাজেরা কুরআন রিডিং</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="তাফসীর" onclick="toggleModalSubject(this, 'তাফসীর')">কোরআন অর্থ ও তাফসীর</button>
+        </div>
+      </div>
+
+      <!-- 4. General Academic Subjects -->
+      <div id="modal-gen-subjects-section">
+        <div class="pfilter-group-title" style="color:#0369a1;">
+          <span>🎓 জেনারেল স্কুল ও কলেজ বিষয়সমূহ (মুসলিম শিক্ষক দ্বারা পরিচালিত):</span>
+        </div>
+        <div class="pfilter-chips-grid">
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="গণিত" onclick="toggleModalSubject(this, 'গণিত')">📐 গণিত / অংক (Mathematics)</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="ইংরেজি" onclick="toggleModalSubject(this, 'ইংরেজি')">🇬🇧 ইংরেজি (English Grammar & Spoken)</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="বাংলা" onclick="toggleModalSubject(this, 'বাংলা')">🇧🇩 বাংলা প্রথম ও দ্বিতীয় পত্র</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="বিজ্ঞান" onclick="toggleModalSubject(this, 'বিজ্ঞান')">🔬 সাধারণ বিজ্ঞান (Science)</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="আইসিটি" onclick="toggleModalSubject(this, 'আইসিটি')">💻 আইসিটি ও কম্পিউটার</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="পদার্থ" onclick="toggleModalSubject(this, 'পদার্থ')">⚡ পদার্থবিজ্ঞান / রসায়ন</button>
+          <button type="button" class="pfilter-pill modal-sub-pill" data-sub="অল সাবজেক্ট" onclick="toggleModalSubject(this, 'অল সাবজেক্ট')">🎒 ১ম-৫ম শ্রেণি সকল বিষয়</button>
+        </div>
+      </div>
+
+      <!-- 5. Student Grade / Class Level -->
+      <div>
+        <div class="pfilter-group-title">
+          <span>🎒 শিক্ষার্থীর শ্রেণি / স্তর:</span>
+        </div>
+        <div class="pfilter-chips-grid">
+          <button type="button" class="pfilter-pill active" id="modal-level-all" onclick="setModalLevel('all')">সকল শ্রেণি / স্তর</button>
+          <button type="button" class="pfilter-pill" id="modal-level-kids" onclick="setModalLevel('শিশু')">🧸 প্রাক-প্রাথমিক / শিশু (Play-KG)</button>
+          <button type="button" class="pfilter-pill" id="modal-level-primary" onclick="setModalLevel('প্রাথমিক')">🎒 প্রাথমিক (১ম - ৫ম শ্রেণি)</button>
+          <button type="button" class="pfilter-pill" id="modal-level-middle" onclick="setModalLevel('৬ষ্ঠ-৮ম')">📚 নিম্ন-মাধ্যমিক (৬ষ্ঠ - ৮ম শ্রেণি)</button>
+          <button type="button" class="pfilter-pill" id="modal-level-ssc" onclick="setModalLevel('মাধ্যমিক')">🎓 মাধ্যমিক / এসএসসি (৯ম - ১০ম)</button>
+          <button type="button" class="pfilter-pill" id="modal-level-hsc" onclick="setModalLevel('উচ্চ-মাধ্যমিক')">🏛️ উচ্চ মাধ্যমিক / এইচএসসি</button>
+          <button type="button" class="pfilter-pill" id="modal-level-adult" onclick="setModalLevel('বয়স্ক')">📖 বড়দের / বয়স্কদের শিক্ষা</button>
+        </div>
+      </div>
+
+      <!-- 6. Curriculum / Medium -->
+      <div>
+        <div class="pfilter-group-title">
+          <span>🌐 কারিকুলাম ও মাধ্যম:</span>
+        </div>
+        <div class="pfilter-chips-grid">
+          <button type="button" class="pfilter-pill active" id="modal-curriculum-all" onclick="setModalCurriculum('all')">সকল মাধ্যম</button>
+          <button type="button" class="pfilter-pill" id="modal-curriculum-bangla" onclick="setModalCurriculum('বাংলা মাধ্যম')">🇧🇩 বাংলা মাধ্যম</button>
+          <button type="button" class="pfilter-pill" id="modal-curriculum-english" onclick="setModalCurriculum('ইংলিশ মিডিয়াম')">🇬🇧 ইংলিশ মিডিয়াম / ভার্সন</button>
+          <button type="button" class="pfilter-pill" id="modal-curriculum-madrasah" onclick="setModalCurriculum('মাদরাসা')">🕌 মাদরাসা কারিকুলাম</button>
+        </div>
+      </div>
+
+      <!-- Trust Note in Modal -->
+      <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:14px;padding:12px 16px;font-size:12.5px;line-height:1.55;color:#065f46;">
+        🛡️ <strong>Global Islamic Care-এর অঙ্গীকার:</strong> আমরা শুধুমাত্র নিষ্ঠাবান ও ভেরিফায়েড মুসলিম শিক্ষকদের মাধ্যমে পাঠদান নিশ্চিত করি। ফলে আপনার সন্তান একাডেমিক শিক্ষার পাশাপাশি নৈতিক শিষ্টাচার ও দ্বীনি মূল্যবোধ নিয়ে গড়ে উঠবে।
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="pfilter-footer">
+      <div style="font-size:13.5px;color:#475569;">
+        ফলাফল: <strong id="pfilter-live-match-count" style="color:var(--blue-dark);font-size:15px;">০</strong> জন শিক্ষক যোগ্য
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button type="button" onclick="resetModalFilters()" style="background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">
+          🔄 রিসেট
+        </button>
+        <button type="button" onclick="applyParentModalFilters()" style="background:linear-gradient(135deg, #0f2744, #1e3d6e);color:#fff;border:none;padding:10px 22px;border-radius:10px;font-size:13.5px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(15,39,68,0.25);">
+          ✅ ফিল্টার প্রয়োগ করুন
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 

@@ -620,6 +620,43 @@
       font-weight: 700;
       border: 1px solid rgba(200,151,42,0.25);
     }
+    .tc-track-badge-quran {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: linear-gradient(135deg, rgba(200, 151, 42, 0.18), rgba(229, 185, 92, 0.28));
+      color: #854d0e;
+      border: 1px solid rgba(200, 151, 42, 0.4);
+      padding: 2.5px 9px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .tc-track-badge-gen {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(14, 165, 233, 0.12);
+      color: #0369a1;
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      padding: 2.5px 9px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .tc-muslim-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(16, 185, 129, 0.1);
+      color: #065f46;
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 10.5px;
+      font-weight: 700;
+    }
     .tc-fee-badge {
       display: inline-block;
       background: rgba(16,185,129,0.08);
@@ -989,9 +1026,13 @@
   <!-- TEACHER DIRECTORY SECTION (List View) -->
   <div id="teacher-directory-section" class="directory-container" style="display:none;">
     <div class="directory-header">
-      <div class="section-label" style="display:inline-flex;background:rgba(30,96,145,0.1);border:1px solid rgba(30,96,145,0.25);color:var(--navy);padding:5px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:12px;">👨‍🏫 বিশ্বজুড়ে অভিজ্ঞ কোরআন শিক্ষক ডিরেক্টরি</div>
-      <h1 class="directory-title">পছন্দের শিক্ষক খুঁজুন ও সরাসরি ক্লাস শুরু করুন</h1>
-      <p class="directory-subtitle">যোগ্যতা, বিষয়, নিজস্ব ফি ও সময়সূচি দেখে দেশ-বিদেশের শীর্ষ হাফেজ ও আলেম শিক্ষকদের সাথে ফ্রি ট্রায়াল ক্লাস শুরু করুন।</p>
+      <div class="section-label" style="display:inline-flex;background:rgba(30,96,145,0.1);border:1px solid rgba(30,96,145,0.25);color:var(--navy);padding:5px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:12px;">👨‍🏫 বিশ্বজুড়ে বিশ্বস্ত মুসলিম শিক্ষক ডিরেক্টরি</div>
+      <h1 class="directory-title">কোরআন ও সকল বিষয়ে সেরা শিক্ষক নির্বাচন করুন</h1>
+      <p class="directory-subtitle">সহীহ কোরআন ও তাজউইদের অভিজ্ঞ হাফেজ-আলেমদের পাশাপাশি বাংলা, অংক, ইংরেজি সহ সকল বিষয়ে পাঠদানের জন্য যাচাইকৃত ও দায়িত্বশীল মুসলিম শিক্ষক নির্বাচন করুন।</p>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.28);color:#065f46;padding:6px 16px;border-radius:30px;font-size:12.5px;font-weight:700;margin-top:10px;">
+        <span style="width:8px;height:8px;background:#10b981;border-radius:50%;box-shadow:0 0 6px rgba(16,185,129,0.6);"></span>
+        <span>🛡️ <strong>১০০% ভেরিফায়েড মুসলিম শিক্ষক</strong> — শিক্ষার্থীদের নৈতিক মূল্যবোধ ও দ্বীনি শিষ্টাচারসহ বিশ্বস্ত পাঠদান</span>
+      </div>
     </div>
 
     <!-- Marketplace Filter & Search Suite -->
@@ -999,28 +1040,41 @@
       <div class="mkt-search-row">
         <div class="mkt-search-input-wrap">
           <span class="mkt-search-icon">🔍</span>
-          <input type="text" id="mkt-search-input" class="mkt-search-input" placeholder="শিক্ষকের নাম, মাদরাসা, বিষয় (হিফজ, তাজউইদ, নূরানী) বা দেশ দিয়ে খুঁজুন..." oninput="handleMarketplaceSearch()">
+          <input type="text" id="mkt-search-input" class="mkt-search-input" placeholder="শিক্ষকের নাম, বিষয় (গণিত, ইংরেজি, তাজউইদ, নূরানী) বা দেশ দিয়ে খুঁজুন..." oninput="handleMarketplaceSearch()">
         </div>
       </div>
 
+      <!-- Track Switcher Chips -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <span style="font-size:13px;font-weight:700;color:var(--navy);margin-right:4px;">শিক্ষার বিভাগ:</span>
+        <button type="button" class="mkt-chip active" id="chip-track-all" onclick="setTrackFilter('all')">👥 সকল শিক্ষক</button>
+        <button type="button" class="mkt-chip" id="chip-track-quran" onclick="setTrackFilter('quran')">🌟 কোরআন ও ইসলামিক শিক্ষা (প্রধান ফোকাস)</button>
+        <button type="button" class="mkt-chip" id="chip-track-general" onclick="setTrackFilter('general')">🎓 জেনারেল একাডেমি (বাংলা, অংক, ইংরেজি...)</button>
+      </div>
+
       <!-- Gender Filter Chips -->
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
         <span style="font-size:13px;font-weight:700;color:var(--navy);margin-right:4px;">শিক্ষক ক্যাটাগরি:</span>
-        <button type="button" class="mkt-chip active" id="chip-gender-all" onclick="setGenderFilter('all')">👥 সকল শিক্ষক</button>
+        <button type="button" class="mkt-chip active" id="chip-gender-all" onclick="setGenderFilter('all')">👥 যে কোনো শিক্ষক</button>
         <button type="button" class="mkt-chip mkt-chip-gender-male" id="chip-gender-male" onclick="setGenderFilter('male')">👨‍🏫 পুরুষ শিক্ষক</button>
-        <button type="button" class="mkt-chip mkt-chip-gender-female" id="chip-gender-female" onclick="setGenderFilter('female')">🧕 মহিলা শিক্ষিকা</button>
+        <button type="button" class="mkt-chip mkt-chip-gender-female" id="chip-gender-female" onclick="setGenderFilter('female')">🧕 মহিলা শিক্ষিকা (মা-বোন ও শিশু)</button>
       </div>
 
       <!-- Subject Filter Chips -->
-      <div class="mkt-filter-chips-row">
-        <span style="font-size:13px;font-weight:700;color:var(--navy);margin-right:4px;">বিশেষজ্ঞতা:</span>
+      <div class="mkt-filter-chips-row" id="mkt-subject-chips-row">
+        <span style="font-size:13px;font-weight:700;color:var(--navy);margin-right:4px;">বিষয়:</span>
         <button type="button" class="mkt-chip active" id="chip-sub-all" onclick="setSubjectFilter('all')">সব বিষয়</button>
         <button type="button" class="mkt-chip" id="chip-sub-noorani" onclick="setSubjectFilter('নূরানী')">নূরানী কায়দা</button>
-        <button type="button" class="mkt-chip" id="chip-sub-tajweed" onclick="setSubjectFilter('তাজউইদ')">তাজউইদ ও সুন্দর সুর</button>
+        <button type="button" class="mkt-chip" id="chip-sub-tajweed" onclick="setSubjectFilter('তাজউইদ')">তাজউইদ ও সুর</button>
         <button type="button" class="mkt-chip" id="chip-sub-hifz" onclick="setSubjectFilter('হিফজ')">হিফজুল কোরআন</button>
+        <button type="button" class="mkt-chip" id="chip-sub-arabic" onclick="setSubjectFilter('আরবি')">আরবি ভাষা</button>
+        <button type="button" class="mkt-chip" id="chip-sub-math" onclick="setSubjectFilter('গণিত')">গণিত / অংক</button>
+        <button type="button" class="mkt-chip" id="chip-sub-english" onclick="setSubjectFilter('ইংরেজি')">ইংরেজি (English)</button>
+        <button type="button" class="mkt-chip" id="chip-sub-bangla" onclick="setSubjectFilter('বাংলা')">বাংলা</button>
+        <button type="button" class="mkt-chip" id="chip-sub-science" onclick="setSubjectFilter('বিজ্ঞান')">সাধারণ বিজ্ঞান</button>
         <button type="button" class="mkt-chip" id="chip-sub-kids" onclick="setSubjectFilter('শিশু')">শিশু ও কিশোর</button>
         <button type="button" class="mkt-chip" id="chip-sub-female" onclick="setSubjectFilter('মহিলা')">মা-বোনদের ক্লাস</button>
-        <button type="button" class="mkt-chip" id="chip-sub-adult" onclick="setSubjectFilter('বয়স্ক')">বয়স্কদের সহজ কোরআন</button>
+        <button type="button" class="mkt-chip" id="chip-sub-adult" onclick="setSubjectFilter('বয়স্ক')">বয়স্কদের শিক্ষা</button>
       </div>
     </div>
 
@@ -1348,6 +1402,7 @@ let reviewRating = 5;
 
 // Marketplace Filter States
 let rawTeachersList = [];
+let activeTrackFilter = 'all';
 let activeGenderFilter = 'all';
 let activeSubjectFilter = 'all';
 let currentSearchQuery = '';
@@ -1357,6 +1412,8 @@ const DEMO_TEACHERS_MAP = {
     name: "হাফেজ মাওলানা তানভীর আহমেদ",
     slug: "hafez-tanvir-ahmed",
     designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
+    teaching_track: "quran",
+    track: "quran",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "male",
@@ -1371,6 +1428,7 @@ const DEMO_TEACHERS_MAP = {
     experience_years: 7,
     students_taught: 180,
     specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "শিশু শিক্ষা"],
+    sort_order: 1,
     weekly_schedule: {
       sat: [10, 11, 14],
       sun: [10, 14],
@@ -1383,6 +1441,8 @@ const DEMO_TEACHERS_MAP = {
     name: "মুফতি সালমান ফারিস",
     slug: "mufti-salman-faris",
     designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
+    teaching_track: "quran",
+    track: "quran",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "male",
@@ -1397,6 +1457,7 @@ const DEMO_TEACHERS_MAP = {
     experience_years: 9,
     students_taught: 240,
     specializations: ["হিফজুল কোরআন", "তাজউইদ ও সুর", "বয়স্কদের শিক্ষা"],
+    sort_order: 2,
     weekly_schedule: {
       sat: [11, 13, 15],
       sun: [11, 15],
@@ -1409,6 +1470,8 @@ const DEMO_TEACHERS_MAP = {
     name: "হাফেজা উম্মে কুলসুম",
     slug: "hafeza-umme-kulsum",
     designation: "সিনিয়র মহিলা কোরআন শিক্ষিকা",
+    teaching_track: "quran",
+    track: "quran",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "female",
@@ -1423,6 +1486,7 @@ const DEMO_TEACHERS_MAP = {
     experience_years: 5,
     students_taught: 150,
     specializations: ["মা-বোনদের ক্লাস", "নূরানী কায়দা", "শিশু শিক্ষা", "দৈনিক দোয়া ও মাসায়েল"],
+    sort_order: 3,
     weekly_schedule: {
       sat: [9, 10, 12],
       sun: [9, 12],
@@ -1430,10 +1494,144 @@ const DEMO_TEACHERS_MAP = {
       tue: [9, 12],
       wed: [9, 10, 12]
     }
+  },
+  'engr-tanzil-hasan': {
+    name: "ইঞ্জিনিয়ার মো: তানজিল হাসান",
+    slug: "engr-tanzil-hasan",
+    designation: "গণিত ও উচ্চতর গণিত বিশেষজ্ঞ (বিএসসি, BUET)",
+    teaching_track: "general",
+    track: "general",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
+    gender: "male",
+    monthly_fee: "৳২,৫০০/মাস",
+    hourly_rate: "$8/hr",
+    photo_url: "",
+    qualifications: ["বিএসসি ইন ইঞ্জিনিয়ারিং (BUET)", "গণিত অলিম্পিয়াড মেন্টর", "৬ বছরের শিক্ষকতা"],
+    languages: ["বাংলা", "English"],
+    category: "general",
+    is_verified: true,
+    bio: "বুয়েট গ্র্যাজুয়েট ও নিষ্ঠাবান মুসলিম শিক্ষক। বাস্তবধর্মী লজিক্যাল পদ্ধতিতে গণিতের ভয় দূর করে এবং শিক্ষার্থীদের নৈতিক ও দ্বীনি মূল্যবোধ চর্চায় উৎসাহিত করেন।",
+    experience_years: 6,
+    students_taught: 320,
+    specializations: ["গণিত (৬ষ্ঠ-১০ম)", "উচ্চতর গণিত (SSC/HSC)", "জ্যামিতি ও বীজগণিত", "বাংলা ও ইংলিশ ভার্সন"],
+    sort_order: 4,
+    weekly_schedule: {
+      sat: [16, 18, 20],
+      sun: [18, 20],
+      mon: [16, 18, 20],
+      tue: [18, 20],
+      wed: [16, 18, 20]
+    }
+  },
+  'maryam-akhter': {
+    name: "মরিয়ম আক্তার",
+    slug: "maryam-akhter",
+    designation: "ইংরেজি গ্রামার, স্পোকেন ও বাংলা শিক্ষিকা (ঢাবি)",
+    teaching_track: "general",
+    track: "general",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
+    gender: "female",
+    monthly_fee: "৳২,০০০/মাস",
+    hourly_rate: "$7/hr",
+    photo_url: "",
+    qualifications: ["বিএ অনার্স ও মাস্টার্স (ইংরেজি বিভাগ, ঢাবি)", "আইইএলটিএস সার্টিফাইড", "বিএড সনদ"],
+    languages: ["বাংলা", "English"],
+    category: "female",
+    is_verified: true,
+    bio: "ঢাকা বিশ্ববিদ্যালয়ের মেধাবী গ্র্যাজুয়েট ও পর্দানশীন মুসলিম শিক্ষিকা। ছোট সোনামণি এবং মা-বোনদের খুব যত্নসহকারে আধুনিক পদ্ধতিতে ইংরেজি ও বাংলা পড়িয়ে থাকেন।",
+    experience_years: 5,
+    students_taught: 210,
+    specializations: ["ইংরেজি গ্রামার ও স্পোকেন", "বাংলা প্রথম ও দ্বিতীয় পত্র", "১ম-৫ম শ্রেণি সকল বিষয়", "মা-বোনদের ক্লাস"],
+    sort_order: 5,
+    weekly_schedule: {
+      sat: [10, 15, 17],
+      sun: [15, 17],
+      mon: [10, 15],
+      tue: [15, 17],
+      wed: [10, 15, 17]
+    }
+  },
+  'sajidur-rahman': {
+    name: "মো: সাজিদুর রহমান",
+    slug: "sajidur-rahman",
+    designation: "সাধারণ বিজ্ঞান ও পদার্থবিজ্ঞান শিক্ষক (ঢাবি)",
+    teaching_track: "general",
+    track: "general",
+    country: "বাংলাদেশ",
+    native_language: "বাংলা",
+    gender: "male",
+    monthly_fee: "৳১,৮০০/মাস",
+    hourly_rate: "$6/hr",
+    photo_url: "",
+    qualifications: ["বিএসসি ও এমএসসি (পদার্থবিজ্ঞান, ঢাবি)", "অভিজ্ঞ অনলাইন সায়েন্স টিউটর"],
+    languages: ["বাংলা", "English"],
+    category: "general",
+    is_verified: true,
+    bio: "ঢাকা বিশ্ববিদ্যালয়ের পদার্থবিজ্ঞান বিভাগের নিষ্ঠাবান মুসলিম শিক্ষক। বাস্তব জীবনের উদাহরণ ও হাতে-কলমে সহজ পদ্ধতিতে বিজ্ঞান ও গণিতকে আনন্দদায়ক করে তোলেন।",
+    experience_years: 4,
+    students_taught: 175,
+    specializations: ["সাধারণ বিজ্ঞান (১ম-৮ম)", "পদার্থবিজ্ঞান (SSC)", "গণিত ও বিজ্ঞান", "প্রাথমিক সকল বিষয়"],
+    sort_order: 6,
+    weekly_schedule: {
+      sat: [17, 19, 21],
+      sun: [19, 21],
+      mon: [17, 19],
+      tue: [19, 21],
+      wed: [17, 19, 21]
+    }
   }
 };
 
-// ── MARKETPLACE FILTER HANDLERS ──
+// ── TRACK HELPERS & MARKETPLACE FILTER HANDLERS ──
+function isTeacherQuran(t) {
+  if (t.teaching_track === 'quran' || t.track === 'quran') return true;
+  if (t.teaching_track === 'general' || t.track === 'general') return false;
+  const combined = [
+    t.designation || '',
+    t.bio || '',
+    (t.specializations || []).join(' '),
+    (t.qualifications || []).join(' '),
+    t.category || ''
+  ].join(' ').toLowerCase();
+  
+  return combined.includes('কোরআন') || combined.includes('কুরআন') || combined.includes('হাফেজ') || 
+         combined.includes('হাফেজা') || combined.includes('তাজবীদ') || combined.includes('তাজউইদ') || 
+         combined.includes('হিফজ') || combined.includes('নূরানী') || combined.includes('হেফজ') || 
+         combined.includes('নাজেরা') || combined.includes('মুফতি') || combined.includes('আলেম') || 
+         combined.includes('আলেমা') || combined.includes('মাওলানা') || combined.includes('আরবি') ||
+         combined.includes('quran') || combined.includes('tajweed') || combined.includes('hifz') ||
+         combined.includes('arabic') || combined.includes('islamic');
+}
+
+function isTeacherGeneral(t) {
+  if (t.teaching_track === 'general' || t.track === 'general') return true;
+  if (t.teaching_track === 'quran' || t.track === 'quran') return false;
+  const combined = [
+    t.designation || '',
+    t.bio || '',
+    (t.specializations || []).join(' '),
+    (t.qualifications || []).join(' ')
+  ].join(' ').toLowerCase();
+  
+  return combined.includes('গণিত') || combined.includes('অংক') || combined.includes('ইংরেজি') || 
+         combined.includes('english') || combined.includes('বাংলা') || combined.includes('বিজ্ঞান') || 
+         combined.includes('পদার্থ') || combined.includes('রসায়ন') || combined.includes('আইসিটি') || 
+         combined.includes('ict') || combined.includes('buet') || combined.includes('ঢাবি') || 
+         combined.includes('ssc') || combined.includes('hsc') || combined.includes('math') ||
+         combined.includes('science');
+}
+
+function setTrackFilter(track) {
+  activeTrackFilter = track;
+  ['all', 'quran', 'general'].forEach(tr => {
+    const el = document.getElementById(`chip-track-${tr}`);
+    if (el) el.classList.toggle('active', tr === track);
+  });
+  filterAndRenderTeachers();
+}
+
 function setGenderFilter(gender) {
   activeGenderFilter = gender;
   ['all', 'male', 'female'].forEach(g => {
@@ -1450,6 +1648,11 @@ function setSubjectFilter(subjectKey) {
     'নূরানী': 'chip-sub-noorani',
     'তাজউইদ': 'chip-sub-tajweed',
     'হিফজ': 'chip-sub-hifz',
+    'আরবি': 'chip-sub-arabic',
+    'গণিত': 'chip-sub-math',
+    'ইংরেজি': 'chip-sub-english',
+    'বাংলা': 'chip-sub-bangla',
+    'বিজ্ঞান': 'chip-sub-science',
     'শিশু': 'chip-sub-kids',
     'মহিলা': 'chip-sub-female',
     'বয়স্ক': 'chip-sub-adult'
@@ -1470,7 +1673,14 @@ function handleMarketplaceSearch() {
 function filterAndRenderTeachers() {
   let list = rawTeachersList.slice();
 
-  // 1. Gender Filter
+  // 1. Track Filter
+  if (activeTrackFilter === 'quran') {
+    list = list.filter(t => isTeacherQuran(t));
+  } else if (activeTrackFilter === 'general') {
+    list = list.filter(t => isTeacherGeneral(t));
+  }
+
+  // 2. Gender Filter
   if (activeGenderFilter !== 'all') {
     list = list.filter(t => {
       const isFemale = t.gender === 'female' || t.category === 'female' || 
@@ -1480,7 +1690,7 @@ function filterAndRenderTeachers() {
     });
   }
 
-  // 2. Subject Filter
+  // 3. Subject Filter
   if (activeSubjectFilter !== 'all') {
     list = list.filter(t => {
       const specs = (t.specializations || []).join(' ').toLowerCase();
@@ -1492,7 +1702,7 @@ function filterAndRenderTeachers() {
     });
   }
 
-  // 3. Search Query Filter
+  // 4. Search Query Filter
   if (currentSearchQuery) {
     list = list.filter(t => {
       const name = (t.name || '').toLowerCase();
@@ -1506,6 +1716,14 @@ function filterAndRenderTeachers() {
              quals.includes(currentSearchQuery) || bio.includes(currentSearchQuery);
     });
   }
+
+  // 5. Quran & Arabic Teachers Spotlight Priority (Quran first, then sort_order)
+  list.sort((a, b) => {
+    const aQuran = isTeacherQuran(a) ? 1 : 0;
+    const bQuran = isTeacherQuran(b) ? 1 : 0;
+    if (aQuran !== bQuran) return bQuran - aQuran;
+    return (a.sort_order || 99) - (b.sort_order || 99);
+  });
 
   renderTeacherDirectory(list);
 }
@@ -1537,7 +1755,7 @@ function renderTeacherDirectory(list) {
         <div style="font-size:44px; margin-bottom:12px;">🔍</div>
         <h3 style="font-size:18px; color:var(--navy); margin-bottom:6px;">কোনো শিক্ষক পাওয়া যায়নি</h3>
         <p style="color:var(--text-muted); font-size:14px; max-width:400px; margin:0 auto 16px;">আপনার অনুসন্ধানের সাথে মিলিয়ে কোনো শিক্ষক প্রোফাইল মেলেনি। অন্য ফিল্টার সিলেক্ট করুন অথবা নিচে শিক্ষক হিসেবে আবেদন করুন।</p>
-        <button class="btn btn-outline btn-sm" onclick="setGenderFilter('all'); setSubjectFilter('all'); document.getElementById('mkt-search-input').value=''; currentSearchQuery=''; filterAndRenderTeachers();">🔄 ফিল্টার রিসেট করুন</button>
+        <button class="btn btn-outline btn-sm" onclick="setTrackFilter('all'); setGenderFilter('all'); setSubjectFilter('all'); document.getElementById('mkt-search-input').value=''; currentSearchQuery=''; filterAndRenderTeachers();">🔄 ফিল্টার রিসেট করুন</button>
       </div>
     `;
     return;
@@ -1555,10 +1773,16 @@ function renderTeacherDirectory(list) {
     const photo = (t.photo_url && t.photo_url.trim() !== '')
       ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" /><div style="display:none;width:100%;height:100%;">${customFallback}</div>`
       : customFallback;
-    const isDemo = t.is_demo || t.slug === 'hafez-tanvir-ahmed' || t.slug === 'mufti-salman-faris' || t.slug === 'hafeza-umme-kulsum';
+    const isDemo = t.is_demo || t.slug === 'hafez-tanvir-ahmed' || t.slug === 'mufti-salman-faris' || t.slug === 'hafeza-umme-kulsum' || t.slug === 'engr-tanzil-hasan' || t.slug === 'maryam-akhter' || t.slug === 'sajidur-rahman';
     const demoBadge = isDemo
       ? `<div style="position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.12);color:#dc2626;border:1.5px solid rgba(239,68,68,0.35);padding:3px 9px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(239,68,68,0.1);z-index:3;" title="এটি একটি নমুনা / ডেমো প্রোফাইল">🧪 ডেমো প্রোফাইল</div>`
       : '';
+
+    const isQuran = isTeacherQuran(t);
+    const trackBadge = isQuran
+      ? `<span class="tc-track-badge-quran" title="কোরআন ও ইসলামিক শিক্ষা বিভাগ">🌟 কোরআন বিভাগ</span>`
+      : `<span class="tc-track-badge-gen" title="জেনারেল একাডেমি বিভাগ">🎓 জেনারেল একাডেমি</span>`;
+    const muslimBadge = `<span class="tc-muslim-badge" title="১০০% যাচাইকৃত আমলদার মুসলিম শিক্ষক">🕌 নিষ্ঠাবান মুসলিম</span>`;
 
     const isSenior = t.teacher_type !== 'fresher';
     const tierBadge = isSenior
@@ -1596,6 +1820,8 @@ function renderTeacherDirectory(list) {
         <div class="tc-designation">${t.designation || 'কোরআন শিক্ষক'}</div>
         
         <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 6px 0;">
+          ${trackBadge}
+          ${muslimBadge}
           ${tierBadge}
           <span class="tc-verified-badge">✅ ভেরিফাইড</span>
           <span class="tc-rating">${ratingStr}</span>
@@ -1698,6 +1924,12 @@ async function init() {
     const { data } = await db.from('teachers').select('*').eq('is_active', true).order('sort_order', { ascending: true }).order('created_at', { ascending: true });
     if (data && data.length > 0) {
       allTeachers = data;
+      // If DB has no general teachers yet, merge demo general teachers so parents can filter them
+      const hasGen = data.some(t => isTeacherGeneral(t));
+      if (!hasGen) {
+        const demoGens = Object.values(DEMO_TEACHERS_MAP).filter(t => isTeacherGeneral(t));
+        allTeachers = allTeachers.concat(demoGens);
+      }
     }
   } catch(e) {
     console.warn('Could not fetch DB teachers:', e);
