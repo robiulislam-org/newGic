@@ -13,6 +13,7 @@ Allow: /library.html
 
 # Block private/admin pages
 Disallow: /dashboard.html
+Disallow: /dashboard
 Disallow: /dashboard/
 
 # Block raw script & patch files (not useful for indexing)

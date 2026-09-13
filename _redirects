@@ -1,0 +1,4 @@
+/dashboard      /dashboard.html      200
+/teachers       /teachers.html       200
+/library        /library.html        200
+/services/:slug /services/:slug.html 200
