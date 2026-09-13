@@ -4562,6 +4562,41 @@ function isTeacherGeneral(t) {
          text.includes('অল সাবজেক্ট') || text.includes('সাধারণ');
 }
 
+// Helper to extract metadata (track, teaching_mode, offline_areas) from bio and specializations
+function extractGicMeta(t) {
+  if (!t) return t;
+  let track = t.track || t.teaching_track;
+  let mode = t.teaching_mode;
+  let offline = t.offline_areas;
+
+  if (t.bio && typeof t.bio === 'string') {
+    const metaMatch = t.bio.match(/<!--gic_meta:([\s\S]*?)-->/);
+    if (metaMatch) {
+      try {
+        const parsed = JSON.parse(metaMatch[1]);
+        if (parsed.track) track = parsed.track;
+        if (parsed.teaching_mode) mode = parsed.teaching_mode;
+        if (parsed.offline_areas !== undefined) offline = parsed.offline_areas;
+      } catch(e) {}
+    }
+    t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
+  }
+
+  if (!offline && Array.isArray(t.specializations)) {
+    const specArea = t.specializations.find(s => typeof s === 'string' && (s.startsWith('হোম টিউশন:') || s.startsWith('হোম টিউশন এলাকা:')));
+    if (specArea) {
+      offline = specArea.replace(/^হোম টিউশন( এলাকা)?:\s*/, '').trim();
+      if (!mode || mode === 'online') mode = 'both';
+    }
+  }
+
+  t.track = track || (isTeacherGeneral(t) ? 'general' : 'quran');
+  t.teaching_track = t.track;
+  t.teaching_mode = mode || (offline ? 'both' : 'online');
+  t.offline_areas = offline || '';
+  return t;
+}
+
 // ── INITIAL PUBLIC TEACHERS LOADER ──
 async function loadPublicTeachers(force = false) {
   if (publicTeachersLoaded && !force) return;
@@ -4598,34 +4633,45 @@ async function loadPublicTeachers(force = false) {
   if (!data || data.length === 0) {
     data = DEMO_PUBLIC_TEACHERS.slice();
   } else {
-    // Enhance DB records with local curated details (clean Bangla names, offline tuition areas, bio, fallback photo)
+    // Enhance DB records: database edits MUST override local curated fallbacks!
     data = data.map(dbT => {
-      const local = localMap[dbT.slug];
-      if (!local) return dbT;
+      const processed = extractGicMeta(dbT);
+      const local = localMap[processed.slug] || {};
       return {
         ...local,
-        ...dbT,
-        name: local.name || dbT.name,
-        teaching_mode: dbT.teaching_mode || local.teaching_mode || 'both',
-        offline_areas: dbT.offline_areas || local.offline_areas || '',
-        photo_url: (dbT.photo_url && dbT.photo_url.trim() !== '') ? dbT.photo_url : local.photo_url,
-        specializations: (Array.isArray(dbT.specializations) && dbT.specializations.length > 0) ? dbT.specializations : local.specializations,
-        qualifications: (Array.isArray(dbT.qualifications) && dbT.qualifications.length > 0) ? dbT.qualifications : local.qualifications,
-        bio: (dbT.bio && dbT.bio.trim() !== '') ? dbT.bio : local.bio,
-        is_verified: true,
+        ...processed,
+        name: (processed.name && processed.name.trim() !== '') ? processed.name : (local.name || ''),
+        designation: (processed.designation && processed.designation.trim() !== '') ? processed.designation : (local.designation || ''),
+        photo_url: (processed.photo_url && processed.photo_url.trim() !== '') ? processed.photo_url : (local.photo_url || ''),
+        teaching_mode: processed.teaching_mode || local.teaching_mode || 'both',
+        track: processed.track || local.track || (isTeacherGeneral(processed) ? 'general' : 'quran'),
+        teaching_track: processed.teaching_track || local.teaching_track || (isTeacherGeneral(processed) ? 'general' : 'quran'),
+        offline_areas: (processed.offline_areas !== undefined && processed.offline_areas !== null && processed.offline_areas !== '') ? processed.offline_areas : (local.offline_areas || ''),
+        specializations: (Array.isArray(processed.specializations) && processed.specializations.length > 0) ? processed.specializations : (local.specializations || []),
+        qualifications: (Array.isArray(processed.qualifications) && processed.qualifications.length > 0) ? processed.qualifications : (local.qualifications || []),
+        bio: (processed.bio && processed.bio.trim() !== '') ? processed.bio : (local.bio || ''),
+        monthly_fee: (processed.monthly_fee && processed.monthly_fee.trim() !== '') ? processed.monthly_fee : (local.monthly_fee || 'আলোচনা সাপেক্ষে'),
+        hourly_rate: processed.hourly_rate || local.hourly_rate || '',
+        whatsapp: processed.whatsapp || local.whatsapp || '8801733017521',
+        country: processed.country || local.country || 'বাংলাদেশ',
+        native_language: processed.native_language || local.native_language || 'বাংলা',
+        languages: (Array.isArray(processed.languages) && processed.languages.length > 0) ? processed.languages : (local.languages || ['বাংলা']),
+        experience_years: (processed.experience_years !== undefined && processed.experience_years !== null) ? processed.experience_years : (local.experience_years || 0),
+        students_taught: (processed.students_taught !== undefined && processed.students_taught !== null) ? processed.students_taught : (local.students_taught || 0),
+        is_verified: processed.is_verified !== false,
         is_demo: false
       };
     });
 
-    // Ensure all 3 real verified teachers are present
+    // Ensure all 3 real verified teachers are present if missing
     const realSlugs = ['md-mujahidul-islam', 'hafez-robiul-islam', 'md-al-amin'];
     realSlugs.forEach(slug => {
-      if (!data.some(t => t.slug === slug) && localMap[slug]) {
+      if (!data.some(t => t.slug === slug || (slug === 'md-mujahidul-islam' && t.id == 10) || (slug === 'hafez-robiul-islam' && t.id == 8) || (slug === 'md-al-amin' && t.id == 9)) && localMap[slug]) {
         data.push(localMap[slug]);
       }
     });
 
-    // Append demo general academic teachers if not already present in DB
+    // Append demo general teachers if not already present in DB
     const hasGeneral = data.some(t => isTeacherGeneral(t));
     if (!hasGeneral) {
       const demoGen = DEMO_PUBLIC_TEACHERS.filter(t => t.track === 'general');
@@ -4818,9 +4864,12 @@ function renderPublicTeacherCards(data) {
       ? quals.slice(0, 3).map(q => `<span class="tc-s-badge-qual">📜 ${q}</span>`).join('')
       : `<span class="tc-s-badge-qual">📜 ${t.designation || 'সনদপ্রাপ্ত শিক্ষক'}</span>`;
 
-    const specBadgesHtml = specs.length > 0
-      ? specs.slice(0, 3).map(s => `<span class="tc-s-badge-spec">📖 ${s}</span>`).join('')
-      : `<span class="tc-s-badge-spec">📖 ${isQuranTeacher ? 'সহীহ কোরআন ও তাজউইদ' : 'স্কুল-কলেজের বিষয়'}</span>`;
+    const cleanSpecs = specs.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
+    const displaySpecs = cleanSpecs.length > 0 ? cleanSpecs : specs;
+
+    const specBadgesHtml = displaySpecs.length > 0
+      ? displaySpecs.slice(0, 3).map(s => `<span class="tc-s-badge-spec">📖 ${s}</span>`).join('')
+      : `<span class="tc-s-badge-spec">📖 ${isQuranTeacher ? 'সহীহ কোরআন ও তাজউইদ' : 'স্কুল-কলেজের বিষয়'}</span>`;
 
     const countryName = t.country || 'বাংলাদেশ';
     const nativeLang = t.native_language || 'বাংলা';

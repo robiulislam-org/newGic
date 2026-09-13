@@ -1686,9 +1686,9 @@ function extractGicMeta(t) {
     if (metaMatch) {
       try {
         const parsed = JSON.parse(metaMatch[1]);
-        if (!track && parsed.track) track = parsed.track;
-        if (!mode && parsed.teaching_mode) mode = parsed.teaching_mode;
-        if (!offline && parsed.offline_areas) offline = parsed.offline_areas;
+        if (parsed.track) track = parsed.track;
+        if (parsed.teaching_mode) mode = parsed.teaching_mode;
+        if (parsed.offline_areas !== undefined) offline = parsed.offline_areas;
       } catch(e) {}
     }
     t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
@@ -1963,9 +1963,12 @@ function renderTeacherDirectory(list) {
       ? quals.map(q => `<span class="tc-s-badge-qual">📜 ${q}</span>`).join('')
       : `<span class="tc-s-badge-qual">📜 ${t.designation || 'সনদপ্রাপ্ত শিক্ষক'}</span>`;
 
-    const specBadgesHtml = specs.length > 0
-      ? specs.map(s => `<span class="tc-s-badge-spec">📖 ${s}</span>`).join('')
-      : `<span class="tc-s-badge-spec">📖 সহীহ কোরআন ও তাজউইদ</span>`;
+    const cleanSpecs = specs.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
+    const displaySpecs = cleanSpecs.length > 0 ? cleanSpecs : specs;
+
+    const specBadgesHtml = displaySpecs.length > 0
+      ? displaySpecs.map(s => `<span class="tc-s-badge-spec">📖 ${s}</span>`).join('')
+      : `<span class="tc-s-badge-spec">📖 ${isQuran ? 'সহীহ কোরআন ও তাজউইদ' : 'স্কুল-কলেজের বিষয়'}</span>`;
 
     const feeDisplay = t.monthly_fee || 'আলোচনা সাপেক্ষে';
     
@@ -2086,27 +2089,37 @@ async function init() {
     if (data && data.length > 0) {
       allTeachers = data.map(dbT => {
         const processed = extractGicMeta(dbT);
-        const local = DEMO_TEACHERS_MAP[processed.slug];
-        if (!local) return processed;
+        const local = DEMO_TEACHERS_MAP[processed.slug] || {};
         return {
           ...local,
           ...processed,
-          name: local.name || processed.name,
+          name: (processed.name && processed.name.trim() !== '') ? processed.name : (local.name || ''),
+          designation: (processed.designation && processed.designation.trim() !== '') ? processed.designation : (local.designation || ''),
+          photo_url: (processed.photo_url && processed.photo_url.trim() !== '') ? processed.photo_url : (local.photo_url || ''),
           teaching_mode: processed.teaching_mode || local.teaching_mode || 'both',
-          offline_areas: processed.offline_areas || local.offline_areas || '',
-          photo_url: (processed.photo_url && processed.photo_url.trim() !== '') ? processed.photo_url : local.photo_url,
-          specializations: (Array.isArray(processed.specializations) && processed.specializations.length > 0) ? processed.specializations : local.specializations,
-          qualifications: (Array.isArray(processed.qualifications) && processed.qualifications.length > 0) ? processed.qualifications : local.qualifications,
-          bio: (processed.bio && processed.bio.trim() !== '') ? processed.bio : local.bio,
-          is_verified: true,
+          track: processed.track || local.track || (isTeacherGeneral(processed) ? 'general' : 'quran'),
+          teaching_track: processed.teaching_track || local.teaching_track || (isTeacherGeneral(processed) ? 'general' : 'quran'),
+          offline_areas: (processed.offline_areas !== undefined && processed.offline_areas !== null && processed.offline_areas !== '') ? processed.offline_areas : (local.offline_areas || ''),
+          specializations: (Array.isArray(processed.specializations) && processed.specializations.length > 0) ? processed.specializations : (local.specializations || []),
+          qualifications: (Array.isArray(processed.qualifications) && processed.qualifications.length > 0) ? processed.qualifications : (local.qualifications || []),
+          bio: (processed.bio && processed.bio.trim() !== '') ? processed.bio : (local.bio || ''),
+          monthly_fee: (processed.monthly_fee && processed.monthly_fee.trim() !== '') ? processed.monthly_fee : (local.monthly_fee || 'আলোচনা সাপেক্ষে'),
+          hourly_rate: processed.hourly_rate || local.hourly_rate || '',
+          whatsapp: processed.whatsapp || local.whatsapp || '8801733017521',
+          country: processed.country || local.country || 'বাংলাদেশ',
+          native_language: processed.native_language || local.native_language || 'বাংলা',
+          languages: (Array.isArray(processed.languages) && processed.languages.length > 0) ? processed.languages : (local.languages || ['বাংলা']),
+          experience_years: (processed.experience_years !== undefined && processed.experience_years !== null) ? processed.experience_years : (local.experience_years || 0),
+          students_taught: (processed.students_taught !== undefined && processed.students_taught !== null) ? processed.students_taught : (local.students_taught || 0),
+          is_verified: processed.is_verified !== false,
           is_demo: false
         };
       });
 
-      // Ensure all 3 real verified teachers exist
+      // Ensure all 3 real verified teachers exist if missing
       const realSlugs = ['md-mujahidul-islam', 'hafez-robiul-islam', 'md-al-amin'];
       realSlugs.forEach(s => {
-        if (!allTeachers.some(t => t.slug === s) && DEMO_TEACHERS_MAP[s]) {
+        if (!allTeachers.some(t => t.slug === s || (s === 'md-mujahidul-islam' && t.id == 10) || (s === 'hafez-robiul-islam' && t.id == 8) || (s === 'md-al-amin' && t.id == 9)) && DEMO_TEACHERS_MAP[s]) {
           allTeachers.push(DEMO_TEACHERS_MAP[s]);
         }
       });
@@ -2153,10 +2166,24 @@ async function init() {
       teacherData = {
         ...local,
         ...foundTeacher,
-        name: local.name || foundTeacher.name,
-        teaching_mode: foundTeacher.teaching_mode || local.teaching_mode || 'both',
-        offline_areas: foundTeacher.offline_areas || local.offline_areas || '',
+        name: (foundTeacher.name && foundTeacher.name.trim() !== '') ? foundTeacher.name : (local.name || ''),
+        designation: (foundTeacher.designation && foundTeacher.designation.trim() !== '') ? foundTeacher.designation : (local.designation || ''),
         photo_url: (foundTeacher.photo_url && foundTeacher.photo_url.trim() !== '') ? foundTeacher.photo_url : (local.photo_url || ''),
+        teaching_mode: foundTeacher.teaching_mode || local.teaching_mode || 'both',
+        track: foundTeacher.track || local.track || (isTeacherGeneral(foundTeacher) ? 'general' : 'quran'),
+        teaching_track: foundTeacher.teaching_track || local.teaching_track || (isTeacherGeneral(foundTeacher) ? 'general' : 'quran'),
+        offline_areas: (foundTeacher.offline_areas !== undefined && foundTeacher.offline_areas !== null && foundTeacher.offline_areas !== '') ? foundTeacher.offline_areas : (local.offline_areas || ''),
+        specializations: (Array.isArray(foundTeacher.specializations) && foundTeacher.specializations.length > 0) ? foundTeacher.specializations : (local.specializations || []),
+        qualifications: (Array.isArray(foundTeacher.qualifications) && foundTeacher.qualifications.length > 0) ? foundTeacher.qualifications : (local.qualifications || []),
+        bio: (foundTeacher.bio && foundTeacher.bio.trim() !== '') ? foundTeacher.bio : (local.bio || ''),
+        monthly_fee: (foundTeacher.monthly_fee && foundTeacher.monthly_fee.trim() !== '') ? foundTeacher.monthly_fee : (local.monthly_fee || 'আলোচনা সাপেক্ষে'),
+        hourly_rate: foundTeacher.hourly_rate || local.hourly_rate || '',
+        whatsapp: foundTeacher.whatsapp || local.whatsapp || '8801733017521',
+        country: foundTeacher.country || local.country || 'বাংলাদেশ',
+        native_language: foundTeacher.native_language || local.native_language || 'বাংলা',
+        languages: (Array.isArray(foundTeacher.languages) && foundTeacher.languages.length > 0) ? foundTeacher.languages : (local.languages || ['বাংলা']),
+        experience_years: (foundTeacher.experience_years !== undefined && foundTeacher.experience_years !== null) ? foundTeacher.experience_years : (local.experience_years || 0),
+        students_taught: (foundTeacher.students_taught !== undefined && foundTeacher.students_taught !== null) ? foundTeacher.students_taught : (local.students_taught || 0),
         is_verified: true,
         is_demo: false
       };

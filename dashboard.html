@@ -4776,9 +4776,9 @@ function extractGicMeta(t) {
     if (metaMatch) {
       try {
         const parsed = JSON.parse(metaMatch[1]);
-        if (!track && parsed.track) track = parsed.track;
-        if (!mode && parsed.teaching_mode) mode = parsed.teaching_mode;
-        if (!offline && parsed.offline_areas) offline = parsed.offline_areas;
+        if (parsed.track) track = parsed.track;
+        if (parsed.teaching_mode) mode = parsed.teaching_mode;
+        if (parsed.offline_areas !== undefined) offline = parsed.offline_areas;
       } catch(e) {}
     }
     // Clean bio so that comment tags are never visible in UI or textarea
@@ -5544,10 +5544,10 @@ function openEditTeacherModal(id) {
   document.getElementById('tm-students').value = teacher.students_taught || 0;
   document.getElementById('tm-sort').value = (teacher.sort_order !== undefined && teacher.sort_order !== null) ? teacher.sort_order : 0;
   
-  const quals = Array.isArray(teacher.qualifications) ? teacher.qualifications : (typeof teacher.qualifications === 'string' ? JSON.parse(teacher.qualifications || '[]') : []);
   const specs = Array.isArray(teacher.specializations) ? teacher.specializations : (typeof teacher.specializations === 'string' ? JSON.parse(teacher.specializations || '[]') : []);
+  const cleanSpecs = specs.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
   document.getElementById('tm-qualifications').value = quals.join(', ');
-  document.getElementById('tm-specializations').value = specs.join(', ');
+  document.getElementById('tm-specializations').value = cleanSpecs.join(', ');
   
   document.getElementById('tm-bio').value = teacher.bio || '';
   document.getElementById('tm-is-active').checked = (teacher.is_active !== false);
