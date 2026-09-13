@@ -15,7 +15,7 @@
   <base href="/">
   <link rel="icon" type="image/jpeg" href="logo.jpg">
   <link rel="apple-touch-icon" href="logo.jpg">
-  <title>GIC Admin Dashboard</title>
+  <title>GIC Admin Dashboard — বিশ্বস্ত মুসলিম শিক্ষক ও শিক্ষার্থী ম্যানেজমেন্ট</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -1712,11 +1712,37 @@
             </div>
           </div>
 
-          <!-- Section 2: স্তর, ক্যাটাগরি, সিরিয়াল ও রেটিং -->
+          <!-- Section 2: স্তর, বিভাগ, মোড, ক্যাটাগরি, সিরিয়াল ও রেটিং -->
           <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
             <div style="font-size:13px;font-weight:700;color:var(--gold-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>🏷️ স্তর, ক্যাটাগরি, সিরিয়াল ও ভেরিফিকেশন</span>
+              <span>🏷️ বিভাগ, পাঠদান মাধ্যম, স্তর, ক্যাটাগরি ও সিরিয়াল</span>
             </div>
+            <!-- Track & Mode Row -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--gold-light);">পাঠদানের বিভাগ (Track) *</label>
+                <select id="tm-track" class="inp" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(200,151,42,0.4);color:#fde047;font-weight:700;">
+                  <option value="quran">🌟 কোরআন ও ইসলামিক শিক্ষা</option>
+                  <option value="general">🎓 জেনারেল একাডেমি (স্কুল/কলেজ বিষয়)</option>
+                  <option value="both">🌟🎓 উভয় বিভাগ (কোরআন ও একাডেমি)</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:#38bdf8;">পাঠদানের মাধ্যম (Teaching Mode) *</label>
+                <select id="tm-teaching-mode" class="inp" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(56,189,248,0.4);color:#7dd3fc;font-weight:700;" onchange="document.getElementById('tm-offline-areas-wrap').style.display = (this.value !== 'online') ? 'block' : 'none';">
+                  <option value="both">🌐🏠 অনলাইন ও সরাসরি হোম টিউশন (উভয়)</option>
+                  <option value="online">💻 শুধুমাত্র অনলাইন ক্লাস</option>
+                  <option value="offline">🏠 শুধুমাত্র হোম টিউশন (বাসায় গিয়ে)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Offline Areas Input (Visible when mode is both or offline) -->
+            <div id="tm-offline-areas-wrap" style="margin-bottom:12px;">
+              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:#fb923c;">📍 অফলাইন হোম টিউশন এলাকা (যেসব এলাকায় বাসায় গিয়ে পড়াতে পারবেন)</label>
+              <input type="text" id="tm-offline-areas" class="inp" placeholder="যেমন: মিরপুর, উত্তরা, ধানমন্ডি, বাড্ডা, ঢাকা" style="margin-bottom:0;background:#18110b;border-color:rgba(249,115,22,0.4);color:#fed7aa;">
+            </div>
+
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:12px;">
               <div>
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষক স্তর *</label>
@@ -4764,23 +4790,23 @@ async function loadTeachersAdmin() {
       } catch(e) {}
     }
     
-    // Auto-seed initial 3 demo profiles into DB if table is empty and user hasn't cleared them
+    // Auto-seed initial profiles into DB if table is empty and user hasn't cleared them
     const hasBeenCleared = localStorage.getItem('gic_teachers_cleared') === 'true';
     if (teachersData.length === 0 && !hasBeenCleared) {
       const initialDemos = [
         {
-          name: "হাফেজ মাওলানা তানভীর আহমেদ",
-          slug: "hafez-tanvir-ahmed",
-          designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
+          name: "মাওলানা মোঃ মুজাহিদুল ইসলাম",
+          slug: "md-mujahidul-islam",
+          designation: "সিনিয়র শিক্ষক ও কারী",
           gender: "male",
-          monthly_fee: "৳১,৫০০/মাস",
+          monthly_fee: "আলোচনা সাপেক্ষে",
           hourly_rate: "$5/hr",
-          photo_url: "",
-          qualifications: ["দাওরায়ে হাদিস", "হিফজুল কুরআন", "সনদে তাজবীদ"],
-          bio: "দীর্ঘ ৭ বছর ধরে দেশি এবং প্রবাসী শিশুদের অত্যন্ত ধৈর্য ও স্নেহের সাথে সহীহ কোরআন শিক্ষা দিচ্ছেন।",
-          experience_years: 7,
+          photo_url: "images/teachers/md-mujahidul-islam.jpg",
+          qualifications: ["দাওরায়ে হাদিস", "সনদে তাজবীদ", "ক্বারীয়ানা কোর্স"],
+          bio: "দীর্ঘ ৬ বছর ধরে নিষ্ঠা ও আন্তরিকতার সাথে দেশ-বিদেশের শিশু ও বয়স্ক শিক্ষার্থীদের সহীহ কোরআন ও তাজবীদ শিক্ষা দিচ্ছেন।",
+          experience_years: 6,
           students_taught: 180,
-          specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "শিশু শিক্ষা"],
+          specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "নূরানী কায়দা", "হোম টিউশন"],
           weekly_schedule: { sat: [10, 11, 14], sun: [10, 14], mon: [10, 11], tue: [10, 14], wed: [10, 11, 14] },
           whatsapp: "8801733017521",
           country: "বাংলাদেশ",
@@ -4791,46 +4817,50 @@ async function loadTeachersAdmin() {
           is_verified: true,
           rating: 5.0,
           teacher_type: 'senior',
-          is_demo: true
+          track: 'quran',
+          teaching_mode: 'both',
+          offline_areas: 'মিরপুর, উত্তরা, ঢাকা'
         },
         {
-          name: "মুফতি সালমান ফারিস",
-          slug: "mufti-salman-faris",
-          designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
+          name: "হাফেজ রবিউল ইসলাম",
+          slug: "hafez-robiul-islam",
+          designation: "হাফেজুল কুরআন ও দ্বীনি শিক্ষক",
           gender: "male",
-          monthly_fee: "৳২,০০০/মাস",
-          hourly_rate: "$7/hr",
-          photo_url: "",
-          qualifications: ["মুফতি (ইফতা)", "দাওরায়ে হাদিস", "হিফজুল কুরআন ৩০ পারা"],
-          bio: "আন্তর্জাতিক হিফজ কারিকুলাম ও আধুনিক রিভিশন টেকনিকে দক্ষ। নতুন শিক্ষার্থীদের সঠিক মাখরাজ ও দ্রুত হেফজ সম্পন্ন করায় অভিজ্ঞ।",
-          experience_years: 9,
-          students_taught: 240,
-          specializations: ["হিফজুল কোরআন", "তাজউইদ ও সুর", "বয়স্কদের শিক্ষা"],
+          monthly_fee: "আলোচনা সাপেক্ষে",
+          hourly_rate: "$6/hr",
+          photo_url: "images/teachers/hafez-robiul-islam.jpg",
+          qualifications: ["হিফজুল কুরআন ৩০ পারা", "দাওরায়ে হাদিস"],
+          bio: "কোরআন হিফজ ও নাজেরা শিক্ষাদানে বিশেষ পারদর্শী। আধুনিক পুনরাবৃত্তি পদ্ধতিতে শিক্ষার্থীদের সহজে হিফজ সম্পন্ন করতে সাহায্য করেন।",
+          experience_years: 5,
+          students_taught: 150,
+          specializations: ["হিফজুল কোরআন", "নাজেরা পড়া", "তাজউইদ ও সুর"],
           weekly_schedule: { sat: [11, 13, 15], sun: [11, 15], mon: [11, 13], tue: [11, 15], wed: [11, 13, 15] },
           whatsapp: "8801733017521",
           country: "বাংলাদেশ",
           native_language: "বাংলা",
-          languages: ["বাংলা", "English", "Urdu"],
+          languages: ["বাংলা", "English"],
           sort_order: 2,
           is_active: true,
           is_verified: true,
           rating: 5.0,
           teacher_type: 'senior',
-          is_demo: true
+          track: 'quran',
+          teaching_mode: 'both',
+          offline_areas: 'বনশ্রী, রামপুরা, বাড্ডা, ঢাকা'
         },
         {
-          name: "হাফেজা উম্মে কুলসুম",
-          slug: "hafeza-umme-kulsum",
-          designation: "সিনিয়র মহিলা কোরআন শিক্ষক",
-          gender: "female",
-          monthly_fee: "৳১,২০০/মাস",
-          hourly_rate: "$4/hr",
-          photo_url: "",
-          qualifications: ["হাফেজা", "আলেমা", "তাজবীদ সার্টিফাইড"],
-          bio: "ছোট সোনামণি এবং মা-বোনদের জন্য অত্যন্ত যত্নের সাথে অনলাইনে নূরানী কায়দা ও সহীহ তেলাওয়াত শেখান।",
-          experience_years: 5,
-          students_taught: 150,
-          specializations: ["মা-বোনদের ক্লাস", "নূরানী কায়দা", "শিশু শিক্ষা", "দৈনিক দোয়া ও মাসায়েল"],
+          name: "মাওলানা মোঃ আল আমিন",
+          slug: "md-al-amin",
+          designation: "ইসলামিক স্টাডিজ ও কোরআন শিক্ষক",
+          gender: "male",
+          monthly_fee: "আলোচনা সাপেক্ষে",
+          hourly_rate: "$5/hr",
+          photo_url: "images/teachers/md-al-amin.jpg",
+          qualifications: ["দাওরায়ে হাদিস", "কামিল (হাদিস)", "বিএ (অনার্স)"],
+          bio: "সহীহ তাজবীদ, ইসলামিক মূল্যবোধ ও আদব-আখলাক শিক্ষাদানে নিবেদিতপ্রাণ শিক্ষক। অনলাইনে ও সরাসরি হোম টিউশনে পাঠদান করেন।",
+          experience_years: 4,
+          students_taught: 120,
+          specializations: ["সহীহ তেলাওয়াত", "মাসলা-মাসায়েল", "শিশু শিক্ষা", "আরবি ভাষা"],
           weekly_schedule: { sat: [9, 10, 12], sun: [9, 12], mon: [9, 10], tue: [9, 12], wed: [9, 10, 12] },
           whatsapp: "8801733017521",
           country: "বাংলাদেশ",
@@ -4841,7 +4871,36 @@ async function loadTeachersAdmin() {
           is_verified: true,
           rating: 5.0,
           teacher_type: 'senior',
-          is_demo: true
+          track: 'quran',
+          teaching_mode: 'both',
+          offline_areas: 'ধানমন্ডি, মোহাম্মদপুর, ঢাকা'
+        },
+        {
+          name: "মোছাঃ ফাতেমা খাতুন",
+          slug: "fatema-khatun",
+          designation: "গণিত ও বিজ্ঞান শিক্ষিকা (বিএসসি অনার্স)",
+          gender: "female",
+          monthly_fee: "আলোচনা সাপেক্ষে",
+          hourly_rate: "$5/hr",
+          photo_url: "",
+          qualifications: ["বিএসসি অনার্স (গণিত)", "বিএড"],
+          bio: "সততা ও দ্বীনি মূল্যবোধসম্পন্ন শিক্ষিকা। ১ম থেকে ৮ম শ্রেণি পর্যন্ত সকল বিষয় এবং ৯ম-১০ম শ্রেণির গণিত ও বিজ্ঞান অত্যন্ত যত্নসহকারে পড়ান।",
+          experience_years: 5,
+          students_taught: 140,
+          specializations: ["গণিত / অংক", "সাধারণ বিজ্ঞান", "১ম-৫ম অল সাবজেক্ট", "মহিলা ও শিশু শিক্ষা"],
+          weekly_schedule: { sat: [9, 10, 14], sun: [9, 14], mon: [9, 10], tue: [9, 14], wed: [9, 10, 14] },
+          whatsapp: "8801733017521",
+          country: "বাংলাদেশ",
+          native_language: "বাংলা",
+          languages: ["বাংলা", "English"],
+          sort_order: 4,
+          is_active: true,
+          is_verified: true,
+          rating: 5.0,
+          teacher_type: 'senior',
+          track: 'general',
+          teaching_mode: 'both',
+          offline_areas: 'উত্তরা, খিলক্ষেত, ঢাকা'
         }
       ];
 
@@ -5053,6 +5112,24 @@ function renderAdminTeachersGrid(list) {
       ? `<img src="${t.photo_url}" alt="${t.name}" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`
       : '👨‍🏫';
 
+    const trackBadge = (t.track === 'general')
+      ? `<span style="background:rgba(14,165,233,0.18);color:#38bdf8;border:1px solid rgba(14,165,233,0.35);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🎓 জেনারেল একাডেমি</span>`
+      : (t.track === 'both')
+      ? `<span style="background:linear-gradient(135deg,rgba(200,151,42,0.22),rgba(14,165,233,0.22));color:#fde047;border:1px solid rgba(200,151,42,0.45);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🌟🎓 উভয় বিভাগ</span>`
+      : `<span style="background:rgba(200,151,42,0.18);color:#fde047;border:1px solid rgba(200,151,42,0.4);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🌟 কোরআন ও ইসলামিক</span>`;
+
+    const modeBadge = (t.teaching_mode === 'offline')
+      ? `<span style="background:rgba(234,88,12,0.18);color:#fb923c;border:1px solid rgba(234,88,12,0.35);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🏠 শুধুমাত্র হোম টিউশন</span>`
+      : (t.teaching_mode === 'online')
+      ? `<span style="background:rgba(30,96,145,0.18);color:#60a5fa;border:1px solid rgba(30,96,145,0.35);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">💻 শুধুমাত্র অনলাইন</span>`
+      : `<span style="background:rgba(16,185,129,0.18);color:#4ade80;border:1px solid rgba(16,185,129,0.35);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🌐 অনলাইন ও হোম টিউশন</span>`;
+
+    const offlineAreaHtml = t.offline_areas ? `
+      <div style="background:rgba(234,88,12,0.08);border:1px dashed rgba(234,88,12,0.35);border-radius:8px;padding:4px 9px;margin-top:6px;font-size:11px;color:#fdba74;text-align:left;display:flex;align-items:center;gap:5px;">
+        <span>📍</span><strong>হোম টিউশন এলাকা:</strong> <span>${t.offline_areas}</span>
+      </div>
+    ` : '';
+
     return `
     <div class="teacher-card ${isActive ? '' : 'inactive'}" id="tc-card-${t.id}" style="position:relative;border:1px solid ${isActive ? 'rgba(255,255,255,0.08)' : 'rgba(244,63,94,0.3)'};">
       
@@ -5113,6 +5190,13 @@ function renderAdminTeachersGrid(list) {
           </button>
         </div>
       </div>
+
+      <!-- Track & Mode Badge Row -->
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0 6px 0;">
+        ${trackBadge}
+        ${modeBadge}
+      </div>
+      ${offlineAreaHtml}
 
       <!-- Structured Info Box: 1. যোগ্যতা, 2. অভিজ্ঞতা, 3. পারদর্শী -->
       <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:8px 12px;margin:10px 0;display:flex;flex-direction:column;gap:6px;font-size:11.5px;text-align:left;">
@@ -5332,12 +5416,27 @@ function selectAllDaySlots(selectAll) {
   renderModalSlots();
 }
 
+function addSpecChip(spec) {
+  const inp = document.getElementById('tm-specializations');
+  if (!inp) return;
+  const current = inp.value.trim();
+  if (!current) {
+    inp.value = spec;
+  } else if (!current.includes(spec)) {
+    inp.value = current + ', ' + spec;
+  }
+}
+
 function openAddTeacherModal() {
   document.getElementById('tm-title').textContent = '➕ নতুন শিক্ষক যোগ করুন';
   document.getElementById('tm-id').value = '';
   document.getElementById('tm-name').value = '';
   document.getElementById('tm-slug').value = '';
   document.getElementById('tm-teacher-type').value = 'senior';
+  if (document.getElementById('tm-track')) document.getElementById('tm-track').value = 'quran';
+  if (document.getElementById('tm-teaching-mode')) document.getElementById('tm-teaching-mode').value = 'both';
+  if (document.getElementById('tm-offline-areas')) document.getElementById('tm-offline-areas').value = '';
+  if (document.getElementById('tm-offline-areas-wrap')) document.getElementById('tm-offline-areas-wrap').style.display = 'block';
   document.getElementById('tm-designation').value = 'হাফেজুল কুরআন ও মাওলানা';
   document.getElementById('tm-whatsapp').value = '8801733017521';
   document.getElementById('tm-gender').value = 'male';
@@ -5382,6 +5481,12 @@ function openEditTeacherModal(id) {
   document.getElementById('tm-name').value = teacher.name || '';
   document.getElementById('tm-slug').value = teacher.slug || '';
   document.getElementById('tm-teacher-type').value = teacher.teacher_type || 'senior';
+  if (document.getElementById('tm-track')) document.getElementById('tm-track').value = teacher.track || 'quran';
+  if (document.getElementById('tm-teaching-mode')) document.getElementById('tm-teaching-mode').value = teacher.teaching_mode || 'both';
+  if (document.getElementById('tm-offline-areas')) document.getElementById('tm-offline-areas').value = teacher.offline_areas || '';
+  if (document.getElementById('tm-offline-areas-wrap')) {
+    document.getElementById('tm-offline-areas-wrap').style.display = (teacher.teaching_mode !== 'online') ? 'block' : 'none';
+  }
   document.getElementById('tm-designation').value = teacher.designation || '';
   document.getElementById('tm-whatsapp').value = teacher.whatsapp || '8801733017521';
   document.getElementById('tm-gender').value = teacher.gender || 'male';
@@ -5438,6 +5543,9 @@ async function saveTeacherSubmit(event) {
   const name = document.getElementById('tm-name').value.trim();
   const slug = document.getElementById('tm-slug').value.trim().toLowerCase();
   const teacherType = document.getElementById('tm-teacher-type').value || 'senior';
+  const track = document.getElementById('tm-track')?.value || 'quran';
+  const teachingMode = document.getElementById('tm-teaching-mode')?.value || 'both';
+  const offlineAreas = document.getElementById('tm-offline-areas')?.value.trim() || '';
   const designation = document.getElementById('tm-designation').value.trim();
   const whatsapp = document.getElementById('tm-whatsapp').value.trim();
   const gender = document.getElementById('tm-gender').value || 'male';
@@ -5496,7 +5604,7 @@ async function saveTeacherSubmit(event) {
         if (!error && data && data.success) updateOk = true;
       } catch(e) {}
 
-      // Direct REST update (always ensures all columns including country, languages, rating, teacher_type etc. are saved)
+      // Direct REST update (always ensures all columns including track, teaching_mode, offline_areas etc. are saved)
       const { error } = await db.from('teachers').update({
         name, slug, photo_url: photoUrl, designation,
         gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
@@ -5506,9 +5614,26 @@ async function saveTeacherSubmit(event) {
         rating, is_verified: isVerified,
         weekly_schedule: modalScheduleState,
         whatsapp, sort_order: sortOrder, is_active: isActive,
-        teacher_type: teacherType
+        teacher_type: teacherType,
+        track, teaching_mode: teachingMode, offline_areas: offlineAreas
       }).eq('id', id);
       if (error && !updateOk) throw error;
+
+      const localT = allAdminTeachers.find(item => item.id == id);
+      if (localT) {
+        Object.assign(localT, {
+          name, slug, photo_url: photoUrl, designation,
+          gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
+          country, native_language: nativeLanguage, languages,
+          qualifications, bio, experience_years: experience,
+          students_taught: students, specializations,
+          rating, is_verified: isVerified,
+          weekly_schedule: modalScheduleState,
+          whatsapp, sort_order: sortOrder, is_active: isActive,
+          teacher_type: teacherType,
+          track, teaching_mode: teachingMode, offline_areas: offlineAreas
+        });
+      }
 
       toast('✅ শিক্ষকের সকল তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
     } else {
@@ -5522,7 +5647,8 @@ async function saveTeacherSubmit(event) {
         rating, is_verified: isVerified,
         weekly_schedule: modalScheduleState,
         whatsapp, sort_order: sortOrder, is_active: isActive,
-        teacher_type: teacherType
+        teacher_type: teacherType,
+        track, teaching_mode: teachingMode, offline_areas: offlineAreas
       }]);
       if (error) throw error;
       toast('✅ নতুন শিক্ষক সফলভাবে যুক্ত হয়েছে!', 'ok');

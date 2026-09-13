@@ -2,138 +2,81 @@
 
 ## About
 
-Global Islamic Care (GIC) is a Bangladesh-based online Islamic education platform that connects qualified, verified Quran teachers (Hafez, Alim, Mufti) with students worldwide. GIC operates as a transparent teacher-student matchmaking platform — students browse verified teacher profiles and contact them directly via WhatsApp. There is no middleman and no hidden commission.
+Global Islamic Care (GIC) is a Bangladesh-based comprehensive education platform connecting verified, qualified Muslim teachers and tutors (both male and female) with students and parents worldwide. GIC offers two foundational tracks:
+1. **Quran & Islamic Education (কোরআন ও ইসলামিক শিক্ষা):** Sahih Quran recitation, Nurani Qaida, Tajweed, Hifz (memorization), Nazera, Quran translation & Tafseer, Arabic language, Masla-Masayel (Fiqh), and Islamic ethics taught by certified Hafez, Alim, and Mufti teachers.
+2. **General Academic Education (জেনারেল একাডেমিক শিক্ষা):** All school and college subjects (Bangla, Mathematics, English, General Science, Physics, Chemistry, Biology, Higher Math, ICT, Accounting) from Primary (Class 1-5), High School (Class 6-10 / SSC), to Higher Secondary (HSC / College) taught by practicing Muslim university graduates and experienced educators.
+
+Teaching Modes Supported:
+- **Online 1-on-1 Live Classes:** Interactive classes conducted via Google Meet or Zoom for students in Bangladesh and expatriates globally.
+- **In-Person Home Tuition (সরাসরি বাসায় গিয়ে অফলাইন হোম টিউশন):** Verified teachers travel directly to students' homes within designated service areas (e.g., Dhaka, Chittagong, Sylhet, Gazipur, and various local areas across Bangladesh).
+
+GIC operates on a transparent, direct-contact model: students and parents browse verified teacher profiles and connect directly via WhatsApp. There is no middleman, no student commission, and no hidden enrollment charges.
 
 Website: https://globalislamiccare.com
 Phone: +8801733017521
 WhatsApp: +8801733017521
 Language: Bengali (বাংলা), English, Arabic, Urdu
 
-## Services Offered
+## Educational Tracks & Services Offered
 
-GIC teachers provide the following Islamic educational services via 1-on-1 live online classes (Google Meet / Zoom):
+### 1. Quran & Islamic Education Track (কোরআন ও ইসলামিক শিক্ষা)
+- **সহীহ কোরআন তেলাওয়াত শিক্ষা (Sahih Quran Recitation):** Correct recitation starting from Nurani Qaida / Norani Qaida with Tajweed rules.
+- **হেফজুল কুরআন (Hifz / Quran Memorization):** Complete or partial Quran memorization with certified Hafez teachers following Sabak, Sabki, and Manzil methods.
+- **নাজেরা পড়ানো (Nazera — Quran Reading Fluency):** Fluent Quran recitation with correct pronunciation.
+- **কুরআন অর্থ ও তাফসীর (Quran Translation & Tafseer):** Verse-by-verse translation and exegesis by certified Alim scholars.
+- **আরবি ভাষা শিক্ষা (Arabic Language):** Conversational Arabic, Quranic Arabic grammar (Nahw & Sarf).
+- **মাসলা-মাসায়েল ও ফিকহ (Islamic Jurisprudence — Fiqh):** Essential Islamic lifestyle rulings, prayer, fasting, zakat, family matters by Mufti/Alim teachers.
+- **দুয়া ও যিকর শিক্ষা (Duas and Daily Dhikr):** Essential masnoon supplications and daily adhkār.
+- **নীতি-নৈতিকতা ও আদব (Islamic Akhlaq & Character Building):** Moral values, prophetic character (Sunnah & Seerah).
 
-1. **সহীহ কোরআন তেলাওয়াত শিক্ষা (Sahih Quran Recitation)**
-   Correct Quran recitation from basics (Nurani Qaida / Norani Qaida) with proper Tajweed rules. Suitable for beginners of all ages.
+### 2. General Academic Tuition Track (জেনারেল একাডেমি ও টিউশন)
+- **প্রাথমিক শিক্ষা (Primary All Subjects - Class 1 to 5):** Bangla, English, Math, Science, Religion taught with gentle care.
+- **মাধ্যমিক শিক্ষা (High School - Class 6 to 10 & SSC):** General Math, Higher Math, General Science, Physics, Chemistry, Biology, English Grammar, Bangla Literature, ICT.
+- **উচ্চ মাধ্যমিক (HSC & College - Class 11-12):** Science, Commerce, and Arts subjects.
+- **নারী শিক্ষার্থীদের জন্য নারী শিক্ষিকা (Female Tutors for Female Students):** Dedicated verified Muslim female teachers available for female students and small children for both online and offline home tuition.
 
-2. **হেফজুল কুরআন (Hifz / Quran Memorization)**
-   Full Quran memorization (Hifz) with certified Hafez teachers. Structured lesson plans with revision methodology.
-
-3. **নাজেরা পড়ানো (Nazera — Quran Reading with Fluency)**
-   Fluent Quran reading with correct pronunciation. Suitable for those who know basics but want to read entire Quran with confidence.
-
-4. **কুরআন অর্থ ও তাফসীর (Quran Translation and Tafseer)**
-   Quran meaning (Bangla/English) and Tafseer (exegesis) classes by qualified Alim teachers. Understand the depth of Quranic verses.
-
-5. **আরবি ভাষা শিক্ষা (Arabic Language Learning)**
-   Arabic language learning for Bengali and English speakers. Conversational Arabic, Quranic Arabic grammar (Nahw & Sarf), and Classical Arabic.
-
-6. **মাসলা-মাসায়েল (Islamic Jurisprudence — Fiqh)**
-   Essential Islamic rulings (Masla-Masayel) related to daily life: prayer, fasting, zakat, halal/haram, family law, and more. Taught by Mufti/Alim teachers.
-
-7. **নীতি-নৈতিকতা ও ইসলামিক আদব (Islamic Ethics and Manners)**
-   Islamic character building, akhlaq (moral conduct), seerah (Prophet's life), and Islamic lifestyle guidance.
-
-8. **দুয়া ও যিকর শিক্ষা (Duas and Dhikr)**
-   Memorization and understanding of important daily duas, masnoon duas, and dhikr from Quran and Hadith.
-
-9. **ইসলামিক শিক্ষা — সকল বিষয় (General Islamic Studies)**
-   Any subject related to Islamic knowledge taught by qualified scholars registered on the platform.
+## Teaching Formats
+1. **Online Live 1-on-1 Classes:** Anywhere worldwide via Google Meet / Zoom.
+2. **Offline Home Tuition (বাসায় গিয়ে সরাসরি হোম টিউশন):** Physical home tutoring within teacher-specified coverage areas across Bangladesh.
 
 ## Target Audience
+- Bangladeshi families in Bangladesh seeking trustworthy, moral Muslim home tutors or online teachers.
+- Expatriate Muslim families in UK, USA, Canada, Saudi Arabia, UAE, Qatar, Malaysia, Australia wanting genuine Islamic and academic guidance.
+- Parents seeking vetted Muslim male and female teachers with verified NID and educational credentials.
+- Students of all ages — from young kids starting Qaida to adults seeking Tafseer or academic tutoring.
 
-- Bangladeshi families in Bangladesh and abroad (UK, USA, Canada, Saudi Arabia, Malaysia, UAE, Australia)
-- Expatriate Muslim families wanting Islamic education for their children
-- Adults wanting to learn Quran or improve recitation
-- Parents looking for verified, qualified Quran tutors for their children
-- Students wanting Hifz, Nazera, Tafseer, Arabic language, or Islamic studies
-
-## Teacher Profiles
-
-All teachers on GIC are:
-- Verified with NID (National ID) and/or passport
-- Qualified (Hafez, Alim, Mufti, or specialized in Islamic subjects)
-- Experienced in online teaching
-- Listed with their qualifications, experience, fees, and teaching schedule
-
-Teachers set their own monthly fees and schedule. Students contact teachers directly via WhatsApp.
-
-## Key Features
-
-- 100% transparent — no commission, no hidden fees
-- Free teacher profile browsing
-- Direct WhatsApp contact with teachers
-- 1-on-1 personalized live classes
-- Flexible scheduling for all time zones
-- Verified teacher profiles with photo, bio, qualifications
-- Digital Islamic Library with free Quran PDFs and Qaida books
-- Free trial class option available
+## Teacher Profiles & Verification
+Every teacher on GIC:
+- Submits verified National ID (NID) and educational certificates.
+- Undergoes thorough manual verification before profile publication.
+- Lists educational track (Islamic / Academic / Both), teaching modes (Online / Home Tuition / Both), offline coverage areas, subjects taught, and monthly fee structure.
+- Communicates directly with parents/students via WhatsApp with zero intermediary fees.
 
 ## Digital Islamic Library
-
-GIC hosts a free Digital Islamic Library at: https://globalislamiccare.com/library.html
-Contents:
-- Emdadia Hafezi Quran (15-line Hifz Quran) — full PDF with 114 Surah and 30 Para navigator
-- Nadiatul Ampara (আমপারা নাদিয়াতুল)
+Free online reading and HD PDF downloads at: https://globalislamiccare.com/library.html
+- Emdadia Hafezi Quran (15-line Quran with 114 Surah and 30 Para jumpers)
+- Nadiatul Ampara (নাদিয়াতুল কায়দা আমপারা)
 - Nurani Podhotite Quran Shikkha (নূরানী পদ্ধতিতে কুরআন শিক্ষা)
-- Norani Qaida (নূরানী কায়দা) — English edition
+- Norani Qaida English Edition
 - Tilawat Qaida (তেলাওয়াত কায়দা)
 
-## Social Media
+## Key Pages
+- Homepage: https://globalislamiccare.com/
+- Teacher Directory: https://globalislamiccare.com/teachers.html
+- Teacher & Student Management Dashboard: https://globalislamiccare.com/dashboard
+- Digital Library: https://globalislamiccare.com/library.html
+- Quran Recitation: https://globalislamiccare.com/services/quran-shikkha.html
+- Hifz: https://globalislamiccare.com/services/hefz.html
+- Nazera: https://globalislamiccare.com/services/nazera.html
+- Tafseer: https://globalislamiccare.com/services/tafseer.html
+- Arabic Language: https://globalislamiccare.com/services/arabic-language.html
+- Masla Masayel: https://globalislamiccare.com/services/masla-masayel.html
+- Duas: https://globalislamiccare.com/services/dua-shikkha.html
 
+## Social Media & Contact
+- Website: https://globalislamiccare.com
+- Phone / WhatsApp: +8801733017521
+- Email: contact@globalislamiccare.com
 - Facebook: https://web.facebook.com/globalislamiccare1
 - YouTube: https://www.youtube.com/@Globalislamiccare
 - LinkedIn: https://www.linkedin.com/company/global-islamic-care
-
-## Key Pages
-
-- Homepage: https://globalislamiccare.com/
-- Teacher Profiles: https://globalislamiccare.com/teachers.html
-- Digital Library: https://globalislamiccare.com/library.html
-- Service — Quran Recitation: https://globalislamiccare.com/services/quran-shikkha.html
-- Service — Hifz: https://globalislamiccare.com/services/hefz.html
-- Service — Nazera: https://globalislamiccare.com/services/nazera.html
-- Service — Tafseer: https://globalislamiccare.com/services/tafseer.html
-- Service — Arabic Language: https://globalislamiccare.com/services/arabic-language.html
-- Service — Masla Masayel: https://globalislamiccare.com/services/masla-masayel.html
-- Service — Duas: https://globalislamiccare.com/services/dua-shikkha.html
-
-## Frequently Asked Questions
-
-Q: How are classes conducted?
-A: Classes are conducted 1-on-1 via Google Meet or Zoom by the student's chosen teacher.
-
-Q: What is the monthly fee?
-A: Each teacher sets their own monthly fee based on qualifications and experience. Fees are displayed on each teacher's profile. There is no enrollment fee.
-
-Q: Can expatriates join from abroad?
-A: Yes. Students from UK, USA, Canada, Saudi Arabia, Malaysia, UAE, Australia, and any country can join live classes at their local convenient time.
-
-Q: Is there a free trial class?
-A: Yes. Most teachers offer a free trial class. Discuss with the teacher directly on WhatsApp.
-
-Q: Who are the teachers?
-A: All teachers are verified qualified Hafez, Alim, or Mufti — holders of recognized Islamic educational certificates. Their profiles, qualifications, and teaching experience are displayed publicly.
-
-Q: How do I contact a teacher?
-A: Browse teacher profiles at https://globalislamiccare.com/teachers.html — click the WhatsApp button on any teacher's profile to contact them directly.
-
-Q: Is there any commission or hidden charge?
-A: No. GIC charges no commission. Payments are made directly to the teacher.
-
-Q: Can I learn Quran without knowing Arabic?
-A: Yes. Teachers teach Quran recitation using the Nurani Qaida method — no prior Arabic knowledge required.
-
-Q: Is GIC a madrasa or a tutoring platform?
-A: GIC is an online tutoring platform — not a madrasa. It connects independent qualified Islamic teachers with students seeking personalized 1-on-1 Islamic education.
-
-Q: What ages can learn from GIC teachers?
-A: All ages — from young children learning Qaida basics to adults wanting Tafseer or Arabic language.
-
-## Contact
-
-- Website: https://globalislamiccare.com
-- Phone/WhatsApp: +8801733017521
-- Email: contact@globalislamiccare.com
-- Organization Type: EducationalOrganization, OnlineBusiness
-- Location: Bangladesh (serving global students)
