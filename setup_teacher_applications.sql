@@ -42,11 +42,19 @@ ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS nid_front_url t
 ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS nid_back_url text DEFAULT '';
 ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS passport_url text DEFAULT '';
 ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS terms_agreed boolean DEFAULT true;
+ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS teaching_track text DEFAULT 'quran';
+ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS track text DEFAULT 'quran';
+ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS teaching_mode text DEFAULT 'online';
+ALTER TABLE public.teacher_applications ADD COLUMN IF NOT EXISTS offline_areas text DEFAULT '';
 ALTER TABLE public.teacher_applications DROP CONSTRAINT IF EXISTS teacher_applications_category_check;
 
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS languages text[] DEFAULT '{}';
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS country text DEFAULT 'বাংলাদেশ';
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS native_language text DEFAULT 'বাংলা';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS teaching_track text DEFAULT 'quran';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS track text DEFAULT 'quran';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS teaching_mode text DEFAULT 'online';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS offline_areas text DEFAULT '';
 
 ALTER TABLE public.teacher_applications ENABLE ROW LEVEL SECURITY;
 

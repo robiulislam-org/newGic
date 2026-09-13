@@ -31,6 +31,10 @@ ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS languages text[] DEFAULT '{
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS country text DEFAULT 'বাংলাদেশ';
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS native_language text DEFAULT 'বাংলা';
 ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS teacher_type text DEFAULT 'senior';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS teaching_track text DEFAULT 'quran';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS track text DEFAULT 'quran';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS teaching_mode text DEFAULT 'online';
+ALTER TABLE public.teachers ADD COLUMN IF NOT EXISTS offline_areas text DEFAULT '';
 
 ALTER TABLE public.teachers ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "teachers_public_read" ON public.teachers FOR SELECT USING (true);

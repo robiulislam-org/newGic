@@ -2743,6 +2743,52 @@ footer {
   font-weight: 700;
 }
 
+/* Teaching Mode Badges & Offline Area */
+.tc-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2.5px 9px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.tc-mode-online {
+  background: rgba(30, 96, 145, 0.1);
+  color: #1e6091;
+  border: 1px solid rgba(30, 96, 145, 0.28);
+}
+.tc-mode-offline {
+  background: rgba(234, 88, 12, 0.12);
+  color: #c2410c;
+  border: 1px solid rgba(234, 88, 12, 0.32);
+}
+.tc-mode-both {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+  border: 1px solid rgba(16, 185, 129, 0.32);
+}
+.tc-offline-area-box {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(234, 88, 12, 0.05);
+  border: 1px dashed rgba(234, 88, 12, 0.3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 6px 0 8px 0;
+  font-size: 11.5px;
+  color: #9a3412;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  line-height: 1.45;
+}
+.tc-offline-area-box strong {
+  color: #7c2d12;
+}
+
 /* Empty State */
 .pub-teachers-empty {
   text-align: center;
@@ -2838,12 +2884,6 @@ footer {
   <!-- ── TEACHER PROFILES ── -->
   <section class="section" style="padding: 24px 20px 60px; background: var(--cream);" id="home-teachers-section">
     <div class="container">
-      <!-- Section Header -->
-      <div style="text-align:center;margin-bottom:16px;" class="reveal">
-        <div class="section-label" style="margin:0 auto;display:inline-flex;background:rgba(30,96,145,0.1);border-color:rgba(30,96,145,0.25);color:var(--blue-dark);gap:6px;align-items:center;font-size:13px;padding:5px 16px;border-radius:50px;">
-          <span>👨‍🏫</span> <span>অভিভাবকদের পছন্দের শিক্ষক বাছাই ও ফিল্টারিং</span>
-        </div>
-      </div>
 
       <!-- FILTER & SEARCH SUITE -->
       <div class="pub-filter-container reveal">
@@ -2856,12 +2896,10 @@ footer {
           <button type="button" class="pub-track-btn" id="pt-track-quran" onclick="setPublicTeacherTrack('quran')">
             <span style="font-size:16px;">🌟</span>
             <span>কোরআন ও ইসলামিক শিক্ষা</span>
-            <span class="pub-track-spotlight-badge">⭐ প্রধান ফোকাস</span>
           </button>
           <button type="button" class="pub-track-btn" id="pt-track-general" onclick="setPublicTeacherTrack('general')">
             <span style="font-size:16px;">🎓</span>
-            <span>জেনারেল একাডেমি</span>
-            <span class="pub-track-gen-badge">বাংলা, অংক, ইংরেজি...</span>
+            <span>জেনারেল শিক্ষা</span>
           </button>
         </div>
 
@@ -2869,7 +2907,7 @@ footer {
         <div class="pub-search-filter-bar">
           <div class="pub-search-wrap">
             <span class="pub-search-icon">🔍</span>
-            <input type="text" id="pub-teacher-search" placeholder="শিক্ষকের নাম, বিষয় (যেমন: গণিত, ইংরেজি, তাজউইদ, নূরানী) বা শ্রেণি..." oninput="handlePublicTeacherSearch()">
+            <input type="text" id="pub-teacher-search" placeholder="শিক্ষকের নাম, বিষয় (যেমন: গণিত, ইংরেজি, তাজউইদ, নূরানী) বা এলাকা (মিরপুর, উত্তরা)..." oninput="handlePublicTeacherSearch()">
             <button type="button" id="pub-search-clear" class="pub-search-clear-btn" style="display:none;" onclick="clearPublicTeacherSearch()">✕</button>
           </div>
           <button type="button" class="pub-filter-open-btn" onclick="openParentFilterModal()" id="pub-filter-toggle-btn" title="বিস্তারিত ফিল্টার করুন">
@@ -2887,7 +2925,8 @@ footer {
           <span class="pub-chips-label">ক্যাটাগরি:</span>
           <button type="button" class="pub-chip active" id="pchip-gender-all" onclick="setPublicTeacherGender('all')">👥 যে কোনো শিক্ষক</button>
           <button type="button" class="pub-chip" id="pchip-gender-male" onclick="setPublicTeacherGender('male')">👨‍🏫 পুরুষ শিক্ষক</button>
-          <button type="button" class="pub-chip pub-chip-gender-female" id="pchip-gender-female" onclick="setPublicTeacherGender('female')">🧕 মহিলা শিক্ষিকা (মা-বোন ও শিশু)</button>
+          <button type="button" class="pub-chip pub-chip-gender-female" id="pchip-gender-female" onclick="setPublicTeacherGender('female')">🧕 মহিলা শিক্ষিকা</button>
+          <button type="button" class="pub-chip" id="pchip-mode-home" onclick="toggleQuickHomeTuitionFilter()">🏠 হোম টিউশন</button>
         </div>
 
         <!-- 4. Dynamic Subject Chips (Populated based on Active Track) -->
@@ -2895,11 +2934,8 @@ footer {
           <!-- Dynamically managed in JS -->
         </div>
 
-        <!-- 5. Active Filter Summary & Result Count Bar -->
-        <div class="pub-active-summary-bar" id="pub-active-summary-bar">
-          <div class="pub-result-count-text" id="pub-result-count-text">
-            <span>ফলাফল: <strong id="pub-count-num">৩</strong> জন শিক্ষক তালিকাভুক্ত (কোরআন শিক্ষক অগ্রাধিকারপ্রাপ্ত)</span>
-          </div>
+        <!-- 5. Active Filter Tags Bar (hidden when no filter is active) -->
+        <div class="pub-active-summary-bar" id="pub-active-summary-bar" style="display:none;">
           <div id="pub-active-filter-tags" style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;"></div>
         </div>
       </div>
@@ -4269,6 +4305,7 @@ let loadedPublicTeachersList = [];
 // Filter States for Homepage
 let homeActiveTrack = 'all';       // 'all' | 'quran' | 'general'
 let homeActiveGender = 'all';      // 'all' | 'male' | 'female'
+let homeActiveMode = 'all';        // 'all' | 'online' | 'offline'
 let homeActiveSubject = 'all';     // string or 'all'
 let homeModalSubjects = new Set(); // multi-select subjects from modal
 let homeActiveLevel = 'all';       // 'all' | 'শিশু' | 'প্রাথমিক' | '৬ষ্ঠ-৮ম' | 'মাধ্যমিক' | 'উচ্চ-মাধ্যমিক' | 'বয়স্ক'
@@ -4278,6 +4315,7 @@ let homeSearchQuery = '';
 // Modal Staged States
 let modalTrack = 'all';
 let modalGender = 'all';
+let modalMode = 'all';
 let modalSubjects = new Set();
 let modalLevel = 'all';
 let modalCurriculum = 'all';
@@ -4290,6 +4328,8 @@ const DEMO_PUBLIC_TEACHERS = [
     slug: "hafez-tanvir-ahmed",
     designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
     track: "quran",
+    teaching_mode: "both",
+    offline_areas: "উত্তরা, মিরপুর ও বিমানবন্দর, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
@@ -4317,6 +4357,8 @@ const DEMO_PUBLIC_TEACHERS = [
     slug: "mufti-salman-faris",
     designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
     track: "quran",
+    teaching_mode: "online",
+    offline_areas: "",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
@@ -4344,6 +4386,8 @@ const DEMO_PUBLIC_TEACHERS = [
     slug: "hafeza-umme-kulsum",
     designation: "সিনিয়র মহিলা কোরআন শিক্ষিকা",
     track: "quran",
+    teaching_mode: "both",
+    offline_areas: "মোহাম্মদপুর, ধানমন্ডি ও লালমাটিয়া, ঢাকা (মা-বোন ও শিশু)",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
@@ -4373,6 +4417,8 @@ const DEMO_PUBLIC_TEACHERS = [
     slug: "engr-tanzil-hasan",
     designation: "গণিত ও উচ্চতর গণিত বিশেষজ্ঞ (বিএসসি, BUET)",
     track: "general",
+    teaching_mode: "both",
+    offline_areas: "মিরপুর ১০/১১/১২, পল্লবী ও ধানমন্ডি, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
@@ -4400,6 +4446,8 @@ const DEMO_PUBLIC_TEACHERS = [
     slug: "maryam-akhter",
     designation: "ইংরেজি গ্রামার, স্পোকেন ও বাংলা শিক্ষিকা (ঢাবি)",
     track: "general",
+    teaching_mode: "both",
+    offline_areas: "আজিমপুর, লালবাগ ও ধানমন্ডি, ঢাকা (মা-বোন ও শিশু)",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
@@ -4427,6 +4475,8 @@ const DEMO_PUBLIC_TEACHERS = [
     slug: "sajidur-rahman",
     designation: "সাধারণ বিজ্ঞান ও পদার্থবিজ্ঞান শিক্ষক (ঢাবি)",
     track: "general",
+    teaching_mode: "online",
+    offline_areas: "",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     photo_url: "",
@@ -4613,7 +4663,14 @@ function filterAndRenderPublicTeachers() {
     });
   }
 
-  // 6. Search Query Filter
+  // 6. Teaching Mode Filter (Home Tuition vs Online)
+  if (homeActiveMode === 'offline') {
+    list = list.filter(t => (t.teaching_mode === 'offline' || t.teaching_mode === 'both' || (t.offline_areas && t.offline_areas.trim() !== '')));
+  } else if (homeActiveMode === 'online') {
+    list = list.filter(t => (!t.teaching_mode || t.teaching_mode === 'online' || t.teaching_mode === 'both'));
+  }
+
+  // 7. Search Query Filter (Matches Name, Subject, Qualification, Bio & Offline Location)
   if (homeSearchQuery) {
     const q = homeSearchQuery.toLowerCase();
     list = list.filter(t => {
@@ -4623,7 +4680,8 @@ function filterAndRenderPublicTeachers() {
         (Array.isArray(t.specializations) ? t.specializations.join(' ') : String(t.specializations || '')),
         (Array.isArray(t.qualifications) ? t.qualifications.join(' ') : String(t.qualifications || '')),
         t.country || '',
-        t.bio || ''
+        t.bio || '',
+        t.offline_areas || ''
       ].join(' ').toLowerCase();
       return combined.includes(q);
     });
@@ -4736,6 +4794,25 @@ function renderPublicTeacherCards(data) {
       ? `<span class="tc-track-badge-quran">⭐ পবিত্র কোরআন ও আরবি বিশেষজ্ঞ</span>`
       : `<span class="tc-track-badge-gen">🎓 জেনারেল একাডেমি</span><span class="tc-muslim-badge">🕌 নিষ্ঠাবান মুসলিম শিক্ষক</span>`;
 
+    // Teaching Mode & Offline Tuition Area
+    const mode = t.teaching_mode || 'online';
+    let modeBadge = '';
+    if (mode === 'both') {
+      modeBadge = `<span class="tc-mode-badge tc-mode-both" title="অনলাইন ও হোম টিউশন উভয় মাধ্যমে পড়ান">🌐 অনলাইন ও হোম টিউশন</span>`;
+    } else if (mode === 'offline') {
+      modeBadge = `<span class="tc-mode-badge tc-mode-offline" title="বাসায় গিয়ে সরাসরি হোম টিউশন করান">🏠 শুধুমাত্র হোম টিউশন</span>`;
+    } else {
+      modeBadge = `<span class="tc-mode-badge tc-mode-online" title="অনলাইনে লাইভ ক্লাস নেন">💻 শুধুমাত্র অনলাইন</span>`;
+    }
+
+    const offlineArea = (t.offline_areas || '').trim();
+    const offlineAreaHtml = (offlineArea && (mode === 'offline' || mode === 'both'))
+      ? `<div class="tc-offline-area-box">
+           <span style="font-size:13px;line-height:1;">📍</span>
+           <div><strong>হোম টিউশন এলাকা:</strong> ${offlineArea}</div>
+         </div>`
+      : '';
+
     return `
       <div class="pub-teacher-card reveal" style="position:relative;${isQuranTeacher ? 'border: 1.5px solid rgba(200,151,42,0.35);' : ''}">
         ${demoBadge}
@@ -4752,6 +4829,7 @@ function renderPublicTeacherCards(data) {
           <!-- Secondary Badges -->
           <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:0 0 10px 0;">
             ${tierBadge}
+            ${modeBadge}
             <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(15,39,68,0.06);color:var(--navy,#0f2744);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid rgba(15,39,68,0.1);">📍 ${countryName}</span>
             <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(16,185,129,0.08);color:#047857;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:800;border:1px solid rgba(16,185,129,0.25);">💰 ${t.monthly_fee || 'আলোচনা সাপেক্ষে'}</span>
           </div>
@@ -4778,6 +4856,9 @@ function renderPublicTeacherCards(data) {
               </div>
             </div>
           </div>
+
+          <!-- Offline Tuition Area Box (if applicable) -->
+          ${offlineAreaHtml}
 
           <!-- Language Box -->
           <div style="background:rgba(15,39,68,0.03);border:1px solid rgba(15,39,68,0.07);border-radius:8px;padding:5px 8px;margin:0 0 12px 0;width:100%;box-sizing:border-box;text-align:left;font-size:11px;line-height:1.4;">
@@ -4829,6 +4910,13 @@ function setPublicTeacherGender(gender) {
   filterAndRenderPublicTeachers();
 }
 
+function toggleQuickHomeTuitionFilter() {
+  homeActiveMode = (homeActiveMode === 'offline') ? 'all' : 'offline';
+  const el = document.getElementById('pchip-mode-home');
+  if (el) el.classList.toggle('active', homeActiveMode === 'offline');
+  filterAndRenderPublicTeachers();
+}
+
 function setPublicTeacherSubject(subKey) {
   homeActiveSubject = (homeActiveSubject === subKey) ? 'all' : subKey;
   homeModalSubjects.clear();
@@ -4856,6 +4944,7 @@ function clearPublicTeacherSearch() {
 function resetAllPublicFilters() {
   homeActiveTrack = 'all';
   homeActiveGender = 'all';
+  homeActiveMode = 'all';
   homeActiveSubject = 'all';
   homeModalSubjects.clear();
   homeActiveLevel = 'all';
@@ -4876,6 +4965,9 @@ function resetAllPublicFilters() {
     const el = document.getElementById(`pchip-gender-${g}`);
     if (el) el.classList.toggle('active', g === 'all');
   });
+
+  const homeModeChip = document.getElementById('pchip-mode-home');
+  if (homeModeChip) homeModeChip.classList.remove('active');
 
   updateSubjectChipsBar();
   filterAndRenderPublicTeachers();
@@ -5011,6 +5103,7 @@ function removeModalSubjectTag(sub) {
 function openParentFilterModal() {
   modalTrack = homeActiveTrack;
   modalGender = homeActiveGender;
+  modalMode = homeActiveMode;
   modalSubjects = new Set(homeModalSubjects);
   if (homeActiveSubject !== 'all') modalSubjects.add(homeActiveSubject);
   modalLevel = homeActiveLevel;
@@ -5024,6 +5117,10 @@ function openParentFilterModal() {
   ['all', 'male', 'female'].forEach(g => {
     const el = document.getElementById(`modal-gender-${g}`);
     if (el) el.classList.toggle('active', g === modalGender);
+  });
+  ['all', 'online', 'offline'].forEach(m => {
+    const el = document.getElementById(`modal-mode-${m}`);
+    if (el) el.classList.toggle('active', m === modalMode);
   });
   ['all', 'kids', 'primary', 'middle', 'ssc', 'hsc', 'adult'].forEach(lvl => {
     const el = document.getElementById(`modal-level-${lvl}`);
@@ -5077,6 +5174,15 @@ function setModalGender(gender) {
   updateModalLiveCount();
 }
 
+function setModalMode(mode) {
+  modalMode = mode;
+  ['all', 'online', 'offline'].forEach(m => {
+    const el = document.getElementById(`modal-mode-${m}`);
+    if (el) el.classList.toggle('active', m === mode);
+  });
+  updateModalLiveCount();
+}
+
 function toggleModalSubject(btn, subject) {
   if (modalSubjects.has(subject)) {
     modalSubjects.delete(subject);
@@ -5124,6 +5230,7 @@ function setModalCurriculum(curr) {
 function resetModalFilters() {
   modalTrack = 'all';
   modalGender = 'all';
+  modalMode = 'all';
   modalSubjects.clear();
   modalLevel = 'all';
   modalCurriculum = 'all';
@@ -5135,6 +5242,10 @@ function resetModalFilters() {
   ['all', 'male', 'female'].forEach(g => {
     const el = document.getElementById(`modal-gender-${g}`);
     if (el) el.classList.toggle('active', g === 'all');
+  });
+  ['all', 'online', 'offline'].forEach(m => {
+    const el = document.getElementById(`modal-mode-${m}`);
+    if (el) el.classList.toggle('active', m === 'all');
   });
   setModalLevel('all');
   setModalCurriculum('all');
@@ -5154,6 +5265,12 @@ function updateModalLiveCount() {
                        (t.name && (t.name.includes('হাফেজা') || t.name.includes('আলেমা') || t.name.includes('ক্বারিয়া') || t.name.includes('উম্মে') || t.name.includes('বেগম')));
       return modalGender === 'female' ? isFemale : !isFemale;
     });
+  }
+
+  if (modalMode === 'offline') {
+    list = list.filter(t => (t.teaching_mode === 'offline' || t.teaching_mode === 'both' || (t.offline_areas && t.offline_areas.trim() !== '')));
+  } else if (modalMode === 'online') {
+    list = list.filter(t => (!t.teaching_mode || t.teaching_mode === 'online' || t.teaching_mode === 'both'));
   }
 
   if (modalSubjects.size > 0) {
@@ -5200,6 +5317,7 @@ function updateModalLiveCount() {
 function applyParentModalFilters() {
   homeActiveTrack = modalTrack;
   homeActiveGender = modalGender;
+  homeActiveMode = modalMode;
   homeModalSubjects = new Set(modalSubjects);
   homeActiveSubject = 'all'; // reset single chip
   homeActiveLevel = modalLevel;
@@ -5216,6 +5334,10 @@ function applyParentModalFilters() {
     const el = document.getElementById(`pchip-gender-${g}`);
     if (el) el.classList.toggle('active', g === homeActiveGender);
   });
+
+  // Sync home tuition chip
+  const homeChip = document.getElementById('pchip-mode-home');
+  if (homeChip) homeChip.classList.toggle('active', homeActiveMode === 'offline');
 
   updateSubjectChipsBar();
   filterAndRenderPublicTeachers();
@@ -5323,6 +5445,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 <option value="male">👨‍🏫 পুরুষ শিক্ষক (Male)</option>
                 <option value="female">🧕 মহিলা শিক্ষিকা (Female)</option>
               </select>
+            </div>
+          </div>
+
+          <!-- Teaching Mode & Offline Area Box -->
+          <div style="background:rgba(200,151,42,0.04);border:1.5px solid rgba(200,151,42,0.22);border-radius:14px;padding:16px;margin-bottom:18px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">
+              <div>
+                <label style="display:block;font-size:13.5px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">
+                  পাঠদানের মাধ্যম (Teaching Mode) *
+                </label>
+                <select id="app-teaching-mode" onchange="toggleTeacherAppOfflineArea()" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13.5px;font-family:inherit;background:#fff;outline:none;box-sizing:border-box;">
+                  <option value="both">🌐 অনলাইন ও অফলাইন / হোম টিউশন (উভয় মাধ্যম)</option>
+                  <option value="online">💻 শুধুমাত্র অনলাইন (Online Only)</option>
+                  <option value="offline">🏠 শুধুমাত্র অফলাইন / হোম টিউশন (বাসায় গিয়ে পাঠদান)</option>
+                </select>
+                <span style="font-size:11px;color:var(--text-muted);margin-top:4px;display:block;">আপনি যেভাবে শিক্ষার্থীদের ক্লাস করাতে সক্ষম তা নির্বাচন করুন</span>
+              </div>
+              <div id="app-offline-area-wrap">
+                <label style="display:block;font-size:13.5px;font-weight:700;color:#c2410c;margin-bottom:6px;">
+                  📍 অফলাইন / হোম টিউশন এলাকা (Location)
+                </label>
+                <input type="text" id="app-offline-areas" placeholder="উদা: মিরপুর ১০, ১১, পল্লবী ও উত্তরা, ঢাকা" style="width:100%;padding:12px 14px;border:1.5px solid rgba(234,88,12,0.35);border-radius:10px;font-size:13.5px;font-family:inherit;outline:none;box-sizing:border-box;background:#fff;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(234,88,12,0.35)'">
+                <span style="font-size:11px;color:var(--text-muted);margin-top:4px;display:block;">যে যে এলাকায় গিয়ে বাসায় সরাসরি পড়াতে পারবেন তা লিখুন (কমা দিয়ে একাধিক)</span>
+              </div>
             </div>
           </div>
 
@@ -5918,6 +6064,18 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
+      <!-- 3. Teaching Mode Preference (Online vs Home Tuition) -->
+      <div>
+        <div class="pfilter-group-title">
+          <span>🏡 পাঠদানের মাধ্যম (অনলাইন / হোম টিউশন):</span>
+        </div>
+        <div class="pfilter-chips-grid">
+          <button type="button" class="pfilter-pill active" id="modal-mode-all" onclick="setModalMode('all')">🌐 সকল মাধ্যম</button>
+          <button type="button" class="pfilter-pill" id="modal-mode-online" onclick="setModalMode('online')">💻 শুধুমাত্র অনলাইন</button>
+          <button type="button" class="pfilter-pill" id="modal-mode-offline" onclick="setModalMode('offline')">🏠 হোম টিউশন (বাসায় এসে পাঠদান)</button>
+        </div>
+      </div>
+
       <!-- 3. Quran & Islamic Subjects -->
       <div id="modal-quran-subjects-section">
         <div class="pfilter-group-title" style="color:#b45309;">
@@ -6447,8 +6605,32 @@ function resetTeacherApplyForm() {
     if (url) url.value = '';
   });
 
+  const modeSelect = document.getElementById('app-teaching-mode');
+  if (modeSelect) modeSelect.value = 'both';
+  const offInp = document.getElementById('app-offline-areas');
+  if (offInp) offInp.value = '';
+  toggleTeacherAppOfflineArea();
+
   setDocType('nid');
   applyGoToStep1();
+}
+
+function toggleTeacherAppOfflineArea() {
+  const mode = document.getElementById('app-teaching-mode')?.value;
+  const wrap = document.getElementById('app-offline-area-wrap');
+  if (wrap) {
+    if (mode === 'online') {
+      wrap.style.opacity = '0.5';
+      wrap.style.pointerEvents = 'none';
+      const inp = document.getElementById('app-offline-areas');
+      if (inp) inp.placeholder = 'শুধুমাত্র অনলাইন পাঠদানে এলাকা প্রযোজ্য নয়';
+    } else {
+      wrap.style.opacity = '1';
+      wrap.style.pointerEvents = 'auto';
+      const inp = document.getElementById('app-offline-areas');
+      if (inp) inp.placeholder = 'উদা: মিরপুর ১০, ১১, পল্লবী ও উত্তরা, ঢাকা';
+    }
+  }
 }
 
 function applyGoToStep2() {
@@ -6576,6 +6758,19 @@ async function submitTeacherApplication(event) {
   const qualifications = qualStr ? qualStr.split(',').map(s => s.trim()).filter(Boolean) : [];
   const specializations = specStr ? specStr.split(',').map(s => s.trim()).filter(Boolean) : [];
 
+  const teachingMode = document.getElementById('app-teaching-mode')?.value || 'both';
+  const offlineAreas = (document.getElementById('app-offline-areas')?.value || '').trim();
+  const teachingTrack = document.getElementById('app-track-val')?.value || (category.includes('general') ? 'general' : 'quran');
+
+  let modeDesc = teachingMode === 'both' ? 'অনলাইন ও অফলাইন/হোম টিউশন' : (teachingMode === 'offline' ? 'শুধুমাত্র অফলাইন/হোম টিউশন' : 'শুধুমাত্র অনলাইন');
+  let enrichedNotes = `[পাঠদানের মাধ্যম: ${modeDesc}]`;
+  if (offlineAreas) {
+    enrichedNotes += ` [হোম টিউশন এলাকা: ${offlineAreas}]`;
+  }
+  if (notes) {
+    enrichedNotes += `\n${notes}`;
+  }
+
   submitBtn.disabled = true;
   submitBtn.innerHTML = '⏳ আবেদন জমা দেওয়া হচ্ছে...';
 
@@ -6591,6 +6786,10 @@ async function submitTeacherApplication(event) {
       try {
         const ins = await dbApp.from('teacher_applications').insert([{
           category: category,
+          teaching_track: teachingTrack,
+          track: teachingTrack,
+          teaching_mode: teachingMode,
+          offline_areas: offlineAreas,
           name: name,
           designation: designation,
           country: country,
@@ -6617,7 +6816,7 @@ async function submitTeacherApplication(event) {
           nid_back_url: nidBackUrl,
           passport_url: passportUrl,
           terms_agreed: true,
-          private_notes: notes,
+          private_notes: enrichedNotes,
           status: 'pending'
         }]);
         if (!ins.error) {

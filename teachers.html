@@ -657,6 +657,51 @@
       font-size: 10.5px;
       font-weight: 700;
     }
+    /* Teaching Mode Badges & Offline Area */
+    .tc-mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2.5px 9px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .tc-mode-online {
+      background: rgba(30, 96, 145, 0.1);
+      color: #1e6091;
+      border: 1px solid rgba(30, 96, 145, 0.28);
+    }
+    .tc-mode-offline {
+      background: rgba(234, 88, 12, 0.12);
+      color: #c2410c;
+      border: 1px solid rgba(234, 88, 12, 0.32);
+    }
+    .tc-mode-both {
+      background: rgba(16, 185, 129, 0.12);
+      color: #047857;
+      border: 1px solid rgba(16, 185, 129, 0.32);
+    }
+    .tc-offline-area-box {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(234, 88, 12, 0.05);
+      border: 1px dashed rgba(234, 88, 12, 0.3);
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin: 6px 0 8px 0;
+      font-size: 11.5px;
+      color: #9a3412;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      line-height: 1.45;
+    }
+    .tc-offline-area-box strong {
+      color: #7c2d12;
+    }
     .tc-fee-badge {
       display: inline-block;
       background: rgba(16,185,129,0.08);
@@ -1040,7 +1085,7 @@
       <div class="mkt-search-row">
         <div class="mkt-search-input-wrap">
           <span class="mkt-search-icon">🔍</span>
-          <input type="text" id="mkt-search-input" class="mkt-search-input" placeholder="শিক্ষকের নাম, বিষয় (গণিত, ইংরেজি, তাজউইদ, নূরানী) বা দেশ দিয়ে খুঁজুন..." oninput="handleMarketplaceSearch()">
+          <input type="text" id="mkt-search-input" class="mkt-search-input" placeholder="শিক্ষকের নাম, বিষয় (গণিত, ইংরেজি, তাজউইদ, নূরানী) বা এলাকা (মিরপুর, উত্তরা)..." oninput="handleMarketplaceSearch()">
         </div>
       </div>
 
@@ -1048,8 +1093,9 @@
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
         <span style="font-size:13px;font-weight:700;color:var(--navy);margin-right:4px;">শিক্ষার বিভাগ:</span>
         <button type="button" class="mkt-chip active" id="chip-track-all" onclick="setTrackFilter('all')">👥 সকল শিক্ষক</button>
-        <button type="button" class="mkt-chip" id="chip-track-quran" onclick="setTrackFilter('quran')">🌟 কোরআন ও ইসলামিক শিক্ষা (প্রধান ফোকাস)</button>
-        <button type="button" class="mkt-chip" id="chip-track-general" onclick="setTrackFilter('general')">🎓 জেনারেল একাডেমি (বাংলা, অংক, ইংরেজি...)</button>
+        <button type="button" class="mkt-chip" id="chip-track-quran" onclick="setTrackFilter('quran')">🌟 কোরআন ও ইসলামিক শিক্ষা</button>
+        <button type="button" class="mkt-chip" id="chip-track-general" onclick="setTrackFilter('general')">🎓 জেনারেল শিক্ষা</button>
+        <button type="button" class="mkt-chip" id="chip-mode-home" onclick="toggleMktHomeTuitionMode()">🏠 হোম টিউশন</button>
       </div>
 
       <!-- Gender Filter Chips -->
@@ -1104,9 +1150,13 @@
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
             <div class="hero-badge">✅ যাচাইকৃত শিক্ষক · GIC</div>
             <div class="hero-badge" id="hero-country" style="background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);color:#fff;">📍 বাংলাদেশ</div>
+            <div class="hero-badge" id="hero-mode-badge" style="background:rgba(16,185,129,0.22);border-color:rgba(16,185,129,0.45);color:#ecfdf5;">🌐 অনলাইন ও হোম টিউশন</div>
           </div>
           <h1 class="hero-name" id="hero-name">শিক্ষকের নাম</h1>
           <p class="hero-designation" id="hero-designation"></p>
+          <div id="hero-offline-area-box" style="display:none;background:rgba(234,88,12,0.25);border:1px solid rgba(251,146,60,0.5);border-radius:10px;padding:6px 14px;color:#ffedd5;font-size:13px;margin:8px 0 12px;font-weight:600;max-width:560px;">
+            📍 <strong>হোম টিউশন এলাকা:</strong> <span id="hero-offline-areas-text"></span>
+          </div>
           <div class="hero-stats">
             <div class="hero-stat">
               <span class="hero-stat-val" id="stat-exp">—</span>
@@ -1306,7 +1356,7 @@
             </div>
             <div class="bc-info-row">
               <span class="bc-info-lbl">ক্লাস মাধ্যম</span>
-              <span class="bc-info-val">অনলাইন (Zoom / Meet)</span>
+              <span class="bc-info-val" id="bc-mode-val">অনলাইন (Zoom / Meet)</span>
             </div>
 
             <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
@@ -1323,6 +1373,14 @@
           <!-- QUICK STATS CARD -->
           <div class="card" style="margin-top:0;">
             <div style="font-weight:700; font-size:14px; color:var(--navy); margin-bottom:14px;">📊 শিক্ষকের তথ্য ও যোগ্যতা</div>
+            <div class="bc-info-row">
+              <span class="bc-info-lbl">🏡 পাঠদানের মাধ্যম</span>
+              <span class="bc-info-val" id="qs-teaching-mode" style="font-weight:700;">—</span>
+            </div>
+            <div class="bc-info-row" id="qs-offline-areas-row" style="display:none;">
+              <span class="bc-info-lbl">📍 হোম টিউশন এলাকা</span>
+              <span class="bc-info-val" id="qs-offline-areas" style="text-align:right; max-width:180px; color:#c2410c; font-weight:700;">—</span>
+            </div>
             <div class="bc-info-row">
               <span class="bc-info-lbl">🎓 যোগ্যতা</span>
               <span class="bc-info-val" id="qs-quals" style="text-align:right; max-width:180px;">—</span>
@@ -1404,6 +1462,7 @@ let reviewRating = 5;
 let rawTeachersList = [];
 let activeTrackFilter = 'all';
 let activeGenderFilter = 'all';
+let activeMktMode = 'all';
 let activeSubjectFilter = 'all';
 let currentSearchQuery = '';
 
@@ -1414,6 +1473,8 @@ const DEMO_TEACHERS_MAP = {
     designation: "হাফেজুল কুরআন ও সিনিয়র তাজবীদ শিক্ষক",
     teaching_track: "quran",
     track: "quran",
+    teaching_mode: "both",
+    offline_areas: "উত্তরা, মিরপুর ও বিমানবন্দর, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "male",
@@ -1443,6 +1504,8 @@ const DEMO_TEACHERS_MAP = {
     designation: "মুফতি ও হেফজুল কোরআন মেন্টর",
     teaching_track: "quran",
     track: "quran",
+    teaching_mode: "online",
+    offline_areas: "",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "male",
@@ -1472,6 +1535,8 @@ const DEMO_TEACHERS_MAP = {
     designation: "সিনিয়র মহিলা কোরআন শিক্ষিকা",
     teaching_track: "quran",
     track: "quran",
+    teaching_mode: "both",
+    offline_areas: "মোহাম্মদপুর, ধানমন্ডি ও লালমাটিয়া, ঢাকা (মা-বোন ও শিশু)",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "female",
@@ -1501,6 +1566,8 @@ const DEMO_TEACHERS_MAP = {
     designation: "গণিত ও উচ্চতর গণিত বিশেষজ্ঞ (বিএসসি, BUET)",
     teaching_track: "general",
     track: "general",
+    teaching_mode: "both",
+    offline_areas: "মিরপুর ১০/১১/১২, পল্লবী ও ধানমন্ডি, ঢাকা",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "male",
@@ -1530,6 +1597,8 @@ const DEMO_TEACHERS_MAP = {
     designation: "ইংরেজি গ্রামার, স্পোকেন ও বাংলা শিক্ষিকা (ঢাবি)",
     teaching_track: "general",
     track: "general",
+    teaching_mode: "both",
+    offline_areas: "আজিমপুর, লালবাগ ও ধানমন্ডি, ঢাকা (মা-বোন ও শিশু)",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "female",
@@ -1559,6 +1628,8 @@ const DEMO_TEACHERS_MAP = {
     designation: "সাধারণ বিজ্ঞান ও পদার্থবিজ্ঞান শিক্ষক (ঢাবি)",
     teaching_track: "general",
     track: "general",
+    teaching_mode: "online",
+    offline_areas: "",
     country: "বাংলাদেশ",
     native_language: "বাংলা",
     gender: "male",
@@ -1664,6 +1735,13 @@ function setSubjectFilter(subjectKey) {
   filterAndRenderTeachers();
 }
 
+function toggleMktHomeTuitionMode() {
+  activeMktMode = (activeMktMode === 'offline') ? 'all' : 'offline';
+  const el = document.getElementById('chip-mode-home');
+  if (el) el.classList.toggle('active', activeMktMode === 'offline');
+  filterAndRenderTeachers();
+}
+
 function handleMarketplaceSearch() {
   const inp = document.getElementById('mkt-search-input');
   currentSearchQuery = inp ? inp.value.trim().toLowerCase() : '';
@@ -1690,7 +1768,12 @@ function filterAndRenderTeachers() {
     });
   }
 
-  // 3. Subject Filter
+  // 3. Teaching Mode Filter (Home Tuition)
+  if (activeMktMode === 'offline') {
+    list = list.filter(t => (t.teaching_mode === 'offline' || t.teaching_mode === 'both' || (t.offline_areas && t.offline_areas.trim() !== '')));
+  }
+
+  // 4. Subject Filter
   if (activeSubjectFilter !== 'all') {
     list = list.filter(t => {
       const specs = (t.specializations || []).join(' ').toLowerCase();
@@ -1702,7 +1785,7 @@ function filterAndRenderTeachers() {
     });
   }
 
-  // 4. Search Query Filter
+  // 5. Search Query Filter (Matches Name, Subject, Qualification, Bio & Offline Location)
   if (currentSearchQuery) {
     list = list.filter(t => {
       const name = (t.name || '').toLowerCase();
@@ -1711,13 +1794,15 @@ function filterAndRenderTeachers() {
       const specs = (t.specializations || []).join(' ').toLowerCase();
       const quals = (t.qualifications || []).join(' ').toLowerCase();
       const bio = (t.bio || '').toLowerCase();
+      const offlineAreas = (t.offline_areas || '').toLowerCase();
       return name.includes(currentSearchQuery) || desig.includes(currentSearchQuery) || 
              country.includes(currentSearchQuery) || specs.includes(currentSearchQuery) || 
-             quals.includes(currentSearchQuery) || bio.includes(currentSearchQuery);
+             quals.includes(currentSearchQuery) || bio.includes(currentSearchQuery) ||
+             offlineAreas.includes(currentSearchQuery);
     });
   }
 
-  // 5. Quran & Arabic Teachers Spotlight Priority (Quran first, then sort_order)
+  // 6. Quran & Arabic Teachers Spotlight Priority (Quran first, then sort_order)
   list.sort((a, b) => {
     const aQuran = isTeacherQuran(a) ? 1 : 0;
     const bQuran = isTeacherQuran(b) ? 1 : 0;
@@ -1784,6 +1869,25 @@ function renderTeacherDirectory(list) {
       : `<span class="tc-track-badge-gen" title="জেনারেল একাডেমি বিভাগ">🎓 জেনারেল একাডেমি</span>`;
     const muslimBadge = `<span class="tc-muslim-badge" title="১০০% যাচাইকৃত আমলদার মুসলিম শিক্ষক">🕌 নিষ্ঠাবান মুসলিম</span>`;
 
+    // Teaching Mode & Offline Tuition Area
+    const mode = t.teaching_mode || 'online';
+    let modeBadge = '';
+    if (mode === 'both') {
+      modeBadge = `<span class="tc-mode-badge tc-mode-both" title="অনলাইন ও হোম টিউশন উভয় মাধ্যমে পড়ান">🌐 অনলাইন ও হোম টিউশন</span>`;
+    } else if (mode === 'offline') {
+      modeBadge = `<span class="tc-mode-badge tc-mode-offline" title="বাসায় গিয়ে সরাসরি হোম টিউশন করান">🏠 শুধুমাত্র হোম টিউশন</span>`;
+    } else {
+      modeBadge = `<span class="tc-mode-badge tc-mode-online" title="অনলাইনে লাইভ ক্লাস নেন">💻 শুধুমাত্র অনলাইন</span>`;
+    }
+
+    const offlineArea = (t.offline_areas || '').trim();
+    const offlineAreaHtml = (offlineArea && (mode === 'offline' || mode === 'both'))
+      ? `<div class="tc-offline-area-box">
+           <span style="font-size:13px;line-height:1;">📍</span>
+           <div><strong>হোম টিউশন এলাকা:</strong> ${offlineArea}</div>
+         </div>`
+      : '';
+
     const isSenior = t.teacher_type !== 'fresher';
     const tierBadge = isSenior
       ? `<span style="display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(200,151,42,0.15),rgba(229,185,92,0.22));color:#854d0e;border:1px solid rgba(200,151,42,0.35);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">⭐ সিনিয়র শিক্ষক</span>`
@@ -1823,6 +1927,7 @@ function renderTeacherDirectory(list) {
           ${trackBadge}
           ${muslimBadge}
           ${tierBadge}
+          ${modeBadge}
           <span class="tc-verified-badge">✅ ভেরিফাইড</span>
           <span class="tc-rating">${ratingStr}</span>
           <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(15,39,68,0.06);color:var(--navy);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid rgba(15,39,68,0.12);">📍 ${countryName}</span>
@@ -1852,6 +1957,9 @@ function renderTeacherDirectory(list) {
             </div>
           </div>
         </div>
+
+        <!-- Offline Tuition Area Box (if applicable) -->
+        ${offlineAreaHtml}
 
         <!-- Language & Location Box -->
         <div style="background:rgba(15,39,68,0.03);border:1px solid rgba(15,39,68,0.07);border-radius:8px;padding:5px 8px;margin:0 0 10px 0;width:100%;box-sizing:border-box;text-align:left;font-size:11px;line-height:1.4;">
@@ -2101,6 +2209,47 @@ function renderPage() {
   // Set dynamic fee in booking card
   const bcFeeEl = document.getElementById('bc-fee-val');
   if (bcFeeEl) bcFeeEl.textContent = t.monthly_fee || 'আলোচনা সাপেক্ষে';
+
+  // Teaching Mode & Offline Tuition Area Handling
+  const mode = t.teaching_mode || 'online';
+  let modeShort = '💻 শুধুমাত্র অনলাইন';
+  if (mode === 'both') {
+    modeShort = '🌐 অনলাইন ও হোম টিউশন';
+  } else if (mode === 'offline') {
+    modeShort = '🏠 শুধুমাত্র হোম টিউশন';
+  }
+
+  const bcModeEl = document.getElementById('bc-mode-val');
+  if (bcModeEl) bcModeEl.textContent = modeShort;
+
+  const qsModeEl = document.getElementById('qs-teaching-mode');
+  if (qsModeEl) qsModeEl.textContent = modeShort;
+
+  const offlineAreas = (t.offline_areas || '').trim();
+  const qsOffAreaRow = document.getElementById('qs-offline-areas-row');
+  const qsOffArea = document.getElementById('qs-offline-areas');
+  if (qsOffAreaRow && qsOffArea) {
+    if (offlineAreas && (mode === 'offline' || mode === 'both')) {
+      qsOffAreaRow.style.display = 'flex';
+      qsOffArea.textContent = offlineAreas;
+    } else {
+      qsOffAreaRow.style.display = 'none';
+    }
+  }
+
+  const heroModeEl = document.getElementById('hero-mode-badge');
+  if (heroModeEl) heroModeEl.textContent = modeShort;
+
+  const heroOffBox = document.getElementById('hero-offline-area-box');
+  const heroOffText = document.getElementById('hero-offline-areas-text');
+  if (heroOffBox && heroOffText) {
+    if (offlineAreas && (mode === 'offline' || mode === 'both')) {
+      heroOffBox.style.display = 'inline-block';
+      heroOffText.textContent = offlineAreas;
+    } else {
+      heroOffBox.style.display = 'none';
+    }
+  }
 
   // Quick stats card elements (Ordered: 1. যোগ্যতা, 2. অভিজ্ঞতা, 3. বিষয়/পারদর্শী, etc.)
   const qsQuals = document.getElementById('qs-quals');
