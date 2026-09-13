@@ -13,15 +13,15 @@ const GIC_SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const DEFAULT_SITE_CONTENT = {
   general: {
     site_name: "Global Islamic Care",
-    site_sub: "Online Quran Teachers & Platform",
+    site_sub: "বিশ্বস্ত মুসলিম শিক্ষক ও শিক্ষিকা প্ল্যাটফর্ম",
     logo_url: "logo.jpg",
     favicon_url: "favicon.png",
     phone_primary: "+880 1733-017521",
-    phone_secondary: "+880 1712-345678",
+    phone_secondary: "",
     whatsapp_number: "8801733017521",
-    whatsapp_default_msg: "আসসালামু আলাইকুম! আমি Global Islamic Care-এ কোরআন শিক্ষক ও ক্লাস সম্পর্কে বিস্তারিত জানতে চাই।",
+    whatsapp_default_msg: "আসসালামু আলাইকুম! আমি Global Islamic Care-এ শিক্ষক ও ক্লাস/হোম টিউশন সম্পর্কে জানতে চাই।",
     email: "globalislamiccare@gmail.com",
-    address: "ঢাকা, বাংলাদেশ (বিশ্বব্যাপী অনলাইন শিক্ষক প্ল্যাটফর্ম)",
+    address: "ঢাকা, বাংলাদেশ (বিশ্বব্যাপী অনলাইন ক্লাস ও অফলাইন হোম টিউশন)",
     office_hours: "শনি – বৃহস্পতি: সকাল ৯:০০ – রাত ১০:০০",
     social_facebook: "https://facebook.com/globalislamiccare",
     social_youtube: "https://youtube.com/@globalislamiccare",
@@ -29,22 +29,22 @@ const DEFAULT_SITE_CONTENT = {
     social_instagram: "",
     social_tiktok: "",
     announcement_enabled: false,
-    announcement_text: "✨ দেশ-বিদেশের অভিজ্ঞ হাফেজ ও আলেম শিক্ষকদের সাথে ফ্রি ট্রায়াল ক্লাস বুক করুন!",
+    announcement_text: "✨ দেশ-বিদেশের অভিজ্ঞ হাফেজ, আলেম ও গ্র্যাজুয়েট শিক্ষকদের সাথে ফ্রি ট্রায়াল ক্লাস বুক করুন!",
     announcement_link: "teachers.html"
   },
   hero: {
-    badge: "বিশ্বস্ত কোরআন শিক্ষক প্ল্যাটফর্ম",
-    title_line1: "পছন্দের কোরআন শিক্ষক",
+    badge: "বিশ্বস্ত মুসলিম শিক্ষক ও শিক্ষিকা প্ল্যাটফর্ম",
+    title_line1: "পছন্দের শিক্ষক ও শিক্ষিকা",
     title_line2: "খুঁজুন ও শিখুন",
     arabic_ayah: "وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا",
-    description: "দেশ-বিদেশের অভিজ্ঞ হাফেজ ও আলেম শিক্ষকদের প্রোফাইল, ডেমো তেলাওয়াত ও ফি দেখে সরাসরি পছন্দের শিক্ষক বেছে নিন। আপনার সুবিধাজনক সময়ে ঘরে বসে শিখুন সহীহ কোরআন।",
+    description: "দেশ-বিদেশের অভিজ্ঞ হাফেজ, আলেম ও বিশ্ববিদ্যালয় গ্র্যাজুয়েট মুসলিম শিক্ষকদের প্রোফাইল দেখে সরাসরি বেছে নিন। সহীহ কোরআন শিক্ষা এবং স্কুল-কলেজের সকল বিষয় অনলাইনে বা অফলাইন হোম টিউশনে পড়ার সেরা ঠিকানা।",
     wa_btn_text: "🔍 শিক্ষক খুঁজুন →",
     courses_btn_text: "🎓 শিক্ষক হিসেবে আবেদন",
     points: [
-      "১০০% ভেরিফাইড সনদপ্রাপ্ত শিক্ষকবৃন্দ",
+      "১০০% ভেরিফাইড সনদপ্রাপ্ত শিক্ষক ও শিক্ষিকা",
       "ফ্রি ট্রায়াল ক্লাস করার বিশেষ সুবিধা",
-      "পছন্দমতো সময় ও সাশ্রয়ী নমনীয় ফি",
-      "মা-বোন ও শিশুদের জন্য অভিজ্ঞ শিক্ষিকা"
+      "অনলাইন ক্লাস ও সরাসরি অফলাইন হোম টিউশন",
+      "কোরআন শিক্ষা ও একাডেমি সকল বিষয়"
     ],
     booking_title: "ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট",
     booking_sub: "পছন্দের শিক্ষক বাছাই ও পরামর্শের জন্য",
@@ -53,14 +53,14 @@ const DEFAULT_SITE_CONTENT = {
   },
   ticker: {
     items: [
-      "হাফেজ ও আলেম শিক্ষকবৃন্দ",
-      "দেশ-বিদেশের বহুভাষী শিক্ষক",
+      "হাফেজ, আলেম ও গ্র্যাজুয়েট শিক্ষকবৃন্দ",
+      "অনলাইন ক্লাস ও অফলাইন হোম টিউশন",
       "১-অন-১ লাইভ ব্যক্তিগত ক্লাস",
+      "কোরআন শিক্ষা ও একাডেমি সকল বিষয়",
       "পছন্দমতো সময় ও নমনীয় ফি",
-      "বিশ্বের যেকোনো দেশ থেকে",
-      "শিশু, নারী ও পুরুষ সবার জন্য",
-      "ফ্রি ট্রায়াল ক্লাসের সুবিধা",
-      "ভেরিফাইড শিক্ষক প্রোফাইল"
+      "বিশ্বের যেকোনো প্রান্ত থেকে",
+      "শিশু, শিক্ষার্থী ও মা-বোনদের বিশেষ ব্যবস্থা",
+      "১০০% ভেরিফাইড শিক্ষক প্রোফাইল"
     ]
   },
   why_us: {
@@ -239,7 +239,7 @@ const DEFAULT_SITE_CONTENT = {
         category: "কুরআন শিক্ষা",
         cover: "📘",
         desc: "সহজ নূরানী নিয়মে দ্রুত কুরআন শেখার পূর্ণাঙ্গ নির্দেশিকা ও নিয়মাবলী।",
-        pdf_url: "Nurani Podhotite Quran Shikkha.pdf",
+        pdf_url: "Nurani-Podhotite-Quran-Shikkha.pdf",
         pages: "৪৮ পৃষ্ঠা",
         language: "বাংলা ও আরবি",
         is_featured: true
@@ -304,13 +304,13 @@ const DEFAULT_SITE_CONTENT = {
     terms_conditions: "সকল শিক্ষার্থী ও শিক্ষককে ক্লাসের সময়সূচি মেনে চলতে হবে। পারস্পরিক বোঝাপড়ার মাধ্যমে সুবিধাজনক সময়ে ১-অন-১ লাইভ ক্লাস সম্পন্ন করতে হবে।"
   },
   footer: {
-    about_text: "Global Islamic Care — দেশ ও বিদেশের শিক্ষার্থীদের জন্য বিশ্বস্ত অনলাইন কোরআন শিক্ষক প্ল্যাটফর্ম।",
+    about_text: "Global Islamic Care — দেশ ও বিদেশের শিক্ষার্থীদের জন্য বিশ্বস্ত মুসলিম শিক্ষক ও শিক্ষিকা প্ল্যাটফর্ম (কোরআন ও সকল একাডেমি বিষয় — অনলাইন ও হোম টিউশন)।",
     copyright: "© ২০২৬ Global Islamic Care. সর্বস্বত্ব সংরক্ষিত।",
     developer_credit: "Powered by Global Islamic Care Tech"
   }
 };
 
-const GIC_CONTENT_VERSION = "2026.08.24.v4";
+const GIC_CONTENT_VERSION = "2026.09.13.v1";
 
 // Global active site content instance
 window.GIC_SITE_CONTENT = { ...DEFAULT_SITE_CONTENT };

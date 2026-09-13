@@ -5823,7 +5823,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
             <div>
               <label style="display:block;font-size:13.5px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">ইমেইল ঠিকানা</label>
-              <input type="email" id="app-email" placeholder="yourname@gmail.com" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+              <input type="email" id="app-email" placeholder="আপনার ইমেইল (ঐচ্ছিক)" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
             </div>
             <div>
               <label style="display:block;font-size:13.5px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">জাতীয় পরিচয়পত্র / পাসপোর্ট নম্বর *</label>
@@ -6043,13 +6043,25 @@ document.addEventListener('DOMContentLoaded', () => {
       <div style="margin-bottom:12px;text-align:left;">
         <label style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:4px;">পড়ার কোর্স / বিষয় *</label>
         <select id="lead-parent-course" class="inp" style="width:100%;padding:9px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;background:#fff;">
-          <option value="সহীহ কোরআন তেলাওয়াত ও তাজউইদ">📖 সহীহ কোরআন তেলাওয়াত ও তাজউইদ</option>
-          <option value="নূরানী কায়দা ও আমপারা (শুরু থেকে)">👶 নূরানী কায়দা ও আমপারা (শুরু থেকে)</option>
-          <option value="হিফজুল কোরআন প্রোগ্রাম">🕌 হিফজুল কোরআন প্রোগ্রাম</option>
-          <option value="শিশু ও কিশোরদের স্পেশাল ক্লাস">🧒 শিশু ও কিশোরদের স্পেশাল ক্লাস</option>
-          <option value="মা-বোনদের জন্য বিশেষ কোরআন শিক্ষা">🧕 মা-বোনদের জন্য বিশেষ ক্লাস</option>
-          <option value="বয়স্কদের জন্য সহজ কোরআন শিক্ষা">🧓 বয়স্কদের সহজ কোরআন শিক্ষা</option>
-          <option value="অন্যান্য / শিক্ষকের সাথে পরামর্শ সাপেক্ষে">💬 অন্যান্য / পরামর্শ সাপেক্ষে</option>
+          <optgroup label="🌟 কোরআন ও ইসলামিক শিক্ষা">
+            <option value="সহীহ কোরআন তেলাওয়াত ও তাজউইদ">📖 সহীহ কোরআন তেলাওয়াত ও তাজউইদ</option>
+            <option value="নূরানী কায়দা ও আমপারা (শুরু থেকে)">👶 নূরানী কায়দা ও আমপারা (শুরু থেকে)</option>
+            <option value="হিফজুল কোরআন প্রোগ্রাম">🕌 হিফজুল কোরআন প্রোগ্রাম</option>
+            <option value="শিশু ও কিশোরদের স্পেশাল ক্লাস">🧒 শিশু ও কিশোরদের ইসলামিক ক্লাস</option>
+            <option value="মা-বোনদের জন্য বিশেষ কোরআন শিক্ষা">🧕 মা-বোনদের জন্য বিশেষ ক্লাস</option>
+            <option value="বয়স্কদের জন্য সহজ কোরআন শিক্ষা">🧓 বয়স্কদের সহজ কোরআন শিক্ষা</option>
+            <option value="দৈনন্দিন দোয়া, মাসআলা ও নামাজ শিক্ষা">🤲 দৈনন্দিন দোয়া, মাসআলা ও নামাজ শিক্ষা</option>
+          </optgroup>
+          <optgroup label="🎓 স্কুল/কলেজ একাডেমি ও হোম টিউশন">
+            <option value="প্রাথমিক / ১ম-৫ম শ্রেণি (সকল বিষয়)">🎒 প্রাথমিক / ১ম-৫ম শ্রেণি (সকল বিষয়)</option>
+            <option value="গণিত ও বিজ্ঞান (৬ষ্ঠ-১০ম শ্রেণি)">📐 গণিত ও বিজ্ঞান (৬ষ্ঠ-১০ম শ্রেণি)</option>
+            <option value="ইংরেজি স্পোকেন ও ব্যাকরণ">🇬🇧 ইংরেজি স্পোকেন ও ব্যাকরণ</option>
+            <option value="এসএসসি ও এইচএসসি বিশেষ প্রস্তুতি">📚 এসএসসি ও এইচএসসি বিশেষ প্রস্তুতি</option>
+            <option value="সরাসরি বাসায় গিয়ে অফলাইন হোম টিউশন">🏠 সরাসরি বাসায় গিয়ে অফলাইন হোম টিউশন</option>
+          </optgroup>
+          <optgroup label="💬 অন্যান্য">
+            <option value="অন্যান্য / শিক্ষকের সাথে পরামর্শ সাপেক্ষে">💬 অন্যান্য / পরামর্শ সাপেক্ষে</option>
+          </optgroup>
         </select>
       </div>
 
