@@ -4,7 +4,7 @@
 
 Global Islamic Care (GIC) is a Bangladesh-based comprehensive education platform connecting verified, qualified Muslim teachers and tutors (both male and female) with students and parents worldwide. GIC offers two foundational tracks:
 1. **Quran & Islamic Education (কোরআন ও ইসলামিক শিক্ষা):** Sahih Quran recitation, Nurani Qaida, Tajweed, Hifz (memorization), Nazera, Quran translation & Tafseer, Arabic language, Masla-Masayel (Fiqh), and Islamic ethics taught by certified Hafez, Alim, and Mufti teachers.
-2. **General Academic Education (জেনারেল একাডেমিক শিক্ষা):** All school and college subjects (Bangla, Mathematics, English, General Science, Physics, Chemistry, Biology, Higher Math, ICT, Accounting) from Primary (Class 1-5), High School (Class 6-10 / SSC), to Higher Secondary (HSC / College) taught by practicing Muslim university graduates and experienced educators.
+2. **General Academic Education (জেনারেল শিক্ষাক শিক্ষা):** All school and college subjects (Bangla, Mathematics, English, General Science, Physics, Chemistry, Biology, Higher Math, ICT, Accounting) from Primary (Class 1-5), High School (Class 6-10 / SSC), to Higher Secondary (HSC / College) taught by practicing Muslim university graduates and experienced educators.
 
 Teaching Modes Supported:
 - **Online 1-on-1 Live Classes:** Interactive classes conducted via Google Meet or Zoom for students in Bangladesh and expatriates globally.
@@ -29,7 +29,7 @@ Language: Bengali (বাংলা), English, Arabic, Urdu
 - **দুয়া ও যিকর শিক্ষা (Duas and Daily Dhikr):** Essential masnoon supplications and daily adhkār.
 - **নীতি-নৈতিকতা ও আদব (Islamic Akhlaq & Character Building):** Moral values, prophetic character (Sunnah & Seerah).
 
-### 2. General Academic Tuition Track (জেনারেল একাডেমি ও টিউশন)
+### 2. General Academic Tuition Track (জেনারেল শিক্ষা ও টিউশন)
 - **প্রাথমিক শিক্ষা (Primary All Subjects - Class 1 to 5):** Bangla, English, Math, Science, Religion taught with gentle care.
 - **মাধ্যমিক শিক্ষা (High School - Class 6 to 10 & SSC):** General Math, Higher Math, General Science, Physics, Chemistry, Biology, English Grammar, Bangla Literature, ICT.
 - **উচ্চ মাধ্যমিক (HSC & College - Class 11-12):** Science, Commerce, and Arts subjects.

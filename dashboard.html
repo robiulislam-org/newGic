@@ -1724,8 +1724,8 @@
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--gold-light);">পাঠদানের বিভাগ (Track) *</label>
                 <select id="tm-track" class="inp" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(200,151,42,0.4);color:#fde047;font-weight:700;">
                   <option value="quran">🌟 কোরআন ও ইসলামিক শিক্ষা</option>
-                  <option value="general">🎓 জেনারেল একাডেমি (স্কুল/কলেজ বিষয়)</option>
-                  <option value="both">🌟🎓 উভয় বিভাগ (কোরআন ও একাডেমি)</option>
+                  <option value="general">🎓 জেনারেল শিক্ষা (স্কুল/কলেজ বিষয়)</option>
+                  <option value="both">🌟🎓 উভয় বিভাগ (কোরআন ও সাধারণ শিক্ষা)</option>
                 </select>
               </div>
               <div>
@@ -5151,7 +5151,7 @@ function renderAdminTeachersGrid(list) {
       : '👨‍🏫';
 
     const trackBadge = (t.track === 'general')
-      ? `<span style="background:rgba(14,165,233,0.18);color:#38bdf8;border:1px solid rgba(14,165,233,0.35);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🎓 জেনারেল একাডেমি</span>`
+      ? `<span style="background:rgba(14,165,233,0.18);color:#38bdf8;border:1px solid rgba(14,165,233,0.35);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🎓 জেনারেল শিক্ষা</span>`
       : (t.track === 'both')
       ? `<span style="background:linear-gradient(135deg,rgba(200,151,42,0.22),rgba(14,165,233,0.22));color:#fde047;border:1px solid rgba(200,151,42,0.45);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🌟🎓 উভয় বিভাগ</span>`
       : `<span style="background:rgba(200,151,42,0.18);color:#fde047;border:1px solid rgba(200,151,42,0.4);padding:2.5px 9px;border-radius:12px;font-size:11px;font-weight:700;">🌟 কোরআন ও ইসলামিক</span>`;
