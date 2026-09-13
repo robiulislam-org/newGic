@@ -4764,6 +4764,42 @@ let teacherToDelete = null;
 let modalScheduleState = { sat:[], sun:[], mon:[], tue:[], wed:[] };
 let modalCurrentDay = 'sat';
 
+function extractGicMeta(t) {
+  if (!t) return t;
+  let track = t.track || t.teaching_track;
+  let mode = t.teaching_mode;
+  let offline = t.offline_areas;
+
+  if (t.bio && typeof t.bio === 'string') {
+    const metaMatch = t.bio.match(/<!--gic_meta:([\s\S]*?)-->/);
+    if (metaMatch) {
+      try {
+        const parsed = JSON.parse(metaMatch[1]);
+        if (!track && parsed.track) track = parsed.track;
+        if (!mode && parsed.teaching_mode) mode = parsed.teaching_mode;
+        if (!offline && parsed.offline_areas) offline = parsed.offline_areas;
+      } catch(e) {}
+    }
+    // Clean bio so that comment tags are never visible in UI or textarea
+    t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
+  }
+
+  // Check specializations for "হোম টিউশন: ..." if offline is still empty
+  if (!offline && Array.isArray(t.specializations)) {
+    const specArea = t.specializations.find(s => typeof s === 'string' && (s.startsWith('হোম টিউশন:') || s.startsWith('হোম টিউশন এলাকা:')));
+    if (specArea) {
+      offline = specArea.replace(/^হোম টিউশন( এলাকা)?:\s*/, '').trim();
+      if (!mode || mode === 'online') mode = 'both';
+    }
+  }
+
+  t.track = track || 'quran';
+  t.teaching_track = t.track;
+  t.teaching_mode = mode || (offline ? 'both' : 'online');
+  t.offline_areas = offline || '';
+  return t;
+}
+
 async function loadTeachersAdmin() {
   const loading = document.getElementById('tc-loading');
   const empty   = document.getElementById('tc-empty');
@@ -4915,6 +4951,7 @@ async function loadTeachersAdmin() {
         teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
       }
     }
+    teachersData = (teachersData || []).map(extractGicMeta);
     allAdminTeachers = teachersData;
 
     // 2. Fetch Bookings
@@ -5576,6 +5613,34 @@ async function saveTeacherSubmit(event) {
     return;
   }
 
+  const cleanBio = bio ? bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim() : '';
+  const metaPayload = JSON.stringify({ track, teaching_mode: teachingMode, offline_areas: offlineAreas });
+  const bioWithMeta = (cleanBio ? cleanBio + '\n\n' : '') + '<!--gic_meta:' + metaPayload + '-->';
+
+  // Also maintain offline area in specializations for instant native searchability & fallback
+  let finalSpecs = [...specializations];
+  if (offlineAreas) {
+    finalSpecs = finalSpecs.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
+    finalSpecs.push('হোম টিউশন: ' + offlineAreas);
+  }
+
+  const basePayload = {
+    name, slug, photo_url: photoUrl, designation,
+    gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
+    country, native_language: nativeLanguage, languages,
+    qualifications, bio: bioWithMeta, experience_years: experience,
+    students_taught: students, specializations: finalSpecs,
+    rating, is_verified: isVerified,
+    weekly_schedule: modalScheduleState,
+    whatsapp, sort_order: sortOrder, is_active: isActive,
+    teacher_type: teacherType
+  };
+
+  const fullPayload = {
+    ...basePayload,
+    track, teaching_mode: teachingMode, offline_areas: offlineAreas
+  };
+
   saveBtn.disabled = true;
   saveBtn.textContent = '⏳ সংরক্ষণ হচ্ছে...';
 
@@ -5592,10 +5657,10 @@ async function saveTeacherSubmit(event) {
           p_photo_url: photoUrl,
           p_designation: designation,
           p_qualifications: qualifications,
-          p_bio: bio,
+          p_bio: bioWithMeta,
           p_experience: experience,
           p_students: students,
-          p_specializations: specializations,
+          p_specializations: finalSpecs,
           p_schedule: modalScheduleState,
           p_whatsapp: whatsapp,
           p_sort_order: sortOrder,
@@ -5604,20 +5669,30 @@ async function saveTeacherSubmit(event) {
         if (!error && data && data.success) updateOk = true;
       } catch(e) {}
 
-      // Direct REST update (always ensures all columns including track, teaching_mode, offline_areas etc. are saved)
-      const { error } = await db.from('teachers').update({
-        name, slug, photo_url: photoUrl, designation,
-        gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
-        country, native_language: nativeLanguage, languages,
-        qualifications, bio, experience_years: experience,
-        students_taught: students, specializations,
-        rating, is_verified: isVerified,
-        weekly_schedule: modalScheduleState,
-        whatsapp, sort_order: sortOrder, is_active: isActive,
-        teacher_type: teacherType,
-        track, teaching_mode: teachingMode, offline_areas: offlineAreas
-      }).eq('id', id);
-      if (error && !updateOk) throw error;
+      // Try saving with fullPayload first (if columns exist)
+      let updateError = null;
+      try {
+        const res = await db.from('teachers').update(fullPayload).eq('id', id);
+        updateError = res.error;
+      } catch(err) {
+        updateError = err;
+      }
+
+      // If database throws schema cache error because column offline_areas/track/teaching_mode does not exist, fallback to basePayload
+      if (updateError && (
+        updateError.message?.includes('schema cache') || 
+        updateError.message?.includes('offline_areas') || 
+        updateError.message?.includes('track') || 
+        updateError.message?.includes('teaching_mode') || 
+        updateError.code === 'PGRST204'
+      )) {
+        console.warn('DB schema missing extra columns, saving via metadata in bio & specializations:', updateError.message);
+        const fbRes = await db.from('teachers').update(basePayload).eq('id', id);
+        updateError = fbRes.error;
+        if (!updateError) updateOk = true;
+      }
+
+      if (updateError && !updateOk) throw updateError;
 
       const localT = allAdminTeachers.find(item => item.id == id);
       if (localT) {
@@ -5625,8 +5700,8 @@ async function saveTeacherSubmit(event) {
           name, slug, photo_url: photoUrl, designation,
           gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
           country, native_language: nativeLanguage, languages,
-          qualifications, bio, experience_years: experience,
-          students_taught: students, specializations,
+          qualifications, bio: cleanBio, experience_years: experience,
+          students_taught: students, specializations: finalSpecs,
           rating, is_verified: isVerified,
           weekly_schedule: modalScheduleState,
           whatsapp, sort_order: sortOrder, is_active: isActive,
@@ -5638,19 +5713,27 @@ async function saveTeacherSubmit(event) {
       toast('✅ শিক্ষকের সকল তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
     } else {
       // INSERT (fallback)
-      const { error } = await db.from('teachers').insert([{
-        name, slug, photo_url: photoUrl, designation,
-        gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
-        country, native_language: nativeLanguage, languages,
-        qualifications, bio, experience_years: experience,
-        students_taught: students, specializations,
-        rating, is_verified: isVerified,
-        weekly_schedule: modalScheduleState,
-        whatsapp, sort_order: sortOrder, is_active: isActive,
-        teacher_type: teacherType,
-        track, teaching_mode: teachingMode, offline_areas: offlineAreas
-      }]);
-      if (error) throw error;
+      let insertError = null;
+      try {
+        const res = await db.from('teachers').insert([fullPayload]).select('*');
+        insertError = res.error;
+      } catch(err) {
+        insertError = err;
+      }
+
+      if (insertError && (
+        insertError.message?.includes('schema cache') || 
+        insertError.message?.includes('offline_areas') || 
+        insertError.message?.includes('track') || 
+        insertError.message?.includes('teaching_mode') || 
+        insertError.code === 'PGRST204'
+      )) {
+        console.warn('DB schema missing extra columns on insert, saving via metadata in bio & specializations:', insertError.message);
+        const fbRes = await db.from('teachers').insert([basePayload]).select('*');
+        insertError = fbRes.error;
+      }
+
+      if (insertError) throw insertError;
       toast('✅ নতুন শিক্ষক সফলভাবে যুক্ত হয়েছে!', 'ok');
     }
 

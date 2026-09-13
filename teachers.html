@@ -1663,6 +1663,40 @@ const DEMO_TEACHERS_MAP = {
 };
 
 // ── TRACK HELPERS & MARKETPLACE FILTER HANDLERS ──
+function extractGicMeta(t) {
+  if (!t) return t;
+  let track = t.track || t.teaching_track;
+  let mode = t.teaching_mode;
+  let offline = t.offline_areas;
+
+  if (t.bio && typeof t.bio === 'string') {
+    const metaMatch = t.bio.match(/<!--gic_meta:([\s\S]*?)-->/);
+    if (metaMatch) {
+      try {
+        const parsed = JSON.parse(metaMatch[1]);
+        if (!track && parsed.track) track = parsed.track;
+        if (!mode && parsed.teaching_mode) mode = parsed.teaching_mode;
+        if (!offline && parsed.offline_areas) offline = parsed.offline_areas;
+      } catch(e) {}
+    }
+    t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
+  }
+
+  if (!offline && Array.isArray(t.specializations)) {
+    const specArea = t.specializations.find(s => typeof s === 'string' && (s.startsWith('হোম টিউশন:') || s.startsWith('হোম টিউশন এলাকা:')));
+    if (specArea) {
+      offline = specArea.replace(/^হোম টিউশন( এলাকা)?:\s*/, '').trim();
+      if (!mode || mode === 'online') mode = 'both';
+    }
+  }
+
+  t.track = track || (isTeacherGeneral(t) ? 'general' : 'quran');
+  t.teaching_track = t.track;
+  t.teaching_mode = mode || (offline ? 'both' : 'online');
+  t.offline_areas = offline || '';
+  return t;
+}
+
 function isTeacherQuran(t) {
   if (t.teaching_track === 'quran' || t.track === 'quran') return true;
   if (t.teaching_track === 'general' || t.track === 'general') return false;
@@ -2039,18 +2073,19 @@ async function init() {
     const { data } = await db.from('teachers').select('*').eq('is_active', true).order('sort_order', { ascending: true }).order('created_at', { ascending: true });
     if (data && data.length > 0) {
       allTeachers = data.map(dbT => {
-        const local = DEMO_TEACHERS_MAP[dbT.slug];
-        if (!local) return dbT;
+        const processed = extractGicMeta(dbT);
+        const local = DEMO_TEACHERS_MAP[processed.slug];
+        if (!local) return processed;
         return {
           ...local,
-          ...dbT,
-          name: local.name || dbT.name,
-          teaching_mode: dbT.teaching_mode || local.teaching_mode || 'both',
-          offline_areas: dbT.offline_areas || local.offline_areas || '',
-          photo_url: (dbT.photo_url && dbT.photo_url.trim() !== '') ? dbT.photo_url : local.photo_url,
-          specializations: (Array.isArray(dbT.specializations) && dbT.specializations.length > 0) ? dbT.specializations : local.specializations,
-          qualifications: (Array.isArray(dbT.qualifications) && dbT.qualifications.length > 0) ? dbT.qualifications : local.qualifications,
-          bio: (dbT.bio && dbT.bio.trim() !== '') ? dbT.bio : local.bio,
+          ...processed,
+          name: local.name || processed.name,
+          teaching_mode: processed.teaching_mode || local.teaching_mode || 'both',
+          offline_areas: processed.offline_areas || local.offline_areas || '',
+          photo_url: (processed.photo_url && processed.photo_url.trim() !== '') ? processed.photo_url : local.photo_url,
+          specializations: (Array.isArray(processed.specializations) && processed.specializations.length > 0) ? processed.specializations : local.specializations,
+          qualifications: (Array.isArray(processed.qualifications) && processed.qualifications.length > 0) ? processed.qualifications : local.qualifications,
+          bio: (processed.bio && processed.bio.trim() !== '') ? processed.bio : local.bio,
           is_verified: true,
           is_demo: false
         };
@@ -2101,6 +2136,7 @@ async function init() {
       if (dbT) foundTeacher = dbT;
     }
     if (foundTeacher) {
+      foundTeacher = extractGicMeta(foundTeacher);
       const local = DEMO_TEACHERS_MAP[foundTeacher.slug] || {};
       teacherData = {
         ...local,
