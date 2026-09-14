@@ -17,7 +17,7 @@
     <image:image>
       <image:loc>https://globalislamiccare.com/og-image.jpg</image:loc>
       <image:title>Global Islamic Care – বিশ্বস্ত মুসলিম শিক্ষক ও শিক্ষিকা প্ল্যাটফর্ম (কোরআন ও স্কুল-কলেজের বিষয়)</image:title>
-      <image:caption>কোরআন ও জেনারেল শিক্ষা শিক্ষার নির্ভরযোগ্য মুসলিম শিক্ষক প্ল্যাটফর্ম — Global Islamic Care</image:caption>
+      <image:caption>কোরআন ও জেনারেল শিক্ষার নির্ভরযোগ্য মুসলিম শিক্ষক প্ল্যাটফর্ম — Global Islamic Care</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://globalislamiccare.com/logo.png</image:loc>
@@ -27,94 +27,114 @@
 
   <!-- ── Teachers & Profiles Page ───────────────────── -->
   <url>
-    <loc>https://globalislamiccare.com/teachers.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/teachers</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/teachers.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/teachers.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/teachers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/teachers"/>
   </url>
 
   <!-- ── Digital Islamic Library ─────────────────────── -->
   <url>
-    <loc>https://globalislamiccare.com/library.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/library</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/library.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/library.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/library"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/library"/>
+  </url>
+
+  <!-- ── Reviews & Testimonials ──────────────────────── -->
+  <url>
+    <loc>https://globalislamiccare.com/reviews</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/reviews"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/reviews"/>
+  </url>
+
+  <!-- ── About Us ────────────────────────────────────── -->
+  <url>
+    <loc>https://globalislamiccare.com/about</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/about"/>
   </url>
 
   <!-- ── AI-readable file ────────────────────────────── -->
   <url>
     <loc>https://globalislamiccare.com/llms.txt</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <!-- ── Service Pages ───────────────────────────────── -->
   <url>
-    <loc>https://globalislamiccare.com/services/quran-shikkha.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/services/quran-shikkha</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/quran-shikkha.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/quran-shikkha.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/quran-shikkha"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/quran-shikkha"/>
   </url>
 
   <url>
-    <loc>https://globalislamiccare.com/services/hefz.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/services/hefz</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/hefz.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/hefz.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/hefz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/hefz"/>
   </url>
 
   <url>
-    <loc>https://globalislamiccare.com/services/nazera.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/services/nazera</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/nazera.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/nazera.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/nazera"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/nazera"/>
   </url>
 
   <url>
-    <loc>https://globalislamiccare.com/services/tafseer.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/services/tafseer</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/tafseer.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/tafseer.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/tafseer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/tafseer"/>
   </url>
 
   <url>
-    <loc>https://globalislamiccare.com/services/arabic-language.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/services/arabic-language</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/arabic-language.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/arabic-language.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/arabic-language"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/arabic-language"/>
   </url>
 
   <url>
-    <loc>https://globalislamiccare.com/services/masla-masayel.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/services/masla-masayel</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.87</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/masla-masayel.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/masla-masayel.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/masla-masayel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/masla-masayel"/>
   </url>
 
   <url>
-    <loc>https://globalislamiccare.com/services/dua-shikkha.html</loc>
-    <lastmod>2026-09-07T00:00:00+06:00</lastmod>
+    <loc>https://globalislamiccare.com/services/dua-shikkha</loc>
+    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.87</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/dua-shikkha.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/dua-shikkha.html"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/services/dua-shikkha"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/services/dua-shikkha"/>
   </url>
 
   <!-- ── PDF Islamic Books (Library) ─────────────────── -->

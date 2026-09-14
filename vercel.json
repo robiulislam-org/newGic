@@ -4,6 +4,18 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/(.*)\\.sql",
+      "destination": "/404"
+    },
+    {
+      "source": "/(.*)\\.py",
+      "destination": "/404"
+    },
+    {
+      "source": "/(.*)\\.md",
+      "destination": "/404"
+    },
+    {
       "source": "/dashboard",
       "destination": "/dashboard.html"
     },
@@ -34,6 +46,30 @@
     {
       "source": "/services/:slug/",
       "destination": "/services/:slug.html"
+    },
+    {
+      "source": "/reviews",
+      "destination": "/index.html?page=reviews"
+    },
+    {
+      "source": "/free-courses",
+      "destination": "/index.html?page=free-courses"
+    },
+    {
+      "source": "/about",
+      "destination": "/index.html?page=about"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html?page=contact"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/index.html?page=privacy-policy"
+    },
+    {
+      "source": "/payment-policy",
+      "destination": "/index.html?page=payment-policy"
     }
   ]
 }
