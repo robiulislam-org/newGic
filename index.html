@@ -6950,6 +6950,68 @@ async function submitTeacherApplication(event) {
     enrichedNotes += `\n${notes}`;
   }
 
+  // ── Capture Applicant's IP, Location and Device ──
+  let applicantIp = '';
+  let applicantLocation = '';
+  let applicantCity = '';
+  let applicantCountry = country || 'বাংলাদেশ';
+  let applicantDevice = '';
+
+  try {
+    const ua = navigator.userAgent || '';
+    const uaLower = ua.toLowerCase();
+    let os = 'ডিভাইস';
+    if (uaLower.includes('windows')) os = 'Windows PC';
+    else if (uaLower.includes('android')) os = 'Android Mobile';
+    else if (uaLower.includes('iphone')) os = 'iPhone';
+    else if (uaLower.includes('ipad')) os = 'iPad';
+    else if (uaLower.includes('macintosh') || uaLower.includes('mac os')) os = 'Mac';
+    else if (uaLower.includes('linux')) os = 'Linux';
+
+    let browser = '';
+    if (uaLower.includes('chrome') || uaLower.includes('crios')) browser = 'Chrome';
+    else if (uaLower.includes('safari') && !uaLower.includes('chrome')) browser = 'Safari';
+    else if (uaLower.includes('firefox')) browser = 'Firefox';
+    else if (uaLower.includes('edge') || uaLower.includes('edg')) browser = 'Edge';
+
+    applicantDevice = browser ? `${os} (${browser})` : os;
+  } catch(e) {}
+
+  try {
+    if (window.userIpAddress) {
+      applicantIp = window.userIpAddress;
+      if (window.userLocation) {
+        applicantCity = window.userLocation.city || '';
+        applicantCountry = window.userLocation.country || applicantCountry;
+        applicantLocation = `${applicantCity ? applicantCity + ', ' : ''}${applicantCountry}`;
+      }
+    }
+    if (!applicantIp) {
+      const geoRes = await Promise.race([
+        fetch('https://ipwho.is/').then(r => r.json()),
+        fetch('https://freeipapi.com/api/json').then(r => r.json()),
+        new Promise((_, reject) => setTimeout(() => reject('timeout'), 1800))
+      ]).catch(() => null);
+
+      if (geoRes) {
+        applicantIp = geoRes.ip || geoRes.ipAddress || '';
+        applicantCity = geoRes.city || geoRes.cityName || '';
+        applicantCountry = geoRes.country || geoRes.countryName || applicantCountry;
+        applicantLocation = `${applicantCity ? applicantCity + ', ' : ''}${applicantCountry}`;
+      }
+    }
+  } catch(e) {}
+
+  if (!applicantLocation) {
+    applicantLocation = presentAddress || country || 'বাংলাদেশ';
+  }
+
+  // Append clear identity trace to notes
+  enrichedNotes += `\n[আবেদনকারী শিক্ষক: ${name}]`;
+  if (applicantIp) enrichedNotes += ` [IP: ${applicantIp}]`;
+  if (applicantLocation) enrichedNotes += ` [অনলাইন অবস্থান: ${applicantLocation}]`;
+  if (applicantDevice) enrichedNotes += ` [ডিভাইস: ${applicantDevice}]`;
+
   submitBtn.disabled = true;
   submitBtn.innerHTML = '⏳ আবেদন জমা দেওয়া হচ্ছে...';
 
@@ -6996,6 +7058,9 @@ async function submitTeacherApplication(event) {
           nid_back_url: nidBackUrl,
           passport_url: passportUrl,
           terms_agreed: true,
+          ip_address: applicantIp,
+          location: applicantLocation,
+          device: applicantDevice,
           private_notes: enrichedNotes,
           status: 'pending'
         };
@@ -7011,7 +7076,10 @@ async function submitTeacherApplication(event) {
           ins.error.message?.includes('demo_video_url') ||
           ins.error.message?.includes('offline_areas') ||
           ins.error.message?.includes('teaching_mode') ||
-          ins.error.message?.includes('teaching_track')
+          ins.error.message?.includes('teaching_track') ||
+          ins.error.message?.includes('ip_address') ||
+          ins.error.message?.includes('location') ||
+          ins.error.message?.includes('device')
         )) {
           // Fallback: core columns that are guaranteed to exist
           const corePayload = {
@@ -7056,6 +7124,13 @@ async function submitTeacherApplication(event) {
     }
 
     if (success) {
+      // Save teacher identity in localStorage so analytics & all future visits track this teacher
+      try {
+        localStorage.setItem('gic_teacher_session', JSON.stringify({ name: name, email: email, phone: phone }));
+        localStorage.setItem('gic_known_email', email);
+        localStorage.setItem('gic_teacher_name', name);
+      } catch(e) {}
+
       document.getElementById('teacher-apply-form').style.display = 'none';
       document.getElementById('apply-success').style.display = 'block';
       document.getElementById('teacher-apply-modal-box')?.scrollTo({ top: 0, behavior: 'smooth' });

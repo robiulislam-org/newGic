@@ -51,9 +51,14 @@ function getOrCreateVisitorId() {
   return vid;
 }
 
-// ─── GET STUDENT EMAIL ──────────────────────────────────────────────────────────
+// ─── GET STUDENT / TEACHER EMAIL ─────────────────────────────────────────
 function getStudentEmail() {
   try {
+    const t = JSON.parse(localStorage.getItem("gic_teacher_session") || "null");
+    if (t && t.email) {
+      localStorage.setItem("gic_known_email", t.email);
+      return t.email;
+    }
     const s = JSON.parse(localStorage.getItem("gic_student_session") || "null");
     if (s && s.email) {
       localStorage.setItem("gic_known_email", s.email);
