@@ -1523,8 +1523,12 @@
               <option value="name">🔤 নাম অনুযায়ী (A-Z)</option>
               <option value="exp">🏆 সর্বোচ্চ অভিজ্ঞতা</option>
             </select>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button type="button" class="btn btn-sm" onclick="openAddTeacherModal()" style="background:linear-gradient(135deg,var(--teal),#0d9488);color:#fff;font-weight:700;padding:8px 14px;border-radius:8px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:5px;">➕ নতুন শিক্ষক যুক্ত করুন</button>
+            <button type="button" class="btn btn-sm" onclick="deleteAllDemoTeachers()" style="background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.35);padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:4px;" title="সকল ডেমো শিক্ষক প্রোফাইল এক ক্লিকে মুছে ফেলুন">🗑️ সকল ডেমো মুছুন</button>
+            <button type="button" class="btn btn-sm" onclick="restoreDemoTeachers()" style="background:rgba(200,151,42,0.15);color:var(--gold-light);border:1px solid rgba(200,151,42,0.35);padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:4px;" title="ডেমো শিক্ষক প্রোফাইল পুনরায় ফিরিয়ে আনুন">🔄 ডেমো রিসেট</button>
+            <div style="font-size:13px;color:var(--text-muted);font-weight:600;margin-left:6px;" id="tc-count-lbl">মোট ০ জন শিক্ষক</div>
           </div>
-          <div style="font-size:13px;color:var(--text-muted);font-weight:600;" id="tc-count-lbl">মোট ০ জন শিক্ষক</div>
         </div>
       </div>
 
@@ -1534,7 +1538,10 @@
         <div style="font-size:44px;margin-bottom:12px;">👨‍🏫</div>
         <h3 style="font-size:16px;color:#fff;margin-bottom:6px;">এখনো কোনো শিক্ষক লাইভ তালিকায় নেই</h3>
         <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">ওয়েবসাইট থেকে শিক্ষকরা আবেদন করলে "📋 শিক্ষক আবেদন" ট্যাব থেকে তাঁদের যাচাই ও অনুমোদন করে লাইভ করতে পারবেন।</p>
-        <button class="btn btn-primary" onclick="switchTeacherSubTab('applications')" style="background:linear-gradient(135deg,var(--teal),#0d9488);">📋 শিক্ষক আবেদনসমূহ দেখুন</button>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="switchTeacherSubTab('applications')" style="background:linear-gradient(135deg,var(--teal),#0d9488);">📋 শিক্ষক আবেদনসমূহ দেখুন</button>
+          <button class="btn" onclick="resetDemoTeachersAndReload()" style="background:rgba(200,151,42,0.18);color:var(--gold-light);border:1px solid rgba(200,151,42,0.4);border-radius:10px;padding:8px 16px;font-size:13px;cursor:pointer;">🔄 ডেমো প্রোফাইল পুনরায় লোড করুন</button>
+        </div>
       </div>
       <div id="admin-teachers-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;"></div>
     </div>
@@ -4941,12 +4948,40 @@ async function loadTeachersAdmin() {
         }
       ];
 
+
       try {
+        // Try inserting full demo data
         const { data: inserted, error: insErr } = await db.from('teachers').insert(initialDemos).select('*');
         if (!insErr && Array.isArray(inserted) && inserted.length > 0) {
           teachersData = inserted;
         } else {
-          teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
+          // If error due to missing columns, try with only core columns
+          const coreDemos = initialDemos.map(d => ({
+            name: d.name,
+            slug: d.slug,
+            designation: d.designation,
+            photo_url: d.photo_url || '',
+            qualifications: d.qualifications || [],
+            bio: d.bio || '',
+            experience_years: d.experience_years || 0,
+            students_taught: d.students_taught || 0,
+            specializations: d.specializations || [],
+            languages: d.languages || ['বাংলা'],
+            weekly_schedule: d.weekly_schedule || { sat:[], sun:[], mon:[], tue:[], wed:[] },
+            whatsapp: d.whatsapp || '8801733017521',
+            country: d.country || 'বাংলাদেশ',
+            native_language: d.native_language || 'বাংলা',
+            sort_order: d.sort_order || 0,
+            is_active: true
+          }));
+          const { data: coreInserted, error: coreErr } = await db.from('teachers').insert(coreDemos).select('*');
+          if (!coreErr && Array.isArray(coreInserted) && coreInserted.length > 0) {
+            // Merge back the extra fields from initialDemos for display
+            teachersData = coreInserted.map((t, i) => ({ ...initialDemos[i], ...t }));
+          } else {
+            // Full fallback: use local data with synthetic IDs for display
+            teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
+          }
         }
       } catch(seedErr) {
         teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
@@ -5815,6 +5850,51 @@ async function confirmDeleteTeacherSubmit() {
   }
 }
 
+// Delete all demo profiles from Supabase and local list
+async function deleteAllDemoTeachers() {
+  if (!confirm('⚠️ আপনি কি নিশ্চিত যে সকল ডেমো শিক্ষক প্রোফাইল মুছে ফেলতে চান?\\n\\nএটি শুধুমাত্র নমুনা ডেমো প্রোফাইলগুলো মুছে ফেলবে। বাস্তব আবেদনকারী বা আপনার যুক্ত করা শিক্ষকদের কোনো ক্ষতি হবে না।')) return;
+  
+  const demoSlugs = ['md-mujahidul-islam', 'hafez-robiul-islam', 'md-al-amin', 'fatema-khatun', 'hafez-tanvir-ahmed', 'mufti-salman-faris', 'hafeza-umme-kulsum'];
+  
+  toast('⏳ ডেমো প্রোফাইল মুছে ফেলা হচ্ছে...', 'ok');
+  
+  try {
+    // Delete from Supabase where is_demo = true
+    try { await db.from('teachers').delete().eq('is_demo', true); } catch(e) {}
+    
+    // Also delete by slug for safety
+    for (const s of demoSlugs) {
+      try { await db.from('teachers').delete().eq('slug', s); } catch(e) {}
+    }
+
+    allAdminTeachers = allAdminTeachers.filter(t => !t.is_demo && !demoSlugs.includes(t.slug));
+    localStorage.setItem('gic_teachers_cleared', 'true');
+    filterAdminTeachers();
+    toast('✅ সকল ডেমো শিক্ষক প্রোফাইল সফলভাবে মুছে ফেলা হয়েছে!', 'ok');
+  } catch(err) {
+    console.error('Delete demo error:', err);
+    allAdminTeachers = allAdminTeachers.filter(t => !t.is_demo && !demoSlugs.includes(t.slug));
+    localStorage.setItem('gic_teachers_cleared', 'true');
+    filterAdminTeachers();
+    toast('✅ ডেমো প্রোফাইল তালিকা থেকে মুছে ফেলা হয়েছে', 'ok');
+  }
+}
+
+// Reset/restore demo teachers
+function restoreDemoTeachers() {
+  if (!confirm('🔄 আপনি কি ডেমো প্রোফাইলগুলো পুনরায় দেখতে চান?')) return;
+  localStorage.removeItem('gic_teachers_cleared');
+  toast('🔄 ডেমো প্রোফাইল পুনরায় লোড হচ্ছে...', 'ok');
+  setTimeout(() => loadTeachersAdmin(), 300);
+}
+
+// Reset demo teachers flag and reload so demo profiles show again
+function resetDemoTeachersAndReload() {
+  localStorage.removeItem('gic_teachers_cleared');
+  toast('🔄 ডেমো প্রোফাইল রিসেট হচ্ছে...', 'ok');
+  setTimeout(() => loadTeachersAdmin(), 300);
+}
+
 function renderBookingsTable() {
   const tbody = document.getElementById('tc-bookings-tbody');
   const filter = document.getElementById('tc-bk-filter-status')?.value || 'all';
@@ -6411,7 +6491,11 @@ async function submitApproveApp(appId) {
           monthly_fee: app.monthly_fee || 'আলোচনা সাপেক্ষে',
           demo_video_url: app.demo_video_url || '',
           is_verified: true,
-          teacher_type: teacherType
+          teacher_type: teacherType,
+          track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
+          teaching_track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
+          teaching_mode: app.teaching_mode || 'both',
+          offline_areas: app.offline_areas || ''
         }]).select('id').single();
 
         if (ins.data) {
@@ -6486,7 +6570,12 @@ async function quickApproveApp(appId, suggestedSlug) {
           gender: app.gender || 'male',
           monthly_fee: app.monthly_fee || 'আলোচনা সাপেক্ষে',
           demo_video_url: app.demo_video_url || '',
-          is_verified: true
+          is_verified: true,
+          teacher_type: app.teacher_type || 'fresher',
+          track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
+          teaching_track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
+          teaching_mode: app.teaching_mode || 'both',
+          offline_areas: app.offline_areas || ''
         }]).select('id').single();
 
         if (ins.data) {

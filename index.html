@@ -5651,6 +5651,7 @@ document.addEventListener('DOMContentLoaded', () => {
               আপনার সাথে যা যা প্রযোজ্য সিলেক্ট করুন (এক বা একাধিক):
             </label>
             <div style="display:flex;gap:8px;flex-wrap:wrap;" id="identity-chips-wrap">
+              <!-- ইসলামিক শিক্ষক পরিচয় -->
               <button type="button" class="toggle-pill active" data-val="hafez" onclick="toggleIdentityChip(this)">📜 হাফেজ</button>
               <button type="button" class="toggle-pill" data-val="alem" onclick="toggleIdentityChip(this)">🎓 আলেম / মাওলানা</button>
               <button type="button" class="toggle-pill" data-val="mufti" onclick="toggleIdentityChip(this)">🕌 মুফতি</button>
@@ -5658,6 +5659,12 @@ document.addEventListener('DOMContentLoaded', () => {
               <button type="button" class="toggle-pill" data-val="hafeza" onclick="toggleIdentityChip(this)">🧕 হাফেজা (মহিলা)</button>
               <button type="button" class="toggle-pill" data-val="alema" onclick="toggleIdentityChip(this)">👩‍🏫 আলেমা (মহিলা)</button>
               <button type="button" class="toggle-pill" data-val="qaria" onclick="toggleIdentityChip(this)">🧕 ক্বারিয়া (মহিলা)</button>
+              <!-- জেনারেল শিক্ষক পরিচয় -->
+              <button type="button" class="toggle-pill" data-val="general_teacher" onclick="toggleIdentityChip(this)">🎓 জেনারেল বিষয় শিক্ষক</button>
+              <button type="button" class="toggle-pill" data-val="math_teacher" onclick="toggleIdentityChip(this)">📐 গণিত শিক্ষক</button>
+              <button type="button" class="toggle-pill" data-val="science_teacher" onclick="toggleIdentityChip(this)">🔬 বিজ্ঞান শিক্ষক</button>
+              <button type="button" class="toggle-pill" data-val="english_teacher" onclick="toggleIdentityChip(this)">🇬🇧 ইংরেজি শিক্ষক</button>
+              <button type="button" class="toggle-pill" data-val="primary_all" onclick="toggleIdentityChip(this)">🎒 ১ম-৮ম অল সাবজেক্ট</button>
             </div>
           </div>
 
@@ -5861,6 +5868,9 @@ document.addEventListener('DOMContentLoaded', () => {
               <button type="button" class="sugg-chip" onclick="applyBioTemplate('alem')">🎓 আলেম ও মুফতি</button>
               <button type="button" class="sugg-chip" onclick="applyBioTemplate('female')">🧕 হাফেজা ও আলেমা (মহিলা)</button>
               <button type="button" class="sugg-chip" onclick="applyBioTemplate('qari')">📖 ক্বারী ও তাজবীদ শিক্ষক</button>
+              <button type="button" class="sugg-chip" onclick="applyBioTemplate('general_math')">📐 গণিত ও বিজ্ঞান শিক্ষক</button>
+              <button type="button" class="sugg-chip" onclick="applyBioTemplate('general_english')">🇬🇧 ইংরেজি শিক্ষক</button>
+              <button type="button" class="sugg-chip" onclick="applyBioTemplate('general_all')">🎒 ১ম-৮ম সকল বিষয় শিক্ষক</button>
             </div>
 
             <textarea id="app-bio" rows="3" placeholder="আপনার শিক্ষাগত পটভূমি, অভিজ্ঞতা এবং শিক্ষার্থীদের কোরআন শেখানোর পদ্ধতি সম্পর্কে সংক্ষেপে লিখুন..." style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;resize:vertical;transition:border-color 0.2s;box-sizing:border-box;line-height:1.7;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></textarea>
@@ -6553,7 +6563,10 @@ function applyBioTemplate(type) {
     hafez: 'আলহামদুলিল্লাহ, আমি একজন সনদপ্রাপ্ত হাফেজুল কুরআন। বিগত কয়েক বছর ধরে তাজউইদ ও সুন্দর উচ্চারণে শিশুদের এবং বয়স্কদের সহীহ কুরআন শিক্ষা দিয়ে আসছি। অত্যন্ত যত্ন ও ধৈর্যের সাথে ছাত্র-ছাত্রীদের হিফজ ও নাজেরা পড়াতে আগ্রহী।',
     alem: 'দাওরায়ে হাদিস (তাকমীল) সম্পন্ন করেছি। সহীহ মাখরাজ ও তাজউইদ অনুযায়ী কুরআনুল কারিম শিক্ষাদানের পাশাপাশি শিক্ষার্থীদের প্রয়োজনীয় দ্বীনি মাসয়ালা-মাসায়েল ও সুন্নত আমল শেখাতে যত্নবান।',
     female: 'আমি একজন হাফেজা ও আলেমা। ছোট বাচ্চা ও মা-বোনদের সম্পূর্ণ শরয়ী পর্দা বজায় রেখে অনলাইনে অত্যন্ত আন্তরিকতার সাথে বিশুদ্ধ কুরআন তেলাওয়াত ও তাজউইদ শেখানোর বিশেষ অভিজ্ঞতা রয়েছে।',
-    qari: 'তাজবীদ ও ক্বিরাআতে বিশেষ পারদর্শী। প্রতিটি হরফের সহীহ মাখরাজ, সিফাত এবং বিশুদ্ধ লাহনে কুরআনুল কারিম তিলাওয়াত শিক্ষাদানে দক্ষ। তিলাওয়াত সুন্দর ও বিশুদ্ধ করাই আমার মূল লক্ষ্য।'
+    qari: 'তাজবীদ ও ক্বিরাআতে বিশেষ পারদর্শী। প্রতিটি হরফের সহীহ মাখরাজ, সিফাত এবং বিশুদ্ধ লাহনে কুরআনুল কারিম তিলাওয়াত শিক্ষাদানে দক্ষ। তিলাওয়াত সুন্দর ও বিশুদ্ধ করাই আমার মূল লক্ষ্য।',
+    general_math: 'আলহামদুলিল্লাহ, আমি গণিত ও বিজ্ঞান বিষয়ে পাঠদানে অভিজ্ঞ। শিক্ষার্থীদের বেসিক কনসেপ্ট ক্লিয়ার করে সৃজনশীল প্রশ্ন ও সমাধান সহজভাবে বোঝানো আমার মূল বৈশিষ্ট্য। নিয়মিত হোমওয়ার্ক ও পরীক্ষার মাধ্যমে উন্নতি নিশ্চিত করি।',
+    general_english: 'ইংরেজি গ্রামার, রিডিং ও স্পোকেন দক্ষতায় বিশেষ গুরুত্ব দিয়ে অত্যন্ত যত্নসহকারে পড়াই। দুর্বল শিক্ষার্থীদের ভীতি দূর করে আত্মবিশ্বাসী করে তোলাই আমার মূল লক্ষ্য।',
+    general_all: '১ম থেকে ৮ম শ্রেণি পর্যন্ত সকল বিষয় অত্যন্ত আন্তরিকতা ও শৃঙ্খলার সাথে পড়িয়ে থাকি। নিয়মিত মূল্যায়ন, পড়া আদায় এবং শিশুর সার্বিক মানসিক ও নৈতিক বিকাশে যত্নশীল।'
   };
   bioEl.value = templates[type] || templates.hafez;
   bioEl.focus();
@@ -6805,6 +6818,13 @@ function applyGoToStep2() {
     return;
   }
 
+  // Pre-fill Step 2 WhatsApp and phone from Step 1 public WhatsApp if available
+  const publicWa = (document.getElementById('app-public-whatsapp')?.value || '').trim();
+  const step2Wa = document.getElementById('app-whatsapp');
+  const step2Phone = document.getElementById('app-phone');
+  if (step2Wa && !step2Wa.value && publicWa) step2Wa.value = publicWa;
+  if (step2Phone && !step2Phone.value && publicWa) step2Phone.value = publicWa;
+
   document.getElementById('apply-step-1').style.display = 'none';
   document.getElementById('apply-step-2').style.display = 'block';
   
@@ -6843,8 +6863,9 @@ async function submitTeacherApplication(event) {
   const monthlyFee = (document.getElementById('app-monthly-fee')?.value || 'আলোচনা সাপেক্ষে').trim();
   const demoUrl = (document.getElementById('app-demo-url')?.value || '').trim();
 
+  const teachingTrack = document.getElementById('app-track-val')?.value || 'quran';
   const activeIdentities = Array.from(document.querySelectorAll('#identity-chips-wrap .toggle-pill.active')).map(b => b.getAttribute('data-val'));
-  const category = activeIdentities.join(',') || 'hafez';
+  const category = activeIdentities.join(',') || (teachingTrack === 'general' ? 'general' : 'hafez');
 
   const activeLangs = Array.from(document.querySelectorAll('#lang-chips-wrap .toggle-pill.active')).map(b => b.getAttribute('data-lang'));
   const languages = activeLangs.length > 0 ? activeLangs : ['বাংলা'];
@@ -6856,8 +6877,11 @@ async function submitTeacherApplication(event) {
   const photoUrl = (document.getElementById('app-photo-url')?.value || '').trim();
   const bio = (document.getElementById('app-bio')?.value || '').trim();
   
-  const phone = (document.getElementById('app-phone')?.value || '').trim();
-  const whatsapp = (document.getElementById('app-whatsapp')?.value || '').trim();
+  const publicWa = (document.getElementById('app-public-whatsapp')?.value || '').trim();
+  const rawWa = (document.getElementById('app-whatsapp')?.value || publicWa).trim();
+  const rawPhone = (document.getElementById('app-phone')?.value || rawWa || publicWa).trim();
+  const whatsapp = rawWa || rawPhone;
+  const phone = rawPhone || rawWa;
   const email = (document.getElementById('app-email')?.value || '').trim();
   const nid = (document.getElementById('app-nid')?.value || '').trim();
   const presentAddress = (document.getElementById('app-present-address')?.value || '').trim();
@@ -6917,7 +6941,6 @@ async function submitTeacherApplication(event) {
 
   const teachingMode = document.getElementById('app-teaching-mode')?.value || 'both';
   const offlineAreas = (document.getElementById('app-offline-areas')?.value || '').trim();
-  const teachingTrack = document.getElementById('app-track-val')?.value || (category.includes('general') ? 'general' : 'quran');
 
   let modeDesc = teachingMode === 'both' ? 'অনলাইন ও অফলাইন/হোম টিউশন' : (teachingMode === 'offline' ? 'শুধুমাত্র অফলাইন/হোম টিউশন' : 'শুধুমাত্র অনলাইন');
   let enrichedNotes = `[পাঠদানের মাধ্যম: ${modeDesc}]`;
@@ -6941,7 +6964,8 @@ async function submitTeacherApplication(event) {
 
     if (dbApp) {
       try {
-        const ins = await dbApp.from('teacher_applications').insert([{
+        // Full payload with all fields
+        const fullPayload = {
           category: category,
           teaching_track: teachingTrack,
           track: teachingTrack,
@@ -6975,7 +6999,53 @@ async function submitTeacherApplication(event) {
           terms_agreed: true,
           private_notes: enrichedNotes,
           status: 'pending'
-        }]);
+        };
+
+        let ins = await dbApp.from('teacher_applications').insert([fullPayload]);
+
+        // If schema cache error for missing columns, retry with core columns only
+        if (ins.error && (
+          ins.error.message?.includes('column') ||
+          ins.error.message?.includes('schema') ||
+          ins.error.message?.includes('gender') ||
+          ins.error.message?.includes('monthly_fee') ||
+          ins.error.message?.includes('demo_video_url') ||
+          ins.error.message?.includes('offline_areas') ||
+          ins.error.message?.includes('teaching_mode') ||
+          ins.error.message?.includes('teaching_track')
+        )) {
+          // Fallback: core columns that are guaranteed to exist
+          const corePayload = {
+            category: category,
+            name: name,
+            designation: designation,
+            country: country,
+            native_language: nativeLanguage,
+            photo_url: photoUrl,
+            qualifications: qualifications,
+            specializations: specializations,
+            languages: languages,
+            experience_years: experience,
+            students_taught: students,
+            bio: bio,
+            weekly_schedule: { sat: [], sun: [], mon: [], tue: [], wed: [] },
+            phone: phone,
+            whatsapp_number: whatsapp,
+            email: email,
+            address: combinedAddress,
+            present_address: presentAddress,
+            permanent_address: permanentAddress,
+            nid_number: nid,
+            nid_front_url: nidFrontUrl,
+            nid_back_url: nidBackUrl,
+            passport_url: passportUrl,
+            terms_agreed: true,
+            private_notes: `[ক্যাটাগরি: ${teachingTrack}] [পাঠদান: ${teachingMode}]${offlineAreas ? ' [এলাকা: '+offlineAreas+']' : ''}${monthlyFee ? ' [ফি: '+monthlyFee+']' : ''}${gender ? ' [লিঙ্গ: '+gender+']' : ''}\n${enrichedNotes}`,
+            status: 'pending'
+          };
+          ins = await dbApp.from('teacher_applications').insert([corePayload]);
+        }
+
         if (!ins.error) {
           success = true;
         } else {

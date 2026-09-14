@@ -951,7 +951,7 @@
         <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(37,211,102,0.15),rgba(37,211,102,0.25));color:#047857;display:flex;align-items:center;justify-content:center;font-size:22px;">💬</div>
         <div>
           <div class="modal-title" id="bk-modal-title" style="margin-bottom:2px;font-size:17.5px;font-weight:800;color:var(--navy,#0f2744);">শিক্ষকের সাথে সরাসরি যোগাযোগ</div>
-          <div style="font-size:11.5px;color:#0f766e;font-weight:700;">Global Islamic Care · ভেরিফাইড শিক্ষক সেবা</div>
+          <div id="bk-modal-desc" style="font-size:11.5px;color:#0f766e;font-weight:700;">Global Islamic Care · ভেরিফাইড শিক্ষক সেবা</div>
         </div>
       </div>
       <button type="button" onclick="closeBookingModal()" style="background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:8px;line-height:1;" title="বন্ধ করুন">✕</button>
@@ -2551,15 +2551,21 @@ function openBookingModal(day = null, slot = null) {
   const dayName = (day && DAY_NAMES[day]) ? DAY_NAMES[day] : day;
   const slotStr = slot ? `${dayName}, ${slot.label} (${slot.period || 'ক্লাস'})` : 'সুবিধাজনক সময়ে';
   
-  document.getElementById('bk-modal-title').textContent = '📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট';
-  document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের সাথে আপনার ক্লাস সমন্বয় ও যোগাযোগের জন্য তথ্য দিন';
-  document.getElementById('modal-slot-info').innerHTML = slot 
-    ? `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} &nbsp;|&nbsp; ⏰ <strong>সময়:</strong> ${slotStr}`
-    : `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} (${teacherData?.designation || 'কোরআন শিক্ষক'})`;
-  document.getElementById('bk-submit-btn').innerHTML = '📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট পাঠান (WhatsApp) →';
-  document.getElementById('bk-modal-err').style.display = 'none';
+  if (document.getElementById('bk-modal-title')) document.getElementById('bk-modal-title').textContent = '📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট';
+  if (document.getElementById('bk-modal-desc')) document.getElementById('bk-modal-desc').textContent = 'শিক্ষকের সাথে আপনার ক্লাস সমন্বয় ও যোগাযোগের জন্য তথ্য দিন';
+  const slotInfoEl = document.getElementById('modal-slot-info');
+  if (slotInfoEl) {
+    slotInfoEl.innerHTML = slot 
+      ? `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} &nbsp;|&nbsp; ⏰ <strong>সময়:</strong> ${slotStr}`
+      : `👨‍🏫 <strong>শিক্ষক:</strong> ${teacherData ? teacherData.name : '—'} (${teacherData?.designation || 'কোরআন শিক্ষক'})`;
+  }
+  const submitBtn = document.getElementById('bk-submit-btn');
+  if (submitBtn) submitBtn.innerHTML = '📅 ফ্রি ট্রায়াল ক্লাস রিকোয়েস্ট পাঠান (WhatsApp) →';
+  const errEl = document.getElementById('bk-modal-err');
+  if (errEl) errEl.style.display = 'none';
 
-  document.getElementById('booking-modal').classList.add('open');
+  const modalEl = document.getElementById('booking-modal');
+  if (modalEl) modalEl.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
