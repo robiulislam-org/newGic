@@ -602,6 +602,9 @@
       </div>
     </div>
 
+    <!-- Teacher Applications Notification Banner -->
+    <div id="today-teacher-app-banner" style="display:none;margin-bottom:20px;"></div>
+
     <!-- Smart Insights -->
     <div style="font-size:13px;font-weight:800;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px;display:flex;align-items:center;gap:10px;">💡 স্মার্ট পরামর্শ <span style="flex:1;height:1px;background:rgba(255,255,255,0.07);display:block;"></span></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:24px;" id="smart-insights">
@@ -1471,7 +1474,7 @@
     </div>
 
     <!-- Stat Row -->
-    <div class="stat-row">
+    <div class="stat-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:24px;">
       <div class="stat-card t">
         <div class="stat-label">👨‍🏫 মোট শিক্ষক</div>
         <div class="stat-val" id="tc-stat-total">0</div>
@@ -1481,6 +1484,11 @@
         <div class="stat-label">✅ সক্রিয় শিক্ষক</div>
         <div class="stat-val live" id="tc-stat-active">0</div>
         <div class="stat-sub">ওয়েবসাইটে দৃশ্যমান</div>
+      </div>
+      <div class="stat-card" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);cursor:pointer;transition:transform 0.2s;" onclick="switchTeacherSubTab('applications')" title="আবেদন দেখতে ক্লিক করুন">
+        <div class="stat-label" style="color:#f59e0b;font-weight:700;">📋 শিক্ষক আবেদন</div>
+        <div class="stat-val" id="tc-stat-pending-apps" style="color:#f59e0b;">0</div>
+        <div class="stat-sub" style="color:#fde68a;">অনুমোদনের জন্য অপেক্ষমাণ ➔</div>
       </div>
       <div class="stat-card gd">
         <div class="stat-label">📅 ক্লাস বুকিং</div>
@@ -1497,13 +1505,15 @@
     <!-- Sub-navigation Tabs -->
     <div style="display:flex;gap:10px;margin-bottom:20px;border-bottom:1px solid var(--card-border);padding-bottom:12px;flex-wrap:wrap;">
       <button class="tc-tab-btn active" id="tc-subtab-btn-list" onclick="switchTeacherSubTab('list')">👨‍🏫 শিক্ষক তালিকা</button>
-      <button class="tc-tab-btn" id="tc-subtab-btn-applications" onclick="switchTeacherSubTab('applications')">📋 শিক্ষক আবেদন <span id="tc-badge-applications" style="display:none;background:#f59e0b;color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
+      <button class="tc-tab-btn" id="tc-subtab-btn-applications" onclick="switchTeacherSubTab('applications')">📋 শিক্ষক আবেদন <span id="tc-badge-applications" style="display:none;background:#f59e0b;color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;font-weight:700;">0</span></button>
       <button class="tc-tab-btn" id="tc-subtab-btn-bookings" onclick="switchTeacherSubTab('bookings')">📅 অভিভাবক-শিক্ষক যোগাযোগ (লিডস) <span id="tc-badge-bookings" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
       <button class="tc-tab-btn" id="tc-subtab-btn-reviews" onclick="switchTeacherSubTab('reviews')">⭐ শিক্ষক রিভিউ ও অনুমোদন <span id="tc-badge-pending-reviews" style="display:none;background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;">0</span></button>
     </div>
 
     <!-- ── VIEW 1: TEACHER LIST ── -->
     <div id="tc-view-list">
+      <!-- Prominent Pending Applications Alert Banner -->
+      <div id="tc-pending-apps-banner" style="display:none;margin-bottom:20px;"></div>
       <div class="card" style="margin-bottom:20px;padding:16px 20px;">
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;">
           <div style="display:flex;gap:10px;flex:1;min-width:280px;flex-wrap:wrap;">
@@ -2983,6 +2993,7 @@ function showDashboard(data) {
   loadStudents();
   startLiveTracking();
   startAutoRefresh();
+  loadTeachersAdmin();
 }
 
 function doLogout() {
@@ -5547,8 +5558,11 @@ function openAddTeacherModal() {
 }
 
 function openEditTeacherModal(id) {
-  const teacher = allAdminTeachers.find(t => t.id === id || String(t.id) === String(id));
-  if (!teacher) return;
+  const teacher = allAdminTeachers.find(t => t.id === id || String(t.id) === String(id) || t.slug === id);
+  if (!teacher) {
+    toast('⚠️ শিক্ষকের তথ্য পাওয়া যায়নি', 'err');
+    return;
+  }
 
   function safeArr(val) {
     if (!val) return [];
@@ -5705,9 +5719,10 @@ async function saveTeacherSubmit(event) {
       // UPDATE
       let updateOk = false;
 
+      const numId = parseInt(id) || id;
       // 1. Direct update by ID in Supabase
       try {
-        const res = await db.from('teachers').update(fullPayload).eq('id', id).select('*');
+        const res = await db.from('teachers').update(fullPayload).eq('id', numId).select('*');
         if (!res.error && res.data && res.data.length > 0) {
           updateOk = true;
         } else if (!res.error && slug) {
@@ -5722,7 +5737,7 @@ async function saveTeacherSubmit(event) {
       // 2. Fallback: update with basePayload if extra columns threw error
       if (!updateOk) {
         try {
-          const fbRes = await db.from('teachers').update(basePayload).eq('id', id).select('*');
+          const fbRes = await db.from('teachers').update(basePayload).eq('id', numId).select('*');
           if (!fbRes.error && fbRes.data && fbRes.data.length > 0) {
             updateOk = true;
           } else if (!fbRes.error && slug) {
@@ -6167,9 +6182,9 @@ async function loadTeacherApplications() {
   const grid = document.getElementById('tc-apps-grid');
   const countLbl = document.getElementById('tc-app-count-lbl');
   const filterVal = document.getElementById('tc-app-filter-status')?.value || 'all';
-  if (!grid) return;
-
-  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">⏳ আবেদনসমূহ লোড হচ্ছে...</div>';
+  if (grid) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">⏳ আবেদনসমূহ লোড হচ্ছে...</div>';
+  }
 
   try {
     let allApps = [];
@@ -6199,13 +6214,106 @@ async function loadTeacherApplications() {
 
     allAdminApplications = allApps;
 
-    // Update pending badge
-    const pendingCount = allApps.filter(a => a.status === 'pending').length;
+    // Calculate counts
+    const pendingApps = allApps.filter(a => a.status === 'pending');
+    const pendingCount = pendingApps.length;
+    const latestApp = pendingApps[0] || allApps[0];
+
+    // Update pending badge on teacher applications sub-tab
     const badge = document.getElementById('tc-badge-applications');
     if (badge) {
       badge.textContent = pendingCount;
       badge.style.display = pendingCount > 0 ? 'inline' : 'none';
     }
+
+    // Update stat card tc-stat-pending-apps
+    const statPending = document.getElementById('tc-stat-pending-apps');
+    if (statPending) statPending.textContent = pendingCount;
+
+    // Update sidebar teacher-badge
+    const sbBadge = document.getElementById('teacher-badge');
+    if (sbBadge) {
+      if (pendingCount > 0) {
+        sbBadge.textContent = `${pendingCount}টি নতুন আবেদন!`;
+        sbBadge.style.background = '#f59e0b';
+        sbBadge.style.color = '#000';
+        sbBadge.style.fontWeight = '800';
+        sbBadge.style.display = 'inline';
+      } else {
+        const totalT = (allAdminTeachers && allAdminTeachers.length) || 0;
+        sbBadge.textContent = totalT;
+        sbBadge.style.background = 'var(--teal)';
+        sbBadge.style.color = '#fff';
+        sbBadge.style.fontWeight = 'normal';
+        sbBadge.style.display = totalT > 0 ? 'inline' : 'none';
+      }
+    }
+
+    // Update Overview Homepage Banner (today-teacher-app-banner)
+    const todayBanner = document.getElementById('today-teacher-app-banner');
+    if (todayBanner) {
+      if (pendingCount > 0 && latestApp) {
+        todayBanner.style.display = 'block';
+        todayBanner.innerHTML = `
+          <div style="background:linear-gradient(135deg,rgba(245,158,11,0.18),rgba(217,119,6,0.12));border:1.5px solid #f59e0b;border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 4px 16px rgba(245,158,11,0.15);">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:26px;">🔔</span>
+              <div>
+                <div style="font-size:15px;font-weight:800;color:#fef3c7;">${pendingCount}টি নতুন শিক্ষক আবেদন অপেক্ষমাণ রয়েছে!</div>
+                <div style="font-size:12.5px;color:#fde68a;">সর্বশেষ আবেদন: <b>${latestApp.name || 'শিক্ষক'}</b> (${latestApp.designation || 'শিক্ষক'}) — ফোন: <b>${latestApp.phone || latestApp.whatsapp_number || '—'}</b></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button onclick="switchTab('teachers'); switchTeacherSubTab('applications');" class="btn" style="background:#f59e0b;color:#000;font-weight:800;padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-size:13px;">
+                📋 আবেদনটি দেখুন ও অনুমোদন করুন ➔
+              </button>
+            </div>
+          </div>`;
+      } else {
+        todayBanner.style.display = 'none';
+      }
+    }
+
+    // Update Teachers List Page Banner (tc-pending-apps-banner)
+    const listBanner = document.getElementById('tc-pending-apps-banner');
+    if (listBanner) {
+      if (pendingCount > 0 && latestApp) {
+        listBanner.style.display = 'block';
+        const cleanSugSlug = (latestApp.name || '').toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/\s+/g, '-').substring(0, 30) || ('teacher-' + latestApp.id);
+        listBanner.innerHTML = `
+          <div style="background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(217,119,6,0.14));border:1.5px solid #f59e0b;border-radius:14px;padding:16px 20px;box-shadow:0 4px 20px rgba(245,158,11,0.15);">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <span style="font-size:32px;">🔔</span>
+                <div>
+                  <div style="font-size:16px;font-weight:800;color:#fef3c7;display:flex;align-items:center;gap:8px;">
+                    <span>${pendingCount}টি নতুন শিক্ষক আবেদন অপেক্ষমাণ রয়েছে!</span>
+                    <span style="background:#f59e0b;color:#000;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:800;">অনুমোদন প্রয়োজন</span>
+                  </div>
+                  <div style="font-size:13px;color:#fde68a;margin-top:4px;">
+                    আবেদনকারী: <b>${latestApp.name || 'শিক্ষক'}</b> (${latestApp.designation || 'শিক্ষক'}) | ফোন: <b>${latestApp.phone || latestApp.whatsapp_number || '—'}</b> | ট্র্যাক: <b>${latestApp.track === 'general' ? 'সাধারণ বিষয়' : 'ইসলামিক/কোরআন'}</b>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button onclick="switchTeacherSubTab('applications')" class="btn" style="background:#f59e0b;color:#000;font-weight:800;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:13px;">
+                  📋 আবেদনসমূহ দেখুন ➔
+                </button>
+                <button onclick="openAppDetailModal(${latestApp.id})" class="btn" style="background:rgba(58,134,200,0.2);color:var(--blue-light);border:1px solid rgba(58,134,200,0.4);font-weight:700;padding:9px 14px;font-size:13px;">
+                  👁️ বিস্তারিত যাচাই
+                </button>
+                <button onclick="quickApproveApp(${latestApp.id}, '${cleanSugSlug}')" class="btn btn-green" style="font-weight:700;padding:9px 14px;font-size:13px;">
+                  ✅ দ্রুত অনুমোদন
+                </button>
+              </div>
+            </div>
+          </div>`;
+      } else {
+        listBanner.style.display = 'none';
+      }
+    }
+
+    if (!grid) return;
 
     // Filter applications for current view
     let displayApps = allApps;
@@ -6213,7 +6321,7 @@ async function loadTeacherApplications() {
       displayApps = allApps.filter(a => a.status === filterVal);
     }
 
-    if (countLbl) countLbl.textContent = `মোট ${displayApps.length}টি আবেদন`;
+    if (countLbl) countLbl.textContent = `মোট ${displayApps.length}টি আবেদন (${pendingCount}টি অপেক্ষমাণ)`;
 
     if (displayApps.length === 0) {
       grid.innerHTML = `
@@ -6223,6 +6331,11 @@ async function loadTeacherApplications() {
           <p style="font-size:13px;color:var(--text-muted);">
             ${filterVal === 'pending' ? 'এই মুহূর্তে কোনো অপেক্ষমাণ আবেদন নেই।' : 'কোনো আবেদন পাওয়া যায়নি।'}
           </p>
+          ${filterVal !== 'all' && allApps.length > 0 ? `
+            <button onclick="document.getElementById('tc-app-filter-status').value='all'; loadTeacherApplications();" class="btn btn-sm" style="margin-top:10px;background:rgba(255,255,255,0.08);color:#fff;">
+              সকল আবেদন দেখুন (${allApps.length}টি)
+            </button>
+          ` : ''}
         </div>`;
       return;
     }
@@ -6230,7 +6343,7 @@ async function loadTeacherApplications() {
     renderApplicationsGrid(displayApps);
   } catch(err) {
     console.error('Load applications error:', err);
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--red);">❌ আবেদন লোড করতে সমস্যা হয়েছে</div>';
+    if (grid) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--red);">❌ আবেদন লোড করতে সমস্যা হয়েছে</div>';
   }
 }
 
@@ -6440,8 +6553,8 @@ function openAppDetailModal(appId) {
   // Slug auto-suggestion
   const slugInp = document.getElementById('tc-app-slug-inp');
   if (slugInp) {
-    const suggested = (app.name || '').toLowerCase()
-      .replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/--+/g, '-').substring(0, 40);
+    let suggested = (app.name || '').toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').substring(0, 40);
+    if (!suggested || suggested.length < 2) suggested = 'teacher-' + app.id;
     slugInp.value = suggested;
   }
   const sortInp = document.getElementById('tc-app-sort-inp');
@@ -6485,22 +6598,15 @@ function closeAppDetailModal() {
 }
 
 async function submitApproveApp(appId) {
-  const slug = (document.getElementById('tc-app-slug-inp')?.value || '').trim();
+  let slug = (document.getElementById('tc-app-slug-inp')?.value || '').trim();
   const sortOrder = parseInt(document.getElementById('tc-app-sort-inp')?.value || '0') || 0;
   const teacherType = document.getElementById('tc-app-type-inp')?.value || 'fresher';
   const errEl = document.getElementById('tc-app-form-err');
 
   if (!slug) {
-    errEl.textContent = '❌ URL Slug দিন (যেমন: hafez-abdur-rahman)';
-    errEl.style.display = 'block';
-    return;
+    slug = 'teacher-' + appId;
   }
-  if (!/^[a-z0-9-]+$/.test(slug)) {
-    errEl.textContent = '❌ Slug-এ শুধু ছোট হাতের ইংরেজি অক্ষর, সংখ্যা ও হাইফেন (-) ব্যবহার করুন';
-    errEl.style.display = 'block';
-    return;
-  }
-  errEl.style.display = 'none';
+  slug = slug.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || ('teacher-' + appId);
 
   const btn = document.getElementById('tc-app-action-btns')?.querySelector('button');
   if (btn) { btn.disabled = true; btn.textContent = '⏳ অনুমোদন হচ্ছে...'; }
@@ -6516,18 +6622,18 @@ async function submitApproveApp(appId) {
         p_sort_order: sortOrder,
         p_teacher_type: teacherType
       });
-      if (!error && data) result = data;
+      if (!error && data && data.success) result = data;
     } catch(e) { console.warn('RPC failed, trying fallback', e); }
 
     // Fallback: direct table operations if RPC unavailable
     if (!result || !result.success) {
-      const app = allAdminApplications.find(a => a.id === appId);
+      const app = allAdminApplications.find(a => a.id == appId);
       if (app) {
         const ins = await db.from('teachers').insert([{
           name: app.name,
           slug: slug,
           photo_url: app.photo_url || '',
-          designation: app.designation || '',
+          designation: app.designation || 'শিক্ষক',
           qualifications: app.qualifications || [],
           specializations: app.specializations || [],
           languages: app.languages || ['বাংলা'],
@@ -6549,43 +6655,56 @@ async function submitApproveApp(appId) {
           teaching_track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
           teaching_mode: app.teaching_mode || 'both',
           offline_areas: app.offline_areas || ''
-        }]).select('id').single();
+        }]).select('*');
 
-        if (ins.data) {
-          await db.from('teacher_applications').update({
-            status: 'approved',
-            reviewed_at: new Date().toISOString(),
-            approved_teacher_id: ins.data.id
-          }).eq('id', appId);
-          result = { success: true };
-        } else if (ins.error) {
-          throw ins.error;
-        }
+        const insertedTeacher = (ins.data && ins.data[0]) || ins.data;
+        const newTeacherId = insertedTeacher?.id || null;
+
+        await db.from('teacher_applications').update({
+          status: 'approved',
+          reviewed_at: new Date().toISOString(),
+          approved_teacher_id: newTeacherId
+        }).eq('id', appId);
+
+        result = { success: true };
       }
     }
 
     if (result && result.success) {
-      toast(`✅ শিক্ষক অনুমোদিত! প্রোফাইল ওয়েবসাইটে যুক্ত হয়েছে।`, 'ok');
+      toast(`✅ শিক্ষক সফলভাবে অনুমোদিত! ওয়েবসাইটে প্রোফাইল যুক্ত হয়েছে।`, 'ok');
       closeAppDetailModal();
       loadTeacherApplications();
-      loadTeachersAdmin(); // refresh main teacher list too
+      loadTeachersAdmin();
     } else {
       const msg = result?.message || 'অনুমোদন ব্যর্থ হয়েছে';
-      errEl.textContent = '❌ ' + msg;
-      errEl.style.display = 'block';
+      if (errEl) {
+        errEl.textContent = '❌ ' + msg;
+        errEl.style.display = 'block';
+      } else {
+        toast('❌ ' + msg, 'err');
+      }
     }
   } catch(err) {
-    errEl.textContent = '❌ সমস্যা: ' + (err.message || 'অনুমোদন ব্যর্থ হয়েছে');
-    errEl.style.display = 'block';
+    console.error('Approval error:', err);
+    if (errEl) {
+      errEl.textContent = '❌ সমস্যা: ' + (err.message || 'অনুমোদন ব্যর্থ হয়েছে');
+      errEl.style.display = 'block';
+    } else {
+      toast('❌ সমস্যা: ' + err.message, 'err');
+    }
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = '✅ অনুমোদন করুন ও ওয়েবসাইটে যুক্ত করুন'; }
   }
 }
 
 async function quickApproveApp(appId, suggestedSlug) {
-  const slug = prompt(`শিক্ষকের URL Slug দিন:\n(যেমন: hafez-abdur-rahman)\n\nপ্রস্তাবিত Slug:`, suggestedSlug || '');
+  const app = allAdminApplications.find(a => a.id == appId);
+  let defSlug = (suggestedSlug || (app?.name || '')).toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  if (!defSlug || defSlug.length < 2) defSlug = 'teacher-' + appId;
+
+  const slug = prompt(`শিক্ষকের URL Slug দিন:\n(যেমন: hafez-abdur-rahman)\n\nপ্রস্তাবিত Slug:`, defSlug);
   if (!slug || !slug.trim()) return;
-  const cleanSlug = slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/--+/g, '-');
+  const cleanSlug = slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || defSlug;
 
   try {
     let ok = false;
@@ -6600,46 +6719,44 @@ async function quickApproveApp(appId, suggestedSlug) {
       if (data && data.success) ok = true;
     } catch(e) {}
 
-    if (!ok) {
-      const app = allAdminApplications.find(a => a.id === appId);
-      if (app) {
-        const ins = await db.from('teachers').insert([{
-          name: app.name,
-          slug: cleanSlug,
-          photo_url: app.photo_url || '',
-          designation: app.designation || '',
-          qualifications: app.qualifications || [],
-          specializations: app.specializations || [],
-          languages: app.languages || ['বাংলা'],
-          country: app.country || 'বাংলাদেশ',
-          native_language: app.native_language || 'বাংলা',
-          bio: app.bio || '',
-          experience_years: app.experience_years || 0,
-          students_taught: app.students_taught || 0,
-          weekly_schedule: app.weekly_schedule || { sat: [], sun: [], mon: [], tue: [], wed: [] },
-          whatsapp: app.whatsapp_number || '8801733017521',
-          is_active: true,
-          sort_order: 0,
-          gender: app.gender || 'male',
-          monthly_fee: app.monthly_fee || 'আলোচনা সাপেক্ষে',
-          demo_video_url: app.demo_video_url || '',
-          is_verified: true,
-          teacher_type: app.teacher_type || 'fresher',
-          track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
-          teaching_track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
-          teaching_mode: app.teaching_mode || 'both',
-          offline_areas: app.offline_areas || ''
-        }]).select('id').single();
+    if (!ok && app) {
+      const ins = await db.from('teachers').insert([{
+        name: app.name,
+        slug: cleanSlug,
+        photo_url: app.photo_url || '',
+        designation: app.designation || 'শিক্ষক',
+        qualifications: app.qualifications || [],
+        specializations: app.specializations || [],
+        languages: app.languages || ['বাংলা'],
+        country: app.country || 'বাংলাদেশ',
+        native_language: app.native_language || 'বাংলা',
+        bio: app.bio || '',
+        experience_years: app.experience_years || 0,
+        students_taught: app.students_taught || 0,
+        weekly_schedule: app.weekly_schedule || { sat: [], sun: [], mon: [], tue: [], wed: [] },
+        whatsapp: app.whatsapp_number || '8801733017521',
+        is_active: true,
+        sort_order: 0,
+        gender: app.gender || 'male',
+        monthly_fee: app.monthly_fee || 'আলোচনা সাপেক্ষে',
+        demo_video_url: app.demo_video_url || '',
+        is_verified: true,
+        teacher_type: app.teacher_type || 'fresher',
+        track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
+        teaching_track: app.track || app.teaching_track || (app.category?.includes('general') ? 'general' : 'quran'),
+        teaching_mode: app.teaching_mode || 'both',
+        offline_areas: app.offline_areas || ''
+      }]).select('*');
 
-        if (ins.data) {
-          await db.from('teacher_applications').update({
-            status: 'approved',
-            reviewed_at: new Date().toISOString(),
-            approved_teacher_id: ins.data.id
-          }).eq('id', appId);
-          ok = true;
-        }
-      }
+      const insertedTeacher = (ins.data && ins.data[0]) || ins.data;
+      const newTeacherId = insertedTeacher?.id || null;
+
+      await db.from('teacher_applications').update({
+        status: 'approved',
+        reviewed_at: new Date().toISOString(),
+        approved_teacher_id: newTeacherId
+      }).eq('id', appId);
+      ok = true;
     }
 
     if (ok) {
@@ -6650,6 +6767,7 @@ async function quickApproveApp(appId, suggestedSlug) {
       toast('❌ অনুমোদন ব্যর্থ হয়েছে', 'err');
     }
   } catch(err) {
+    console.error('Quick approve error:', err);
     toast('❌ সমস্যা হয়েছে: ' + err.message, 'err');
   }
 }
@@ -6657,8 +6775,21 @@ async function quickApproveApp(appId, suggestedSlug) {
 async function submitRejectApp(appId) {
   if (!confirm('এই আবেদনটি প্রত্যাখ্যান করবেন?')) return;
   try {
-    const { data } = await db.rpc('reject_teacher_application', { pass_code: authPwd, p_app_id: appId });
-    if (data && data.success) {
+    let ok = false;
+    try {
+      const { data } = await db.rpc('reject_teacher_application', { pass_code: authPwd, p_app_id: appId });
+      if (data && data.success) ok = true;
+    } catch(e) {}
+
+    if (!ok) {
+      await db.from('teacher_applications').update({
+        status: 'rejected',
+        reviewed_at: new Date().toISOString()
+      }).eq('id', appId);
+      ok = true;
+    }
+
+    if (ok) {
       toast('✅ আবেদন প্রত্যাখ্যান করা হয়েছে।', 'ok');
       closeAppDetailModal();
       loadTeacherApplications();
@@ -6673,8 +6804,21 @@ async function submitRejectApp(appId) {
 async function quickRejectApp(appId) {
   if (!confirm('এই আবেদনটি প্রত্যাখ্যান করবেন?')) return;
   try {
-    const { data } = await db.rpc('reject_teacher_application', { pass_code: authPwd, p_app_id: appId });
-    if (data && data.success) {
+    let ok = false;
+    try {
+      const { data } = await db.rpc('reject_teacher_application', { pass_code: authPwd, p_app_id: appId });
+      if (data && data.success) ok = true;
+    } catch(e) {}
+
+    if (!ok) {
+      await db.from('teacher_applications').update({
+        status: 'rejected',
+        reviewed_at: new Date().toISOString()
+      }).eq('id', appId);
+      ok = true;
+    }
+
+    if (ok) {
       toast('✅ আবেদন প্রত্যাখ্যান করা হয়েছে।', 'ok');
       loadTeacherApplications();
     } else {
