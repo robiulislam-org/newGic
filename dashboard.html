@@ -1699,7 +1699,7 @@
           <button type="button" onclick="closeTeacherModal()" style="background:none;border:none;color:#94a3b8;font-size:22px;cursor:pointer;" title="বন্ধ করুন">✕</button>
         </div>
 
-        <form id="teacher-form" onsubmit="saveTeacherSubmit(event)">
+        <form id="teacher-form" novalidate onsubmit="saveTeacherSubmit(event)">
           <input type="hidden" id="tm-id" value="">
 
           <!-- Section 1: মৌলিক তথ্য -->
@@ -1812,7 +1812,7 @@
               </div>
               <div>
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ডেমো ভিডিও লিংক (YouTube/Drive)</label>
-                <input type="url" id="tm-demo-url" class="inp" placeholder="https://youtube.com/..." style="margin-bottom:0;">
+                <input type="text" id="tm-demo-url" class="inp" placeholder="https://youtube.com/... বা ভিডিও লিংক" style="margin-bottom:0;">
               </div>
             </div>
           </div>
@@ -1844,9 +1844,9 @@
               <span>🖼️ প্রোফাইল ছবি</span>
             </div>
             <div>
-              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ছবির সরাসরি URL (Google Drive / Direct Image URL)</label>
+              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ছবির পাথ বা সরাসরি URL (যেমন: images/teachers/photo.jpg বা https://...)</label>
               <div style="display:flex;gap:12px;align-items:center;">
-                <input type="url" id="tm-photo-url" class="inp" placeholder="https://example.com/photo.jpg" oninput="updatePhotoPreview()" style="margin-bottom:0;flex:1;">
+                <input type="text" id="tm-photo-url" class="inp" placeholder="images/teachers/photo.jpg বা ছবির অনলাইন লিংক" oninput="updatePhotoPreview()" style="margin-bottom:0;flex:1;">
                 <div id="tm-photo-preview" style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.05);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:22px;">👨‍🏫</div>
               </div>
             </div>
