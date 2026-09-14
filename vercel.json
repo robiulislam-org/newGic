@@ -64,24 +64,28 @@
       "destination": "/index.html?page=contact"
     },
     {
+      "source": "/policy",
+      "destination": "/policy.html"
+    },
+    {
+      "source": "/policy/",
+      "destination": "/policy.html"
+    },
+    {
       "source": "/privacy-policy",
-      "destination": "/index.html?page=privacy-policy"
+      "destination": "/policy.html"
     },
     {
       "source": "/payment-policy",
-      "destination": "/index.html?page=payment-policy"
-    },
-    {
-      "source": "/policy",
-      "destination": "/index.html?page=privacy-policy"
+      "destination": "/policy.html"
     },
     {
       "source": "/policies",
-      "destination": "/index.html?page=privacy-policy"
+      "destination": "/policy.html"
     },
     {
       "source": "/terms",
-      "destination": "/index.html?page=privacy-policy"
+      "destination": "/policy.html"
     }
   ]
 }
