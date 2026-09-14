@@ -2840,6 +2840,7 @@ footer {
     <a href="/free-courses" onclick="showPage('free-courses');return false;"><span style="background:var(--gold);color:var(--dark);padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">FREE</span> কোর্স</a>
     <a href="/library"><span style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-right:4px;">📚</span> লাইব্রেরি</a>
     <a href="/about" onclick="showPage('about');return false;">আমাদের সম্পর্কে</a>
+    <a href="/privacy-policy" onclick="showPage('privacy-policy');return false;">📜 নীতিমালা</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -3193,6 +3194,16 @@ footer {
       <p style="max-width:580px;margin:0 auto 24px;opacity:0.85;font-size:16px;line-height:1.8;">আমাদের প্ল্যাটফর্মে কে কাকে পেমেন্ট করে, কীভাবে করে — সব কিছু সম্পূর্ণ স্বচ্ছভাবে এখানে জানুন।</p>
       <div style="display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:50px;padding:8px 20px;font-size:13px;color:rgba(255,255,255,0.65);">
         🕰️ সর্বশেষ আপডেট: আগস্ট ২০২৬
+      </div>
+
+      <!-- Policy Switcher Tabs -->
+      <div style="display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap;">
+        <a href="/privacy-policy" onclick="showPage('privacy-policy');return false;" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:9px 20px;border-radius:30px;font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s;">
+          📋 প্ল্যাটফর্ম নীতিমালা ও শর্তাবলী
+        </a>
+        <a href="/payment-policy" onclick="showPage('payment-policy');return false;" style="background:linear-gradient(135deg,var(--gold,#c8972a),var(--gold-light,#e4b94a));color:#0a1628;border:none;padding:9px 20px;border-radius:30px;font-weight:800;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 3px 12px rgba(200,151,42,0.35);">
+          💳 পেমেন্ট নীতিমালা (বর্তমান)
+        </a>
       </div>
     </div>
   </div>
@@ -3687,9 +3698,19 @@ footer {
       <h2 style="color:#fff;font-size:clamp(22px,4vw,36px);font-weight:900;line-height:1.2;margin:0 0 10px;">
         Global Islamic Care <span style="color:#E4B94A;">প্ল্যাটফর্ম নীতিমালা</span>
       </h2>
-      <p style="color:rgba(255,255,255,0.75);font-size:14.5px;line-height:1.75;max-width:580px;margin:0 auto;">
+      <p style="color:rgba(255,255,255,0.75);font-size:14.5px;line-height:1.75;max-width:580px;margin:0 auto 18px;">
         আমাদের প্ল্যাটফর্ম কীভাবে কাজ করে, তথ্যের সুরক্ষা এবং আমাদের স্বচ্ছ দায়িত্ব ও সীমাবদ্ধতা সম্পর্কে জানুন।
       </p>
+
+      <!-- Policy Switcher Tabs -->
+      <div style="display:flex;justify-content:center;gap:10px;margin-top:16px;flex-wrap:wrap;">
+        <a href="/privacy-policy" onclick="showPage('privacy-policy');return false;" style="background:linear-gradient(135deg,var(--gold,#c8972a),var(--gold-light,#e4b94a));color:#0a1628;border:none;padding:9px 20px;border-radius:30px;font-weight:800;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 3px 12px rgba(200,151,42,0.35);">
+          📋 প্ল্যাটফর্ম নীতিমালা ও শর্তাবলী (বর্তমান)
+        </a>
+        <a href="/payment-policy" onclick="showPage('payment-policy');return false;" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:9px 20px;border-radius:30px;font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s;">
+          💳 পেমেন্ট ও স্বচ্ছতা নীতিমালা
+        </a>
+      </div>
     </div>
   </div>
 
@@ -3973,7 +3994,8 @@ footer {
         <li><a href="/library">ডিজিটাল লাইব্রেরি (PDF)</a></li>
         <li><a href="/about" onclick="showPage('about');return false;">আমাদের সম্পর্কে</a></li>
         <li><a href="/reviews" onclick="showPage('reviews');return false;">⭐ শিক্ষার্থী ও অভিভাবক রিভিউ</a></li>
-        <li><a href="/payment-policy" onclick="showPage('payment-policy');return false;">পেমেন্ট নীতিমালা</a></li>
+        <li><a href="/privacy-policy" onclick="showPage('privacy-policy');return false;">📋 প্ল্যাটফর্ম নীতিমালা ও শর্তাবলী</a></li>
+        <li><a href="/payment-policy" onclick="showPage('payment-policy');return false;">💳 পেমেন্ট ও স্বচ্ছতা নীতিমালা</a></li>
         <li><a href="/contact" onclick="showPage('contact');return false;">যোগাযোগ ও সহায়তা</a></li>
       </ul>
     </div>
@@ -3984,7 +4006,7 @@ footer {
       <span>·</span>
       <a href="/reviews" onclick="showPage('reviews');return false;">রিভিউ</a>
       <span>·</span>
-      <a href="/privacy-policy" onclick="showPage('privacy-policy');return false;">প্রাইভেসি পলিসি</a>
+      <a href="/privacy-policy" onclick="showPage('privacy-policy');return false;">প্ল্যাটফর্ম নীতিমালা</a>
       <span>·</span>
       <a href="/payment-policy" onclick="showPage('payment-policy');return false;">পেমেন্ট নীতিমালা</a>
       <span>·</span>
@@ -5465,7 +5487,10 @@ function getPageFromLocation() {
   const validPages = ['home', 'free-courses', 'courses', 'teachers', 'about', 'reviews', 'contact', 'privacy-policy', 'payment-policy'];
   const path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
   const urlParams = new URLSearchParams(window.location.search);
-  const paramPage = urlParams.get('page');
+  const paramPage = (urlParams.get('page') || '').toLowerCase();
+  if (paramPage === 'policy' || paramPage === 'policies' || paramPage === 'terms' || path === 'policy' || path === 'policies' || path === 'terms') {
+    return 'privacy-policy';
+  }
   if (paramPage && validPages.includes(paramPage)) return paramPage;
   if (validPages.includes(path)) return path;
   return 'home';

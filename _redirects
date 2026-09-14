@@ -11,4 +11,7 @@
 /contact        /index.html?page=contact 200
 /privacy-policy /index.html?page=privacy-policy 200
 /payment-policy /index.html?page=payment-policy 200
+/policy         /index.html?page=privacy-policy 200
+/policies       /index.html?page=privacy-policy 200
+/terms          /index.html?page=privacy-policy 200
 

@@ -70,6 +70,18 @@
     {
       "source": "/payment-policy",
       "destination": "/index.html?page=payment-policy"
+    },
+    {
+      "source": "/policy",
+      "destination": "/index.html?page=privacy-policy"
+    },
+    {
+      "source": "/policies",
+      "destination": "/index.html?page=privacy-policy"
+    },
+    {
+      "source": "/terms",
+      "destination": "/index.html?page=privacy-policy"
     }
   ]
 }
