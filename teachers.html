@@ -2140,7 +2140,7 @@ async function init() {
       // Ensure all 3 real verified teachers exist if missing
       const realSlugs = ['md-mujahidul-islam', 'hafez-robiul-islam', 'md-al-amin'];
       realSlugs.forEach(s => {
-        if (!allTeachers.some(t => t.slug === s || (s === 'md-mujahidul-islam' && t.id == 10) || (s === 'hafez-robiul-islam' && t.id == 8) || (s === 'md-al-amin' && t.id == 9)) && DEMO_TEACHERS_MAP[s]) {
+        if (!allTeachers.some(t => t.slug === s) && DEMO_TEACHERS_MAP[s]) {
           allTeachers.push(DEMO_TEACHERS_MAP[s]);
         }
       });

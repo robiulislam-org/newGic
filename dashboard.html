@@ -531,8 +531,14 @@
   <div class="nav-item active" onclick="switchTab('analytics')" id="nav-analytics">
     <span class="nav-icon">📊</span> ভিজিটর ও প্ল্যাটফর্ম ট্রাফিক
   </div>
-  <div class="nav-item" onclick="switchTab('teachers')" id="nav-teachers">
+  <div class="nav-item" onclick="switchTab('teachers'); switchTeacherSubTab('list');" id="nav-teachers">
     <span class="nav-icon">👨‍🏫</span> শিক্ষক ব্যবস্থাপনা <span id="teacher-badge" style="display:none;background:var(--teal);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
+  </div>
+  <div class="nav-item" onclick="openTeacherApplicationsTab()" id="nav-applications">
+    <span class="nav-icon">📋</span> শিক্ষক আবেদনসমূহ <span id="app-badge-sidebar" style="display:none;background:#f59e0b;color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;font-weight:700;"></span>
+  </div>
+  <div class="nav-item" onclick="openTeacherBookingsTab()" id="nav-bookings">
+    <span class="nav-icon">📅</span> অভিভাবক লিডস ও বুকিং <span id="booking-badge-sidebar" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;font-weight:700;"></span>
   </div>
   <div class="nav-item" onclick="switchTab('reviews')" id="nav-reviews">
     <span class="nav-icon">⭐</span> রিভিউ ম্যানেজার <span id="review-badge" style="display:none;background:var(--gold);color:#000;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px;"></span>
@@ -828,16 +834,25 @@
     <div id="tc-view-applications" style="display:none;">
       <div class="card" style="margin-bottom:20px;padding:16px 20px;">
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;">
-          <div style="display:flex;gap:10px;flex:1;min-width:260px;">
-            <select id="tc-app-filter-status" class="inp" onchange="loadTeacherApplications()" style="margin-bottom:0;width:200px;cursor:pointer;">
+          <div style="display:flex;gap:10px;flex:1;min-width:280px;flex-wrap:wrap;">
+            <input type="text" id="tc-app-search-inp" class="inp" placeholder="🔍 নাম, পদবী, ফোন, ইমেইল, এলাকা দিয়ে খুঁজুন..." oninput="filterTeacherApplications()" style="margin-bottom:0;flex:1;min-width:200px;">
+            <select id="tc-app-filter-status" class="inp" onchange="filterTeacherApplications()" style="margin-bottom:0;width:180px;cursor:pointer;">
+              <option value="all" selected>📋 সকল আবেদন</option>
               <option value="pending">⏳ অপেক্ষমাণ আবেদন</option>
-              <option value="all">সকল আবেদন</option>
               <option value="approved">✅ অনুমোদিত</option>
               <option value="rejected">❌ প্রত্যাখ্যাত</option>
             </select>
             <button class="btn btn-sm" onclick="loadTeacherApplications()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);padding:8px 14px;">🔄 রিফ্রেশ</button>
           </div>
           <div style="font-size:13px;color:var(--text-muted);" id="tc-app-count-lbl">লোড হচ্ছে...</div>
+        </div>
+
+        <!-- Quick Filter Pill Tabs -->
+        <div id="tc-app-pill-filters" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+          <button type="button" class="btn btn-sm" id="tc-app-pill-all" onclick="setTeacherAppFilter('all')" style="background:rgba(58,134,200,0.2);color:var(--blue-light);border:1px solid rgba(58,134,200,0.4);border-radius:20px;padding:5px 14px;font-weight:700;cursor:pointer;">📋 সকল আবেদন (<span id="tc-pill-count-all">0</span>)</button>
+          <button type="button" class="btn btn-sm" id="tc-app-pill-pending" onclick="setTeacherAppFilter('pending')" style="background:rgba(245,158,11,0.12);color:#f59e0b;border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:5px 14px;font-weight:700;cursor:pointer;">⏳ অপেক্ষমাণ (<span id="tc-pill-count-pending">0</span>)</button>
+          <button type="button" class="btn btn-sm" id="tc-app-pill-approved" onclick="setTeacherAppFilter('approved')" style="background:rgba(16,185,129,0.12);color:var(--green);border:1px solid rgba(16,185,129,0.3);border-radius:20px;padding:5px 14px;font-weight:700;cursor:pointer;">✅ অনুমোদিত (<span id="tc-pill-count-approved">0</span>)</button>
+          <button type="button" class="btn btn-sm" id="tc-app-pill-rejected" onclick="setTeacherAppFilter('rejected')" style="background:rgba(244,63,94,0.12);color:var(--red);border:1px solid rgba(244,63,94,0.3);border-radius:20px;padding:5px 14px;font-weight:700;cursor:pointer;">❌ প্রত্যাখ্যাত (<span id="tc-pill-count-rejected">0</span>)</button>
         </div>
       </div>
 
@@ -1316,6 +1331,73 @@
           <table>
             <thead><tr><th>&#2439;&#2476;&#2503;&#2472;&#2509;&#2463;</th><th>&#2474;&#2503;&#2460;</th><th>IP</th><th>&#2482;&#2507;&#2453;&#2503;&#2486;&#2472;</th><th>&#2474;&#2509;&#2482;&#2509;&#2479;&#2494;&#2463;&#2475;&#2480;&#2509;&#2478;</th><th>&#2488;&#2478;&#2479;&#2492;</th></tr></thead>
             <tbody id="sam-events-tbl"><tr class="empty-row"><td colspan="6">&#2482;&#2507;&#2465; &#2489;&#2458;&#2509;&#2459;&#2503;...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teacher Login & Visit History Modal -->
+  <div id="teacher-history-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+    <div style="background:#0d1726;border:1px solid rgba(200,151,42,0.35);border-radius:20px;max-width:860px;width:95%;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="background:linear-gradient(135deg,#121d30,#261e0e);border-bottom:1px solid rgba(200,151,42,0.25);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:18px;font-weight:800;color:#fff;" id="thm-teacher-name">👨‍🏫 শিক্ষকের নাম</div>
+          <div style="font-size:12.5px;color:var(--gold-light);margin-top:2px;" id="thm-teacher-email">✉️ ইমেইল</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,0.6);margin-top:4px;" id="thm-summary-sub">ভিজিট ও লগইন হিস্টোরি</div>
+        </div>
+        <button onclick="closeTeacherHistoryModal()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;">✕</button>
+      </div>
+      <div style="padding:20px;overflow-y:auto;flex:1;">
+        <!-- Stats Summary -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;margin-bottom:18px;">
+          <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;text-align:center;">
+            <div style="font-size:20px;font-weight:800;color:var(--gold-light);" id="thm-total-visits">0 বার</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">মোট ভিজিট / লগইন</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;text-align:center;">
+            <div style="font-size:20px;font-weight:800;color:var(--green);" id="thm-total-locations">0টি</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">লোকেশন / এলাকা</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;text-align:center;">
+            <div style="font-size:20px;font-weight:800;color:var(--blue-light);" id="thm-total-devices">0টি</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">ডিভাইস ও ব্রাউজার</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;text-align:center;">
+            <div style="font-size:20px;font-weight:800;color:#c084fc;" id="thm-unique-ips">0টি</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">ইউনিক আইপি (IP)</div>
+          </div>
+        </div>
+
+        <!-- Locations & Devices Breakdown -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;">
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--gold-light);margin-bottom:8px;">📍 ব্যবহৃত লোকেশন হিস্টোরি:</div>
+            <div id="thm-locations-list" style="max-height:160px;overflow-y:auto;"></div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--blue-light);margin-bottom:8px;">💻 ব্যবহৃত ডিভাইস ও ব্রাউজার:</div>
+            <div id="thm-devices-list" style="max-height:160px;overflow-y:auto;"></div>
+          </div>
+        </div>
+
+        <!-- Events Table -->
+        <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:8px;">📋 সাম্প্রতিক ভিজিট ও লগইন ইভেন্ট লগ:</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>তারিখ ও সময়</th>
+                <th>ইভেন্ট / কার্যক্রম</th>
+                <th>IP এড্রেস</th>
+                <th>লোকেশন</th>
+                <th>ডিভাইস ও ওএস</th>
+                <th>উৎস</th>
+              </tr>
+            </thead>
+            <tbody id="thm-events-tbl">
+              <tr class="empty-row"><td colspan="6">লোড হচ্ছে...</td></tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -2104,7 +2186,7 @@ function buildAlerts() {
       type:"warn",
       title:`⚠️ ${inactive.length} জন স্টুডেন্ট ${INACTIVE_DAYS}+ দিন ধরে নিষ্ক্রিয়`,
       desc:`এদের WhatsApp রিমাইন্ডার পাঠান যাতে তারা কোর্সে ফিরে আসে।`,
-      action:{ label:"💬 WhatsApp মেসেজ পাঠান", fn:"switchTab('whatsapp')" }
+      action:{ label:"📅 অভিভাবক লিড ও বুকিং দেখুন", fn:"openTeacherBookingsTab()" }
     });
   }
   const newStudents = allStudents.filter(s => !s.last_active);
@@ -2113,7 +2195,7 @@ function buildAlerts() {
       type:"info",
       title:`🆕 ${newStudents.length} জন নতুন রেজিস্ট্রেশন — এখনো লগইন করেনি`,
       desc:`এরা রেজিস্ট্রেশন করেছে কিন্তু এখনো কোনো কার্যক্রম করেনি। স্বাগত মেসেজ পাঠান!`,
-      action:{ label:"📋 তালিকা দেখুন", fn:"switchTab('leads')" }
+      action:{ label:"📋 আবেদন ও বুকিং দেখুন", fn:"openTeacherApplicationsTab()" }
     });
   }
   const totalVisits = allDailyTraffic.reduce((s,d)=>s+(d.views||0),0);
@@ -2123,7 +2205,7 @@ function buildAlerts() {
       type:"warn",
       title:"📉 রেজিস্ট্রেশন কনভার্সন রেট মাত্র " + conversion.toFixed(2) + "%",
       desc:"ফানেল অপ্টিমাইজ করুন। ল্যান্ডিং পেজে রেজিস্ট্রেশন ফর্ম আরো সহজ করুন।",
-      action:{ label:"🔽 ফানেল দেখুন", fn:"switchTab('funnel')" }
+      action:{ label:"📊 ভিজিটর চার্ট দেখুন", fn:"document.getElementById('chart-views')?.scrollIntoView({behavior:'smooth'})" }
     });
   }
   if (!allUtm.length) {
@@ -2131,7 +2213,7 @@ function buildAlerts() {
       type:"info",
       title:"🎯 UTM ক্যাম্পেইন শুরু করুন",
       desc:"আপনার সোশ্যাল মিডিয়া পোস্টে UTM লিংক যোগ করলে কোন পোস্ট থেকে বেশি ভিজিটর আসছে তা জানতে পারবেন।",
-      action:{ label:"📊 রিপোর্ট ও এক্সপোর্ট দেখুন", fn:"switchTab('reports')" }
+      action:{ label:"📥 ভিজিটর লগ এক্সপোর্ট করুন", fn:"exportVisitorCSV()" }
     });
   }
   if (!alerts.length) {
@@ -2391,10 +2473,18 @@ async function loadStudents() {
 // NAVIGATION
 // ══════════════════════════════════════════════════════
 function switchTab(id) {
+  let targetTab = document.getElementById("tab-" + id);
+  if (!targetTab) {
+    console.warn(`Tab "tab-${id}" not found, falling back to "tab-analytics"`);
+    id = 'analytics';
+    targetTab = document.getElementById("tab-analytics");
+  }
   document.querySelectorAll(".tab-page").forEach(p => p.classList.remove("active"));
   document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
-  document.getElementById("tab-" + id)?.classList.add("active");
-  document.querySelector(`.nav-item[onclick="switchTab('${id}')"]`)?.classList.add("active");
+  if (targetTab) targetTab.classList.add("active");
+  const navItem = document.getElementById('nav-' + id) || document.querySelector(`.nav-item[onclick*="switchTab('${id}')"]`);
+  if (navItem) navItem.classList.add("active");
+
   if (id === 'analytics') loadVisitorLog();
   if (id === 'teachers')  loadTeachersAdmin();
   if (id === 'reviews')   loadAdminReviews();
@@ -3154,6 +3244,41 @@ function closeStudentActivityModal() {
 }
 
 // ══════════════════════════════════════════════════════
+// TEACHER & APPLICATIONS CONTROLLER CORE DEFINITIONS
+// ══════════════════════════════════════════════════════
+
+const TC_SLOTS = [
+  { idx: 1,  start: '০৭:০০', end: '০৭:৫০', label: '০৭:০০ – ০৭:৫০', period: 'সকাল' },
+  { idx: 2,  start: '০৮:০০', end: '০৮:৫০', label: '০৮:০০ – ০৮:৫০', period: 'সকাল' },
+  { idx: 3,  start: '০৯:০০', end: '০৯:৫০', label: '০৯:০০ – ০৯:৫০', period: 'সকাল' },
+  { idx: 4,  start: '১০:০০', end: '১০:৫০', label: '১০:০০ – ১০:৫০', period: 'সকাল' },
+  { idx: 5,  start: '১১:০০', end: '১১:৫০', label: '১১:০০ – ১১:৫০', period: 'সকাল' },
+  { idx: 6,  start: '১২:০০', end: '১২:৫০', label: '১২:০০ – ১২:৫০', period: 'দুপুর' },
+  { idx: 7,  start: '১৩:০০', end: '১৩:৫০', label: '১৩:০০ – ১৩:৫০', period: 'দুপুর (০১টা)' },
+  { idx: 8,  start: '১৪:০০', end: '১৪:৫০', label: '১৪:০০ – ১৪:৫০', period: 'দুপুর (০২টা)' },
+  { idx: 9,  start: '১৫:০০', end: '১৫:৫০', label: '১৫:০০ – ১৫:৫০', period: 'বিকেল (০৩টা)' },
+  { idx: 10, start: '১৬:০০', end: '১৬:৫০', label: '১৬:০০ – ১৬:৫০', period: 'বিকেল (০৪টা)' },
+  { idx: 11, start: '১৭:০০', end: '১৭:৫০', label: '১৭:০০ – ১৭:৫০', period: 'বিকেল (০৫টা)' },
+  { idx: 12, start: '১৮:০০', end: '১৮:৫০', label: '১৮:০০ – ১৮:৫০', period: 'সন্ধ্যা (০৬টা)' },
+  { idx: 13, start: '১৯:০০', end: '১৯:৫০', label: '১৯:০০ – ১৯:৫০', period: 'সন্ধ্যা (০৭টা)' },
+  { idx: 14, start: '২০:০০', end: '২০:৫০', label: '২০:০০ – ২০:৫০', period: 'রাত (০৮টা)' },
+  { idx: 15, start: '২১:০০', end: '২১:৫০', label: '২১:০০ – ২১:৫০', period: 'রাত (০৯টা)' },
+  { idx: 16, start: '২২:০০', end: '২২:৫০', label: '২২:০০ – ২২:৫০', period: 'রাত (১০টা)' }
+];
+
+let allAdminTeachers = [];
+let allAdminBookings = [];
+let teacherToDelete = null;
+let modalScheduleState = {
+  sat: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+  sun: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+  mon: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+  tue: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+  wed: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+};
+let modalCurrentDay = 'sat';
+
+// ══════════════════════════════════════════════════════
 
 function extractGicMeta(t) {
   if (!t) return t;
@@ -3456,13 +3581,35 @@ async function loadTeachersAdmin() {
   }
 }
 
+function openTeacherApplicationsTab() {
+  switchTab('teachers');
+  switchTeacherSubTab('applications');
+}
+
+function openTeacherBookingsTab() {
+  switchTab('teachers');
+  switchTeacherSubTab('bookings');
+}
+
 function switchTeacherSubTab(subTab) {
   ['list', 'applications', 'bookings', 'reviews'].forEach(t => {
     document.getElementById(`tc-subtab-btn-${t}`)?.classList.toggle('active', t === subTab);
     const view = document.getElementById(`tc-view-${t}`);
     if (view) view.style.display = (t === subTab) ? 'block' : 'none';
   });
-  if (subTab === 'applications') loadTeacherApplications();
+
+  // Keep sidebar nav in sync
+  const navItems = ['nav-teachers', 'nav-applications', 'nav-bookings'];
+  navItems.forEach(id => document.getElementById(id)?.classList.remove('active'));
+  if (subTab === 'applications') {
+    document.getElementById('nav-applications')?.classList.add('active');
+    loadTeacherApplications();
+  } else if (subTab === 'bookings') {
+    document.getElementById('nav-bookings')?.classList.add('active');
+    renderBookingsTable();
+  } else {
+    document.getElementById('nav-teachers')?.classList.add('active');
+  }
 }
 
 function filterAdminTeachers() {
@@ -3933,7 +4080,7 @@ function openAddTeacherModal() {
 }
 
 function openEditTeacherModal(id) {
-  const teacher = allAdminTeachers.find(t => t.id === id || String(t.id) === String(id) || t.slug === id);
+  const teacher = allAdminTeachers.find(t => t.id == id || String(t.id) === String(id) || t.slug === id);
   if (!teacher) {
     toast('⚠️ শিক্ষকের তথ্য পাওয়া যায়নি', 'err');
     return;
@@ -4154,28 +4301,16 @@ async function saveTeacherSubmit(event) {
         } catch(e) {}
       }
 
-      const localT = allAdminTeachers.find(item => item.id == id || item.slug === slug);
-      if (localT) {
-        Object.assign(localT, {
-          name, slug, photo_url: photoUrl, designation,
-          gender, monthly_fee: monthlyFee, hourly_rate: hourlyRate, demo_video_url: demoUrl,
-          country, native_language: nativeLanguage, languages,
-          qualifications, bio: cleanBio, experience_years: experience,
-          students_taught: students, specializations: finalSpecs,
-          rating, is_verified: isVerified,
-          weekly_schedule: modalScheduleState,
-          whatsapp, sort_order: sortOrder, is_active: isActive,
-          teacher_type: teacherType,
-          track, teaching_mode: teachingMode, offline_areas: offlineAreas
-        });
+      if (!updateOk) {
+        throw new Error('ডেটাবেজে শিক্ষকের তথ্য সংরক্ষণ করা যায়নি। অনুগ্রহ করে ইন্টারনেট সংযোগ চেক করুন।');
       }
 
       toast('✅ শিক্ষকের সকল তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
       closeTeacherModal();
-      filterAdminTeachers();
+      await loadTeachersAdmin();
       return;
     } else {
-      // INSERT (fallback)
+      // INSERT (new teacher)
       let insertError = null;
       try {
         const res = await db.from('teachers').insert([fullPayload]).select('*');
@@ -4198,10 +4333,9 @@ async function saveTeacherSubmit(event) {
 
       if (insertError) throw insertError;
       toast('✅ নতুন শিক্ষক সফলভাবে যুক্ত হয়েছে!', 'ok');
+      closeTeacherModal();
+      await loadTeachersAdmin();
     }
-
-    closeTeacherModal();
-    loadTeachersAdmin();
   } catch(err) {
     console.error('Save teacher error:', err);
     errEl.textContent = '❌ ত্রুটি: ' + (err.message || 'সংরক্ষণ ব্যর্থ হয়েছে');
@@ -4582,9 +4716,31 @@ function getTeacherAppMeta(app) {
   return { ip, loc, dev };
 }
 
+function setTeacherAppFilter(status) {
+  const sel = document.getElementById('tc-app-filter-status');
+  if (sel) sel.value = status;
+
+  ['all', 'pending', 'approved', 'rejected'].forEach(s => {
+    const pill = document.getElementById('tc-app-pill-' + s);
+    if (pill) {
+      if (s === status) {
+        pill.style.borderColor = 'var(--gold)';
+        pill.style.background = 'rgba(200,151,42,0.18)';
+        pill.style.color = '#fff';
+      } else {
+        pill.style.borderColor = 'var(--card-border)';
+        pill.style.background = 'rgba(255,255,255,0.04)';
+        pill.style.color = 'var(--text-muted)';
+      }
+    }
+  });
+
+  filterTeacherApplications();
+}
+
 function filterTeacherApplications() {
   const q = (document.getElementById('tc-app-search-inp')?.value || '').toLowerCase().trim();
-  const filterVal = document.getElementById('tc-app-filter-status')?.value || 'pending';
+  const filterVal = document.getElementById('tc-app-filter-status')?.value || 'all';
 
   let list = allAdminApplications;
   if (filterVal !== 'all') {
@@ -4644,9 +4800,22 @@ async function loadTeacherApplications() {
     allAdminApplications = allApps;
 
     // Calculate counts
+    const totalCount = allApps.length;
     const pendingApps = allApps.filter(a => a.status === 'pending');
     const pendingCount = pendingApps.length;
+    const approvedCount = allApps.filter(a => a.status === 'approved').length;
+    const rejectedCount = allApps.filter(a => a.status === 'rejected').length;
     const latestApp = pendingApps[0] || allApps[0];
+
+    // Update status pill count badges
+    const pillAll = document.getElementById('tc-pill-count-all');
+    if (pillAll) pillAll.textContent = totalCount;
+    const pillPending = document.getElementById('tc-pill-count-pending');
+    if (pillPending) pillPending.textContent = pendingCount;
+    const pillApproved = document.getElementById('tc-pill-count-approved');
+    if (pillApproved) pillApproved.textContent = approvedCount;
+    const pillRejected = document.getElementById('tc-pill-count-rejected');
+    if (pillRejected) pillRejected.textContent = rejectedCount;
 
     // Update pending badge on teacher applications sub-tab
     const badge = document.getElementById('tc-badge-applications');
@@ -4675,6 +4844,20 @@ async function loadTeacherApplications() {
         sbBadge.style.color = '#fff';
         sbBadge.style.fontWeight = 'normal';
         sbBadge.style.display = totalT > 0 ? 'inline' : 'none';
+      }
+    }
+
+    // Update direct sidebar applications badge
+    const appSbBadge = document.getElementById('app-badge-sidebar');
+    if (appSbBadge) {
+      appSbBadge.textContent = pendingCount > 0 ? `${pendingCount}টি নতুন` : (totalCount > 0 ? `${totalCount}` : '');
+      appSbBadge.style.display = (pendingCount > 0 || totalCount > 0) ? 'inline' : 'none';
+      if (pendingCount > 0) {
+        appSbBadge.style.background = '#f59e0b';
+        appSbBadge.style.color = '#000';
+      } else {
+        appSbBadge.style.background = 'rgba(255,255,255,0.12)';
+        appSbBadge.style.color = '#cbd5e1';
       }
     }
 
@@ -4861,7 +5044,7 @@ function renderApplicationsGrid(apps) {
 }
 
 function openAppDetailModal(appId) {
-  const app = allAdminApplications.find(a => a.id === appId);
+  const app = allAdminApplications.find(a => a.id == appId || String(a.id) === String(appId));
   if (!app) return;
   currentAppDetail = app;
   const meta = typeof getTeacherAppMeta === 'function' ? getTeacherAppMeta(app) : { ip: app.ip_address || '', loc: app.location || '', dev: app.device || '' };
@@ -5092,10 +5275,16 @@ async function submitApproveApp(appId) {
         p_app_id: appId,
         p_slug: slug,
         p_whatsapp: '8801733017521',
-        p_sort_order: sortOrder,
-        p_teacher_type: teacherType
+        p_sort_order: sortOrder
       });
-      if (!error && data && data.success) result = data;
+      if (!error && data && data.success) {
+        result = data;
+        if (teacherType && data.teacher_id) {
+          try {
+            await db.from('teachers').update({ teacher_type: teacherType }).eq('id', data.teacher_id);
+          } catch(e) {}
+        }
+      }
     } catch(e) { console.warn('RPC failed, trying fallback', e); }
 
     // Fallback: direct table operations if RPC unavailable
