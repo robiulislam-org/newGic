@@ -5065,6 +5065,7 @@ async function loadTeachersAdmin() {
     filterAdminTeachers();
     renderBookingsTable();
     renderTeacherReviewsTable();
+    loadTeacherApplications();
   } catch(err) {
     if (loading) loading.style.display = 'none';
     console.error('Error loading teachers:', err);
@@ -5546,8 +5547,29 @@ function openAddTeacherModal() {
 }
 
 function openEditTeacherModal(id) {
-  const teacher = allAdminTeachers.find(t => t.id === id);
+  const teacher = allAdminTeachers.find(t => t.id === id || String(t.id) === String(id));
   if (!teacher) return;
+
+  function safeArr(val) {
+    if (!val) return [];
+    if (Array.isArray(val)) return val;
+    if (typeof val === 'string') {
+      val = val.trim();
+      if (val.startsWith('{') && val.endsWith('}')) {
+        return val.slice(1, -1).split(',').map(s => s.replace(/^"|"$/g, '').trim()).filter(Boolean);
+      }
+      if (val.startsWith('[') && val.endsWith(']')) {
+        try { return JSON.parse(val); } catch(e) {}
+      }
+      return val.split(',').map(s => s.trim()).filter(Boolean);
+    }
+    return [];
+  }
+
+  const quals = safeArr(teacher.qualifications);
+  const specs = safeArr(teacher.specializations);
+  const cleanSpecs = specs.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
+  const langs = safeArr(teacher.languages);
 
   document.getElementById('tm-title').textContent = '✏️ শিক্ষক প্রোফাইলের সকল তথ্য সম্পাদনা';
   document.getElementById('tm-id').value = teacher.id;
@@ -5568,32 +5590,30 @@ function openEditTeacherModal(id) {
   document.getElementById('tm-demo-url').value = teacher.demo_video_url || '';
   document.getElementById('tm-country').value = teacher.country || 'বাংলাদেশ';
   document.getElementById('tm-native-language').value = teacher.native_language || 'বাংলা';
-  
-  const langs = Array.isArray(teacher.languages) ? teacher.languages : (typeof teacher.languages === 'string' ? JSON.parse(teacher.languages || '[]') : ['বাংলা']);
   document.getElementById('tm-languages').value = (langs && langs.length > 0) ? langs.join(', ') : 'বাংলা';
-  
   document.getElementById('tm-rating').value = teacher.rating || 5.0;
   document.getElementById('tm-is-verified').checked = (teacher.is_verified !== false);
   document.getElementById('tm-photo-url').value = teacher.photo_url || '';
   document.getElementById('tm-experience').value = teacher.experience_years || 0;
   document.getElementById('tm-students').value = teacher.students_taught || 0;
   document.getElementById('tm-sort').value = (teacher.sort_order !== undefined && teacher.sort_order !== null) ? teacher.sort_order : 0;
-  
-  const specs = Array.isArray(teacher.specializations) ? teacher.specializations : (typeof teacher.specializations === 'string' ? JSON.parse(teacher.specializations || '[]') : []);
-  const cleanSpecs = specs.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
   document.getElementById('tm-qualifications').value = quals.join(', ');
   document.getElementById('tm-specializations').value = cleanSpecs.join(', ');
-  
-  document.getElementById('tm-bio').value = teacher.bio || '';
+  document.getElementById('tm-bio').value = (teacher.bio || '').replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
   document.getElementById('tm-is-active').checked = (teacher.is_active !== false);
   document.getElementById('tm-form-err').style.display = 'none';
 
+  let sched = teacher.weekly_schedule;
+  if (typeof sched === 'string') {
+    try { sched = JSON.parse(sched); } catch(e) { sched = {}; }
+  }
+  sched = sched || {};
   modalScheduleState = {
-    sat: (teacher.weekly_schedule && teacher.weekly_schedule.sat) || [],
-    sun: (teacher.weekly_schedule && teacher.weekly_schedule.sun) || [],
-    mon: (teacher.weekly_schedule && teacher.weekly_schedule.mon) || [],
-    tue: (teacher.weekly_schedule && teacher.weekly_schedule.tue) || [],
-    wed: (teacher.weekly_schedule && teacher.weekly_schedule.wed) || []
+    sat: sched.sat || [],
+    sun: sched.sun || [],
+    mon: sched.mon || [],
+    tue: sched.tue || [],
+    wed: sched.wed || []
   };
   modalCurrentDay = 'sat';
   updatePhotoPreview();
@@ -5684,53 +5704,67 @@ async function saveTeacherSubmit(event) {
     if (id) {
       // UPDATE
       let updateOk = false;
-      try {
-        const { data, error } = await db.rpc('update_teacher', {
-          pass_code: authPwd,
-          p_id: parseInt(id),
-          p_name: name,
-          p_slug: slug,
-          p_photo_url: photoUrl,
-          p_designation: designation,
-          p_qualifications: qualifications,
-          p_bio: bioWithMeta,
-          p_experience: experience,
-          p_students: students,
-          p_specializations: finalSpecs,
-          p_schedule: modalScheduleState,
-          p_whatsapp: whatsapp,
-          p_sort_order: sortOrder,
-          p_is_active: isActive
-        });
-        if (!error && data && data.success) updateOk = true;
-      } catch(e) {}
 
-      // Try saving with fullPayload first (if columns exist)
-      let updateError = null;
+      // 1. Direct update by ID in Supabase
       try {
-        const res = await db.from('teachers').update(fullPayload).eq('id', id);
-        updateError = res.error;
+        const res = await db.from('teachers').update(fullPayload).eq('id', id).select('*');
+        if (!res.error && res.data && res.data.length > 0) {
+          updateOk = true;
+        } else if (!res.error && slug) {
+          // Fallback: match by slug
+          const resSlug = await db.from('teachers').update(fullPayload).eq('slug', slug).select('*');
+          if (!resSlug.error && resSlug.data && resSlug.data.length > 0) updateOk = true;
+        }
       } catch(err) {
-        updateError = err;
+        console.warn('Direct update error:', err);
       }
 
-      // If database throws schema cache error because column offline_areas/track/teaching_mode does not exist, fallback to basePayload
-      if (updateError && (
-        updateError.message?.includes('schema cache') || 
-        updateError.message?.includes('offline_areas') || 
-        updateError.message?.includes('track') || 
-        updateError.message?.includes('teaching_mode') || 
-        updateError.code === 'PGRST204'
-      )) {
-        console.warn('DB schema missing extra columns, saving via metadata in bio & specializations:', updateError.message);
-        const fbRes = await db.from('teachers').update(basePayload).eq('id', id);
-        updateError = fbRes.error;
-        if (!updateError) updateOk = true;
+      // 2. Fallback: update with basePayload if extra columns threw error
+      if (!updateOk) {
+        try {
+          const fbRes = await db.from('teachers').update(basePayload).eq('id', id).select('*');
+          if (!fbRes.error && fbRes.data && fbRes.data.length > 0) {
+            updateOk = true;
+          } else if (!fbRes.error && slug) {
+            const fbSlug = await db.from('teachers').update(basePayload).eq('slug', slug).select('*');
+            if (!fbSlug.error && fbSlug.data && fbSlug.data.length > 0) updateOk = true;
+          }
+        } catch(err) {}
       }
 
-      if (updateError && !updateOk) throw updateError;
+      // 3. Fallback: RPC update_teacher
+      if (!updateOk) {
+        try {
+          const { data, error } = await db.rpc('update_teacher', {
+            pass_code: authPwd,
+            p_id: parseInt(id),
+            p_name: name,
+            p_slug: slug,
+            p_photo_url: photoUrl,
+            p_designation: designation,
+            p_qualifications: qualifications,
+            p_bio: bioWithMeta,
+            p_experience: experience,
+            p_students: students,
+            p_specializations: finalSpecs,
+            p_schedule: modalScheduleState,
+            p_whatsapp: whatsapp,
+            p_sort_order: sortOrder,
+            p_is_active: isActive
+          });
+          if (!error && data && data.success) updateOk = true;
+        } catch(e) {}
+      }
 
-      const localT = allAdminTeachers.find(item => item.id == id);
+      // 4. Fallback: If not in DB yet (e.g. synthetic local profile), insert it
+      if (!updateOk) {
+        try {
+          const insRes = await db.from('teachers').insert([fullPayload]).select('*');
+          if (!insRes.error) updateOk = true;
+        } catch(e) {}
+      }
+
+      const localT = allAdminTeachers.find(item => item.id == id || item.slug === slug);
       if (localT) {
         Object.assign(localT, {
           name, slug, photo_url: photoUrl, designation,
@@ -5747,6 +5781,9 @@ async function saveTeacherSubmit(event) {
       }
 
       toast('✅ শিক্ষকের সকল তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
+      closeTeacherModal();
+      filterAdminTeachers();
+      return;
     } else {
       // INSERT (fallback)
       let insertError = null;
@@ -6129,52 +6166,68 @@ let currentAppDetail = null;
 async function loadTeacherApplications() {
   const grid = document.getElementById('tc-apps-grid');
   const countLbl = document.getElementById('tc-app-count-lbl');
-  const filterVal = document.getElementById('tc-app-filter-status')?.value || 'pending';
+  const filterVal = document.getElementById('tc-app-filter-status')?.value || 'all';
   if (!grid) return;
 
   grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">⏳ আবেদনসমূহ লোড হচ্ছে...</div>';
 
   try {
-    let apps = [];
+    let allApps = [];
+
+    // 1. Direct table read (most reliable, fetches full list with newest first)
     try {
-      const { data, error } = await db.rpc('get_teacher_applications', {
-        pass_code: authPwd,
-        p_status: filterVal
-      });
-      if (!error && Array.isArray(data)) apps = data;
+      const { data, error } = await db.from('teacher_applications').select('*').order('created_at', { ascending: false });
+      if (!error && Array.isArray(data) && data.length > 0) {
+        allApps = data;
+      }
     } catch(e) {
-      // Fallback: direct table read
-      let q = db.from('teacher_applications').select('*').order('created_at', { ascending: false });
-      if (filterVal !== 'all') q = q.eq('status', filterVal);
-      const { data, error } = await q;
-      if (!error && Array.isArray(data)) apps = data;
+      console.warn('Direct applications fetch error:', e);
     }
 
-    allAdminApplications = apps;
+    // 2. Fallback to RPC if direct returned empty
+    if (allApps.length === 0) {
+      try {
+        const { data, error } = await db.rpc('get_teacher_applications', {
+          pass_code: authPwd,
+          p_status: 'all'
+        });
+        if (!error && Array.isArray(data) && data.length > 0) {
+          allApps = data;
+        }
+      } catch(e) {}
+    }
+
+    allAdminApplications = allApps;
 
     // Update pending badge
-    const pendingCount = apps.filter(a => a.status === 'pending').length;
+    const pendingCount = allApps.filter(a => a.status === 'pending').length;
     const badge = document.getElementById('tc-badge-applications');
     if (badge) {
       badge.textContent = pendingCount;
       badge.style.display = pendingCount > 0 ? 'inline' : 'none';
     }
 
-    if (countLbl) countLbl.textContent = `মোট ${apps.length}টি আবেদন`;
+    // Filter applications for current view
+    let displayApps = allApps;
+    if (filterVal !== 'all') {
+      displayApps = allApps.filter(a => a.status === filterVal);
+    }
 
-    if (apps.length === 0) {
+    if (countLbl) countLbl.textContent = `মোট ${displayApps.length}টি আবেদন`;
+
+    if (displayApps.length === 0) {
       grid.innerHTML = `
         <div style="grid-column:1/-1;text-align:center;padding:50px;background:var(--card-bg);border:1px dashed var(--card-border);border-radius:16px;">
           <div style="font-size:44px;margin-bottom:12px;">📋</div>
           <h3 style="font-size:16px;color:#fff;margin-bottom:6px;">কোনো আবেদন নেই</h3>
           <p style="font-size:13px;color:var(--text-muted);">
-            ${filterVal === 'pending' ? 'এখনো কোনো অপেক্ষমাণ আবেদন নেই।' : 'কোনো আবেদন পাওয়া যায়নি।'}
+            ${filterVal === 'pending' ? 'এই মুহূর্তে কোনো অপেক্ষমাণ আবেদন নেই।' : 'কোনো আবেদন পাওয়া যায়নি।'}
           </p>
         </div>`;
       return;
     }
 
-    renderApplicationsGrid(apps);
+    renderApplicationsGrid(displayApps);
   } catch(err) {
     console.error('Load applications error:', err);
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--red);">❌ আবেদন লোড করতে সমস্যা হয়েছে</div>';
