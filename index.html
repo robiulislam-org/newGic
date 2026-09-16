@@ -4699,7 +4699,8 @@ function extractGicMeta(t) {
   t.track = track || (isTeacherGeneral(t) ? 'general' : 'quran');
   t.teaching_track = t.track;
   t.teaching_mode = mode || (offline ? 'both' : 'online');
-  t.offline_areas = offline || '';
+  // ── KEY FIX: if mode is strictly online, never show any offline area ──
+  t.offline_areas = (t.teaching_mode === 'online') ? '' : (offline || '');
   return t;
 }
 
@@ -5028,7 +5029,7 @@ function renderPublicTeacherCards(data) {
           <div class="tc-subject-chips">${subjectChipsHtml}</div>
           <div class="tc-mode-row">
             <span class="tc-meta-mode ${modeClass}">${modeLabel}</span>
-            ${(t.offline_areas && t.offline_areas.trim()) ? `<span class="tc-area-pill">📍 ${t.offline_areas.trim().split(',').slice(0,2).join(', ')}</span>` : ''}
+            ${(t.offline_areas && t.offline_areas.trim() && mode !== 'online') ? `<span class="tc-area-pill">📍 ${t.offline_areas.trim().split(',').slice(0,2).join(', ')}</span>` : ''}
           </div>
         </div>
         <div style="padding:0 12px 12px;width:100%;box-sizing:border-box;">

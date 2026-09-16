@@ -1758,7 +1758,8 @@ function extractGicMeta(t) {
   t.track = track || (isTeacherGeneral(t) ? 'general' : 'quran');
   t.teaching_track = t.track;
   t.teaching_mode = mode || (offline ? 'both' : 'online');
-  t.offline_areas = offline || '';
+  // KEY FIX: if mode is strictly online, never show any offline area
+  t.offline_areas = (t.teaching_mode === 'online') ? '' : (offline || '');
   return t;
 }
 
