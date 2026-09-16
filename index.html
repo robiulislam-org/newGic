@@ -2130,169 +2130,194 @@ footer {
 .pub-teachers-grid-wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 14px;
   align-items: stretch;
 }
 @media (max-width: 1100px) {
-  .pub-teachers-grid-wrapper {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .pub-teachers-grid-wrapper { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 760px) {
-  .pub-teachers-grid-wrapper {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
+  .pub-teachers-grid-wrapper { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
 @media (max-width: 360px) {
-  .pub-teachers-grid-wrapper {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
-  }
+  .pub-teachers-grid-wrapper { grid-template-columns: repeat(2, 1fr); gap: 8px; }
 }
 
 /* ── CARD BASE ── */
 .pub-teacher-card {
   background: #ffffff;
   border: 1px solid #e4eaf4;
-  border-radius: 20px;
-  padding: 0 0 16px;
-  box-shadow: 0 4px 20px rgba(15,39,68,0.07);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 3px 14px rgba(15,39,68,0.07);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   position: relative;
   overflow: hidden;
   text-align: center;
 }
 .pub-teacher-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(15,39,68,0.14);
-  border-color: rgba(200,151,42,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(15,39,68,0.13);
+  border-color: rgba(200,151,42,0.35);
 }
 
-/* ── CARD HEADER BANNER (color block behind photo) ── */
-.pub-teacher-card-banner {
+/* ── PHOTO AREA (full-width rectangular, top-rounded) ── */
+.pub-teacher-photo-wrap {
+  position: relative;
   width: 100%;
-  height: 90px;
-  background: linear-gradient(135deg, #0f2744 0%, #1a4a80 60%, #0f2744 100%);
-  border-radius: 20px 20px 0 0;
-  position: relative;
-  flex-shrink: 0;
-}
-.pub-teacher-card.tc-quran-card .pub-teacher-card-banner {
-  background: linear-gradient(135deg, #1a0a00 0%, #6b3a00 55%, #c8972a 100%);
-}
-
-/* ── AVATAR (large, overlapping banner) ── */
-.pub-teacher-avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  border: 4px solid #ffffff;
+  /* 4:3 ratio on mobile stays compact */
+  height: 0;
+  padding-bottom: 72%;
+  background: linear-gradient(145deg, #0f2744 0%, #1a4a80 100%);
+  border-radius: 16px 16px 0 0;
   overflow: hidden;
-  background: var(--cream);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  margin: -48px auto 0;
-  box-shadow: 0 6px 22px rgba(15,39,68,0.2), 0 0 0 4px rgba(200,151,42,0.18);
-  position: relative;
-  z-index: 2;
 }
-.pub-teacher-card.tc-quran-card .pub-teacher-avatar {
-  box-shadow: 0 6px 22px rgba(200,151,42,0.3), 0 0 0 4px rgba(200,151,42,0.28);
+.pub-teacher-card.tc-quran-card .pub-teacher-photo-wrap {
+  background: linear-gradient(145deg, #1a0a00 0%, #7c4a0a 100%);
 }
-.pub-teacher-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Custom Distinct Avatar Placeholders for Male & Female */
-.tc-avatar-custom {
+/* actual photo fills the box */
+.pub-teacher-photo-wrap img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+/* Gradient scrim at bottom of photo for text contrast */
+.pub-teacher-photo-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(10,24,50,0.72) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+/* placeholder icon when no photo */
+.tc-avatar-custom {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
   user-select: none;
 }
 .tc-avatar-male {
   background: linear-gradient(145deg, #0b2239 0%, #15395b 55%, #1d4e78 100%);
   color: #fff;
-  border: 2px solid #e5b95c;
-  box-shadow: inset 0 0 14px rgba(229,185,92,0.3);
 }
 .tc-avatar-female {
-  background: linear-gradient(145deg, #380b3d 0%, #581c61 55%, #86198f 100%);
+  background: linear-gradient(145deg, #380b3d 0%, #6b2480 55%, #86198f 100%);
   color: #fff;
-  border: 2px solid #f472b6;
-  box-shadow: inset 0 0 14px rgba(244,114,182,0.3);
 }
 .tc-avatar-icon {
-  font-size: 38px;
+  font-size: 52px;
   line-height: 1;
-  margin-top: -4px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5));
   transition: transform 0.25s ease;
 }
-.pub-teacher-card:hover .tc-avatar-icon {
-  transform: scale(1.1);
-}
-.tc-avatar-role-pill {
+.pub-teacher-card:hover .tc-avatar-icon { transform: scale(1.08); }
+.tc-avatar-role-pill { display: none; }
+
+/* ── VERIFIED badge — top-right, over photo ── */
+.tc-verify-badge {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  font-size: 8px;
+  top: 8px;
+  right: 8px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
   font-weight: 800;
-  text-align: center;
-  padding: 2px 0 2px;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  padding: 3px 8px 3px 5px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
-.tc-avatar-male .tc-avatar-role-pill {
-  background: linear-gradient(90deg, #c8972a, #b8831e);
-  color: #ffffff;
+.tc-verify-badge.verified {
+  background: rgba(30,111,255,0.88);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  box-shadow: 0 2px 10px rgba(30,111,255,0.4);
 }
-.tc-avatar-female .tc-avatar-role-pill {
-  background: linear-gradient(90deg, #db2777, #9333ea);
-  color: #ffffff;
+.tc-verify-badge.demo {
+  background: rgba(239,68,68,0.88);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  box-shadow: 0 2px 8px rgba(239,68,68,0.35);
 }
 
-/* ── CARD BODY CONTENT (below avatar) ── */
+/* ── TRACK PILL — top-left ── */
+.tc-track-pill {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 6;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  letter-spacing: 0.1px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.tc-track-pill.quran {
+  background: rgba(180,130,20,0.88);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.tc-track-pill.general {
+  background: rgba(14,165,233,0.88);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.22);
+}
+
+/* ── CARD BODY ── */
 .pub-tc-body {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 0 14px 0;
+  padding: 10px 12px 12px;
   flex: 1;
 }
 
 /* ── NAME ── */
 .pub-teacher-name {
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 800;
   color: var(--blue-dark);
   text-align: center;
-  margin: 12px 0 3px;
+  margin: 0 0 2px;
   line-height: 1.25;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
 }
+@media (max-width: 400px) { .pub-teacher-name { font-size: 12.5px; } }
 
-/* ── DESIGNATION / SUBJECT ── */
+/* ── DESIGNATION ── */
 .pub-teacher-desig {
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--text-muted);
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2302,71 +2327,64 @@ footer {
 /* ── SUBJECT CHIPS ── */
 .tc-subject-chips {
   display: flex;
-  gap: 5px;
+  gap: 4px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .tc-subject-chip {
   background: #eef3ff;
   color: #1e3d6e;
   border: 1px solid #c7d5ee;
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 10px;
-  max-width: 100px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  max-width: 90px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
 }
-.tc-subject-chip.quran {
-  background: #fef3c7;
-  color: #92400e;
-  border-color: #fde68a;
-}
+.tc-subject-chip.quran { background: #fef3c7; color: #92400e; border-color: #fde68a; }
 
-/* ── MODE ROW (online / offline / both) ── */
+/* ── MODE + AREA (single compact row) ── */
 .tc-mode-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   flex-wrap: wrap;
-  margin-bottom: 7px;
+  margin-bottom: 9px;
   width: 100%;
 }
 .tc-meta-mode {
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 10px;
+  padding: 2px 7px;
+  border-radius: 8px;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
 }
-.tc-meta-mode.online  { background: rgba(30,96,145,0.1);  color: #1e6091; border: 1px solid rgba(30,96,145,0.25); }
-.tc-meta-mode.offline { background: rgba(234,88,12,0.1);  color: #c2410c; border: 1px solid rgba(234,88,12,0.28); }
-.tc-meta-mode.both    { background: rgba(16,185,129,0.1); color: #047857; border: 1px solid rgba(16,185,129,0.28); }
-
-/* ── AREA PILL (offline areas) ── */
+.tc-meta-mode.online  { background: rgba(30,96,145,0.09);  color: #1e5f8a; border: 1px solid rgba(30,96,145,0.2); }
+.tc-meta-mode.offline { background: rgba(234,88,12,0.09);  color: #b94100; border: 1px solid rgba(234,88,12,0.22); }
+.tc-meta-mode.both    { background: rgba(16,185,129,0.09); color: #047857; border: 1px solid rgba(16,185,129,0.22); }
 .tc-area-pill {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   background: rgba(249,115,22,0.07);
-  border: 1px solid rgba(249,115,22,0.22);
+  border: 1px solid rgba(249,115,22,0.2);
   color: #9a3412;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 10px;
+  padding: 2px 7px;
+  border-radius: 8px;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 9px;
 }
 
 /* ── CTA BUTTON ── */
@@ -2374,137 +2392,44 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  width: calc(100% - 28px);
+  width: 100%;
   background: linear-gradient(135deg, #0f2744, #1a4a80);
-  color: #ffffff;
-  font-size: 12.5px;
+  color: #fff;
+  font-size: 11.5px;
   font-weight: 800;
-  padding: 11px 14px;
-  border-radius: 12px;
+  padding: 9px 10px;
+  border-radius: 10px;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: all 0.22s;
+  transition: all 0.2s;
   font-family: inherit;
   margin-top: auto;
-  box-shadow: 0 4px 14px rgba(15,39,68,0.18);
+  box-shadow: 0 3px 10px rgba(15,39,68,0.16);
   letter-spacing: 0.1px;
 }
 .tc-cta-btn:hover {
   background: linear-gradient(135deg, #16365c, #264d88);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(15,39,68,0.26);
+  box-shadow: 0 6px 18px rgba(15,39,68,0.24);
   color: #fff;
 }
+@media (max-width: 400px) { .tc-cta-btn { font-size: 10.5px; padding: 8px 8px; } }
 
-/* ── VERIFIED BADGE (top-right corner) ── */
-.tc-verify-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  letter-spacing: 0.3px;
-  z-index: 5;
-  line-height: 1.4;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-.tc-verify-badge.verified {
-  background: rgba(16,185,129,0.92);
-  color: #ffffff;
-  border: 1.5px solid rgba(255,255,255,0.3);
-  box-shadow: 0 3px 12px rgba(16,185,129,0.45);
-}
-.tc-verify-badge.demo {
-  background: rgba(239,68,68,0.88);
-  color: #ffffff;
-  border: 1.5px solid rgba(255,255,255,0.25);
-  box-shadow: 0 2px 8px rgba(239,68,68,0.35);
-}
+/* tier chip — hidden in compact design */
+.tc-tier-chip { display: none; }
+.pub-tc-divider { display: none; }
 
-/* ── TRACK PILL (top-left) ── */
-.tc-track-pill {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 9.5px;
-  font-weight: 800;
-  padding: 4px 9px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  letter-spacing: 0.1px;
-  z-index: 5;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-.tc-track-pill.quran {
-  background: rgba(200,151,42,0.88);
-  color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.25);
-  box-shadow: 0 2px 8px rgba(200,151,42,0.35);
-}
-.tc-track-pill.general {
-  background: rgba(14,165,233,0.88);
-  color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.22);
-  box-shadow: 0 2px 8px rgba(14,165,233,0.3);
-}
-
-/* ── TIER CHIP ── */
-.tc-tier-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 9.5px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 8px;
-  margin-bottom: 7px;
-}
-.tc-tier-chip.senior {
-  background: linear-gradient(135deg,rgba(200,151,42,0.15),rgba(229,185,92,0.22));
-  color: #854d0e;
-  border: 1px solid rgba(200,151,42,0.35);
-}
-.tc-tier-chip.fresher {
-  background: rgba(20,184,166,0.12);
-  color: #0f766e;
-  border: 1px solid rgba(20,184,166,0.25);
-}
-
-/* ── DIVIDER ── */
-.pub-tc-divider {
-  width: calc(100% - 28px);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #e4eaf4, transparent);
-  margin: 4px 0 10px;
-}
-
-/* Responsive font tweaks */
-@media (max-width: 400px) {
-  .pub-teacher-name { font-size: 13px; }
-  .pub-teacher-desig { font-size: 10px; }
-  .tc-cta-btn { font-size: 11.5px; padding: 9px 12px; }
-  .pub-teacher-avatar { width: 80px; height: 80px; margin-top: -40px; }
-  .pub-teacher-card-banner { height: 80px; }
-}
-/* Legacy classes still referenced elsewhere — keep stubs */
+/* Legacy stubs */
 .tc-profile-structured-box { display: none; }
 .pub-tc-qual-tags { display: none; }
 .pub-tc-stats-row { display: none; }
 .pub-tc-actions { display: none; }
-/* Old fee/meta row — hidden in new design */
 .tc-meta-fee { display: none; }
 .tc-meta-row { display: none; }
+/* Old banner / circular avatar — no longer used */
+.pub-teacher-avatar { display: none; }
+.pub-teacher-card-banner { display: none; }
+
 
 
 /* ───── HOMEPAGE TEACHER FILTER & TRUST STYLES ───── */
@@ -5103,34 +5028,37 @@ function renderPublicTeacherCards(data) {
 
     const feeText = t.monthly_fee || 'আলোচনা সাপেক্ষে';
 
+    // Build avatar/photo html for new rectangular photo-wrap
+    const photoHtml = (t.photo_url && t.photo_url.trim() !== '')
+      ? `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div style="display:none;position:absolute;inset:0;">${customFallback}</div>`
+      : customFallback;
+
+    // Blue verified badge with checkmark
+    const verifyBadgeNew = isDemo
+      ? `<div class="tc-verify-badge demo" title="এটি একটি নমুনা প্রোফাইল">🧪 Demo</div>`
+      : `<div class="tc-verify-badge verified" title="GIC কর্তৃক যাচাইকৃত">✓ Verified</div>`;
+
     return `
       <div class="pub-teacher-card reveal${isQuranTeacher ? ' tc-quran-card' : ''}" style="${isQuranTeacher ? 'border-color:rgba(200,151,42,0.35);' : ''}">
-        <!-- Colored banner at top -->
-        <div class="pub-teacher-card-banner">
+        <!-- Full-width rectangular photo at top -->
+        <div class="pub-teacher-photo-wrap">
+          ${photoHtml}
           ${trackPill}
-          ${verifyBadge}
+          ${verifyBadgeNew}
         </div>
-        <!-- Large avatar overlapping the banner -->
-        <div class="pub-teacher-avatar">${avatarHtml}</div>
-        <!-- Card body content -->
+        <!-- Compact card body -->
         <div class="pub-tc-body">
-          <!-- Name -->
           <h3 class="pub-teacher-name" title="${t.name}">${t.name}</h3>
-          <!-- What they teach (designation) -->
           <div class="pub-teacher-desig" title="${t.designation || ''}">${t.designation || (isQuranTeacher ? 'কোরআন শিক্ষক' : 'জেনারেল শিক্ষক')}</div>
-          ${tierChip}
-          <!-- Subject chips -->
           <div class="tc-subject-chips">${subjectChipsHtml}</div>
-          <!-- Teaching mode row -->
           <div class="tc-mode-row">
             <span class="tc-meta-mode ${modeClass}">${modeLabel}</span>
+            ${(t.offline_areas && t.offline_areas.trim()) ? `<span class="tc-area-pill">📍 ${t.offline_areas.trim().split(',').slice(0,2).join(', ')}</span>` : ''}
           </div>
-          ${(t.offline_areas && t.offline_areas.trim()) ? `<div class="tc-area-pill">📍 ${t.offline_areas.trim().split(',').slice(0,2).join(', ')}</div>` : ''}
-          <!-- Divider -->
-          <div class="pub-tc-divider"></div>
         </div>
-        <!-- Full profile CTA -->
-        <a href="${profileUrl}" class="tc-cta-btn">সম্পূর্ণ প্রোফাইল দেখুন →</a>
+        <div style="padding:0 12px 12px;width:100%;box-sizing:border-box;">
+          <a href="${profileUrl}" class="tc-cta-btn">সম্পূর্ণ প্রোফাইল দেখুন →</a>
+        </div>
       </div>
     `;
   }).join('');
