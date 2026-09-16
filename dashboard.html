@@ -803,10 +803,11 @@
               <option value="inactive">🔒 লুকানো (Hidden)</option>
             </select>
             <select id="tc-sort-by" class="inp" onchange="filterAdminTeachers()" style="margin-bottom:0;width:170px;cursor:pointer;">
-              <option value="serial">🔢 ক্রম অনুযায়ী (১,২,৩...)</option>
-              <option value="name">🔤 নাম অনুযায়ী (A-Z)</option>
+              <option value="serial">🔢 ক্রম অনুযায়ী (১,২,৩...)</option>
+              <option value="name">🔤 নাম অনুযায়ী (A-Z)</option>
               <option value="exp">🏆 সর্বোচ্চ অভিজ্ঞতা</option>
             </select>
+          </div>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
             <button type="button" class="btn btn-sm" onclick="openAddTeacherModal()" style="background:linear-gradient(135deg,var(--teal),#0d9488);color:#fff;font-weight:700;padding:8px 14px;border-radius:8px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:5px;">➕ নতুন শিক্ষক যুক্ত করুন</button>
             <button type="button" class="btn btn-sm" onclick="deleteAllDemoTeachers()" style="background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.35);padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:4px;" title="সকল ডেমো শিক্ষক প্রোফাইল এক ক্লিকে মুছে ফেলুন">🗑️ সকল ডেমো মুছুন</button>
@@ -913,7 +914,7 @@
               <option value="not_hired">❌ হায়ার করেনি</option>
               <option value="cancelled">🚫 বাতিল</option>
             </select>
-            <button class="btn btn-sm" onclick="loadTeachersAdmin()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);padding:8px 12px;">🔄</button>
+            <button class="btn btn-sm" onclick="loadTeachersAdmin().then(()=>switchTeacherSubTab('bookings'))" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.12);padding:8px 12px;">🔄</button>
           </div>
         </div>
         <div class="tbl-wrap">
@@ -973,7 +974,7 @@
 
     <!-- ── ADD / EDIT TEACHER MODAL ── -->
     <!-- ── EDIT TEACHER MODAL (সকল কনটেন্ট সম্পাদনা) ── -->
-    <div id="teacher-modal" class="tc-modal-overlay">
+    <div id="teacher-modal" class="tc-modal-overlay" style="display:none;">
       <div class="tc-modal-box" style="max-width:800px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:14px;">
           <h2 style="font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;" id="tm-title">
@@ -1214,7 +1215,7 @@
     </div>
 
     <!-- ── DELETE TEACHER CONFIRM MODAL ── -->
-    <div id="tc-delete-modal" class="tc-modal-overlay">
+    <div id="tc-delete-modal" class="tc-modal-overlay" style="display:none;">
       <div style="background:#0d1726;border:1px solid rgba(244,63,94,0.3);border-radius:20px;padding:32px;max-width:420px;width:100%;text-align:center;">
         <div style="font-size:48px;margin-bottom:16px;">🗑️</div>
         <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:#fff;">শিক্ষক মুছে ফেলবেন?</h3>
@@ -2637,7 +2638,7 @@ function renderAdminReviews(reviews) {
       <!-- Footer: ID + Delete button -->
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
         <span style="font-size:11px;color:rgba(148,163,184,0.5);font-family:monospace;">ID: ${r.id}</span>
-        <button onclick="openDeleteModal(${r.id}, '${(r.name||'অজ্ঞাত').replace(/'/g,"\\'")}', '${(r.message||'').replace(/'/g,"\\'").replace(/\n/g,' ').substring(0,80)}...')"
+        <button onclick="openDeleteModal('${r.id}', '${(r.name||'অজ্ঞাত').replace(/'/g,"\\'")}', '${(r.message||'').replace(/'/g,"\\'").replace(/\n/g,' ').substring(0,80)}...')"
           style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:rgba(244,63,94,0.1);color:var(--red);border:1px solid rgba(244,63,94,0.25);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:inherit;"
           onmouseover="this.style.background='var(--red)';this.style.color='#fff'"
           onmouseout="this.style.background='rgba(244,63,94,0.1)';this.style.color='var(--red)'">
@@ -2709,7 +2710,7 @@ async function confirmDeleteReview() {
     }
 
     // Remove from local array
-    allAdminReviews = allAdminReviews.filter(r => r.id !== reviewToDelete);
+    allAdminReviews = allAdminReviews.filter(r => r.id != reviewToDelete && String(r.id) !== String(reviewToDelete));
     deletedCount++;
 
     // Update stats
@@ -3342,159 +3343,220 @@ async function loadTeachersAdmin() {
       } catch(e) {}
     }
     
-    // Auto-seed initial profiles into DB if table is empty and user hasn't cleared them
+    // Auto-seed initial profiles into DB if table is empty or missing profiles and user hasn't cleared them
     const hasBeenCleared = localStorage.getItem('gic_teachers_cleared') === 'true';
+    const initialDemos = [
+      {
+        name: "মাওলানা মোঃ মুজাহিদুল ইসলাম",
+        slug: "md-mujahidul-islam",
+        designation: "সিনিয়র শিক্ষক ও কারী",
+        gender: "male",
+        monthly_fee: "আলোচনা সাপেক্ষে",
+        hourly_rate: "$5/hr",
+        photo_url: "images/teachers/md-mujahidul-islam.jpg",
+        qualifications: ["দাওরায়ে হাদিস", "সনদে তাজবীদ", "ক্বারীয়ানা কোর্স"],
+        bio: "দীর্ঘ ৬ বছর ধরে নিষ্ঠা ও আন্তরিকতার সাথে দেশ-বিদেশের শিশু ও বয়স্ক শিক্ষার্থীদের সহীহ কোরআন ও তাজবীদ শিক্ষা দিচ্ছেন।",
+        experience_years: 6,
+        students_taught: 180,
+        specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "নূরানী কায়দা", "হোম টিউশন"],
+        weekly_schedule: { sat: [10, 11, 14], sun: [10, 14], mon: [10, 11], tue: [10, 14], wed: [10, 11, 14] },
+        whatsapp: "8801733017521",
+        country: "বাংলাদেশ",
+        native_language: "বাংলা",
+        languages: ["বাংলা", "English", "العربية"],
+        sort_order: 1,
+        is_active: true,
+        is_verified: true,
+        rating: 5.0,
+        teacher_type: 'senior',
+        track: 'quran',
+        teaching_mode: 'both',
+        offline_areas: 'মিরপুর, উত্তরা, ঢাকা'
+      },
+      {
+        name: "হাফেজ রবিউল ইসলাম",
+        slug: "hafez-robiul-islam",
+        designation: "হাফেজুল কুরআন ও দ্বীনি শিক্ষক",
+        gender: "male",
+        monthly_fee: "আলোচনা সাপেক্ষে",
+        hourly_rate: "$6/hr",
+        photo_url: "images/teachers/hafez-robiul-islam.jpg",
+        qualifications: ["হিফজুল কুরআন ৩০ পারা", "দাওরায়ে হাদিস"],
+        bio: "কোরআন হিফজ ও নাজেরা শিক্ষাদানে বিশেষ পারদর্শী। আধুনিক পুনরাবৃত্তি পদ্ধতিতে শিক্ষার্থীদের সহজে হিফজ সম্পন্ন করতে সাহায্য করেন।",
+        experience_years: 5,
+        students_taught: 150,
+        specializations: ["হিফজুল কোরআন", "নাজেরা পড়া", "তাজউইদ ও সুর"],
+        weekly_schedule: { sat: [11, 13, 15], sun: [11, 15], mon: [11, 13], tue: [11, 15], wed: [11, 13, 15] },
+        whatsapp: "8801733017521",
+        country: "বাংলাদেশ",
+        native_language: "বাংলা",
+        languages: ["বাংলা", "English"],
+        sort_order: 2,
+        is_active: true,
+        is_verified: true,
+        rating: 5.0,
+        teacher_type: 'senior',
+        track: 'quran',
+        teaching_mode: 'both',
+        offline_areas: 'বনশ্রী, রামপুরা, বাড্ডা, ঢাকা'
+      },
+      {
+        name: "মাওলানা মোঃ আল আমিন",
+        slug: "md-al-amin",
+        designation: "ইসলামিক স্টাডিজ ও কোরআন শিক্ষক",
+        gender: "male",
+        monthly_fee: "আলোচনা সাপেক্ষে",
+        hourly_rate: "$5/hr",
+        photo_url: "images/teachers/md-al-amin.jpg",
+        qualifications: ["দাওরায়ে হাদিস", "কামিল (হাদিস)", "বিএ (অনার্স)"],
+        bio: "সহীহ তাজবীদ, ইসলামিক মূল্যবোধ ও আদব-আখলাক শিক্ষাদানে নিবেদিতপ্রাণ শিক্ষক। অনলাইনে ও সরাসরি হোম টিউশনে পাঠদান করেন।",
+        experience_years: 4,
+        students_taught: 120,
+        specializations: ["সহীহ তেলাওয়াত", "মাসলা-মাসায়েল", "শিশু শিক্ষা", "আরবি ভাষা"],
+        weekly_schedule: { sat: [9, 10, 12], sun: [9, 12], mon: [9, 10], tue: [9, 12], wed: [9, 10, 12] },
+        whatsapp: "8801733017521",
+        country: "বাংলাদেশ",
+        native_language: "বাংলা",
+        languages: ["বাংলা", "English"],
+        sort_order: 3,
+        is_active: true,
+        is_verified: true,
+        rating: 5.0,
+        teacher_type: 'senior',
+        track: 'quran',
+        teaching_mode: 'both',
+        offline_areas: 'ধানমন্ডি, মোহাম্মদপুর, ঢাকা'
+      },
+      {
+        name: "ইঞ্জিনিয়ার মো: তানজিল হাসান",
+        slug: "engr-tanzil-hasan",
+        designation: "গণিত ও উচ্চতর গণিত বিশেষজ্ঞ (বিএসসি, BUET)",
+        gender: "male",
+        monthly_fee: "৳২,৫০০/মাস",
+        hourly_rate: "$8/hr",
+        photo_url: "",
+        qualifications: ["বিএসসি ইন ইঞ্জিনিয়ারিং (BUET)", "গণিত অলিম্পিয়াড মেন্টর", "৬ বছরের শিক্ষকতা"],
+        bio: "বুয়েট গ্র্যাজুয়েট ও নিষ্ঠাবান মুসলিম শিক্ষক। বাস্তবধর্মী লজিক্যাল পদ্ধতিতে গণিতের ভয় দূর করে এবং শিক্ষার্থীদের নৈতিক ও দ্বীনি মূল্যবোধ চর্চায় উৎসাহিত করেন।",
+        experience_years: 6,
+        students_taught: 320,
+        specializations: ["গণিত (৬ষ্ঠ-১০ম)", "উচ্চতর গণিত (SSC/HSC)", "জ্যামিতি ও বীজগণিত", "বাংলা ও ইংলিশ ভার্সন"],
+        weekly_schedule: { sat: [16, 18, 20], sun: [18, 20], mon: [16, 18, 20], tue: [18, 20], wed: [16, 18, 20] },
+        whatsapp: "8801733017521",
+        country: "বাংলাদেশ",
+        native_language: "বাংলা",
+        languages: ["বাংলা", "English"],
+        sort_order: 4,
+        is_active: true,
+        is_verified: true,
+        rating: 5.0,
+        teacher_type: 'senior',
+        track: 'general',
+        teaching_mode: 'both',
+        offline_areas: 'মিরপুর ১০/১১/১২, পল্লবী ও ধানমন্ডি, ঢাকা'
+      },
+      {
+        name: "মরিয়ম আক্তার",
+        slug: "maryam-akhter",
+        designation: "ইংরেজি গ্রামার, স্পোকেন ও বাংলা শিক্ষিকা (ঢাবি)",
+        gender: "female",
+        monthly_fee: "৳২,০০০/মাস",
+        hourly_rate: "$7/hr",
+        photo_url: "",
+        qualifications: ["বিএ ও এমএ (ইংরেজি সাহিত্য, ঢাবি)", "আইইএলটিএস ব্যান্ড ৭.৫", "৪ বছরের শিক্ষকতা"],
+        bio: "ঢাকা বিশ্ববিদ্যালয়ের মেধাবী শিক্ষার্থী ও পর্দানশীন শিক্ষিকা। শিশু ও ছাত্রীদের অত্যন্ত যত্ন ও স্নেহের সাথে ইংরেজি ও অন্যান্য বিষয় ও শুদ্ধ বাংলা ভাষা শিক্ষা দেন।",
+        experience_years: 4,
+        students_taught: 210,
+        specializations: ["ইংরেজি ১ম ও ২য় পত্র (১ম-১০ম)", "বেসিক গ্রামার ও স্পোকেন", "বাংলা সাহিত্য ও ব্যাকরণ", "শিশু শিক্ষা"],
+        weekly_schedule: { sat: [10, 15, 17], sun: [15, 17], mon: [10, 15, 17], tue: [15, 17], wed: [10, 15, 17] },
+        whatsapp: "8801733017521",
+        country: "বাংলাদেশ",
+        native_language: "বাংলা",
+        languages: ["বাংলা", "English"],
+        sort_order: 5,
+        is_active: true,
+        is_verified: true,
+        rating: 5.0,
+        teacher_type: 'senior',
+        track: 'general',
+        teaching_mode: 'both',
+        offline_areas: 'আজিমপুর, লালবাগ ও ধানমন্ডি, ঢাকা (মা-বোন ও শিশু)'
+      },
+      {
+        name: "মো: সাজিদুর রহমান",
+        slug: "sajidur-rahman",
+        designation: "পদার্থবিজ্ঞান ও সাধারণ বিজ্ঞান শিক্ষক (ঢাবি)",
+        gender: "male",
+        monthly_fee: "৳১,৮০০/মাস",
+        hourly_rate: "$6/hr",
+        photo_url: "",
+        qualifications: ["বিএসসি ও এমএসসি (পদার্থবিজ্ঞান, ঢাবি)", "অভিজ্ঞ অনলাইন সায়েন্স টিউটর"],
+        bio: "ঢাকা বিশ্ববিদ্যালয়ের পদার্থবিজ্ঞান বিভাগের নিষ্ঠাবান মুসলিম শিক্ষক। বাস্তব জীবনের উদাহরণ ও হাতে-কলমে সহজ পদ্ধতিতে বিজ্ঞান ও গণিতকে আনন্দদায়ক করে তোলেন।",
+        experience_years: 4,
+        students_taught: 175,
+        specializations: ["সাধারণ বিজ্ঞান (১ম-৮ম)", "পদার্থবিজ্ঞান (SSC)", "গণিত ও বিজ্ঞান", "প্রাথমিক সকল বিষয়"],
+        weekly_schedule: { sat: [17, 19, 21], sun: [19, 21], mon: [17, 19], tue: [19, 21], wed: [17, 19, 21] },
+        whatsapp: "8801733017521",
+        country: "বাংলাদেশ",
+        native_language: "বাংলা",
+        languages: ["বাংলা", "English"],
+        sort_order: 6,
+        is_active: true,
+        is_verified: true,
+        rating: 5.0,
+        teacher_type: 'senior',
+        track: 'general',
+        teaching_mode: 'both',
+        offline_areas: 'উত্তরা ১-১৪ নম্বর সেক্টর ও বিমানবন্দর, ঢাকা'
+      },
+      {
+        name: "মোছাঃ ফাতেমা খাতুন",
+        slug: "fatema-khatun",
+        designation: "গণিত ও বিজ্ঞান শিক্ষিকা (বিএসসি অনার্স)",
+        gender: "female",
+        monthly_fee: "আলোচনা সাপেক্ষে",
+        hourly_rate: "$5/hr",
+        photo_url: "",
+        qualifications: ["বিএসসি অনার্স (গণিত)", "বিএড"],
+        bio: "সততা ও দ্বীনি মূল্যবোধসম্পন্ন শিক্ষিকা। ১ম থেকে ৮ম শ্রেণি পর্যন্ত সকল বিষয় এবং ৯ম-১০ম শ্রেণির গণিত ও বিজ্ঞান অত্যন্ত যত্নসহকারে পড়ান।",
+        experience_years: 5,
+        students_taught: 140,
+        specializations: ["গণিত / অংক", "সাধারণ বিজ্ঞান", "১ম-৫ম অল সাবজেক্ট", "মহিলা ও শিশু শিক্ষা"],
+        weekly_schedule: { sat: [9, 10, 14], sun: [9, 14], mon: [9, 10], tue: [9, 14], wed: [9, 10, 14] },
+        whatsapp: "8801733017521",
+        country: "বাংলাদেশ",
+        native_language: "বাংলা",
+        languages: ["বাংলা", "English"],
+        sort_order: 7,
+        is_active: true,
+        is_verified: true,
+        rating: 5.0,
+        teacher_type: 'senior',
+        track: 'general',
+        teaching_mode: 'both',
+        offline_areas: 'উত্তরা, খিলক্ষেত, ঢাকা'
+      }
+    ];
+
     if (teachersData.length === 0 && !hasBeenCleared) {
-      const initialDemos = [
-        {
-          name: "মাওলানা মোঃ মুজাহিদুল ইসলাম",
-          slug: "md-mujahidul-islam",
-          designation: "সিনিয়র শিক্ষক ও কারী",
-          gender: "male",
-          monthly_fee: "আলোচনা সাপেক্ষে",
-          hourly_rate: "$5/hr",
-          photo_url: "images/teachers/md-mujahidul-islam.jpg",
-          qualifications: ["দাওরায়ে হাদিস", "সনদে তাজবীদ", "ক্বারীয়ানা কোর্স"],
-          bio: "দীর্ঘ ৬ বছর ধরে নিষ্ঠা ও আন্তরিকতার সাথে দেশ-বিদেশের শিশু ও বয়স্ক শিক্ষার্থীদের সহীহ কোরআন ও তাজবীদ শিক্ষা দিচ্ছেন।",
-          experience_years: 6,
-          students_taught: 180,
-          specializations: ["সহীহ তেলাওয়াত", "তাজউইদ ও মাখরাজ", "নূরানী কায়দা", "হোম টিউশন"],
-          weekly_schedule: { sat: [10, 11, 14], sun: [10, 14], mon: [10, 11], tue: [10, 14], wed: [10, 11, 14] },
-          whatsapp: "8801733017521",
-          country: "বাংলাদেশ",
-          native_language: "বাংলা",
-          languages: ["বাংলা", "English", "العربية"],
-          sort_order: 1,
-          is_active: true,
-          is_verified: true,
-          rating: 5.0,
-          teacher_type: 'senior',
-          track: 'quran',
-          teaching_mode: 'both',
-          offline_areas: 'মিরপুর, উত্তরা, ঢাকা'
-        },
-        {
-          name: "হাফেজ রবিউল ইসলাম",
-          slug: "hafez-robiul-islam",
-          designation: "হাফেজুল কুরআন ও দ্বীনি শিক্ষক",
-          gender: "male",
-          monthly_fee: "আলোচনা সাপেক্ষে",
-          hourly_rate: "$6/hr",
-          photo_url: "images/teachers/hafez-robiul-islam.jpg",
-          qualifications: ["হিফজুল কুরআন ৩০ পারা", "দাওরায়ে হাদিস"],
-          bio: "কোরআন হিফজ ও নাজেরা শিক্ষাদানে বিশেষ পারদর্শী। আধুনিক পুনরাবৃত্তি পদ্ধতিতে শিক্ষার্থীদের সহজে হিফজ সম্পন্ন করতে সাহায্য করেন।",
-          experience_years: 5,
-          students_taught: 150,
-          specializations: ["হিফজুল কোরআন", "নাজেরা পড়া", "তাজউইদ ও সুর"],
-          weekly_schedule: { sat: [11, 13, 15], sun: [11, 15], mon: [11, 13], tue: [11, 15], wed: [11, 13, 15] },
-          whatsapp: "8801733017521",
-          country: "বাংলাদেশ",
-          native_language: "বাংলা",
-          languages: ["বাংলা", "English"],
-          sort_order: 2,
-          is_active: true,
-          is_verified: true,
-          rating: 5.0,
-          teacher_type: 'senior',
-          track: 'quran',
-          teaching_mode: 'both',
-          offline_areas: 'বনশ্রী, রামপুরা, বাড্ডা, ঢাকা'
-        },
-        {
-          name: "মাওলানা মোঃ আল আমিন",
-          slug: "md-al-amin",
-          designation: "ইসলামিক স্টাডিজ ও কোরআন শিক্ষক",
-          gender: "male",
-          monthly_fee: "আলোচনা সাপেক্ষে",
-          hourly_rate: "$5/hr",
-          photo_url: "images/teachers/md-al-amin.jpg",
-          qualifications: ["দাওরায়ে হাদিস", "কামিল (হাদিস)", "বিএ (অনার্স)"],
-          bio: "সহীহ তাজবীদ, ইসলামিক মূল্যবোধ ও আদব-আখলাক শিক্ষাদানে নিবেদিতপ্রাণ শিক্ষক। অনলাইনে ও সরাসরি হোম টিউশনে পাঠদান করেন।",
-          experience_years: 4,
-          students_taught: 120,
-          specializations: ["সহীহ তেলাওয়াত", "মাসলা-মাসায়েল", "শিশু শিক্ষা", "আরবি ভাষা"],
-          weekly_schedule: { sat: [9, 10, 12], sun: [9, 12], mon: [9, 10], tue: [9, 12], wed: [9, 10, 12] },
-          whatsapp: "8801733017521",
-          country: "বাংলাদেশ",
-          native_language: "বাংলা",
-          languages: ["বাংলা", "English"],
-          sort_order: 3,
-          is_active: true,
-          is_verified: true,
-          rating: 5.0,
-          teacher_type: 'senior',
-          track: 'quran',
-          teaching_mode: 'both',
-          offline_areas: 'ধানমন্ডি, মোহাম্মদপুর, ঢাকা'
-        },
-        {
-          name: "মোছাঃ ফাতেমা খাতুন",
-          slug: "fatema-khatun",
-          designation: "গণিত ও বিজ্ঞান শিক্ষিকা (বিএসসি অনার্স)",
-          gender: "female",
-          monthly_fee: "আলোচনা সাপেক্ষে",
-          hourly_rate: "$5/hr",
-          photo_url: "",
-          qualifications: ["বিএসসি অনার্স (গণিত)", "বিএড"],
-          bio: "সততা ও দ্বীনি মূল্যবোধসম্পন্ন শিক্ষিকা। ১ম থেকে ৮ম শ্রেণি পর্যন্ত সকল বিষয় এবং ৯ম-১০ম শ্রেণির গণিত ও বিজ্ঞান অত্যন্ত যত্নসহকারে পড়ান।",
-          experience_years: 5,
-          students_taught: 140,
-          specializations: ["গণিত / অংক", "সাধারণ বিজ্ঞান", "১ম-৫ম অল সাবজেক্ট", "মহিলা ও শিশু শিক্ষা"],
-          weekly_schedule: { sat: [9, 10, 14], sun: [9, 14], mon: [9, 10], tue: [9, 14], wed: [9, 10, 14] },
-          whatsapp: "8801733017521",
-          country: "বাংলাদেশ",
-          native_language: "বাংলা",
-          languages: ["বাংলা", "English"],
-          sort_order: 4,
-          is_active: true,
-          is_verified: true,
-          rating: 5.0,
-          teacher_type: 'senior',
-          track: 'general',
-          teaching_mode: 'both',
-          offline_areas: 'উত্তরা, খিলক্ষেত, ঢাকা'
-        }
-      ];
-
-
       try {
-        // Try inserting full demo data
         const { data: inserted, error: insErr } = await db.from('teachers').insert(initialDemos).select('*');
         if (!insErr && Array.isArray(inserted) && inserted.length > 0) {
           teachersData = inserted;
         } else {
-          // If error due to missing columns, try with only core columns
-          const coreDemos = initialDemos.map(d => ({
-            name: d.name,
-            slug: d.slug,
-            designation: d.designation,
-            photo_url: d.photo_url || '',
-            qualifications: d.qualifications || [],
-            bio: d.bio || '',
-            experience_years: d.experience_years || 0,
-            students_taught: d.students_taught || 0,
-            specializations: d.specializations || [],
-            languages: d.languages || ['বাংলা'],
-            weekly_schedule: d.weekly_schedule || { sat:[], sun:[], mon:[], tue:[], wed:[] },
-            whatsapp: d.whatsapp || '8801733017521',
-            country: d.country || 'বাংলাদেশ',
-            native_language: d.native_language || 'বাংলা',
-            sort_order: d.sort_order || 0,
-            is_active: true
-          }));
-          const { data: coreInserted, error: coreErr } = await db.from('teachers').insert(coreDemos).select('*');
-          if (!coreErr && Array.isArray(coreInserted) && coreInserted.length > 0) {
-            // Merge back the extra fields from initialDemos for display
-            teachersData = coreInserted.map((t, i) => ({ ...initialDemos[i], ...t }));
-          } else {
-            // Full fallback: use local data with synthetic IDs for display
-            teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
-          }
+          teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
         }
       } catch(seedErr) {
         teachersData = initialDemos.map((d, idx) => ({ ...d, id: idx + 1 }));
       }
+    } else if (teachersData.length > 0) {
+      // Ensure any missing standard profiles from initialDemos are also represented
+      initialDemos.forEach((demo, idx) => {
+        if (!teachersData.some(t => t.slug === demo.slug)) {
+          teachersData.push({ ...demo, id: demo.slug });
+        }
+      });
     }
+
     teachersData = (teachersData || []).map(extractGicMeta);
     allAdminTeachers = teachersData;
 
@@ -3607,6 +3669,9 @@ function switchTeacherSubTab(subTab) {
   } else if (subTab === 'bookings') {
     document.getElementById('nav-bookings')?.classList.add('active');
     renderBookingsTable();
+  } else if (subTab === 'reviews') {
+    document.getElementById('nav-teachers')?.classList.add('active');
+    renderTeacherReviewsTable();
   } else {
     document.getElementById('nav-teachers')?.classList.add('active');
   }
@@ -3620,13 +3685,22 @@ function filterAdminTeachers() {
   const grid = document.getElementById('admin-teachers-grid');
   const empty = document.getElementById('tc-empty');
 
-  let list = allAdminTeachers.filter(t => {
+  const safeJoin = (arr) => {
+    if (!arr) return '';
+    if (Array.isArray(arr)) return arr.join(' ');
+    if (typeof arr === 'string') return arr;
+    return String(arr);
+  };
+
+  let list = (allAdminTeachers || []).filter(t => {
+    const qualsStr = safeJoin(t.qualifications);
+    const specsStr = safeJoin(t.specializations);
     const nameMatch = (t.name || '').toLowerCase().includes(q) ||
                       (t.slug || '').toLowerCase().includes(q) ||
                       (t.designation || '').toLowerCase().includes(q) ||
                       (t.bio || '').toLowerCase().includes(q) ||
-                      ((t.qualifications || []).join(' ')).toLowerCase().includes(q) ||
-                      ((t.specializations || []).join(' ')).toLowerCase().includes(q);
+                      qualsStr.toLowerCase().includes(q) ||
+                      specsStr.toLowerCase().includes(q);
     let statusOk = true;
     if (f === 'active')   statusOk = (t.is_active !== false);
     if (f === 'inactive') statusOk = (t.is_active === false);
@@ -3645,7 +3719,7 @@ function filterAdminTeachers() {
       const ordA = (a.sort_order !== undefined && a.sort_order !== null) ? a.sort_order : 9999;
       const ordB = (b.sort_order !== undefined && b.sort_order !== null) ? b.sort_order : 9999;
       if (ordA !== ordB) return ordA - ordB;
-      return (a.id || 0) - (b.id || 0);
+      return (Number(a.id) || 0) - (Number(b.id) || 0);
     });
   } else if (sortBy === 'name') {
     list.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
@@ -3734,8 +3808,10 @@ function renderAdminTeachersGrid(list) {
       </div>
     ` : '';
 
+    const safeIdStr = String(t.id || t.slug || '');
+
     return `
-    <div class="teacher-card ${isActive ? '' : 'inactive'}" id="tc-card-${t.id}" style="position:relative;border:1px solid ${isActive ? 'rgba(255,255,255,0.08)' : 'rgba(244,63,94,0.3)'};">
+    <div class="teacher-card ${isActive ? '' : 'inactive'}" id="tc-card-${safeIdStr}" style="position:relative;border:1px solid ${isActive ? 'rgba(255,255,255,0.08)' : 'rgba(244,63,94,0.3)'};">
       
       <!-- Top Serial & Tier Ribbon -->
       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;">
@@ -3752,17 +3828,17 @@ function renderAdminTeachersGrid(list) {
 
           <!-- Quick Move Up / Down Buttons -->
           <div style="display:flex;gap:3px;align-items:center;">
-            <button type="button" class="btn btn-sm" onclick="moveTeacherUp(${t.id})" style="padding:2px 7px;font-size:11px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:6px;cursor:pointer;" title="সিরিয়ালে উপরে নিন">⬆️</button>
-            <button type="button" class="btn btn-sm" onclick="moveTeacherDown(${t.id})" style="padding:2px 7px;font-size:11px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:6px;cursor:pointer;" title="সিরিয়ালে নিচে নিন">⬇️</button>
+            <button type="button" class="btn btn-sm" onclick="moveTeacherUp('${safeIdStr}')" style="padding:2px 7px;font-size:11px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:6px;cursor:pointer;" title="সিরিয়ালে উপরে নিন">⬆️</button>
+            <button type="button" class="btn btn-sm" onclick="moveTeacherDown('${safeIdStr}')" style="padding:2px 7px;font-size:11px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:6px;cursor:pointer;" title="সিরিয়ালে নিচে নিন">⬇️</button>
           </div>
 
           <!-- Direct Serial Input -->
-          <input type="number" value="${t.sort_order ?? 0}" min="0" onchange="quickUpdateTeacherSerial(${t.id}, this.value)" style="width:48px;padding:2px 4px;font-size:11px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:6px;text-align:center;" title="সরাসরি ক্রম নম্বর লিখে এন্টার চাপুন">
+          <input type="number" value="${t.sort_order ?? 0}" min="0" onchange="quickUpdateTeacherSerial('${safeIdStr}', this.value)" style="width:48px;padding:2px 4px;font-size:11px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:6px;text-align:center;" title="সরাসরি ক্রম নম্বর লিখে এন্টার চাপুন">
         </div>
 
         <div style="display:flex;align-items:center;gap:6px;">
           <!-- Tier (Senior vs Fresher) Quick Select -->
-          <select onchange="quickUpdateTeacherType(${t.id}, this.value)" style="background:${isSenior ? 'rgba(200,151,42,0.18)' : 'rgba(200,184,166,0.15)'};color:${isSenior ? 'var(--gold-light)' : 'var(--teal)'};border:1px solid ${isSenior ? 'rgba(200,151,42,0.4)' : 'rgba(200,184,166,0.3)'};border-radius:20px;font-size:11px;font-weight:700;padding:2px 8px;cursor:pointer;" title="শিক্ষকের স্তর পরিবর্তন করুন">
+          <select onchange="quickUpdateTeacherType('${safeIdStr}', this.value)" style="background:${isSenior ? 'rgba(200,151,42,0.18)' : 'rgba(200,184,166,0.15)'};color:${isSenior ? 'var(--gold-light)' : 'var(--teal)'};border:1px solid ${isSenior ? 'rgba(200,151,42,0.4)' : 'rgba(200,184,166,0.3)'};border-radius:20px;font-size:11px;font-weight:700;padding:2px 8px;cursor:pointer;" title="শিক্ষকের স্তর পরিবর্তন করুন">
             <option value="senior" ${isSenior ? 'selected' : ''}>⭐ সিনিয়র শিক্ষক</option>
             <option value="fresher" ${!isSenior ? 'selected' : ''}>🌱 ফ্রেশার শিক্ষক</option>
           </select>
@@ -3789,7 +3865,7 @@ function renderAdminTeachersGrid(list) {
         </div>
         <div>
           <!-- Quick Edit Icon Button at top -->
-          <button class="btn btn-sm" onclick="openEditTeacherModal(${t.id})" style="padding:4px 10px;font-size:11.5px;background:rgba(20,184,166,0.15);color:var(--teal);border:1px solid rgba(20,184,166,0.35);border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;" title="প্রোফাইলের সকল কনটেন্ট এডিট করুন">
+          <button type="button" class="btn btn-sm" onclick="openEditTeacherModal('${safeIdStr}')" style="padding:4px 10px;font-size:11.5px;background:rgba(20,184,166,0.15);color:var(--teal);border:1px solid rgba(20,184,166,0.35);border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;" title="প্রোফাইলের সকল কনটেন্ট এডিট করুন">
             ✏️ এডিট
           </button>
         </div>
@@ -3845,14 +3921,14 @@ function renderAdminTeachersGrid(list) {
         </button>
         <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
           <!-- 1-Click Hide/Unhide Toggle Button -->
-          <button class="btn btn-sm" onclick="toggleTeacherActiveStatus(${t.id}, ${isActive})" title="${isActive ? 'ওয়েবসাইটে প্রোফাইল লুকান (হাইড করুন)' : 'ওয়েবসাইটে প্রোফাইল দৃশ্যমান করুন (আনহাইড)'}" style="padding:6px 12px;font-size:12px;background:${isActive ? 'rgba(244,63,94,0.12);color:var(--red);border:1px solid rgba(244,63,94,0.25)' : 'rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)'};cursor:pointer;">
+          <button type="button" class="btn btn-sm" onclick="toggleTeacherActiveStatus('${safeIdStr}', ${isActive})" title="${isActive ? 'ওয়েবসাইটে প্রোফাইল লুকান (হাইড করুন)' : 'ওয়েবসাইটে প্রোফাইল দৃশ্যমান করুন (আনহাইড)'}" style="padding:6px 12px;font-size:12px;background:${isActive ? 'rgba(244,63,94,0.12);color:var(--red);border:1px solid rgba(244,63,94,0.25)' : 'rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)'};cursor:pointer;">
             ${isActive ? '👁️ হাইড' : '👁️ আনহাইড'}
           </button>
           <!-- Prominent Full Edit Button -->
-          <button class="btn btn-sm" onclick="openEditTeacherModal(${t.id})" style="padding:6px 14px;font-size:12px;font-weight:700;background:linear-gradient(135deg,rgba(20,184,166,0.2),rgba(13,148,136,0.3));color:#2dd4bf;border:1px solid rgba(45,212,191,0.4);border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;" title="প্রোফাইলের সকল কনটেন্ট পরিবর্তন করুন">
+          <button type="button" class="btn btn-sm" onclick="openEditTeacherModal('${safeIdStr}')" style="padding:6px 14px;font-size:12px;font-weight:700;background:linear-gradient(135deg,rgba(20,184,166,0.2),rgba(13,148,136,0.3));color:#2dd4bf;border:1px solid rgba(45,212,191,0.4);border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;" title="প্রোফাইলের সকল কনটেন্ট পরিবর্তন করুন">
             ✏️ সকল তথ্য এডিট
           </button>
-          <button class="btn btn-sm btn-red" onclick="openDeleteTeacherModal(${t.id})" style="padding:6px 10px;font-size:12px;cursor:pointer;" title="প্রোফাইল মুছে ফেলুন">
+          <button type="button" class="btn btn-sm btn-red" onclick="openDeleteTeacherModal('${safeIdStr}')" style="padding:6px 10px;font-size:12px;cursor:pointer;" title="প্রোফাইল মুছে ফেলুন">
             🗑️
           </button>
         </div>
@@ -3863,11 +3939,18 @@ function renderAdminTeachersGrid(list) {
 
 async function quickUpdateTeacherSerial(id, newSerial) {
   const serial = parseInt(newSerial) || 0;
+  const numId = parseInt(id);
   try {
-    const { error } = await db.from('teachers').update({ sort_order: serial }).eq('id', id);
-    if (error) throw error;
-    const t = allAdminTeachers.find(item => item.id === id);
-    if (t) t.sort_order = serial;
+    if (!isNaN(numId)) {
+      await db.from('teachers').update({ sort_order: serial }).eq('id', numId);
+    }
+    const t = allAdminTeachers.find(item => item.id == id || String(item.id) === String(id) || item.slug === id);
+    if (t) {
+      if (isNaN(numId) && t.slug) {
+        await db.from('teachers').update({ sort_order: serial }).eq('slug', t.slug);
+      }
+      t.sort_order = serial;
+    }
     allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
     filterAdminTeachers();
     toast(`✅ ক্রম নম্বর পরিবর্তন করে ${serial} করা হয়েছে!`, 'ok');
@@ -3879,7 +3962,7 @@ async function quickUpdateTeacherSerial(id, newSerial) {
 
 async function moveTeacherUp(id) {
   allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-  const idx = allAdminTeachers.findIndex(t => t.id === id);
+  const idx = allAdminTeachers.findIndex(t => t.id == id || String(t.id) === String(id) || t.slug === id);
   if (idx <= 0) {
     toast('ℹ️ শিক্ষকটি ইতিমধ্যেই সবার উপরে রয়েছে', 'info');
     return;
@@ -3898,8 +3981,14 @@ async function moveTeacherUp(id) {
   prevT.sort_order = newPrevSort;
 
   try {
-    await db.from('teachers').update({ sort_order: newCurrentSort }).eq('id', currentT.id);
-    await db.from('teachers').update({ sort_order: newPrevSort }).eq('id', prevT.id);
+    const curNum = parseInt(currentT.id);
+    const prevNum = parseInt(prevT.id);
+    if (!isNaN(curNum)) await db.from('teachers').update({ sort_order: newCurrentSort }).eq('id', curNum);
+    else if (currentT.slug) await db.from('teachers').update({ sort_order: newCurrentSort }).eq('slug', currentT.slug);
+
+    if (!isNaN(prevNum)) await db.from('teachers').update({ sort_order: newPrevSort }).eq('id', prevNum);
+    else if (prevT.slug) await db.from('teachers').update({ sort_order: newPrevSort }).eq('slug', prevT.slug);
+
     allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
     filterAdminTeachers();
     toast(`⬆️ "${currentT.name}" কে সিরিয়ালে উপরে নেওয়া হয়েছে!`, 'ok');
@@ -3911,7 +4000,7 @@ async function moveTeacherUp(id) {
 
 async function moveTeacherDown(id) {
   allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-  const idx = allAdminTeachers.findIndex(t => t.id === id);
+  const idx = allAdminTeachers.findIndex(t => t.id == id || String(t.id) === String(id) || t.slug === id);
   if (idx < 0 || idx >= allAdminTeachers.length - 1) {
     toast('ℹ️ শিক্ষকটি ইতিমধ্যেই সবার নিচে রয়েছে', 'info');
     return;
@@ -3930,8 +4019,14 @@ async function moveTeacherDown(id) {
   nextT.sort_order = newNextSort;
 
   try {
-    await db.from('teachers').update({ sort_order: newCurrentSort }).eq('id', currentT.id);
-    await db.from('teachers').update({ sort_order: newNextSort }).eq('id', nextT.id);
+    const curNum = parseInt(currentT.id);
+    const nextNum = parseInt(nextT.id);
+    if (!isNaN(curNum)) await db.from('teachers').update({ sort_order: newCurrentSort }).eq('id', curNum);
+    else if (currentT.slug) await db.from('teachers').update({ sort_order: newCurrentSort }).eq('slug', currentT.slug);
+
+    if (!isNaN(nextNum)) await db.from('teachers').update({ sort_order: newNextSort }).eq('id', nextNum);
+    else if (nextT.slug) await db.from('teachers').update({ sort_order: newNextSort }).eq('slug', nextT.slug);
+
     allAdminTeachers.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
     filterAdminTeachers();
     toast(`⬇️ "${currentT.name}" কে সিরিয়ালে নিচে নেওয়া হয়েছে!`, 'ok');
@@ -3942,11 +4037,18 @@ async function moveTeacherDown(id) {
 }
 
 async function quickUpdateTeacherType(id, newType) {
+  const numId = parseInt(id);
   try {
-    const { error } = await db.from('teachers').update({ teacher_type: newType }).eq('id', id);
-    if (error) throw error;
-    const t = allAdminTeachers.find(item => item.id === id);
-    if (t) t.teacher_type = newType;
+    if (!isNaN(numId)) {
+      await db.from('teachers').update({ teacher_type: newType }).eq('id', numId);
+    }
+    const t = allAdminTeachers.find(item => item.id == id || String(item.id) === String(id) || item.slug === id);
+    if (t) {
+      if (isNaN(numId) && t.slug) {
+        await db.from('teachers').update({ teacher_type: newType }).eq('slug', t.slug);
+      }
+      t.teacher_type = newType;
+    }
     filterAdminTeachers();
     toast(`✅ শিক্ষক স্তর পরিবর্তন করা হয়েছে: ${newType === 'senior' ? '⭐ সিনিয়র শিক্ষক' : '🌱 ফ্রেশার শিক্ষক'}`, 'ok');
   } catch(err) {
@@ -4076,6 +4178,10 @@ function openAddTeacherModal() {
   updatePhotoPreview();
   switchModalScheduleDay('sat');
 
+  // Reset save button state (may be stuck from a previous interrupted save)
+  const saveBtn = document.getElementById('tm-save-btn');
+  if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = '💾 সকল পরিবর্তন সংরক্ষণ করুন'; }
+
   document.getElementById('teacher-modal').style.display = 'flex';
 }
 
@@ -4154,6 +4260,10 @@ function openEditTeacherModal(id) {
   modalCurrentDay = 'sat';
   updatePhotoPreview();
   switchModalScheduleDay('sat');
+
+  // Reset save button state (may be stuck from a previous interrupted save)
+  const saveBtn = document.getElementById('tm-save-btn');
+  if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = '💾 সকল পরিবর্তন সংরক্ষণ করুন'; }
 
   document.getElementById('teacher-modal').style.display = 'flex';
 }
@@ -4241,40 +4351,48 @@ async function saveTeacherSubmit(event) {
       // UPDATE
       let updateOk = false;
 
-      const numId = parseInt(id) || id;
-      // 1. Direct update by ID in Supabase
-      try {
-        const res = await db.from('teachers').update(fullPayload).eq('id', numId).select('*');
-        if (!res.error && res.data && res.data.length > 0) {
-          updateOk = true;
-        } else if (!res.error && slug) {
-          // Fallback: match by slug
-          const resSlug = await db.from('teachers').update(fullPayload).eq('slug', slug).select('*');
-          if (!resSlug.error && resSlug.data && resSlug.data.length > 0) updateOk = true;
-        }
-      } catch(err) {
-        console.warn('Direct update error:', err);
-      }
-
-      // 2. Fallback: update with basePayload if extra columns threw error
-      if (!updateOk) {
+      // 1. Direct update by ID in Supabase if numeric
+      if (!isNaN(Number(id))) {
         try {
-          const fbRes = await db.from('teachers').update(basePayload).eq('id', numId).select('*');
-          if (!fbRes.error && fbRes.data && fbRes.data.length > 0) {
-            updateOk = true;
-          } else if (!fbRes.error && slug) {
-            const fbSlug = await db.from('teachers').update(basePayload).eq('slug', slug).select('*');
-            if (!fbSlug.error && fbSlug.data && fbSlug.data.length > 0) updateOk = true;
-          }
-        } catch(err) {}
+          const res = await db.from('teachers').update(fullPayload).eq('id', Number(id)).select('*');
+          if (!res.error) updateOk = true;
+        } catch(err) {
+          console.warn('Direct update by id error:', err);
+        }
       }
 
-      // 3. Fallback: RPC update_teacher
+      // 2. Direct update by slug in Supabase
+      if (!updateOk && slug) {
+        try {
+          const resSlug = await db.from('teachers').update(fullPayload).eq('slug', slug).select('*');
+          if (!resSlug.error) updateOk = true;
+        } catch(err) {
+          console.warn('Direct update by slug error:', err);
+        }
+      }
+
+      // 3. Fallback: update with basePayload if extra columns threw error
+      if (!updateOk) {
+        if (!isNaN(Number(id))) {
+          try {
+            const fbRes = await db.from('teachers').update(basePayload).eq('id', Number(id)).select('*');
+            if (!fbRes.error) updateOk = true;
+          } catch(err) {}
+        }
+        if (!updateOk && slug) {
+          try {
+            const fbSlug = await db.from('teachers').update(basePayload).eq('slug', slug).select('*');
+            if (!fbSlug.error) updateOk = true;
+          } catch(err) {}
+        }
+      }
+
+      // 4. Fallback: RPC update_teacher
       if (!updateOk) {
         try {
           const { data, error } = await db.rpc('update_teacher', {
             pass_code: authPwd,
-            p_id: parseInt(id),
+            p_id: parseInt(id) || 0,
             p_name: name,
             p_slug: slug,
             p_photo_url: photoUrl,
@@ -4293,7 +4411,7 @@ async function saveTeacherSubmit(event) {
         } catch(e) {}
       }
 
-      // 4. Fallback: If not in DB yet (e.g. synthetic local profile), insert it
+      // 5. Fallback: If not in DB yet (e.g. synthetic local profile), insert it
       if (!updateOk) {
         try {
           const insRes = await db.from('teachers').insert([fullPayload]).select('*');
@@ -4305,16 +4423,29 @@ async function saveTeacherSubmit(event) {
         throw new Error('ডেটাবেজে শিক্ষকের তথ্য সংরক্ষণ করা যায়নি। অনুগ্রহ করে ইন্টারনেট সংযোগ চেক করুন।');
       }
 
+      // Update in-memory array immediately for instant UI feedback
+      const existingIdx = allAdminTeachers.findIndex(t => t.id == id || String(t.id) === String(id) || (slug && t.slug === slug));
+      if (existingIdx !== -1) {
+        allAdminTeachers[existingIdx] = {
+          ...allAdminTeachers[existingIdx],
+          ...fullPayload,
+          id: allAdminTeachers[existingIdx].id
+        };
+      }
+
+      filterAdminTeachers();
       toast('✅ শিক্ষকের সকল তথ্য সফলভাবে আপডেট হয়েছে!', 'ok');
       closeTeacherModal();
-      await loadTeachersAdmin();
+      loadTeachersAdmin();
       return;
     } else {
       // INSERT (new teacher)
       let insertError = null;
+      let insertedData = null;
       try {
         const res = await db.from('teachers').insert([fullPayload]).select('*');
         insertError = res.error;
+        insertedData = res.data;
       } catch(err) {
         insertError = err;
       }
@@ -4329,12 +4460,21 @@ async function saveTeacherSubmit(event) {
         console.warn('DB schema missing extra columns on insert, saving via metadata in bio & specializations:', insertError.message);
         const fbRes = await db.from('teachers').insert([basePayload]).select('*');
         insertError = fbRes.error;
+        insertedData = fbRes.data;
       }
 
       if (insertError) throw insertError;
+
+      if (insertedData && insertedData[0]) {
+        allAdminTeachers.unshift(insertedData[0]);
+      } else {
+        allAdminTeachers.unshift({ ...fullPayload, id: Date.now() });
+      }
+
+      filterAdminTeachers();
       toast('✅ নতুন শিক্ষক সফলভাবে যুক্ত হয়েছে!', 'ok');
       closeTeacherModal();
-      await loadTeachersAdmin();
+      loadTeachersAdmin();
     }
   } catch(err) {
     console.error('Save teacher error:', err);
@@ -4349,9 +4489,19 @@ async function saveTeacherSubmit(event) {
 async function toggleTeacherActiveStatus(id, currentStatus) {
   const newStatus = !currentStatus;
   try {
-    const { error } = await db.from('teachers').update({ is_active: newStatus }).eq('id', id);
-    if (error) throw error;
-    const t = allAdminTeachers.find(item => item.id === id);
+    let updateOk = false;
+    if (!isNaN(Number(id))) {
+      const { error } = await db.from('teachers').update({ is_active: newStatus }).eq('id', Number(id));
+      if (!error) updateOk = true;
+    }
+    if (!updateOk) {
+      const teacher = allAdminTeachers.find(item => item.id == id || String(item.id) === String(id) || item.slug === id);
+      if (teacher && teacher.slug) {
+        const { error } = await db.from('teachers').update({ is_active: newStatus }).eq('slug', teacher.slug);
+        if (!error) updateOk = true;
+      }
+    }
+    const t = allAdminTeachers.find(item => item.id == id || String(item.id) === String(id) || item.slug === id);
     if (t) t.is_active = newStatus;
     toast(`✅ প্রোফাইল ${newStatus ? 'সক্রিয় (ওয়েবসাইটে দৃশ্যমান)' : 'হাইড (ওয়েবসাইটে বন্ধ)'} করা হয়েছে!`, 'ok');
     filterAdminTeachers();
@@ -4362,7 +4512,7 @@ async function toggleTeacherActiveStatus(id, currentStatus) {
 }
 
 function openDeleteTeacherModal(id) {
-  const teacher = allAdminTeachers.find(t => t.id === id);
+  const teacher = allAdminTeachers.find(t => t.id == id || String(t.id) === String(id) || t.slug === id);
   if (!teacher) return;
   teacherToDelete = teacher;
   document.getElementById('tc-delete-preview').innerHTML = `
@@ -4383,19 +4533,19 @@ async function confirmDeleteTeacherSubmit() {
   const slug = teacherToDelete.slug;
   try {
     try {
-      await db.rpc('delete_teacher', { pass_code: authPwd, p_id: id });
+      await db.rpc('delete_teacher', { pass_code: authPwd, p_id: Number(id) || id });
     } catch(e) {}
 
     try {
-      if (typeof id === 'number' || !isNaN(Number(id))) {
-        await db.from('teachers').delete().eq('id', id);
+      if (!isNaN(Number(id))) {
+        await db.from('teachers').delete().eq('id', Number(id));
       }
       if (slug) {
         await db.from('teachers').delete().eq('slug', slug);
       }
     } catch(e) {}
 
-    allAdminTeachers = allAdminTeachers.filter(t => t.id !== id && (!slug || t.slug !== slug));
+    allAdminTeachers = allAdminTeachers.filter(t => t.id != id && String(t.id) !== String(id) && (!slug || t.slug !== slug));
     if (allAdminTeachers.length === 0) {
       localStorage.setItem('gic_teachers_cleared', 'true');
     }
@@ -4404,7 +4554,7 @@ async function confirmDeleteTeacherSubmit() {
     filterAdminTeachers();
   } catch(err) {
     console.error('Delete teacher error:', err);
-    allAdminTeachers = allAdminTeachers.filter(t => t.id !== id && (!slug || t.slug !== slug));
+    allAdminTeachers = allAdminTeachers.filter(t => t.id != id && String(t.id) !== String(id) && (!slug || t.slug !== slug));
     closeTeacherDeleteModal();
     filterAdminTeachers();
     toast('✅ শিক্ষক তালিকা থেকে মুছে ফেলা হয়েছে', 'ok');
@@ -4519,7 +4669,7 @@ function renderBookingsTable() {
           <span style="font-size:11px;font-weight:700;background:${st.bg};color:${st.color};padding:4px 8px;border-radius:12px;display:inline-block;">${st.label}</span>
         </td>
         <td>
-          <select onchange="updateBookingStatusSubmit(${b.id}, this.value)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer;">
+          <select onchange="updateBookingStatusSubmit('${b.id}', this.value)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer;">
             <option value="pending" ${b.status==='pending'?'selected':''}>⏳ নতুন লিড</option>
             <option value="whatsapp_opened" ${b.status==='whatsapp_opened'?'selected':''}>💬 WhatsApp শুরু করেছে</option>
             <option value="contacted" ${b.status==='contacted'?'selected':''}>📞 কথা হয়েছে</option>
@@ -4533,7 +4683,7 @@ function renderBookingsTable() {
             <a href="${parentWaUrl}" target="_blank" class="btn btn-sm" style="background:#25d366;color:#fff;font-size:10.5px;padding:4px 8px;border-radius:6px;text-decoration:none;font-weight:700;" title="অভিভাবককে WhatsApp-এ ফলোআপ করুন">
               💬 ফলোআপ
             </a>
-            <button onclick="deleteBookingSubmit(${b.id})" class="btn btn-sm btn-red" style="font-size:10px;padding:4px 7px;border-radius:6px;" title="মুছে ফেলুন">
+            <button onclick="deleteBookingSubmit('${b.id}')" class="btn btn-sm btn-red" style="font-size:10px;padding:4px 7px;border-radius:6px;" title="মুছে ফেলুন">
               🗑️
             </button>
           </div>
@@ -4547,13 +4697,14 @@ async function updateBookingStatusSubmit(id, newStatus) {
   try {
     let ok = false;
     try {
-      const { data, error } = await db.rpc('update_booking_status', { pass_code: authPwd, p_id: id, p_status: newStatus });
+      const { data, error } = await db.rpc('update_booking_status', { pass_code: authPwd, p_id: Number(id) || id, p_status: newStatus });
       if (!error && data) ok = true;
     } catch(e) {}
     if (!ok) {
-      await db.from('teacher_bookings').update({ status: newStatus }).eq('id', id);
+      const targetId = !isNaN(Number(id)) ? Number(id) : id;
+      await db.from('teacher_bookings').update({ status: newStatus }).eq('id', targetId);
     }
-    const b = allAdminBookings.find(item => item.id === id);
+    const b = allAdminBookings.find(item => item.id == id || String(item.id) === String(id));
     if (b) b.status = newStatus;
     toast('✅ বুকিং ও লিড স্ট্যাটাস আপডেট হয়েছে!', 'ok');
     renderBookingsTable();
@@ -4566,8 +4717,9 @@ async function updateBookingStatusSubmit(id, newStatus) {
 async function deleteBookingSubmit(id) {
   if (!confirm('আপনি কি এই লিড/যোগাযোগ রেকর্ডটি মুছে ফেলতে চান?')) return;
   try {
-    await db.from('teacher_bookings').delete().eq('id', id);
-    allAdminBookings = allAdminBookings.filter(b => b.id !== id);
+    const targetId = !isNaN(Number(id)) ? Number(id) : id;
+    await db.from('teacher_bookings').delete().eq('id', targetId);
+    allAdminBookings = allAdminBookings.filter(b => b.id != id && String(b.id) !== String(id));
     toast('✅ রেকর্ড মুছে ফেলা হয়েছে', 'ok');
     renderBookingsTable();
   } catch(e) {
@@ -4610,11 +4762,11 @@ function renderTeacherReviewsTable() {
         <td>
           <div style="display:flex;gap:6px;">
             ${!isAppr ? `
-              <button class="btn btn-sm btn-green" onclick="approveTeacherReviewSubmit(${r.id})" style="padding:4px 8px;font-size:11px;">
+              <button class="btn btn-sm btn-green" onclick="approveTeacherReviewSubmit('${r.id}')" style="padding:4px 8px;font-size:11px;">
                 ✅ অনুমোদন
               </button>
             ` : ''}
-            <button class="btn btn-sm btn-red" onclick="deleteTeacherReviewSubmit(${r.id})" style="padding:4px 8px;font-size:11px;">
+            <button class="btn btn-sm btn-red" onclick="deleteTeacherReviewSubmit('${r.id}')" style="padding:4px 8px;font-size:11px;">
               🗑️
             </button>
           </div>
@@ -4628,15 +4780,17 @@ async function approveTeacherReviewSubmit(id) {
   try {
     let ok = false;
     try {
-      const { data, error } = await db.rpc('approve_teacher_review', { pass_code: authPwd, p_id: id });
+      const { data, error } = await db.rpc('approve_teacher_review', { pass_code: authPwd, p_id: Number(id) || id });
       if (!error && data) ok = true;
     } catch(e) {}
     if (!ok) {
-      await db.from('teacher_reviews').update({ is_approved: true }).eq('id', id);
+      const targetId = !isNaN(Number(id)) ? Number(id) : id;
+      await db.from('teacher_reviews').update({ is_approved: true }).eq('id', targetId);
     }
-    const r = allAdminTeacherReviews.find(item => item.id === id);
+    const r = allAdminTeacherReviews.find(item => item.id == id || String(item.id) === String(id));
     if (r) r.is_approved = true;
     toast('✅ রিভিউ অনুমোদিত হয়েছে!', 'ok');
+    renderTeacherReviewsTable();
     loadTeachersAdmin();
   } catch(err) {
     console.error(err);
@@ -4649,14 +4803,16 @@ async function deleteTeacherReviewSubmit(id) {
   try {
     let ok = false;
     try {
-      const { data, error } = await db.rpc('delete_teacher_review', { pass_code: authPwd, p_id: id });
+      const { data, error } = await db.rpc('delete_teacher_review', { pass_code: authPwd, p_id: Number(id) || id });
       if (!error && data) ok = true;
     } catch(e) {}
     if (!ok) {
-      await db.from('teacher_reviews').delete().eq('id', id);
+      const targetId = !isNaN(Number(id)) ? Number(id) : id;
+      await db.from('teacher_reviews').delete().eq('id', targetId);
     }
-    allAdminTeacherReviews = allAdminTeacherReviews.filter(r => r.id !== id);
+    allAdminTeacherReviews = allAdminTeacherReviews.filter(r => r.id != id && String(r.id) !== String(id));
     toast('✅ রিভিউ মুছে ফেলা হয়েছে!', 'ok');
+    renderTeacherReviewsTable();
     loadTeachersAdmin();
   } catch(err) {
     console.error(err);
@@ -4720,17 +4876,32 @@ function setTeacherAppFilter(status) {
   const sel = document.getElementById('tc-app-filter-status');
   if (sel) sel.value = status;
 
+  const pillStyles = {
+    all:      { activeBg: 'rgba(58,134,200,0.35)',   activeBorder: '#3a86c8',   activeColor: '#fff' },
+    pending:  { activeBg: 'rgba(245,158,11,0.35)',   activeBorder: '#f59e0b',   activeColor: '#fff' },
+    approved: { activeBg: 'rgba(16,185,129,0.35)',   activeBorder: '#10b981',   activeColor: '#fff' },
+    rejected: { activeBg: 'rgba(244,63,94,0.35)',    activeBorder: '#f43f5e',   activeColor: '#fff' }
+  };
+  const inactiveBg = 'rgba(255,255,255,0.04)';
+  const inactiveBorder = 'var(--card-border)';
+  const inactiveColor = 'var(--text-muted)';
+
   ['all', 'pending', 'approved', 'rejected'].forEach(s => {
     const pill = document.getElementById('tc-app-pill-' + s);
     if (pill) {
       if (s === status) {
-        pill.style.borderColor = 'var(--gold)';
-        pill.style.background = 'rgba(200,151,42,0.18)';
-        pill.style.color = '#fff';
+        const ps = pillStyles[s] || pillStyles.all;
+        pill.style.borderColor = ps.activeBorder;
+        pill.style.background = ps.activeBg;
+        pill.style.color = ps.activeColor;
+        pill.style.fontWeight = '800';
+        pill.style.boxShadow = `0 0 0 2px ${ps.activeBorder}40`;
       } else {
-        pill.style.borderColor = 'var(--card-border)';
-        pill.style.background = 'rgba(255,255,255,0.04)';
-        pill.style.color = 'var(--text-muted)';
+        pill.style.borderColor = inactiveBorder;
+        pill.style.background = inactiveBg;
+        pill.style.color = inactiveColor;
+        pill.style.fontWeight = '600';
+        pill.style.boxShadow = 'none';
       }
     }
   });
@@ -4891,7 +5062,8 @@ async function loadTeacherApplications() {
     if (listBanner) {
       if (pendingCount > 0 && latestApp) {
         listBanner.style.display = 'block';
-        const cleanSugSlug = (latestApp.name || '').toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/\s+/g, '-').substring(0, 30) || ('teacher-' + latestApp.id);
+        const rawSugSlug = (latestApp.name || '').toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/\s+/g, '-').substring(0, 30);
+        const cleanSugSlug = (rawSugSlug && rawSugSlug.replace(/-/g,'').length >= 3) ? rawSugSlug : ('teacher-' + latestApp.id);
         listBanner.innerHTML = `
           <div style="background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(217,119,6,0.14));border:1.5px solid #f59e0b;border-radius:14px;padding:16px 20px;box-shadow:0 4px 20px rgba(245,158,11,0.15);">
             <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
@@ -4911,10 +5083,10 @@ async function loadTeacherApplications() {
                 <button onclick="switchTeacherSubTab('applications')" class="btn" style="background:#f59e0b;color:#000;font-weight:800;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:13px;">
                   📋 আবেদনসমূহ দেখুন ➔
                 </button>
-                <button onclick="openAppDetailModal(${latestApp.id})" class="btn" style="background:rgba(58,134,200,0.2);color:var(--blue-light);border:1px solid rgba(58,134,200,0.4);font-weight:700;padding:9px 14px;font-size:13px;">
+                <button onclick="openAppDetailModal('${latestApp.id}')" class="btn" style="background:rgba(58,134,200,0.2);color:var(--blue-light);border:1px solid rgba(58,134,200,0.4);font-weight:700;padding:9px 14px;font-size:13px;">
                   👁️ বিস্তারিত যাচাই
                 </button>
-                <button onclick="quickApproveApp(${latestApp.id}, '${cleanSugSlug}')" class="btn btn-green" style="font-weight:700;padding:9px 14px;font-size:13px;">
+                <button onclick="quickApproveApp('${latestApp.id}', '${cleanSugSlug}')" class="btn btn-green" style="font-weight:700;padding:9px 14px;font-size:13px;">
                   ✅ দ্রুত অনুমোদন
                 </button>
               </div>
@@ -4980,7 +5152,9 @@ function renderApplicationsGrid(apps) {
     const avatarHtml = app.photo_url 
       ? `<img src="${app.photo_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`
       : '👨‍🏫';
-    const suggestedSlug = (app.name || '').toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').substring(0, 30);
+    let suggestedSlug = (app.name || '').toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').substring(0, 30).replace(/-+$/,'');
+    // If slug is all dashes or too short (Bengali name), fall back to teacher-{id}
+    if (!suggestedSlug || suggestedSlug.replace(/-/g,'').length < 3) suggestedSlug = 'teacher-' + app.id;
 
     return `
     <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:20px;transition:transform 0.2s;position:relative;">
@@ -5028,15 +5202,15 @@ function renderApplicationsGrid(apps) {
 
       <!-- Actions -->
       <div style="display:flex;gap:6px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;flex-wrap:wrap;">
-        <button onclick="openAppDetailModal(${app.id})" class="btn btn-sm" style="flex:1;padding:7px 10px;font-size:11.5px;background:rgba(58,134,200,0.15);color:var(--blue-light);border:1px solid rgba(58,134,200,0.3);border-radius:8px;">
+        <button onclick="openAppDetailModal('${app.id}')" class="btn btn-sm" style="flex:1;padding:7px 10px;font-size:11.5px;background:rgba(58,134,200,0.15);color:var(--blue-light);border:1px solid rgba(58,134,200,0.3);border-radius:8px;">
           👁️ বিস্তারিত
         </button>
         <button onclick="openTeacherHistoryModal('${app.email || ''}', '${(app.name || '').replace(/'/g, "\\'")}')" class="btn btn-sm" style="padding:7px 10px;font-size:11.5px;background:rgba(200,151,42,0.15);color:var(--gold-light);border:1px solid rgba(200,151,42,0.3);border-radius:8px;display:inline-flex;align-items:center;gap:4px;font-weight:700;" title="এই শিক্ষকের সব লগইন ও ভিজিট হিস্টোরি দেখুন">
           🌐 লগইন ট্রেস
         </button>
         ${app.status === 'pending' ? `
-          <button onclick="quickApproveApp(${app.id}, '${suggestedSlug}')" class="btn btn-sm btn-green" style="padding:7px 10px;font-size:11.5px;">✅ অনুমোদন</button>
-          <button onclick="quickRejectApp(${app.id})" class="btn btn-sm btn-red" style="padding:7px 10px;font-size:11.5px;">❌</button>
+          <button onclick="quickApproveApp('${app.id}', '${suggestedSlug}')" class="btn btn-sm btn-green" style="padding:7px 10px;font-size:11.5px;">✅ অনুমোদন</button>
+          <button onclick="quickRejectApp('${app.id}')" class="btn btn-sm btn-red" style="padding:7px 10px;font-size:11.5px;">❌</button>
         ` : ''}
       </div>
     </div>`;
@@ -5223,21 +5397,21 @@ function openAppDetailModal(appId) {
     if (app.status === 'pending') {
       approveForm.style.display = 'block';
       actionBtns.innerHTML = `
-        <button onclick="submitApproveApp(${app.id})" class="btn btn-green" style="flex:1;padding:11px;">✅ অনুমোদন করুন ও ওয়েবসাইটে যুক্ত করুন</button>
-        <button onclick="submitRejectApp(${app.id})" class="btn btn-red" style="padding:11px 18px;">❌ প্রত্যাখ্যান</button>
-        <button onclick="confirmDeleteApp(${app.id})" class="btn" style="padding:11px;background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid rgba(255,255,255,0.12);">🗑️</button>
+        <button onclick="submitApproveApp('${app.id}')" class="btn btn-green" style="flex:1;padding:11px;">✅ অনুমোদন করুন ও ওয়েবসাইটে যুক্ত করুন</button>
+        <button onclick="submitRejectApp('${app.id}')" class="btn btn-red" style="padding:11px 18px;">❌ প্রত্যাখ্যান</button>
+        <button onclick="confirmDeleteApp('${app.id}')" class="btn" style="padding:11px;background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid rgba(255,255,255,0.12);">🗑️</button>
       `;
     } else if (app.status === 'approved') {
       approveForm.style.display = 'none';
       actionBtns.innerHTML = `
         <div style="color:var(--green);font-size:14px;font-weight:600;">✅ এই আবেদন ইতোমধ্যে অনুমোদিত হয়েছে।</div>
-        <button onclick="confirmDeleteApp(${app.id})" class="btn btn-red" style="padding:10px 16px;font-size:12px;">🗑️ মুছে ফেলুন</button>
+        <button onclick="confirmDeleteApp('${app.id}')" class="btn btn-red" style="padding:10px 16px;font-size:12px;">🗑️ মুছে ফেলুন</button>
       `;
     } else {
       approveForm.style.display = 'none';
       actionBtns.innerHTML = `
         <div style="color:var(--red);font-size:14px;font-weight:600;">❌ এই আবেদন প্রত্যাখ্যাত হয়েছে।</div>
-        <button onclick="confirmDeleteApp(${app.id})" class="btn" style="padding:10px 16px;font-size:12px;background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid rgba(255,255,255,0.12);">🗑️ মুছে ফেলুন</button>
+        <button onclick="confirmDeleteApp('${app.id}')" class="btn" style="padding:10px 16px;font-size:12px;background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid rgba(255,255,255,0.12);">🗑️ মুছে ফেলুন</button>
       `;
     }
   }
@@ -5272,7 +5446,7 @@ async function submitApproveApp(appId) {
     try {
       const { data, error } = await db.rpc('approve_teacher_application', {
         pass_code: authPwd,
-        p_app_id: appId,
+        p_app_id: Number(appId) || appId,
         p_slug: slug,
         p_whatsapp: '8801733017521',
         p_sort_order: sortOrder
@@ -5289,7 +5463,7 @@ async function submitApproveApp(appId) {
 
     // Fallback: direct table operations if RPC unavailable
     if (!result || !result.success) {
-      const app = allAdminApplications.find(a => a.id == appId);
+      const app = allAdminApplications.find(a => a.id == appId || String(a.id) === String(appId));
       if (app) {
         const ins = await db.from('teachers').insert([{
           name: app.name,
@@ -5322,11 +5496,12 @@ async function submitApproveApp(appId) {
         const insertedTeacher = (ins.data && ins.data[0]) || ins.data;
         const newTeacherId = insertedTeacher?.id || null;
 
+        const targetAppId = !isNaN(Number(appId)) ? Number(appId) : appId;
         await db.from('teacher_applications').update({
           status: 'approved',
           reviewed_at: new Date().toISOString(),
           approved_teacher_id: newTeacherId
-        }).eq('id', appId);
+        }).eq('id', targetAppId);
 
         result = { success: true };
       }
@@ -5360,20 +5535,34 @@ async function submitApproveApp(appId) {
 }
 
 async function quickApproveApp(appId, suggestedSlug) {
-  const app = allAdminApplications.find(a => a.id == appId);
-  let defSlug = (suggestedSlug || (app?.name || '')).toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-  if (!defSlug || defSlug.length < 2) defSlug = 'teacher-' + appId;
+  const app = allAdminApplications.find(a => a.id == appId || String(a.id) === String(appId));
+  // Generate slug: use passed slug, fallback to app ID-based slug for Bengali names
+  let defSlug = (suggestedSlug || '').toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  if (!defSlug || defSlug.length < 3 || /^-+$/.test(defSlug)) {
+    // Fallback: use teacher-{id} since Bengali names can't be directly transliterated
+    defSlug = 'teacher-' + appId;
+  }
 
-  const slug = prompt(`শিক্ষকের URL Slug দিন:\n(যেমন: hafez-abdur-rahman)\n\nপ্রস্তাবিত Slug:`, defSlug);
+  const slug = prompt(
+    `✏️ শিক্ষকের URL Slug দিন (শুধু ইংরেজি অক্ষর, সংখ্যা ও হাইফেন):\n` +
+    `যেমন: hafez-abdur-rahman, teacher-robiul-islam\n\n` +
+    `শিক্ষকের নাম: ${app?.name || '—'}\n` +
+    `প্রস্তাবিত Slug:`,
+    defSlug
+  );
   if (!slug || !slug.trim()) return;
   const cleanSlug = slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || defSlug;
+  if (cleanSlug.length < 3) {
+    alert('❌ স্লাগ সঠিক নয়। অনুগ্রহ করে ইংরেজিতে একটি বৈধ স্লাগ দিন।');
+    return;
+  }
 
   try {
     let ok = false;
     try {
       const { data } = await db.rpc('approve_teacher_application', {
         pass_code: authPwd,
-        p_app_id: appId,
+        p_app_id: Number(appId) || appId,
         p_slug: cleanSlug,
         p_whatsapp: '8801733017521',
         p_sort_order: 0
@@ -5413,11 +5602,12 @@ async function quickApproveApp(appId, suggestedSlug) {
       const insertedTeacher = (ins.data && ins.data[0]) || ins.data;
       const newTeacherId = insertedTeacher?.id || null;
 
+      const targetAppId = !isNaN(Number(appId)) ? Number(appId) : appId;
       await db.from('teacher_applications').update({
         status: 'approved',
         reviewed_at: new Date().toISOString(),
         approved_teacher_id: newTeacherId
-      }).eq('id', appId);
+      }).eq('id', targetAppId);
       ok = true;
     }
 
@@ -5439,15 +5629,16 @@ async function submitRejectApp(appId) {
   try {
     let ok = false;
     try {
-      const { data } = await db.rpc('reject_teacher_application', { pass_code: authPwd, p_app_id: appId });
+      const { data } = await db.rpc('reject_teacher_application', { pass_code: authPwd, p_app_id: Number(appId) || appId });
       if (data && data.success) ok = true;
     } catch(e) {}
 
     if (!ok) {
+      const targetAppId = !isNaN(Number(appId)) ? Number(appId) : appId;
       await db.from('teacher_applications').update({
         status: 'rejected',
         reviewed_at: new Date().toISOString()
-      }).eq('id', appId);
+      }).eq('id', targetAppId);
       ok = true;
     }
 
@@ -5468,15 +5659,16 @@ async function quickRejectApp(appId) {
   try {
     let ok = false;
     try {
-      const { data } = await db.rpc('reject_teacher_application', { pass_code: authPwd, p_app_id: appId });
+      const { data } = await db.rpc('reject_teacher_application', { pass_code: authPwd, p_app_id: Number(appId) || appId });
       if (data && data.success) ok = true;
     } catch(e) {}
 
     if (!ok) {
+      const targetAppId = !isNaN(Number(appId)) ? Number(appId) : appId;
       await db.from('teacher_applications').update({
         status: 'rejected',
         reviewed_at: new Date().toISOString()
-      }).eq('id', appId);
+      }).eq('id', targetAppId);
       ok = true;
     }
 
@@ -5494,14 +5686,15 @@ async function quickRejectApp(appId) {
 async function confirmDeleteApp(appId) {
   if (!confirm('এই আবেদনটি স্থায়ীভাবে মুছে ফেলবেন?')) return;
   try {
-    const { data } = await db.rpc('delete_teacher_application', { pass_code: authPwd, p_app_id: appId });
+    const targetAppId = !isNaN(Number(appId)) ? Number(appId) : appId;
+    const { data } = await db.rpc('delete_teacher_application', { pass_code: authPwd, p_app_id: Number(appId) || appId });
     if (data) {
       toast('✅ আবেদন মুছে ফেলা হয়েছে।', 'ok');
       closeAppDetailModal();
       loadTeacherApplications();
     } else {
       // Fallback
-      await db.from('teacher_applications').delete().eq('id', appId);
+      await db.from('teacher_applications').delete().eq('id', targetAppId);
       toast('✅ আবেদন মুছে ফেলা হয়েছে।', 'ok');
       closeAppDetailModal();
       loadTeacherApplications();
