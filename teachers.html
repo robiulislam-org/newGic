@@ -1733,6 +1733,8 @@ function extractGicMeta(t) {
   let track = t.track || t.teaching_track;
   let mode = t.teaching_mode;
   let offline = t.offline_areas;
+  let photoPos = t.photo_position;
+  let photoZoom = t.photo_zoom;
 
   if (t.bio && typeof t.bio === 'string') {
     const metaMatch = t.bio.match(/<!--gic_meta:([\s\S]*?)-->/);
@@ -1742,6 +1744,8 @@ function extractGicMeta(t) {
         if (parsed.track) track = parsed.track;
         if (parsed.teaching_mode) mode = parsed.teaching_mode;
         if (parsed.offline_areas !== undefined) offline = parsed.offline_areas;
+        if (parsed.photo_position) photoPos = parsed.photo_position;
+        if (parsed.photo_zoom) photoZoom = parsed.photo_zoom;
       } catch(e) {}
     }
     t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
@@ -1766,6 +1770,8 @@ function extractGicMeta(t) {
   if (t.teaching_mode === 'online' && Array.isArray(t.specializations)) {
     t.specializations = t.specializations.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
   }
+  t.photo_position = photoPos || '50% 20%';
+  t.photo_zoom = photoZoom || 1.0;
   return t;
 }
 
@@ -1968,8 +1974,11 @@ function renderTeacherDirectory(list) {
       ? `<div class="tc-avatar-custom tc-avatar-female" title="মহিলা শিক্ষিকা"><div class="tc-avatar-icon">🧕</div><div class="tc-avatar-role-pill">মহিলা শিক্ষিকা</div></div>`
       : `<div class="tc-avatar-custom tc-avatar-male" title="পুরুষ শিক্ষক"><div class="tc-avatar-icon">👨‍🏫</div><div class="tc-avatar-role-pill">পুরুষ শিক্ষক</div></div>`;
 
+    const photoPos = t.photo_position || '50% 20%';
+    const photoZoom = parseFloat(t.photo_zoom) || 1.0;
+    const photoTransform = photoZoom > 1.01 ? `transform:scale(${photoZoom});transform-origin:${photoPos};` : '';
     const photo = (t.photo_url && t.photo_url.trim() !== '')
-      ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" /><div style="display:none;width:100%;height:100%;">${customFallback}</div>`
+      ? `<img src="${t.photo_url}" alt="${t.name}" class="tc-photo" style="object-position:${photoPos};${photoTransform}" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" /><div style="display:none;width:100%;height:100%;">${customFallback}</div>`
       : customFallback;
     const isDemo = t.is_demo === true || t.slug === 'engr-tanzil-hasan' || t.slug === 'maryam-akhter' || t.slug === 'sajidur-rahman';
     const demoBadge = isDemo

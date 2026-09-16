@@ -4668,12 +4668,14 @@ function isTeacherGeneral(t) {
          text.includes('অল সাবজেক্ট') || text.includes('সাধারণ');
 }
 
-// Helper to extract metadata (track, teaching_mode, offline_areas) from bio and specializations
+// Helper to extract metadata (track, teaching_mode, offline_areas, photo_position, photo_zoom) from bio and specializations
 function extractGicMeta(t) {
   if (!t) return t;
   let track = t.track || t.teaching_track;
   let mode = t.teaching_mode;
   let offline = t.offline_areas;
+  let photoPos = t.photo_position;
+  let photoZoom = t.photo_zoom;
 
   if (t.bio && typeof t.bio === 'string') {
     const metaMatch = t.bio.match(/<!--gic_meta:([\s\S]*?)-->/);
@@ -4683,6 +4685,8 @@ function extractGicMeta(t) {
         if (parsed.track) track = parsed.track;
         if (parsed.teaching_mode) mode = parsed.teaching_mode;
         if (parsed.offline_areas !== undefined) offline = parsed.offline_areas;
+        if (parsed.photo_position) photoPos = parsed.photo_position;
+        if (parsed.photo_zoom) photoZoom = parsed.photo_zoom;
       } catch(e) {}
     }
     t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
@@ -4707,6 +4711,8 @@ function extractGicMeta(t) {
   if (t.teaching_mode === 'online' && Array.isArray(t.specializations)) {
     t.specializations = t.specializations.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
   }
+  t.photo_position = photoPos || '50% 20%';
+  t.photo_zoom = photoZoom || 1.0;
   return t;
 }
 
@@ -4758,6 +4764,8 @@ async function loadPublicTeachers(force = false) {
         name: (processed.name && processed.name.trim() !== '') ? processed.name : (local.name || ''),
         designation: (processed.designation && processed.designation.trim() !== '') ? processed.designation : (local.designation || ''),
         photo_url: (processed.photo_url && processed.photo_url.trim() !== '') ? processed.photo_url : (local.photo_url || ''),
+        photo_position: processed.photo_position || local.photo_position || '50% 20%',
+        photo_zoom: processed.photo_zoom || local.photo_zoom || 1.0,
         teaching_mode: resolvedMode,
         track: processed.track || local.track || (isTeacherGeneral(processed) ? 'general' : 'quran'),
         teaching_track: processed.teaching_track || local.teaching_track || (isTeacherGeneral(processed) ? 'general' : 'quran'),
@@ -5012,9 +5020,12 @@ function renderPublicTeacherCards(data) {
 
     const feeText = t.monthly_fee || 'আলোচনা সাপেক্ষে';
 
-    // Build avatar/photo html for new rectangular photo-wrap
+    // Build avatar/photo html for new rectangular photo-wrap with position & zoom
+    const photoPos = t.photo_position || '50% 20%';
+    const photoZoom = parseFloat(t.photo_zoom) || 1.0;
+    const photoTransform = photoZoom > 1.01 ? `transform:scale(${photoZoom});transform-origin:${photoPos};` : '';
     const photoHtml = (t.photo_url && t.photo_url.trim() !== '')
-      ? `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div style="display:none;position:absolute;inset:0;">${customFallback}</div>`
+      ? `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" style="object-position:${photoPos};${photoTransform}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div style="display:none;position:absolute;inset:0;">${customFallback}</div>`
       : customFallback;
 
     // Blue verified badge with checkmark (only if verified or demo)

@@ -1237,6 +1237,82 @@
                   </div>
                 </div>
 
+                <!-- ── Interactive Photo Positioning & Framing Tool ── -->
+                <div id="tm-photo-controls-wrap" style="background:rgba(0,0,0,0.3);border:1px solid rgba(56,189,248,0.25);border-radius:14px;padding:12px 14px;margin-bottom:14px;box-shadow:inset 0 2px 8px rgba(0,0,0,0.3);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <strong style="font-size:12.5px;color:#38bdf8;display:flex;align-items:center;gap:6px;">
+                      <span>📐 ছবির পজিশন ও ফ্রেমিং ঠিক করুন</span>
+                    </strong>
+                    <span style="font-size:10.5px;color:#94a3b8;">ছবি টেনে বা স্লাইডারে অ্যাডজাস্ট করুন</span>
+                  </div>
+
+                  <!-- Interactive Bounding Box / Framer with Aspect Ratio matching the card -->
+                  <div id="tm-photo-framer-box" style="position:relative;width:100%;height:135px;border-radius:10px;overflow:hidden;border:2px solid #38bdf8;background:#0b1523;cursor:grab;user-select:none;touch-action:none;box-shadow:inset 0 2px 10px rgba(0,0,0,0.5);">
+                    <img id="tm-framer-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:none;">
+                    <div id="tm-framer-empty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:11.5px;text-align:center;padding:10px;">ছবির লিংক দিলে এখানে ফ্রেমিং বক্স চালু হবে</div>
+                    <!-- Framing guides (rule of thirds / frame crosshairs) -->
+                    <div style="position:absolute;inset:0;border:1px dashed rgba(255,255,255,0.35);pointer-events:none;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;">
+                      <div style="border-right:1px dashed rgba(255,255,255,0.2);border-bottom:1px dashed rgba(255,255,255,0.2);"></div>
+                      <div style="border-right:1px dashed rgba(255,255,255,0.2);border-bottom:1px dashed rgba(255,255,255,0.2);"></div>
+                      <div style="border-bottom:1px dashed rgba(255,255,255,0.2);"></div>
+                      <div style="border-right:1px dashed rgba(255,255,255,0.2);border-bottom:1px dashed rgba(255,255,255,0.2);"></div>
+                      <div style="border-right:1px dashed rgba(255,255,255,0.2);border-bottom:1px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);font-size:14px;">🎯</div>
+                      <div style="border-bottom:1px dashed rgba(255,255,255,0.2);"></div>
+                      <div style="border-right:1px dashed rgba(255,255,255,0.2);"></div>
+                      <div style="border-right:1px dashed rgba(255,255,255,0.2);"></div>
+                      <div></div>
+                    </div>
+                    <div style="position:absolute;bottom:4px;left:6px;background:rgba(0,0,0,0.75);color:#38bdf8;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:8px;pointer-events:none;">
+                      🎯 এই ফ্রেমের ভেতরের অংশটুকু কার্ডে প্রদর্শিত হবে
+                    </div>
+                  </div>
+
+                  <!-- X and Y Sliders -->
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;">
+                    <div>
+                      <div style="display:flex;justify-content:space-between;font-size:11px;color:#cbd5e1;margin-bottom:3px;">
+                        <span>↕️ উপর-নিচ (Vertical)</span>
+                        <span id="tm-photo-y-val" style="font-weight:800;color:#fde047;">20%</span>
+                      </div>
+                      <input type="range" id="tm-photo-y" min="0" max="100" value="20" oninput="onPhotoPositionSliderChange()" style="width:100%;accent-color:#fde047;cursor:pointer;margin-bottom:2px;">
+                      <div style="display:flex;justify-content:space-between;font-size:9px;color:#94a3b8;">
+                        <span>মাথা (0%)</span>
+                        <span>মাঝামাঝি (50%)</span>
+                        <span>নিচ (100%)</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="display:flex;justify-content:space-between;font-size:11px;color:#cbd5e1;margin-bottom:3px;">
+                        <span>↔️ ডানে-বামে (Horizontal)</span>
+                        <span id="tm-photo-x-val" style="font-weight:800;color:#38bdf8;">50%</span>
+                      </div>
+                      <input type="range" id="tm-photo-x" min="0" max="100" value="50" oninput="onPhotoPositionSliderChange()" style="width:100%;accent-color:#38bdf8;cursor:pointer;margin-bottom:2px;">
+                      <div style="display:flex;justify-content:space-between;font-size:9px;color:#94a3b8;">
+                        <span>বাম (0%)</span>
+                        <span>মাঝখানে (50%)</span>
+                        <span>ডান (100%)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Zoom Slider -->
+                  <div style="margin-top:8px;">
+                    <div style="display:flex;justify-content:space-between;font-size:11px;color:#cbd5e1;margin-bottom:3px;">
+                      <span>🔍 জুম / আকার (Zoom)</span>
+                      <span id="tm-photo-zoom-val" style="font-weight:800;color:#4ade80;">1.00x</span>
+                    </div>
+                    <input type="range" id="tm-photo-zoom" min="1.0" max="2.0" step="0.05" value="1.0" oninput="onPhotoPositionSliderChange()" style="width:100%;accent-color:#4ade80;cursor:pointer;margin-bottom:0;">
+                  </div>
+
+                  <!-- Quick Presets -->
+                  <div style="display:flex;gap:5px;margin-top:10px;flex-wrap:wrap;">
+                    <button type="button" class="btn btn-sm" onclick="setPhotoPreset(50, 15, 1.05)" style="font-size:10.5px;padding:3px 8px;background:rgba(200,151,42,0.2);color:#fde047;border:1px solid rgba(200,151,42,0.4);">👤 মুখমণ্ডল ফোকাস</button>
+                    <button type="button" class="btn btn-sm" onclick="setPhotoPreset(50, 50, 1.0)" style="font-size:10.5px;padding:3px 8px;background:rgba(56,189,248,0.15);color:#7dd3fc;border:1px solid rgba(56,189,248,0.3);">🎯 একদম কেন্দ্র</button>
+                    <button type="button" class="btn btn-sm" onclick="setPhotoPreset(50, 0, 1.0)" style="font-size:10.5px;padding:3px 8px;background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.15);">⬆️ শীর্ষ ভাগ</button>
+                    <button type="button" class="btn btn-sm" onclick="setPhotoPreset(50, 20, 1.0)" style="font-size:10.5px;padding:3px 8px;background:rgba(255,255,255,0.06);color:#cbd5e1;border:1px solid rgba(255,255,255,0.15);">🔄 ডিফল্ট</button>
+                  </div>
+                </div>
+
                 <!-- Verified Badge Checkbox -->
                 <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
                   <div>
@@ -3498,6 +3574,8 @@ function extractGicMeta(t) {
   let track = t.track || t.teaching_track;
   let mode = t.teaching_mode;
   let offline = t.offline_areas;
+  let photoPos = t.photo_position;
+  let photoZoom = t.photo_zoom;
 
   if (t.bio && typeof t.bio === 'string') {
     const metaMatch = t.bio.match(/<!--gic_meta:([\s\S]*?)-->/);
@@ -3507,6 +3585,8 @@ function extractGicMeta(t) {
         if (parsed.track) track = parsed.track;
         if (parsed.teaching_mode) mode = parsed.teaching_mode;
         if (parsed.offline_areas !== undefined) offline = parsed.offline_areas;
+        if (parsed.photo_position) photoPos = parsed.photo_position;
+        if (parsed.photo_zoom) photoZoom = parsed.photo_zoom;
       } catch(e) {}
     }
     // Clean bio so that comment tags are never visible in UI or textarea
@@ -3532,6 +3612,8 @@ function extractGicMeta(t) {
   if (t.teaching_mode === 'online' && Array.isArray(t.specializations)) {
     t.specializations = t.specializations.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
   }
+  t.photo_position = photoPos || '50% 20%';
+  t.photo_zoom = photoZoom || 1.0;
   return t;
 }
 
@@ -4292,12 +4374,110 @@ function autoGenSlug() {
 function updatePhotoPreview() {
   const url = document.getElementById('tm-photo-url')?.value.trim();
   const preview = document.getElementById('tm-photo-preview');
-  if (!preview) return;
-  if (url) {
-    preview.innerHTML = `<img src="${url}" alt="Preview" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`;
-  } else {
-    preview.innerHTML = '👨‍🏫';
+  const framerImg = document.getElementById('tm-framer-img');
+  const framerEmpty = document.getElementById('tm-framer-empty');
+
+  if (preview) {
+    if (url) {
+      preview.innerHTML = `<img src="${url}" alt="Preview" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.parentElement.innerHTML='👨‍🏫'">`;
+    } else {
+      preview.innerHTML = '👨‍🏫';
+    }
   }
+
+  if (framerImg && framerEmpty) {
+    if (url) {
+      framerImg.src = url;
+      framerImg.style.display = 'block';
+      framerEmpty.style.display = 'none';
+      onPhotoPositionSliderChange();
+    } else {
+      framerImg.style.display = 'none';
+      framerEmpty.style.display = 'flex';
+    }
+  }
+}
+
+function onPhotoPositionSliderChange() {
+  const x = document.getElementById('tm-photo-x')?.value || 50;
+  const y = document.getElementById('tm-photo-y')?.value || 20;
+  const zoom = parseFloat(document.getElementById('tm-photo-zoom')?.value) || 1.0;
+
+  const xValEl = document.getElementById('tm-photo-x-val');
+  const yValEl = document.getElementById('tm-photo-y-val');
+  const zoomValEl = document.getElementById('tm-photo-zoom-val');
+  if (xValEl) xValEl.textContent = `${x}%`;
+  if (yValEl) yValEl.textContent = `${y}%`;
+  if (zoomValEl) zoomValEl.textContent = `${zoom.toFixed(2)}x`;
+
+  const framerImg = document.getElementById('tm-framer-img');
+  if (framerImg) {
+    framerImg.style.objectPosition = `${x}% ${y}%`;
+    framerImg.style.transform = zoom > 1.01 ? `scale(${zoom})` : '';
+    framerImg.style.transformOrigin = `${x}% ${y}%`;
+  }
+
+  updateTeacherCardPreview();
+}
+
+function setPhotoPreset(x, y, zoom = 1.0) {
+  const xInp = document.getElementById('tm-photo-x');
+  const yInp = document.getElementById('tm-photo-y');
+  const zoomInp = document.getElementById('tm-photo-zoom');
+  if (xInp) xInp.value = x;
+  if (yInp) yInp.value = y;
+  if (zoomInp) zoomInp.value = zoom;
+  onPhotoPositionSliderChange();
+}
+
+function initPhotoFramerDrag() {
+  const box = document.getElementById('tm-photo-framer-box');
+  if (!box || box._dragInit) return;
+  box._dragInit = true;
+
+  let isDragging = false;
+  let startX = 0, startY = 0;
+  let initX = 50, initY = 20;
+
+  box.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    initX = parseFloat(document.getElementById('tm-photo-x')?.value) || 50;
+    initY = parseFloat(document.getElementById('tm-photo-y')?.value) || 20;
+    box.style.cursor = 'grabbing';
+    box.setPointerCapture(e.pointerId);
+  });
+
+  box.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    const rect = box.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+
+    // Moving mouse down should reveal the top of the photo (decrease Y%)
+    const deltaX = (dx / rect.width) * 70;
+    const deltaY = (dy / rect.height) * 70;
+
+    let newX = Math.min(100, Math.max(0, Math.round(initX - deltaX)));
+    let newY = Math.min(100, Math.max(0, Math.round(initY - deltaY)));
+
+    const xInp = document.getElementById('tm-photo-x');
+    const yInp = document.getElementById('tm-photo-y');
+    if (xInp) xInp.value = newX;
+    if (yInp) yInp.value = newY;
+    onPhotoPositionSliderChange();
+  });
+
+  const stop = () => {
+    if (isDragging) {
+      isDragging = false;
+      box.style.cursor = 'grab';
+    }
+  };
+  box.addEventListener('pointerup', stop);
+  box.addEventListener('pointercancel', stop);
 }
 
 function switchModalScheduleDay(day) {
@@ -4365,6 +4545,12 @@ function updateTeacherCardPreview() {
   const specStr = document.getElementById('tm-specializations')?.value.trim() || '';
   const gender = document.getElementById('tm-gender')?.value || 'male';
 
+  const x = document.getElementById('tm-photo-x')?.value || 50;
+  const y = document.getElementById('tm-photo-y')?.value || 20;
+  const zoom = parseFloat(document.getElementById('tm-photo-zoom')?.value) || 1.0;
+  const photoPos = `${x}% ${y}%`;
+  const photoTransform = zoom > 1.01 ? `transform:scale(${zoom});transform-origin:${photoPos};` : '';
+
   const previewEl = document.getElementById('tm-live-card-preview');
   if (!previewEl) return;
 
@@ -4387,7 +4573,7 @@ function updateTeacherCardPreview() {
     : `<div style="position:absolute;inset:0;background:linear-gradient(145deg,#0b2239,#1d4e78);display:flex;align-items:center;justify-content:center;font-size:42px;">👨‍🏫</div>`;
 
   const photoHtml = photoUrl
-    ? `<img src="${photoUrl}" alt="${name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" /><div style="display:none;position:absolute;inset:0;">${fallback}</div>`
+    ? `<img src="${photoUrl}" alt="${name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${photoPos};${photoTransform}" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" /><div style="display:none;position:absolute;inset:0;">${fallback}</div>`
     : fallback;
 
   previewEl.innerHTML = `
@@ -4443,6 +4629,16 @@ function openAddTeacherModal() {
   document.getElementById('tm-bio').value = '';
   document.getElementById('tm-is-active').checked = true;
   document.getElementById('tm-form-err').style.display = 'none';
+
+  // Photo Framer controls default
+  const xInp = document.getElementById('tm-photo-x');
+  const yInp = document.getElementById('tm-photo-y');
+  const zoomInp = document.getElementById('tm-photo-zoom');
+  if (xInp) xInp.value = 50;
+  if (yInp) yInp.value = 20;
+  if (zoomInp) zoomInp.value = 1.0;
+  initPhotoFramerDrag();
+  onPhotoPositionSliderChange();
 
   modalScheduleState = {
     sat: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
@@ -4523,6 +4719,27 @@ function openEditTeacherModal(id) {
   document.getElementById('tm-is-active').checked = (teacher.is_active !== false);
   document.getElementById('tm-form-err').style.display = 'none';
 
+  // Photo position & zoom loading
+  let posX = 50, posY = 20, zoomVal = 1.0;
+  if (teacher.photo_position) {
+    const parts = String(teacher.photo_position).split(' ');
+    if (parts.length >= 2) {
+      posX = parseFloat(parts[0]) || 50;
+      posY = parseFloat(parts[1]) || 20;
+    }
+  }
+  if (teacher.photo_zoom) {
+    zoomVal = parseFloat(teacher.photo_zoom) || 1.0;
+  }
+  const editXInp = document.getElementById('tm-photo-x');
+  const editYInp = document.getElementById('tm-photo-y');
+  const editZoomInp = document.getElementById('tm-photo-zoom');
+  if (editXInp) editXInp.value = posX;
+  if (editYInp) editYInp.value = posY;
+  if (editZoomInp) editZoomInp.value = zoomVal;
+  initPhotoFramerDrag();
+  onPhotoPositionSliderChange();
+
   let sched = teacher.weekly_schedule;
   if (typeof sched === 'string') {
     try { sched = JSON.parse(sched); } catch(e) { sched = {}; }
@@ -4596,7 +4813,20 @@ async function saveTeacherSubmit(event) {
 
   const cleanBio = bio ? bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim() : '';
   const effectiveOfflineAreas = (teachingMode === 'online') ? '' : offlineAreas;
-  const metaPayload = JSON.stringify({ track, teaching_mode: teachingMode, offline_areas: effectiveOfflineAreas });
+
+  // Photo Framer settings
+  const photoX = document.getElementById('tm-photo-x')?.value || 50;
+  const photoY = document.getElementById('tm-photo-y')?.value || 20;
+  const photoZoom = parseFloat(document.getElementById('tm-photo-zoom')?.value) || 1.0;
+  const photoPosition = `${photoX}% ${photoY}%`;
+
+  const metaPayload = JSON.stringify({
+    track,
+    teaching_mode: teachingMode,
+    offline_areas: effectiveOfflineAreas,
+    photo_position: photoPosition,
+    photo_zoom: photoZoom
+  });
   const bioWithMeta = (cleanBio ? cleanBio + '\n\n' : '') + '<!--gic_meta:' + metaPayload + '-->';
 
   // Also maintain offline area in specializations for instant native searchability & fallback (ONLY if not online)
@@ -4619,7 +4849,11 @@ async function saveTeacherSubmit(event) {
 
   const fullPayload = {
     ...basePayload,
-    track, teaching_mode: teachingMode, offline_areas: effectiveOfflineAreas
+    track,
+    teaching_mode: teachingMode,
+    offline_areas: effectiveOfflineAreas,
+    photo_position: photoPosition,
+    photo_zoom: photoZoom
   };
 
   saveBtn.disabled = true;
@@ -4705,11 +4939,11 @@ async function saveTeacherSubmit(event) {
       // Update in-memory array immediately for instant UI feedback
       const existingIdx = allAdminTeachers.findIndex(t => t.id == id || String(t.id) === String(id) || (slug && t.slug === slug));
       if (existingIdx !== -1) {
-        allAdminTeachers[existingIdx] = {
+        allAdminTeachers[existingIdx] = extractGicMeta({
           ...allAdminTeachers[existingIdx],
           ...fullPayload,
           id: allAdminTeachers[existingIdx].id
-        };
+        });
       }
 
       filterAdminTeachers();
@@ -4734,6 +4968,8 @@ async function saveTeacherSubmit(event) {
         insertError.message?.includes('offline_areas') || 
         insertError.message?.includes('track') || 
         insertError.message?.includes('teaching_mode') || 
+        insertError.message?.includes('photo_position') || 
+        insertError.message?.includes('photo_zoom') || 
         insertError.code === 'PGRST204'
       )) {
         console.warn('DB schema missing extra columns on insert, saving via metadata in bio & specializations:', insertError.message);
@@ -4745,9 +4981,9 @@ async function saveTeacherSubmit(event) {
       if (insertError) throw insertError;
 
       if (insertedData && insertedData[0]) {
-        allAdminTeachers.unshift(insertedData[0]);
+        allAdminTeachers.unshift(extractGicMeta(insertedData[0]));
       } else {
-        allAdminTeachers.unshift({ ...fullPayload, id: Date.now() });
+        allAdminTeachers.unshift(extractGicMeta({ ...fullPayload, id: Date.now() }));
       }
 
       filterAdminTeachers();
