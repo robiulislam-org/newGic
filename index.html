@@ -2129,49 +2129,71 @@ footer {
 /* ───── PUBLIC TEACHER CARDS ───── */
 .pub-teachers-grid-wrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
   align-items: stretch;
 }
-@media (max-width: 980px) {
+@media (max-width: 1100px) {
   .pub-teachers-grid-wrapper {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 760px) {
   .pub-teachers-grid-wrapper {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+@media (max-width: 360px) {
+  .pub-teachers-grid-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 }
 
 .pub-teacher-card {
   background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e8edf3;
+  border-radius: 16px;
+  padding: 14px 12px 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 .pub-teacher-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 36px rgba(15,39,68,0.12);
-  border-color: rgba(200,151,42,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(15,39,68,0.11);
+  border-color: rgba(200,151,42,0.35);
+}
+/* Subtle top gradient stripe */
+.pub-teacher-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0f2744, #c8972a);
+  border-radius: 16px 16px 0 0;
+  opacity: 0.7;
+}
+.pub-teacher-card.tc-quran-card::before {
+  background: linear-gradient(90deg, #c8972a, #e5b95c, #c8972a);
+  opacity: 1;
 }
 .pub-teacher-avatar {
-  width: 90px; height: 90px;
+  width: 68px; height: 68px;
   border-radius: 50%;
-  border: 3px solid var(--gold);
+  border: 2.5px solid var(--gold);
   overflow: hidden;
   background: var(--cream);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  margin: 0 auto 14px;
-  box-shadow: 0 4px 14px rgba(200,151,42,0.2);
+  margin: 8px auto 10px;
+  box-shadow: 0 3px 10px rgba(200,151,42,0.18);
   position: relative;
 }
 .pub-teacher-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -2202,10 +2224,10 @@ footer {
   box-shadow: inset 0 0 14px rgba(244,114,182,0.3);
 }
 .tc-avatar-icon {
-  font-size: 36px;
+  font-size: 28px;
   line-height: 1;
-  margin-top: -6px;
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+  margin-top: -4px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
   transition: transform 0.25s ease;
 }
 .pub-teacher-card:hover .tc-avatar-icon {
@@ -2216,10 +2238,10 @@ footer {
   bottom: 0;
   left: 0;
   right: 0;
-  font-size: 9.5px;
+  font-size: 8px;
   font-weight: 800;
   text-align: center;
-  padding: 2px 0 3px;
+  padding: 2px 0 2px;
   letter-spacing: 0.02em;
   text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
@@ -2232,109 +2254,133 @@ footer {
   color: #ffffff;
 }
 .pub-teacher-name {
-  font-size: 18px; font-weight: 800; color: var(--blue-dark);
-  text-align: center; margin-bottom: 3px; line-height: 1.3;
+  font-size: 14px; font-weight: 800; color: var(--blue-dark);
+  text-align: center; margin-bottom: 2px; line-height: 1.3;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  width: 100%;
 }
 .pub-teacher-desig {
-  font-size: 13px; color: var(--text-muted);
-  text-align: center; margin-bottom: 12px;
-}
-.tc-profile-structured-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 10px 12px;
-  margin: 6px 0 10px 0;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
+  font-size: 11px; color: var(--text-muted);
+  text-align: center; margin-bottom: 8px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   width: 100%;
-  box-sizing: border-box;
 }
-.tc-structured-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  font-size: 12px;
-  line-height: 1.45;
+/* Compact subject chips row */
+.tc-subject-chips {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  justify-content: center; margin-bottom: 8px;
 }
-.tc-s-lbl {
-  font-weight: 800;
-  color: var(--blue-dark, #0f2744);
-  white-space: nowrap;
-  font-size: 11.5px;
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  margin-top: 1px;
-}
-.tc-s-val {
-  color: #334155;
-  font-size: 11.5px;
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  align-items: center;
-}
-.tc-s-text {
-  font-weight: 700;
-  color: #1e293b;
-}
-.tc-s-badge-qual {
-  background: #fef3c7;
-  color: #92400e;
-  border: 1px solid #fde68a;
-  padding: 1.5px 7px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 700;
+.tc-subject-chip {
+  background: #f0f4ff;
+  color: #1e3d6e;
+  border: 1px solid #c7d5ee;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 8px;
+  max-width: 90px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
   display: inline-block;
-  line-height: 1.35;
 }
-.tc-s-badge-spec {
-  background: #e0f2fe;
-  color: #0369a1;
-  border: 1px solid #bae6fd;
-  padding: 1.5px 7px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  display: inline-block;
-  line-height: 1.35;
+.tc-subject-chip.quran {
+  background: #fef3c7; color: #92400e; border-color: #fde68a;
 }
-.tc-s-badge-exp {
-  background: #dcfce7;
-  color: #15803d;
-  border: 1px solid #bbf7d0;
-  padding: 1.5px 7px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 800;
-  display: inline-block;
-  line-height: 1.35;
+/* Fee + Mode inline row */
+.tc-meta-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; flex-wrap: wrap; margin-bottom: 10px; width: 100%;
 }
-.pub-tc-qual-tags {
-  display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 14px;
+.tc-meta-fee {
+  font-size: 11px; font-weight: 800; color: #047857;
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.22);
+  padding: 2px 8px; border-radius: 8px;
 }
-.pub-tc-qual-tag {
-  background: rgba(200,151,42,0.1); color: #9c6e14;
-  border: 1px solid rgba(200,151,42,0.25);
-  font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 12px;
+.tc-meta-mode {
+  font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 8px;
 }
-.pub-tc-stats-row {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-  background: var(--cream); border-radius: 12px;
-  padding: 10px; text-align: center; margin-bottom: 16px;
-  border: 1px solid rgba(0,0,0,0.03);
+.tc-meta-mode.online { background: rgba(30,96,145,0.1); color: #1e6091; border: 1px solid rgba(30,96,145,0.25); }
+.tc-meta-mode.offline { background: rgba(234,88,12,0.1); color: #c2410c; border: 1px solid rgba(234,88,12,0.28); }
+.tc-meta-mode.both { background: rgba(16,185,129,0.1); color: #047857; border: 1px solid rgba(16,185,129,0.28); }
+/* Compact CTA */
+.tc-cta-btn {
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; width: 100%;
+  background: linear-gradient(135deg, #0f2744, #1a4a80);
+  color: #ffffff;
+  font-size: 12px; font-weight: 700;
+  padding: 9px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: none; cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  margin-top: auto;
+  box-shadow: 0 3px 10px rgba(15,39,68,0.15);
 }
-.pub-tc-stat-val { font-size: 14px; font-weight: 800; color: var(--blue-dark); }
-.pub-tc-stat-lbl { font-size: 11px; color: var(--text-muted); }
-.pub-tc-actions {
-  display: flex; gap: 8px; flex-direction: column;
+.tc-cta-btn:hover {
+  background: linear-gradient(135deg, #16365c, #264d88);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15,39,68,0.22);
 }
+/* Verified / Demo badge */
+.tc-verify-badge {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 9.5px; font-weight: 800;
+  padding: 2px 7px; border-radius: 8px;
+  display: flex; align-items: center; gap: 3px;
+  letter-spacing: 0.2px; z-index: 3; line-height: 1.4;
+}
+.tc-verify-badge.verified {
+  background: rgba(16,185,129,0.12); color: #047857;
+  border: 1.5px solid rgba(16,185,129,0.35);
+}
+.tc-verify-badge.demo {
+  background: rgba(239,68,68,0.1); color: #dc2626;
+  border: 1.5px solid rgba(239,68,68,0.3);
+}
+/* Track badge top-left */
+.tc-track-pill {
+  position: absolute; top: 8px; left: 8px;
+  font-size: 9px; font-weight: 800;
+  padding: 2px 6px; border-radius: 7px;
+  display: flex; align-items: center; gap: 2px;
+  letter-spacing: 0.1px; z-index: 3;
+}
+.tc-track-pill.quran {
+  background: linear-gradient(135deg,rgba(200,151,42,0.2),rgba(229,185,92,0.3));
+  color: #854d0e; border: 1px solid rgba(200,151,42,0.4);
+}
+.tc-track-pill.general {
+  background: rgba(14,165,233,0.12); color: #0369a1;
+  border: 1px solid rgba(14,165,233,0.3);
+}
+/* Tier (senior/fresher) badge under name */
+.tc-tier-chip {
+  display: inline-flex; align-items: center; gap: 2px;
+  font-size: 9.5px; font-weight: 700;
+  padding: 1.5px 7px; border-radius: 7px;
+  margin-bottom: 6px;
+}
+.tc-tier-chip.senior {
+  background: linear-gradient(135deg,rgba(200,151,42,0.15),rgba(229,185,92,0.22));
+  color: #854d0e; border: 1px solid rgba(200,151,42,0.35);
+}
+.tc-tier-chip.fresher {
+  background: rgba(20,184,166,0.12); color: #0f766e;
+  border: 1px solid rgba(20,184,166,0.25);
+}
+/* Responsive font tweaks for very small screens */
+@media (max-width: 400px) {
+  .pub-teacher-name { font-size: 12.5px; }
+  .pub-teacher-desig { font-size: 10px; }
+  .tc-cta-btn { font-size: 11px; padding: 8px 10px; }
+}
+/* Legacy classes still referenced elsewhere — keep stubs */
+.tc-profile-structured-box { display: none; }
+.pub-tc-qual-tags { display: none; }
+.pub-tc-stats-row { display: none; }
+.pub-tc-actions { display: none; }
+
 
 /* ───── HOMEPAGE TEACHER FILTER & TRUST STYLES ───── */
 .pub-trust-pill {
@@ -4902,114 +4948,53 @@ function renderPublicTeacherCards(data) {
     const cleanSpecs = specs.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
     const displaySpecs = cleanSpecs.length > 0 ? cleanSpecs : specs;
 
-    const specBadgesHtml = displaySpecs.length > 0
-      ? displaySpecs.slice(0, 3).map(s => `<span class="tc-s-badge-spec">📖 ${s}</span>`).join('')
-      : `<span class="tc-s-badge-spec">📖 ${isQuranTeacher ? 'সহীহ কোরআন ও তাজউইদ' : 'স্কুল-কলেজের বিষয়'}</span>`;
-
-    const countryName = t.country || 'বাংলাদেশ';
-    const nativeLang = t.native_language || 'বাংলা';
-    const teachLangs = (t.languages && t.languages.length > 0) ? t.languages : ['বাংলা'];
+    // Subject chips — max 2, for compact display
+    const chipClass = isQuranTeacher ? 'tc-subject-chip quran' : 'tc-subject-chip';
+    const subjectChipsHtml = displaySpecs.length > 0
+      ? displaySpecs.slice(0, 2).map(s => `<span class="${chipClass}">${s}</span>`).join('')
+      : `<span class="${chipClass}">${isQuranTeacher ? 'কোরআন · তাজউইদ' : 'স্কুল · কলেজ'}</span>`;
 
     const profileUrl = `/teachers?id=${t.slug || t.id}`;
 
     const isDemo = t.is_demo === true || t.slug === 'engr-tanzil-hasan' || t.slug === 'maryam-akhter' || t.slug === 'sajidur-rahman';
-    const demoBadge = isDemo
-      ? `<div style="position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.1);color:#dc2626;border:1.5px solid rgba(239,68,68,0.3);padding:3px 9px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;z-index:3;" title="এটি একটি নমুনা প্রোফাইল">🧪 ডেমো প্রোফাইল</div>`
-      : `<div style="position:absolute;top:12px;right:12px;background:rgba(16,185,129,0.12);color:#047857;border:1.5px solid rgba(16,185,129,0.4);padding:3px 10px;border-radius:12px;font-size:10.5px;font-weight:800;letter-spacing:0.3px;display:flex;align-items:center;gap:4px;z-index:3;box-shadow:0 2px 6px rgba(16,185,129,0.12);" title="জিআইসি কর্তৃক ১০০% সনদ ও পরিচয় যাচাইকৃত শিক্ষক">✅ যাচাইকৃত শিক্ষক · GIC</div>`;
+    const verifyBadge = isDemo
+      ? `<div class="tc-verify-badge demo" title="এটি একটি নমুনা প্রোফাইল">🧪 ডেমো</div>`
+      : `<div class="tc-verify-badge verified" title="জিআইসি কর্তৃক যাচাইকৃত">✅ যাচাই</div>`;
+
+    const trackPill = isQuranTeacher
+      ? `<div class="tc-track-pill quran">🌟 কোরআন</div>`
+      : `<div class="tc-track-pill general">🎓 জেনারেল</div>`;
 
     const isSenior = t.teacher_type !== 'fresher';
-    const tierBadge = isSenior
-      ? `<span style="display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(200,151,42,0.15),rgba(229,185,92,0.22));color:#854d0e;border:1px solid rgba(200,151,42,0.35);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">⭐ সিনিয়র শিক্ষক</span>`
-      : `<span style="display:inline-flex;align-items:center;gap:3px;background:rgba(20,184,166,0.12);color:#0f766e;border:1px solid rgba(20,184,166,0.25);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">🌱 ফ্রেশার শিক্ষক</span>`;
+    const tierChip = isSenior
+      ? `<span class="tc-tier-chip senior">⭐ সিনিয়র</span>`
+      : `<span class="tc-tier-chip fresher">🌱 ফ্রেশার</span>`;
 
-    // Highlight Badges
-    const trackHighlightBadge = isQuranTeacher
-      ? `<span class="tc-track-badge-quran">⭐ পবিত্র কোরআন ও আরবি বিশেষজ্ঞ</span>`
-      : `<span class="tc-track-badge-gen">🎓 জেনারেল শিক্ষা</span><span class="tc-muslim-badge">🕌 নিষ্ঠাবান মুসলিম শিক্ষক</span>`;
-
-    // Teaching Mode & Offline Tuition Area
+    // Teaching Mode compact label
     const mode = t.teaching_mode || 'online';
-    let modeBadge = '';
-    if (mode === 'both') {
-      modeBadge = `<span class="tc-mode-badge tc-mode-both" title="অনলাইন ও হোম টিউশন উভয় মাধ্যমে পড়ান">🌐 অনলাইন ও হোম টিউশন</span>`;
-    } else if (mode === 'offline') {
-      modeBadge = `<span class="tc-mode-badge tc-mode-offline" title="বাসায় গিয়ে সরাসরি হোম টিউশন করান">🏠 শুধুমাত্র হোম টিউশন</span>`;
-    } else {
-      modeBadge = `<span class="tc-mode-badge tc-mode-online" title="অনলাইনে লাইভ ক্লাস নেন">💻 শুধুমাত্র অনলাইন</span>`;
-    }
+    let modeClass = 'online', modeLabel = '💻 অনলাইন';
+    if (mode === 'both')    { modeClass = 'both';    modeLabel = '🌐 অনলাইন+হোম'; }
+    else if (mode === 'offline') { modeClass = 'offline'; modeLabel = '🏠 হোম টিউশন'; }
 
-    const offlineArea = (t.offline_areas || '').trim();
-    const offlineAreaHtml = (offlineArea && (mode === 'offline' || mode === 'both'))
-      ? `<div class="tc-offline-area-box">
-           <span style="font-size:13px;line-height:1;">📍</span>
-           <div><strong>হোম টিউশন এলাকা:</strong> ${offlineArea}</div>
-         </div>`
-      : '';
+    const feeText = t.monthly_fee || 'আলোচনা সাপেক্ষে';
 
     return `
-      <div class="pub-teacher-card reveal" style="position:relative;${isQuranTeacher ? 'border: 1.5px solid rgba(200,151,42,0.35);' : ''}">
-        ${demoBadge}
-        <div>
-          <div class="pub-teacher-avatar" style="${isQuranTeacher ? 'border-color:var(--gold);' : 'border-color:#38bdf8;'}">${avatarHtml}</div>
-          <h3 class="pub-teacher-name">${t.name}</h3>
-          <div class="pub-teacher-desig">${t.designation || (isQuranTeacher ? 'কোরআন শিক্ষক' : 'জেনারেল শিক্ষক')}</div>
-          
-          <!-- Track & Category Badge -->
-          <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 8px 0;">
-            ${trackHighlightBadge}
-          </div>
-
-          <!-- Secondary Badges -->
-          <div style="display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;margin:0 0 10px 0;">
-            ${tierBadge}
-            ${modeBadge}
-            <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(15,39,68,0.06);color:var(--navy,#0f2744);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid rgba(15,39,68,0.1);">📍 ${countryName}</span>
-            <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(16,185,129,0.08);color:#047857;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:800;border:1px solid rgba(16,185,129,0.25);">💰 ${t.monthly_fee || 'আলোচনা সাপেক্ষে'}</span>
-          </div>
-
-          <!-- 1. যোগ্যতা, 2. অভিজ্ঞতা, 3. পারদর্শী (Structured Info Box) -->
-          <div class="tc-profile-structured-box">
-            <div class="tc-structured-row">
-              <span class="tc-s-lbl">🎓 যোগ্যতা:</span>
-              <div class="tc-s-val">
-                ${qualBadgesHtml}
-              </div>
-            </div>
-            <div class="tc-structured-row">
-              <span class="tc-s-lbl">⏱️ অভিজ্ঞতা:</span>
-              <div class="tc-s-val">
-                <span class="tc-s-badge-exp">${expText}</span>
-                ${studentText ? `<span style="font-size:10.5px;color:var(--text-muted,#64748b);font-weight:700;margin-left:2px;">(${studentText})</span>` : ''}
-              </div>
-            </div>
-            <div class="tc-structured-row">
-              <span class="tc-s-lbl">🎯 পারদর্শী:</span>
-              <div class="tc-s-val">
-                ${specBadgesHtml}
-              </div>
-            </div>
-          </div>
-
-          <!-- Offline Tuition Area Box (if applicable) -->
-          ${offlineAreaHtml}
-
-          <!-- Language Box -->
-          <div style="background:rgba(15,39,68,0.03);border:1px solid rgba(15,39,68,0.07);border-radius:8px;padding:5px 8px;margin:0 0 12px 0;width:100%;box-sizing:border-box;text-align:left;font-size:11px;line-height:1.4;">
-            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;">
-              <div><span style="color:var(--text-muted);font-weight:600;">🗣️ মাতৃভাষা:</span> <strong style="color:var(--blue-dark,#0f2744);font-weight:700;">${nativeLang}</strong></div>
-              <div style="display:flex;align-items:center;gap:3px;"><span style="color:var(--text-muted);font-weight:600;">🌐 ক্লাস:</span> ${teachLangs.map(l => `<span style="background:#fff;border:1px solid #cbd5e1;color:var(--blue-dark,#0f2744);font-size:10px;padding:1px 5px;border-radius:4px;font-weight:700;">${l}</span>`).join('')}</div>
-            </div>
-          </div>
+      <div class="pub-teacher-card reveal${isQuranTeacher ? ' tc-quran-card' : ''}" style="${isQuranTeacher ? 'border-color:rgba(200,151,42,0.35);' : ''}">
+        ${trackPill}
+        ${verifyBadge}
+        <div class="pub-teacher-avatar" style="${isQuranTeacher ? 'border-color:var(--gold);' : 'border-color:#38bdf8;'}">${avatarHtml}</div>
+        <h3 class="pub-teacher-name" title="${t.name}">${t.name}</h3>
+        <div class="pub-teacher-desig" title="${t.designation || ''}">${t.designation || (isQuranTeacher ? 'কোরআন শিক্ষক' : 'জেনারেল শিক্ষক')}</div>
+        ${tierChip}
+        <!-- Subject chips -->
+        <div class="tc-subject-chips">${subjectChipsHtml}</div>
+        <!-- Fee + Mode row -->
+        <div class="tc-meta-row">
+          <span class="tc-meta-fee">💰 ${feeText}</span>
+          <span class="tc-meta-mode ${modeClass}">${modeLabel}</span>
         </div>
-
-        <div class="pub-tc-actions">
-          <a href="${profileUrl}" class="btn btn-blue btn-full" style="padding:10px 16px;font-size:13.5px;font-weight:700;text-decoration:none;border-radius:12px;justify-content:center;box-shadow:none;display:flex;align-items:center;gap:6px;">
-            👨‍🏫 বিস্তারিত প্রোফাইল দেখুন ↗
-          </a>
-          <button type="button" onclick="openTeacherLeadModalFromHome('${t.slug || t.id}')" class="btn btn-wa btn-full" style="padding:9px 16px;font-size:13px;font-weight:700;border:none;cursor:pointer;border-radius:12px;justify-content:center;box-shadow:none;display:flex;align-items:center;gap:6px;">
-            💬 সরাসরি যোগাযোগ করুন
-          </button>
-        </div>
+        <!-- Single CTA -->
+        <a href="${profileUrl}" class="tc-cta-btn">👨‍🏫 প্রোফাইল দেখুন</a>
       </div>
     `;
   }).join('');
