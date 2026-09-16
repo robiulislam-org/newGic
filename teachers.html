@@ -1747,11 +1747,14 @@ function extractGicMeta(t) {
     t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
   }
 
-  if (!offline && Array.isArray(t.specializations)) {
+  // If strictly online, ensure no offline area and clean specs
+  if (mode === 'online') {
+    offline = '';
+  } else if (!offline && Array.isArray(t.specializations)) {
     const specArea = t.specializations.find(s => typeof s === 'string' && (s.startsWith('হোম টিউশন:') || s.startsWith('হোম টিউশন এলাকা:')));
     if (specArea) {
       offline = specArea.replace(/^হোম টিউশন( এলাকা)?:\s*/, '').trim();
-      if (!mode || mode === 'online') mode = 'both';
+      if (!mode) mode = 'both';
     }
   }
 
@@ -1760,6 +1763,9 @@ function extractGicMeta(t) {
   t.teaching_mode = mode || (offline ? 'both' : 'online');
   // KEY FIX: if mode is strictly online, never show any offline area
   t.offline_areas = (t.teaching_mode === 'online') ? '' : (offline || '');
+  if (t.teaching_mode === 'online' && Array.isArray(t.specializations)) {
+    t.specializations = t.specializations.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
+  }
   return t;
 }
 

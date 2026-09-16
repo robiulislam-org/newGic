@@ -490,6 +490,196 @@
       margin-bottom: 6px;
     }
 
+    /* ── DASHBOARD MINI-CARD LIVE PREVIEW ── */
+    .pub-teacher-card {
+      background: #ffffff;
+      border: 1px solid #e4eaf4;
+      border-radius: 16px;
+      padding: 0;
+      box-shadow: 0 3px 14px rgba(15,39,68,0.07);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .pub-teacher-photo-wrap {
+      position: relative;
+      width: 100%;
+      height: 125px;
+      background: linear-gradient(145deg, #0f2744 0%, #1a4a80 100%);
+      border-radius: 16px 16px 0 0;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .pub-teacher-card.tc-quran-card .pub-teacher-photo-wrap {
+      background: linear-gradient(145deg, #1a0a00 0%, #7c4a0a 100%);
+    }
+    .pub-teacher-photo-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .pub-teacher-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 45%;
+      background: linear-gradient(to top, rgba(10,24,50,0.72) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .tc-verify-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px 3px 5px;
+      border-radius: 20px;
+      line-height: 1.4;
+      background: rgba(30,111,255,0.88);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      box-shadow: 0 2px 10px rgba(30,111,255,0.4);
+    }
+    .tc-track-pill {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 6;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .tc-track-pill.quran {
+      background: rgba(180,130,20,0.88);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .tc-track-pill.general {
+      background: rgba(14,165,233,0.88);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+    .pub-tc-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 10px 12px 10px;
+      flex: 1;
+    }
+    .pub-teacher-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f2744;
+      text-align: center;
+      margin: 0 0 2px;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+    .pub-teacher-desig {
+      font-size: 10.5px;
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+    .tc-subject-chips {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+    .tc-subject-chip {
+      background: #eef3ff;
+      color: #1e3d6e;
+      border: 1px solid #c7d5ee;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 8px;
+      max-width: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .tc-subject-chip.quran { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+    .tc-mode-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+      width: 100%;
+    }
+    .tc-meta-mode {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .tc-meta-mode.online  { background: rgba(30,96,145,0.09);  color: #1e5f8a; border: 1px solid rgba(30,96,145,0.2); }
+    .tc-meta-mode.offline { background: rgba(234,88,12,0.09);  color: #b94100; border: 1px solid rgba(234,88,12,0.22); }
+    .tc-meta-mode.both    { background: rgba(16,185,129,0.09); color: #047857; border: 1px solid rgba(16,185,129,0.22); }
+    .tc-area-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(249,115,22,0.07);
+      border: 1px solid rgba(249,115,22,0.2);
+      color: #9a3412;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 8px;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .tc-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: linear-gradient(135deg, #0f2744, #1a4a80);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 7px 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      border: none;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(15,39,68,0.16);
+    }
+
 </style>
 </head>
 <body>
@@ -986,26 +1176,102 @@
         <form id="teacher-form" novalidate onsubmit="saveTeacherSubmit(event)">
           <input type="hidden" id="tm-id" value="">
 
-          <!-- Section 1: মৌলিক তথ্য -->
+          <!-- ── SECTION 0: হোমপেজ মিনি-কার্ড এডিটর ও লাইভ প্রিভিউ ── -->
+          <div style="background:linear-gradient(135deg, rgba(200,151,42,0.1) 0%, rgba(15,39,68,0.3) 100%);border:1.5px solid rgba(200,151,42,0.4);border-radius:16px;padding:18px;margin-bottom:20px;box-shadow:0 6px 24px rgba(0,0,0,0.25);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(200,151,42,0.25);padding-bottom:10px;">
+              <div style="font-size:15px;font-weight:800;color:#fde047;display:flex;align-items:center;gap:8px;">
+                <span>🎯 ১. হোমপেজ মিনি-কার্ড এডিটর ও লাইভ প্রিভিউ</span>
+              </div>
+              <span style="font-size:11.5px;color:#cbd5e1;background:rgba(255,255,255,0.08);padding:3px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);">
+                💡 হোমপেজের ছোট কার্ডে যা দেখাবে তা এখানে হুবহু এডিট করুন
+              </span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 240px;gap:20px;align-items:start;" id="tm-card-editor-wrap">
+              <!-- বামপাশ: হোমপেজ কার্ডের ফিল্ডসমূহ -->
+              <div>
+                <div style="margin-bottom:12px;">
+                  <label style="display:block;font-size:12.5px;font-weight:700;margin-bottom:5px;color:#fff;">১. শিক্ষকের পুরো নাম * <span style="font-size:11px;color:#94a3b8;font-weight:normal;">(হোমপেজ কার্ডের প্রধান নাম)</span></label>
+                  <input type="text" id="tm-name" class="inp" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান" required oninput="autoGenSlug(); updateTeacherCardPreview();" style="margin-bottom:0;">
+                </div>
+
+                <div style="margin-bottom:12px;">
+                  <label style="display:block;font-size:12.5px;font-weight:700;margin-bottom:5px;color:#fde047;">২. পদবী / কি শেখান * <span style="font-size:11px;color:#cbd5e1;font-weight:normal;">(নামের নিচে যা শেখান তা প্রদর্শিত হবে)</span></label>
+                  <input type="text" id="tm-designation" class="inp" placeholder="যেমন: হাফেজুল কুরআন ও মাওলানা / গণিত ও বিজ্ঞান শিক্ষক" oninput="updateTeacherCardPreview();" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(200,151,42,0.4);color:#fef08a;">
+                </div>
+
+                <div style="margin-bottom:12px;">
+                  <label style="display:block;font-size:12.5px;font-weight:700;margin-bottom:5px;color:#38bdf8;">৩. কার্ডের বিষয়সমূহ (কমা দিয়ে লিখুন) <span style="font-size:11px;color:#cbd5e1;font-weight:normal;">(প্রথম ২টি বিষয় কার্ডে নীল চিপ হিসেবে দেখাবে)</span></label>
+                  <input type="text" id="tm-specializations" class="inp" placeholder="যেমন: সহীহ তেলাওয়াত, হিফজ, তাজউইদ, শিশু শিক্ষা" oninput="updateTeacherCardPreview();" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(56,189,248,0.4);color:#bae6fd;">
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                  <div>
+                    <label style="display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:#fde047;">৪. শিক্ষার বিভাগ (Track) *</label>
+                    <select id="tm-track" class="inp" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(200,151,42,0.4);color:#fde047;font-weight:700;" onchange="updateTeacherCardPreview();">
+                      <option value="quran">🌟 কোরআন ও ইসলামিক শিক্ষা</option>
+                      <option value="general">🎓 জেনারেল শিক্ষা (স্কুল/কলেজ বিষয়)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:#38bdf8;">৫. পাঠদানের মাধ্যম *</label>
+                    <select id="tm-teaching-mode" class="inp" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(56,189,248,0.4);color:#7dd3fc;font-weight:700;" onchange="document.getElementById('tm-offline-areas-wrap').style.display = (this.value !== 'online') ? 'block' : 'none'; updateTeacherCardPreview();">
+                      <option value="online">💻 শুধুমাত্র অনলাইন ক্লাস</option>
+                      <option value="offline">🏠 শুধুমাত্র হোম টিউশন (বাসায় গিয়ে)</option>
+                      <option value="both">🌐🏠 অনলাইন ও সরাসরি হোম টিউশন (উভয়)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Offline Areas Input (Visible when mode is both or offline) -->
+                <div id="tm-offline-areas-wrap" style="margin-bottom:12px;display:none;">
+                  <label style="display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:#fb923c;">৬. অফলাইন হোম টিউশন এলাকা <span style="font-size:11px;color:#fed7aa;font-weight:normal;">(কার্ডে 📍 চিহ্নের সাথে দেখাবে)</span></label>
+                  <input type="text" id="tm-offline-areas" class="inp" placeholder="যেমন: মিরপুর, উত্তরা, ধানমন্ডি, ঢাকা" oninput="updateTeacherCardPreview();" style="margin-bottom:0;background:#18110b;border-color:rgba(249,115,22,0.4);color:#fed7aa;">
+                </div>
+
+                <div style="margin-bottom:12px;">
+                  <label style="display:block;font-size:12.5px;font-weight:700;margin-bottom:5px;color:#fff;">৭. ছবির লিংক / পাথ <span style="font-size:11px;color:#94a3b8;font-weight:normal;">(কার্ডের উপরে বড় আয়তাকার ফটো)</span></label>
+                  <div style="display:flex;gap:10px;align-items:center;">
+                    <input type="text" id="tm-photo-url" class="inp" placeholder="images/teachers/hafez-robiul-islam.jpg বা অনলাইন ছবির URL" oninput="updatePhotoPreview(); updateTeacherCardPreview();" style="margin-bottom:0;flex:1;">
+                    <div id="tm-photo-preview" style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);border:1.5px solid var(--teal);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:18px;">👨‍🏫</div>
+                  </div>
+                </div>
+
+                <!-- Verified Badge Checkbox -->
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <strong style="font-size:12.5px;color:#fff;display:block;">৮. ভেরিফাইড ব্যাজ (Verified Badge)</strong>
+                    <span style="font-size:11px;color:#94a3b8;">টিক দিলে কার্ডের কোনায় নীল ✓ Verified দেখাবে</span>
+                  </div>
+                  <input type="checkbox" id="tm-is-verified" checked onchange="updateTeacherCardPreview();" style="width:20px;height:20px;accent-color:#1e6fff;cursor:pointer;">
+                </div>
+              </div>
+
+              <!-- ডানপাশ: লাইভ কার্ড প্রিভিউ -->
+              <div style="position:sticky;top:10px;">
+                <div style="font-size:12px;font-weight:800;color:#cbd5e1;text-align:center;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px;">
+                  <span>👁️ লাইভ কার্ড প্রিভিউ</span>
+                  <span style="width:7px;height:7px;border-radius:50%;background:#10b981;display:inline-block;"></span>
+                </div>
+                <div id="tm-live-card-preview" style="background:#f1f5f9;padding:8px;border-radius:18px;border:1.5px dashed rgba(200,151,42,0.45);">
+                  <!-- Populated dynamically by updateTeacherCardPreview() -->
+                </div>
+                <div style="font-size:10.5px;color:#94a3b8;text-align:center;margin-top:6px;">
+                  হোমপেজে কার্ডটি ঠিক এভাবে দেখাবে
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 1: অন্যান্য পরিচিতি তথ্য -->
           <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
             <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>👤 শিক্ষকের সাধারণ তথ্য ও পরিচিতি</span>
+              <span>🔗 ২. সম্পূর্ণ প্রোফাইল লিংক ও WhatsApp বুকিং নম্বর</span>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
-              <div>
-                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষকের পুরো নাম *</label>
-                <input type="text" id="tm-name" class="inp" placeholder="যেমন: হাফেজ মাওলানা আব্দুর রহমান" required oninput="autoGenSlug()" style="margin-bottom:0;">
-              </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
               <div>
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">URL স্লাগ (SEO ফ্রেন্ডলি আইডি) *</label>
                 <input type="text" id="tm-slug" class="inp" placeholder="যেমন: hafez-abdur-rahman" required style="margin-bottom:0;">
-              </div>
-            </div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-              <div>
-                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">পদবী / উপাধি</label>
-                <input type="text" id="tm-designation" class="inp" placeholder="যেমন: হাফেজুল কুরআন ও মাওলানা" style="margin-bottom:0;">
               </div>
               <div>
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">WhatsApp বুকিং নম্বর</label>
@@ -1014,38 +1280,12 @@
             </div>
           </div>
 
-          <!-- Section 2: স্তর, বিভাগ, মোড, ক্যাটাগরি, সিরিয়াল ও রেটিং -->
+          <!-- Section 2: স্তর, ক্যাটাগরি, সিরিয়াল ও রেটিং -->
           <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
             <div style="font-size:13px;font-weight:700;color:var(--gold-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>🏷️ বিভাগ, পাঠদান মাধ্যম, স্তর, ক্যাটাগরি ও সিরিয়াল</span>
+              <span>🏷️ ৩. শিক্ষক স্তর, জেন্ডার, সিরিয়াল ও রেটিং</span>
             </div>
-            <!-- Track & Mode Row -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
-              <div>
-                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--gold-light);">পাঠদানের বিভাগ (Track) *</label>
-                <select id="tm-track" class="inp" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(200,151,42,0.4);color:#fde047;font-weight:700;">
-                  <option value="quran">🌟 কোরআন ও ইসলামিক শিক্ষা</option>
-                  <option value="general">🎓 জেনারেল শিক্ষা (স্কুল/কলেজ বিষয়)</option>
-                  <option value="both">🌟🎓 উভয় বিভাগ (কোরআন ও সাধারণ শিক্ষা)</option>
-                </select>
-              </div>
-              <div>
-                <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:#38bdf8;">পাঠদানের মাধ্যম (Teaching Mode) *</label>
-                <select id="tm-teaching-mode" class="inp" style="margin-bottom:0;background:#0d1a2d;border-color:rgba(56,189,248,0.4);color:#7dd3fc;font-weight:700;" onchange="document.getElementById('tm-offline-areas-wrap').style.display = (this.value !== 'online') ? 'block' : 'none';">
-                  <option value="both">🌐🏠 অনলাইন ও সরাসরি হোম টিউশন (উভয়)</option>
-                  <option value="online">💻 শুধুমাত্র অনলাইন ক্লাস</option>
-                  <option value="offline">🏠 শুধুমাত্র হোম টিউশন (বাসায় গিয়ে)</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Offline Areas Input (Visible when mode is both or offline) -->
-            <div id="tm-offline-areas-wrap" style="margin-bottom:12px;">
-              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:#fb923c;">📍 অফলাইন হোম টিউশন এলাকা (যেসব এলাকায় বাসায় গিয়ে পড়াতে পারবেন)</label>
-              <input type="text" id="tm-offline-areas" class="inp" placeholder="যেমন: মিরপুর, উত্তরা, ধানমন্ডি, বাড্ডা, ঢাকা" style="margin-bottom:0;background:#18110b;border-color:rgba(249,115,22,0.4);color:#fed7aa;">
-            </div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:12px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;">
               <div>
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">শিক্ষক স্তর *</label>
                 <select id="tm-teacher-type" class="inp" style="margin-bottom:0;">
@@ -1055,7 +1295,7 @@
               </div>
               <div>
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">জেন্ডার / ক্যাটাগরি</label>
-                <select id="tm-gender" class="inp" style="margin-bottom:0;">
+                <select id="tm-gender" class="inp" style="margin-bottom:0;" onchange="updateTeacherCardPreview();">
                   <option value="male">👨‍🏫 পুরুষ শিক্ষক (Male)</option>
                   <option value="female">🧕 মহিলা শিক্ষিকা (Female)</option>
                 </select>
@@ -1064,18 +1304,9 @@
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ওয়েবসাইটে সিরিয়াল ক্রম (Sort) *</label>
                 <input type="number" id="tm-sort" class="inp" placeholder="0" value="0" min="0" style="margin-bottom:0;">
               </div>
-            </div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
               <div>
                 <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">রেটিং (Rating / 5.0)</label>
                 <input type="number" id="tm-rating" step="0.1" min="1.0" max="5.0" class="inp" placeholder="5.0" value="5.0" style="margin-bottom:0;">
-              </div>
-              <div style="display:flex;align-items:center;padding-top:24px;">
-                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#fff;">
-                  <input type="checkbox" id="tm-is-verified" checked style="width:18px;height:18px;accent-color:var(--green);">
-                  <span>✅ ভেরিফাইড ব্যাজ (Verified Badge)</span>
-                </label>
               </div>
             </div>
           </div>
@@ -1083,7 +1314,7 @@
           <!-- Section 3: ফি ও ডেমো ভিডিও -->
           <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
             <div style="font-size:13px;font-weight:700;color:var(--blue-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>💰 কোর্স ফি ও ডেমো ভিডিও</span>
+              <span>💰 ৪. কোর্স ফি ও ডেমো ভিডিও</span>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
               <div>
@@ -1104,7 +1335,7 @@
           <!-- Section 4: দেশ ও ভাষা -->
           <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
             <div style="font-size:13px;font-weight:700;color:#38bdf8;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>📍 দেশ, মাতৃভাষা ও ক্লাসের ভাষা</span>
+              <span>📍 ৫. দেশ, মাতৃভাষা ও ক্লাসের ভাষা</span>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
               <div>
@@ -1122,24 +1353,10 @@
             </div>
           </div>
 
-          <!-- Section 5: ছবি ও প্রিভিউ -->
-          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
-            <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>🖼️ প্রোফাইল ছবি</span>
-            </div>
-            <div>
-              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">ছবির পাথ বা সরাসরি URL (যেমন: images/teachers/photo.jpg বা https://...)</label>
-              <div style="display:flex;gap:12px;align-items:center;">
-                <input type="text" id="tm-photo-url" class="inp" placeholder="images/teachers/photo.jpg বা ছবির অনলাইন লিংক" oninput="updatePhotoPreview()" style="margin-bottom:0;flex:1;">
-                <div id="tm-photo-preview" style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.05);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:22px;">👨‍🏫</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section 6: অভিজ্ঞতা ও যোগ্যতা -->
+          <!-- Section 5: অভিজ্ঞতা ও যোগ্যতা -->
           <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;">
             <div style="font-size:13px;font-weight:700;color:var(--gold-light);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-              <span>🏆 অভিজ্ঞতা, যোগ্যতা ও বিশেষজ্ঞতা</span>
+              <span>🏆 ৬. অভিজ্ঞতা ও সনদের বিস্তারিত যোগ্যতা</span>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
               <div>
@@ -1152,14 +1369,9 @@
               </div>
             </div>
 
-            <div style="margin-bottom:12px;">
-              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">যোগ্যতাসমূহ (কমা দিয়ে আলাদা করুন)</label>
-              <input type="text" id="tm-qualifications" class="inp" placeholder="হাফেজ, মাওলানা, ক্বারী, মুফতি" style="margin-bottom:0;">
-            </div>
-
             <div>
-              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">বিশেষজ্ঞতা বিষয় (কমা দিয়ে আলাদা করুন)</label>
-              <input type="text" id="tm-specializations" class="inp" placeholder="সহীহ তেলাওয়াত, হেফজ, তাজউইদ, শিশু শিক্ষা, নাজেরা" style="margin-bottom:0;">
+              <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--text-muted);">সনদ / যোগ্যতাসমূহ (কমা দিয়ে আলাদা করুন)</label>
+              <input type="text" id="tm-qualifications" class="inp" placeholder="হাফেজুল কুরআন (৩০ পারা), দাওরায়ে হাদিস (তাকমীল), ক্বারী" style="margin-bottom:0;">
             </div>
           </div>
 
@@ -3301,19 +3513,25 @@ function extractGicMeta(t) {
     t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
   }
 
-  // Check specializations for "হোম টিউশন: ..." if offline is still empty
-  if (!offline && Array.isArray(t.specializations)) {
+  // If strictly online, ensure no offline area and clean specs
+  if (mode === 'online') {
+    offline = '';
+  } else if (!offline && Array.isArray(t.specializations)) {
     const specArea = t.specializations.find(s => typeof s === 'string' && (s.startsWith('হোম টিউশন:') || s.startsWith('হোম টিউশন এলাকা:')));
     if (specArea) {
       offline = specArea.replace(/^হোম টিউশন( এলাকা)?:\s*/, '').trim();
-      if (!mode || mode === 'online') mode = 'both';
+      if (!mode) mode = 'both';
     }
   }
 
   t.track = track || 'quran';
   t.teaching_track = t.track;
   t.teaching_mode = mode || (offline ? 'both' : 'online');
-  t.offline_areas = offline || '';
+  // KEY FIX: if mode is strictly online, never show any offline area
+  t.offline_areas = (t.teaching_mode === 'online') ? '' : (offline || '');
+  if (t.teaching_mode === 'online' && Array.isArray(t.specializations)) {
+    t.specializations = t.specializations.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
+  }
   return t;
 }
 
@@ -4136,6 +4354,65 @@ function addSpecChip(spec) {
   }
 }
 
+function updateTeacherCardPreview() {
+  const name = document.getElementById('tm-name')?.value.trim() || 'শিক্ষকের নাম';
+  const designation = document.getElementById('tm-designation')?.value.trim() || 'পদবী / কি শেখান';
+  const photoUrl = document.getElementById('tm-photo-url')?.value.trim() || '';
+  const track = document.getElementById('tm-track')?.value || 'quran';
+  const mode = document.getElementById('tm-teaching-mode')?.value || 'online';
+  const offlineAreas = (mode === 'online') ? '' : (document.getElementById('tm-offline-areas')?.value.trim() || '');
+  const isVerified = document.getElementById('tm-is-verified')?.checked;
+  const specStr = document.getElementById('tm-specializations')?.value.trim() || '';
+  const gender = document.getElementById('tm-gender')?.value || 'male';
+
+  const previewEl = document.getElementById('tm-live-card-preview');
+  if (!previewEl) return;
+
+  const isQuran = (track === 'quran');
+  const isFemale = (gender === 'female');
+
+  let modeLabel = '💻 অনলাইন';
+  let modeClass = 'online';
+  if (mode === 'both') { modeLabel = '🌐 অনলাইন+হোম'; modeClass = 'both'; }
+  else if (mode === 'offline') { modeLabel = '🏠 হোম টিউশন'; modeClass = 'offline'; }
+
+  const specs = specStr ? specStr.split(',').map(s => s.trim()).filter(s => s && !s.startsWith('হোম টিউশন')).slice(0, 2) : [];
+  const chipClass = isQuran ? 'tc-subject-chip quran' : 'tc-subject-chip';
+  const chipsHtml = specs.length > 0
+    ? specs.map(s => `<span class="${chipClass}">${s}</span>`).join('')
+    : `<span class="${chipClass}">${isQuran ? 'কোরআন · তাজউইদ' : 'স্কুল · কলেজ'}</span>`;
+
+  const fallback = isFemale
+    ? `<div style="position:absolute;inset:0;background:linear-gradient(145deg,#380b3d,#86198f);display:flex;align-items:center;justify-content:center;font-size:42px;">🧕</div>`
+    : `<div style="position:absolute;inset:0;background:linear-gradient(145deg,#0b2239,#1d4e78);display:flex;align-items:center;justify-content:center;font-size:42px;">👨‍🏫</div>`;
+
+  const photoHtml = photoUrl
+    ? `<img src="${photoUrl}" alt="${name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" /><div style="display:none;position:absolute;inset:0;">${fallback}</div>`
+    : fallback;
+
+  previewEl.innerHTML = `
+    <div class="pub-teacher-card ${isQuran ? 'tc-quran-card' : ''}" style="width:100%;margin:0 auto;box-shadow:0 4px 14px rgba(0,0,0,0.18);">
+      <div class="pub-teacher-photo-wrap" style="height:120px;padding-bottom:0;">
+        ${photoHtml}
+        <div class="tc-track-pill ${isQuran ? 'quran' : 'general'}">${isQuran ? '🌟 কোরআন' : '🎓 জেনারেল'}</div>
+        ${isVerified ? '<div class="tc-verify-badge verified">✓ Verified</div>' : ''}
+      </div>
+      <div class="pub-tc-body">
+        <h3 class="pub-teacher-name" style="color:#0f2744;">${name}</h3>
+        <div class="pub-teacher-desig" style="color:#64748b;">${designation}</div>
+        <div class="tc-subject-chips">${chipsHtml}</div>
+        <div class="tc-mode-row">
+          <span class="tc-meta-mode ${modeClass}">${modeLabel}</span>
+          ${(offlineAreas && mode !== 'online') ? `<span class="tc-area-pill">📍 ${offlineAreas.split(',').slice(0, 2).join(', ')}</span>` : ''}
+        </div>
+      </div>
+      <div style="padding:0 10px 10px;width:100%;box-sizing:border-box;">
+        <div class="tc-cta-btn">সম্পূর্ণ প্রোফাইল দেখুন →</div>
+      </div>
+    </div>
+  `;
+}
+
 function openAddTeacherModal() {
   document.getElementById('tm-title').textContent = '➕ নতুন শিক্ষক যোগ করুন';
   document.getElementById('tm-id').value = '';
@@ -4177,6 +4454,7 @@ function openAddTeacherModal() {
   modalCurrentDay = 'sat';
   updatePhotoPreview();
   switchModalScheduleDay('sat');
+  updateTeacherCardPreview();
 
   // Reset save button state (may be stuck from a previous interrupted save)
   const saveBtn = document.getElementById('tm-save-btn');
@@ -4260,6 +4538,7 @@ function openEditTeacherModal(id) {
   modalCurrentDay = 'sat';
   updatePhotoPreview();
   switchModalScheduleDay('sat');
+  updateTeacherCardPreview();
 
   // Reset save button state (may be stuck from a previous interrupted save)
   const saveBtn = document.getElementById('tm-save-btn');
@@ -4316,14 +4595,14 @@ async function saveTeacherSubmit(event) {
   }
 
   const cleanBio = bio ? bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim() : '';
-  const metaPayload = JSON.stringify({ track, teaching_mode: teachingMode, offline_areas: offlineAreas });
+  const effectiveOfflineAreas = (teachingMode === 'online') ? '' : offlineAreas;
+  const metaPayload = JSON.stringify({ track, teaching_mode: teachingMode, offline_areas: effectiveOfflineAreas });
   const bioWithMeta = (cleanBio ? cleanBio + '\n\n' : '') + '<!--gic_meta:' + metaPayload + '-->';
 
-  // Also maintain offline area in specializations for instant native searchability & fallback
-  let finalSpecs = [...specializations];
-  if (offlineAreas) {
-    finalSpecs = finalSpecs.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
-    finalSpecs.push('হোম টিউশন: ' + offlineAreas);
+  // Also maintain offline area in specializations for instant native searchability & fallback (ONLY if not online)
+  let finalSpecs = [...specializations].filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
+  if (effectiveOfflineAreas && teachingMode !== 'online') {
+    finalSpecs.push('হোম টিউশন: ' + effectiveOfflineAreas);
   }
 
   const basePayload = {
@@ -4340,7 +4619,7 @@ async function saveTeacherSubmit(event) {
 
   const fullPayload = {
     ...basePayload,
-    track, teaching_mode: teachingMode, offline_areas: offlineAreas
+    track, teaching_mode: teachingMode, offline_areas: effectiveOfflineAreas
   };
 
   saveBtn.disabled = true;

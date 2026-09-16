@@ -4688,11 +4688,14 @@ function extractGicMeta(t) {
     t.bio = t.bio.replace(/<!--gic_meta:[\s\S]*?-->/g, '').trim();
   }
 
-  if (!offline && Array.isArray(t.specializations)) {
+  // If strictly online, ensure no offline area and clean specs
+  if (mode === 'online') {
+    offline = '';
+  } else if (!offline && Array.isArray(t.specializations)) {
     const specArea = t.specializations.find(s => typeof s === 'string' && (s.startsWith('হোম টিউশন:') || s.startsWith('হোম টিউশন এলাকা:')));
     if (specArea) {
       offline = specArea.replace(/^হোম টিউশন( এলাকা)?:\s*/, '').trim();
-      if (!mode || mode === 'online') mode = 'both';
+      if (!mode) mode = 'both';
     }
   }
 
@@ -4701,6 +4704,9 @@ function extractGicMeta(t) {
   t.teaching_mode = mode || (offline ? 'both' : 'online');
   // ── KEY FIX: if mode is strictly online, never show any offline area ──
   t.offline_areas = (t.teaching_mode === 'online') ? '' : (offline || '');
+  if (t.teaching_mode === 'online' && Array.isArray(t.specializations)) {
+    t.specializations = t.specializations.filter(s => typeof s === 'string' && !s.startsWith('হোম টিউশন'));
+  }
   return t;
 }
 
@@ -4744,16 +4750,18 @@ async function loadPublicTeachers(force = false) {
     data = data.map(dbT => {
       const processed = extractGicMeta(dbT);
       const local = localMap[processed.slug] || {};
+      const resolvedMode = processed.teaching_mode || local.teaching_mode || 'both';
+      const resolvedOffline = (resolvedMode === 'online') ? '' : ((processed.offline_areas !== undefined && processed.offline_areas !== null && processed.offline_areas !== '') ? processed.offline_areas : (local.offline_areas || ''));
       return {
         ...local,
         ...processed,
         name: (processed.name && processed.name.trim() !== '') ? processed.name : (local.name || ''),
         designation: (processed.designation && processed.designation.trim() !== '') ? processed.designation : (local.designation || ''),
         photo_url: (processed.photo_url && processed.photo_url.trim() !== '') ? processed.photo_url : (local.photo_url || ''),
-        teaching_mode: processed.teaching_mode || local.teaching_mode || 'both',
+        teaching_mode: resolvedMode,
         track: processed.track || local.track || (isTeacherGeneral(processed) ? 'general' : 'quran'),
         teaching_track: processed.teaching_track || local.teaching_track || (isTeacherGeneral(processed) ? 'general' : 'quran'),
-        offline_areas: (processed.offline_areas !== undefined && processed.offline_areas !== null && processed.offline_areas !== '') ? processed.offline_areas : (local.offline_areas || ''),
+        offline_areas: resolvedOffline,
         specializations: (Array.isArray(processed.specializations) && processed.specializations.length > 0) ? processed.specializations : (local.specializations || []),
         qualifications: (Array.isArray(processed.qualifications) && processed.qualifications.length > 0) ? processed.qualifications : (local.qualifications || []),
         bio: (processed.bio && processed.bio.trim() !== '') ? processed.bio : (local.bio || ''),
@@ -5009,10 +5017,13 @@ function renderPublicTeacherCards(data) {
       ? `<img src="${t.photo_url}" alt="${t.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div style="display:none;position:absolute;inset:0;">${customFallback}</div>`
       : customFallback;
 
-    // Blue verified badge with checkmark
-    const verifyBadgeNew = isDemo
-      ? `<div class="tc-verify-badge demo" title="এটি একটি নমুনা প্রোফাইল">🧪 Demo</div>`
-      : `<div class="tc-verify-badge verified" title="GIC কর্তৃক যাচাইকৃত">✓ Verified</div>`;
+    // Blue verified badge with checkmark (only if verified or demo)
+    let verifyBadgeNew = '';
+    if (isDemo) {
+      verifyBadgeNew = `<div class="tc-verify-badge demo" title="এটি একটি নমুনা প্রোফাইল">🧪 Demo</div>`;
+    } else if (t.is_verified !== false) {
+      verifyBadgeNew = `<div class="tc-verify-badge verified" title="GIC কর্তৃক যাচাইকৃত">✓ Verified</div>`;
+    }
 
     return `
       <div class="pub-teacher-card reveal${isQuranTeacher ? ' tc-quran-card' : ''}" style="${isQuranTeacher ? 'border-color:rgba(200,151,42,0.35);' : ''}">
