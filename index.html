@@ -2986,59 +2986,34 @@ footer {
   <section class="section" style="padding: 24px 20px 60px; background: var(--cream);" id="home-teachers-section">
     <div class="container">
 
-      <!-- FILTER & SEARCH SUITE -->
-      <div class="pub-filter-container reveal">
-        <!-- 1. Track Switcher -->
-        <div class="pub-track-tabs">
-          <button type="button" class="pub-track-btn active" id="pt-track-all" onclick="setPublicTeacherTrack('all')">
-            <span style="font-size:16px;">👥</span>
-            <span>সকল শিক্ষক</span>
-          </button>
-          <button type="button" class="pub-track-btn" id="pt-track-quran" onclick="setPublicTeacherTrack('quran')">
-            <span style="font-size:16px;">🌟</span>
-            <span>কোরআন ও ইসলামিক শিক্ষা</span>
-          </button>
-          <button type="button" class="pub-track-btn" id="pt-track-general" onclick="setPublicTeacherTrack('general')">
-            <span style="font-size:16px;">🎓</span>
-            <span>জেনারেল শিক্ষা</span>
-          </button>
+      <!-- COMPACT SEARCH + FILTER BAR -->
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:18px;" class="reveal">
+        <div style="flex:1;position:relative;display:flex;align-items:center;">
+          <span style="position:absolute;left:13px;font-size:15px;color:#94a3b8;pointer-events:none;">🔍</span>
+          <input type="text" id="pub-teacher-search"
+            placeholder="নাম, বিষয় বা এলাকা লিখুন..."
+            oninput="handlePublicTeacherSearch()"
+            style="width:100%;padding:11px 36px 11px 40px;border:1.5px solid #cbd5e1;border-radius:12px;font-size:13px;font-family:inherit;outline:none;background:#fff;color:#0f2744;box-sizing:border-box;transition:border-color 0.2s;"
+            onfocus="this.style.borderColor='#1a5f9e';this.style.boxShadow='0 0 0 3px rgba(26,95,158,0.1)'"
+            onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
+          <button type="button" id="pub-search-clear" style="display:none;position:absolute;right:11px;background:#e2e8f0;border:none;color:#64748b;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:11px;align-items:center;justify-content:center;" onclick="clearPublicTeacherSearch()">✕</button>
         </div>
+        <button type="button" onclick="openParentFilterModal()" id="pub-filter-toggle-btn"
+          style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#0f2744,#1e3d6e);color:#fff;border:none;border-radius:12px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 3px 10px rgba(15,39,68,0.18);transition:all 0.2s;flex-shrink:0;"
+          onmouseover="this.style.background='linear-gradient(135deg,#16365c,#264d88)'"
+          onmouseout="this.style.background='linear-gradient(135deg,#0f2744,#1e3d6e)'">
+          <span style="font-size:15px;">⚙️</span>
+          <span>ফিল্টার</span>
+          <span id="pub-filter-badge" class="pub-filter-count-badge" style="display:none;">0</span>
+        </button>
+        <button type="button" onclick="resetAllPublicFilters()" id="pub-filter-reset-btn" style="display:none;background:#f1f5f9;border:1px solid #cbd5e1;color:#475569;border-radius:12px;padding:11px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0;">
+          🔄
+        </button>
+      </div>
 
-        <!-- 2. Search Bar + Filter Modal Button + Reset -->
-        <div class="pub-search-filter-bar">
-          <div class="pub-search-wrap">
-            <span class="pub-search-icon">🔍</span>
-            <input type="text" id="pub-teacher-search" placeholder="শিক্ষকের নাম, বিষয় (যেমন: গণিত, ইংরেজি, তাজউইদ, নূরানী) বা এলাকা (মিরপুর, উত্তরা)..." oninput="handlePublicTeacherSearch()">
-            <button type="button" id="pub-search-clear" class="pub-search-clear-btn" style="display:none;" onclick="clearPublicTeacherSearch()">✕</button>
-          </div>
-          <button type="button" class="pub-filter-open-btn" onclick="openParentFilterModal()" id="pub-filter-toggle-btn" title="বিস্তারিত ফিল্টার করুন">
-            <span style="font-size:16px;">⚙️</span>
-            <span>ফিল্টার করুন</span>
-            <span id="pub-filter-badge" class="pub-filter-count-badge" style="display:none;">0</span>
-          </button>
-          <button type="button" class="pub-filter-reset-btn" onclick="resetAllPublicFilters()" id="pub-filter-reset-btn" style="display:none;" title="সব ফিল্টার মুছে ফেলুন">
-            <span>🔄 রিসেট</span>
-          </button>
-        </div>
-
-        <!-- 3. Quick Chips Row: Gender & Popular Subjects -->
-        <div class="pub-quick-chips-row" style="margin-bottom:6px;">
-          <span class="pub-chips-label">ক্যাটাগরি:</span>
-          <button type="button" class="pub-chip active" id="pchip-gender-all" onclick="setPublicTeacherGender('all')">👥 যে কোনো শিক্ষক</button>
-          <button type="button" class="pub-chip" id="pchip-gender-male" onclick="setPublicTeacherGender('male')">👨‍🏫 পুরুষ শিক্ষক</button>
-          <button type="button" class="pub-chip pub-chip-gender-female" id="pchip-gender-female" onclick="setPublicTeacherGender('female')">🧕 মহিলা শিক্ষিকা</button>
-          <button type="button" class="pub-chip" id="pchip-mode-home" onclick="toggleQuickHomeTuitionFilter()">🏠 হোম টিউশন</button>
-        </div>
-
-        <!-- 4. Dynamic Subject Chips (Populated based on Active Track) -->
-        <div class="pub-quick-chips-row" id="pub-subject-chips-wrap">
-          <!-- Dynamically managed in JS -->
-        </div>
-
-        <!-- 5. Active Filter Tags Bar (hidden when no filter is active) -->
-        <div class="pub-active-summary-bar" id="pub-active-summary-bar" style="display:none;">
-          <div id="pub-active-filter-tags" style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;"></div>
-        </div>
+      <!-- Active filter tags (shown when filters are active) -->
+      <div class="pub-active-summary-bar" id="pub-active-summary-bar" style="display:none;margin-bottom:14px;">
+        <div id="pub-active-filter-tags" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;"></div>
       </div>
 
       <!-- TEACHERS GRID & LOADER -->
