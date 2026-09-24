@@ -7,8 +7,10 @@
 /services/:slug /services/:slug.html 200
 /reviews        /index.html?page=reviews 200
 /free-courses   /index.html?page=free-courses 200
-/about          /index.html?page=about 200
-/contact        /index.html?page=contact 200
+/about          /about.html 200
+/about/         /about.html 200
+/contact        /contact.html 200
+/contact/       /contact.html 200
 /policy         /policy.html 200
 /policy/        /policy.html 200
 /privacy-policy /policy.html 200

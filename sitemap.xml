@@ -58,11 +58,31 @@
   <!-- ── About Us ────────────────────────────────────── -->
   <url>
     <loc>https://globalislamiccare.com/about</loc>
-    <lastmod>2026-09-14T00:00:00+06:00</lastmod>
+    <lastmod>2026-09-24T00:00:00+06:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/about"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/about"/>
+  </url>
+
+  <!-- ── Contact Us ──────────────────────────────────── -->
+  <url>
+    <loc>https://globalislamiccare.com/contact</loc>
+    <lastmod>2026-09-24T00:00:00+06:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/contact"/>
+  </url>
+
+  <!-- ── Policy & Terms ──────────────────────────────── -->
+  <url>
+    <loc>https://globalislamiccare.com/policy</loc>
+    <lastmod>2026-09-24T00:00:00+06:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://globalislamiccare.com/policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://globalislamiccare.com/policy"/>
   </url>
 
   <!-- ── AI-readable file ────────────────────────────── -->
