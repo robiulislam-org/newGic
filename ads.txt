@@ -1,3 +1,9 @@
-﻿# Google AdSense ads.txt
-# globalislamiccare.com
-google.com, ca-pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+# Google AdSense ads.txt
+# Domain: globalislamiccare.com
+# 
+# Status: Prepared for Google AdSense Activation
+# As soon as you receive your publisher ID from Google AdSense, activate it by running:
+# .\set-adsense.ps1 -PublisherId ca-pub-1234567890123456
+# 
+# Active record format (uncomment upon account approval):
+# google.com, ca-pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

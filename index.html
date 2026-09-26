@@ -2927,7 +2927,7 @@ footer {
 
 <!-- ─────────── NAV ─────────── -->
 <nav id="mainNav">
-  <a class="nav-logo" href="#" onclick="showPage('home');return false;">
+  <a class="nav-logo" href="/" onclick="showPage('home');return false;">
     <img src="logo.jpg" alt="Global Islamic Care" class="logo-img">
     <div class="logo-text">
       <span class="lt-main">Global Islamic Care</span>
@@ -4035,7 +4035,7 @@ footer {
 <footer>
   <div class="footer-main">
     <div class="footer-brand">
-      <a class="nav-logo" href="#" onclick="showPage('home')">
+      <a class="nav-logo" href="/" onclick="showPage('home');return false;">
         <img src="logo.jpg" alt="Global Islamic Care" class="logo-img">
         <div class="logo-text">
           <span class="lt-main">Global Islamic Care</span>
@@ -4061,31 +4061,33 @@ footer {
       </ul>
     </div>
     <div class="footer-col">
-      <h5>প্রয়োজনীয় লিংক</h5>
+      <h5>প্রয়োজনীয় লিংক ও পলিসি</h5>
       <ul>
         <li><a href="/teachers" style="font-weight:700;color:var(--gold-light);">🔍 শিক্ষক খুঁজুন (অনলাইন ও হোম টিউশন)</a></li>
         <li><a href="javascript:void(0)" onclick="openTeacherApplyModal()">🎓 শিক্ষক হিসেবে আবেদন</a></li>
         <li><a href="/free-courses" onclick="showPage('free-courses');return false;">ফ্রি মিনি-কোর্স</a></li>
         <li><a href="/library">ডিজিটাল লাইব্রেরি (PDF)</a></li>
-        <li><a href="/about">আমাদের সম্পর্কে</a></li>
+        <li><a href="/about">আমাদের সম্পর্কে (About Us)</a></li>
         <li><a href="/reviews" onclick="showPage('reviews');return false;">⭐ শিক্ষার্থী ও অভিভাবক রিভিউ</a></li>
-        <li><a href="/policy">📋 প্ল্যাটফর্ম নীতিমালা ও শর্তাবলী</a></li>
+        <li><a href="/policy#privacy">🛡️ গোপনীয়তা নীতি (Privacy Policy)</a></li>
+        <li><a href="/policy">📋 প্ল্যাটফর্ম নীতিমালা ও শর্তাবলী (Terms)</a></li>
         <li><a href="/policy#payment">💳 পেমেন্ট ও স্বচ্ছতা নীতিমালা</a></li>
-        <li><a href="/contact">যোগাযোগ ও সহায়তা</a></li>
+        <li><a href="/policy#safety">⚠️ দায়িত্বের সীমাবদ্ধতা (Disclaimer)</a></li>
+        <li><a href="/contact">যোগাযোগ ও সহায়তা (Contact)</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
     <div class="footer-policy-links">
-      <a href="/teachers">শিক্ষক খুঁজুন</a>
+      <a href="/policy#privacy">গোপনীয়তা নীতি (Privacy Policy)</a>
       <span>·</span>
-      <a href="/reviews" onclick="showPage('reviews');return false;">রিভিউ</a>
-      <span>·</span>
-      <a href="/about">আমাদের সম্পর্কে</a>
-      <span>·</span>
-      <a href="/policy">প্ল্যাটফর্ম নীতিমালা</a>
+      <a href="/policy">শর্তাবলী ও নীতিমালা (Terms)</a>
       <span>·</span>
       <a href="/policy#payment">পেমেন্ট নীতিমালা</a>
+      <span>·</span>
+      <a href="/policy#safety">দায়িত্বের সীমাবদ্ধতা (Disclaimer)</a>
+      <span>·</span>
+      <a href="/about">আমাদের সম্পর্কে</a>
       <span>·</span>
       <a href="/contact">যোগাযোগ</a>
     </div>
@@ -7370,5 +7372,6 @@ document.getElementById('teacher-apply-modal')?.addEventListener('click', functi
 
 </script>
 <script src="inline_edit.js"></script>
+<script src="cookie-consent.js" defer></script>
 </body>
 </html>

@@ -33,11 +33,13 @@ Disallow: /emergency_login_fix.sql
 Disallow: /supabase_master_setup.sql
 Disallow: /home_44a0bf7.html
 
-# ── Google ────────────────────────────────────────────────────
+# ── Google AdSense & Search Crawlers ─────────────────────────
+User-agent: Mediapartners-Google
+Allow: /
+
 User-agent: Googlebot
 Allow: /
 Allow: /llms.txt
-Crawl-delay: 1
 
 User-agent: Googlebot-Image
 Allow: /og-image.jpg
