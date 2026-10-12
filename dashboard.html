@@ -5005,17 +5005,35 @@ async function toggleTeacherActiveStatus(id, currentStatus) {
   const newStatus = !currentStatus;
   try {
     let updateOk = false;
-    if (!isNaN(Number(id))) {
-      const { error } = await db.from('teachers').update({ is_active: newStatus }).eq('id', Number(id));
-      if (!error) updateOk = true;
+
+    // Primary: use toggle_teacher_active RPC (SECURITY DEFINER, bypasses RLS)
+    if (!isNaN(Number(id)) && authPwd) {
+      const { data: rpcData, error: rpcErr } = await db.rpc('toggle_teacher_active', {
+        pass_code: authPwd,
+        p_id: Number(id),
+        p_is_active: newStatus
+      });
+      if (!rpcErr && rpcData && rpcData.success) updateOk = true;
     }
-    if (!updateOk) {
+
+    // Fallback: try slug-based RPC if numeric id failed
+    if (!updateOk && authPwd) {
       const teacher = allAdminTeachers.find(item => item.id == id || String(item.id) === String(id) || item.slug === id);
-      if (teacher && teacher.slug) {
-        const { error } = await db.from('teachers').update({ is_active: newStatus }).eq('slug', teacher.slug);
-        if (!error) updateOk = true;
+      if (teacher && teacher.id) {
+        const { data: rpcData, error: rpcErr } = await db.rpc('toggle_teacher_active', {
+          pass_code: authPwd,
+          p_id: Number(teacher.id),
+          p_is_active: newStatus
+        });
+        if (!rpcErr && rpcData && rpcData.success) updateOk = true;
       }
     }
+
+    if (!updateOk) {
+      toast('❌ হাইড/আনহাইড করতে সমস্যা হয়েছে। Supabase-এ fix_teacher_hide.sql রান করুন।', 'err');
+      return;
+    }
+
     const t = allAdminTeachers.find(item => item.id == id || String(item.id) === String(id) || item.slug === id);
     if (t) t.is_active = newStatus;
     toast(`✅ প্রোফাইল ${newStatus ? 'সক্রিয় (ওয়েবসাইটে দৃশ্যমান)' : 'হাইড (ওয়েবসাইটে বন্ধ)'} করা হয়েছে!`, 'ok');
