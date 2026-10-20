@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bn">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -2191,13 +2191,13 @@ async function init() {
         };
       });
 
-      // Ensure all 3 real verified teachers exist if missing
-      const realSlugs = ['md-mujahidul-islam', 'hafez-robiul-islam', 'md-al-amin'];
-      realSlugs.forEach(s => {
-        if (!allTeachers.some(t => t.slug === s) && DEMO_TEACHERS_MAP[s]) {
-          allTeachers.push(DEMO_TEACHERS_MAP[s]);
-        }
-      });
+      // NOTE: Do NOT force-add hardcoded teachers here.
+      // If a teacher is hidden (is_active=false) in the DB, the query above
+      // already excludes them via .eq('is_active', true). Respect that.
+      // BUG FIX: Removed realSlugs force-add that bypassed is_active filter.
+
+
+
 
       // If DB has no general teachers yet, merge demo general teachers so parents can filter them
       // General education teachers disabled — Islamic network only
