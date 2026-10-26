@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islamic Horse Racing Typing Game – Learn English Typing Free | Global Islamic Care</title>
+<meta name="description" content="Play GIC's Islamic Horse Racing Typing Game! Race horses while learning English typing with Quran verses, Hadith and Islamic wisdom. Free educational typing game for Muslims. Improve your WPM today!">
+<meta name="keywords" content="islamic typing game, horse racing typing game, english typing practice, quran typing game, learn english typing islam, GIC game, global islamic care game, free typing game bangladesh, typing speed wpm islam, islamic educational game">
+<meta name="author" content="Global Islamic Care">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="theme-color" content="#1a5f3a">
+<link rel="canonical" href="https://globalislamiccare.com/typing-game.html">
+<link rel="icon" href="favicon.png">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://globalislamiccare.com/typing-game.html">
+<meta property="og:title" content="Islamic Horse Racing Typing Game | Global Islamic Care">
+<meta property="og:description" content="Race against 4 AI opponents! Learn English typing with Islamic wisdom. Free game by Global Islamic Care. 🐎🌙">
+<meta property="og:image" content="https://globalislamiccare.com/og-image.jpg">
+<meta property="og:site_name" content="Global Islamic Care">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Islamic Horse Racing Typing Game | GIC">
+<meta name="twitter:description" content="Race horses while learning English typing with Islamic wisdom. Free game by Global Islamic Care!">
+<meta name="twitter:image" content="https://globalislamiccare.com/og-image.jpg">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================
+   ROOT VARIABLES
+   ========================================= */
+:root {
+  --green:       #1a5f3a;
+  --green-light: #27ae60;
+  --gold:        #C8972A;
+  --gold-light:  #f0c040;
+  --dark:        #0a1a10;
+  --dark2:       #0d2218;
+  --surface:     #12261a;
+  --surface2:    #1a3828;
+  --surface3:    #224535;
+  --text:        #e8f5e9;
+  --muted:       #81c784;
+  --red:         #e74c3c;
+  --red-bg:      rgba(231,76,60,0.18);
+  --blue:        #3498db;
+  --purple:      #9b59b6;
+  --orange:      #f39c12;
+  --wa:          #25D366;
+}
+
+/* =========================================
+   RESET & BASE
+   ========================================= */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+input { font-family: inherit; outline: none; }
+
+/* =========================================
+   HEADER
+   ========================================= */
+.site-header {
+  position: sticky; top: 0; z-index: 200;
+  background: linear-gradient(135deg, var(--dark2) 0%, var(--green) 100%);
+  border-bottom: 2px solid var(--gold);
+  padding: 10px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+}
+.logo-wrap { display:flex; align-items:center; gap:10px; }
+.logo-box {
+  width:42px; height:42px; background:var(--gold); border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; font-weight:700; color:var(--dark2); font-family:serif;
+  flex-shrink:0;
+}
+.logo-text h1 { font-size:15px; font-weight:700; color:var(--gold); line-height:1.2; }
+.logo-text p  { font-size:10px; color:var(--muted); }
+.site-nav { display:flex; gap:20px; list-style:none; }
+.site-nav a { font-size:13px; color:var(--muted); transition:color .2s; padding:4px 0; }
+.site-nav a:hover, .site-nav a.active { color:var(--gold); }
+@media(max-width:700px){ .site-nav { display:none; } }
+
+/* =========================================
+   GAME HERO
+   ========================================= */
+.game-hero {
+  background: linear-gradient(135deg, var(--dark2) 0%, var(--surface) 50%, var(--dark2) 100%);
+  border-bottom: 1px solid var(--surface2);
+  text-align: center;
+  padding: 28px 20px 20px;
+  position: relative; overflow: hidden;
+}
+.game-hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C8972A' fill-opacity='0.04'%3E%3Cpath d='M26 0l4 8h8l-6 6 2 8-8-5-8 5 2-8-6-6h8z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.game-hero h2 {
+  font-family:'Cinzel',serif;
+  font-size:clamp(22px,5vw,40px);
+  color:var(--gold);
+  margin-bottom:8px;
+  position:relative;
+  text-shadow:0 2px 20px rgba(200,151,42,0.3);
+}
+.game-hero h2 span { color:var(--text); }
+.game-hero p {
+  color:var(--muted); font-size:14px; max-width:580px;
+  margin:0 auto 14px; position:relative; line-height:1.6;
+}
+.badge-row { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; position:relative; }
+.badge {
+  background:rgba(200,151,42,0.12); border:1px solid rgba(200,151,42,0.4);
+  color:var(--gold); padding:4px 13px; border-radius:20px;
+  font-size:11px; font-weight:600; letter-spacing:.3px;
+}
+
+/* =========================================
+   MAIN LAYOUT
+   ========================================= */
+.game-wrap { max-width:1080px; margin:0 auto; padding:18px 16px 40px; }
+
+/* =========================================
+   STATS BAR
+   ========================================= */
+.stats-bar {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+  margin-bottom:16px;
+}
+.stat-card {
+  background:var(--surface); border:1px solid var(--surface2);
+  border-radius:12px; padding:12px 8px; text-align:center;
+}
+.stat-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.stat-val   { font-size:26px; font-weight:700; color:var(--gold); line-height:1; transition:color .3s, text-shadow .3s; }
+.stat-unit  { font-size:10px; color:var(--muted); margin-top:2px; }
+.stat-val.fast      { color:#2ecc71; text-shadow:0 0 14px rgba(46,204,113,0.5); }
+.stat-val.very-fast { color:#f39c12; text-shadow:0 0 18px rgba(243,156,18,0.7); }
+@media(max-width:540px){ .stats-bar { grid-template-columns:repeat(2,1fr); } }
+
+/* =========================================
+   RACE TRACK
+   ========================================= */
+.race-section {
+  background:var(--surface); border:1px solid var(--surface2);
+  border-radius:16px; overflow:hidden; margin-bottom:16px;
+}
+.track-topbar {
+  background:var(--surface2); padding:9px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid var(--surface3);
+}
+.track-topbar span { font-size:12px; color:var(--muted); font-weight:600; }
+.rank-badge {
+  background:rgba(200,151,42,0.12); border:1px solid var(--gold);
+  color:var(--gold); padding:3px 12px; border-radius:8px;
+  font-size:11px; font-weight:700;
+}
+
+/* Desert panorama background */
+.track-panorama {
+  position:relative; height:290px; overflow:hidden;
+  background:
+    linear-gradient(180deg,
+      #0d1b3e 0%,
+      #1a2f6a 28%,
+      #c8822a 62%,
+      #d4a040 70%,
+      #8b6010 70.1%,
+      #6b480a 100%
+    );
+}
+
+/* Stars */
+.t-stars {
+  position:absolute; inset:0; height:65%;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8%  12%, rgba(255,255,255,.9) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 18% 6%,  rgba(255,255,255,.8) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 30% 20%, rgba(255,255,255,.9) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 45% 8%,  rgba(255,255,255,.7) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 58% 15%, rgba(255,255,255,.8) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 72% 5%,  rgba(255,255,255,.9) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 85% 22%, rgba(255,255,255,.7) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 92% 10%, rgba(255,255,255,.8) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 14% 32%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 68% 28%, rgba(255,255,255,.7) 0%, transparent 100%);
+}
+
+/* Moon */
+.t-moon {
+  position:absolute; top:6%; left:7%;
+  font-size:36px;
+  animation:moonFloat 5s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px rgba(200,151,42,.7));
+}
+@keyframes moonFloat {
+  0%,100%{ transform:translateY(0) rotate(-5deg); }
+  50%     { transform:translateY(-8px) rotate(5deg); }
+}
+
+/* Sand dunes */
+.t-dune {
+  position:absolute; bottom:28%; left:0; right:0; height:40px;
+  background:linear-gradient(180deg, transparent 0%, rgba(139,96,16,0.4) 100%);
+  border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  transform:scaleX(1.4);
+}
+
+/* Mosque SVG at finish */
+.t-mosque {
+  position:absolute; right:3.5%; bottom:27%;
+  width:70px; opacity:.9;
+  filter:drop-shadow(0 0 10px rgba(200,151,42,.6));
+}
+
+/* Finish line */
+.t-finish {
+  position:absolute; right:6.5%; top:35%; bottom:0; width:5px;
+  background: repeating-linear-gradient(0deg,#fff 0,#fff 10px,#111 10px,#111 20px);
+  z-index:5;
+}
+.t-flag {
+  position:absolute; right:6%; top:32%;
+  font-size:24px; z-index:6;
+}
+
+/* Winner flash */
+.winner-flash {
+  position:absolute; inset:0; z-index:40;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(200,151,42,.18);
+  font-family:'Cinzel',serif; font-size:36px; font-weight:900;
+  color:var(--gold); text-shadow:0 0 30px rgba(200,151,42,1);
+  pointer-events:none; opacity:0;
+  transition:opacity .3s;
+}
+.winner-flash.show { opacity:1; }
+
+/* Lanes container */
+.lanes-wrap {
+  position:absolute; top:36%; left:3%; right:6.5%; bottom:0;
+  display:flex; flex-direction:column;
+}
+.lane {
+  flex:1; position:relative; display:flex; align-items:center;
+  border-top:1px dashed rgba(255,255,255,.08);
+}
+.lane:first-child { border-top:none; }
+
+/* Lane dust trail */
+.lane-dust {
+  position:absolute; left:0; bottom:25%; height:5px;
+  background:linear-gradient(90deg, transparent 0%, rgba(200,151,42,.35) 100%);
+  border-radius:3px; transition:width .15s linear;
+  pointer-events:none;
+}
+
+/* Position badge left */
+.lane-pos {
+  position:absolute; left:-22px; width:18px; height:18px;
+  border-radius:50%; background:var(--surface2); border:1px solid var(--surface3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:9px; font-weight:700; color:var(--muted);
+}
+.lane-pos.p1 { background:var(--gold); color:var(--dark2); }
+.lane-pos.p2 { background:#aaa; color:var(--dark2); }
+.lane-pos.p3 { background:#cd7f32; color:var(--dark2); }
+
+/* Horse */
+.horse {
+  position:absolute; font-size:26px; left:2%;
+  transition:left .12s linear;
+  filter:drop-shadow(1px 2px 4px rgba(0,0,0,.6));
+  cursor:default; z-index:10; line-height:1;
+  user-select:none;
+}
+.horse.player-horse { filter:drop-shadow(0 0 8px rgba(46,204,113,.8)) drop-shadow(1px 2px 4px rgba(0,0,0,.5)); }
+.horse.galloping { animation:gallop .25s ease-in-out infinite alternate; }
+.horse.error-bump { animation:errBump .15s ease-out; }
+@keyframes gallop  { 0%{ transform:translateY(0) rotate(-3deg); } 100%{ transform:translateY(-5px) rotate(3deg); } }
+@keyframes errBump { 0%{ transform:translateX(0); } 50%{ transform:translateX(-5px); } 100%{ transform:translateX(0); } }
+
+/* Racer name label */
+.horse-label {
+  position:absolute; bottom:-2px; white-space:nowrap;
+  font-size:8px; font-weight:700; color:#fff;
+  background:rgba(0,0,0,.65); padding:1px 5px; border-radius:4px;
+  left:50%; transform:translateX(-50%);
+  pointer-events:none;
+}
+
+/* Countdown overlay */
+.countdown-ov {
+  position:absolute; inset:0; z-index:50;
+  background:rgba(0,0,0,.76); display:flex;
+  align-items:center; justify-content:center;
+  border-radius:0;
+}
+.cd-num {
+  font-family:'Cinzel',serif; font-size:72px; font-weight:900;
+  color:var(--gold); text-shadow:0 0 40px rgba(200,151,42,.8);
+  animation:cdPop .7s ease-out;
+}
+@keyframes cdPop {
+  0%  { transform:scale(1.8); opacity:0; }
+  100%{ transform:scale(1);   opacity:1; }
+}
+
+/* =========================================
+   STREAK BADGE
+   ========================================= */
+.streak-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  background:rgba(243,156,18,.15); border:1px solid var(--orange);
+  color:var(--orange); border-radius:8px; padding:2px 8px;
+  font-size:12px; font-weight:700; margin-left:8px;
+  opacity:0; transition:opacity .3s;
+}
+.streak-badge.show { opacity:1; }
+
+/* =========================================
+   TYPING SECTION
+   ========================================= */
+.typing-section {
+  background:var(--surface); border:1px solid var(--surface2);
+  border-radius:16px; padding:18px; margin-bottom:16px;
+}
+.typing-header {
+  display:flex; align-items:center; gap:8px; margin-bottom:12px;
+  flex-wrap:wrap;
+}
+.typing-header h3 { font-size:14px; color:var(--gold); font-weight:700; }
+.src-tag {
+  margin-left:auto; background:var(--surface2);
+  color:var(--muted); font-size:11px; padding:3px 10px;
+  border-radius:10px; flex-shrink:0;
+}
+
+/* Text display */
+.text-display {
+  background:var(--dark2); border:1px solid var(--surface2);
+  border-radius:10px; padding:16px 18px; margin-bottom:14px;
+  font-size:17px; line-height:1.9; font-family:'Courier New', monospace;
+  word-break:break-word; min-height:76px; letter-spacing:.4px;
+  position:relative; user-select:none;
+}
+
+/* Character spans */
+.c { position:relative; }
+.c.typed     { color:#66bb6a; }
+.c.current   { color:var(--gold); border-bottom:2px solid var(--gold); animation:blinkC .7s ease-in-out infinite alternate; }
+.c.err       { color:var(--red); background:var(--red-bg); border-bottom:2px solid var(--red); }
+.c.remaining { color:#3a5c3f; }
+@keyframes blinkC { 0%{ opacity:1; } 100%{ opacity:.4; } }
+
+/* Input area */
+.typing-input {
+  width:100%; background:var(--surface2); border:2px solid var(--surface3);
+  border-radius:10px; padding:12px 16px; color:var(--text);
+  font-size:16px; font-family:'Courier New', monospace;
+  transition:border-color .2s;
+  caret-color: var(--gold);
+}
+.typing-input:focus { border-color:var(--gold); }
+.typing-input.shake  { animation:shakeInput .18s ease; border-color:var(--red); }
+@keyframes shakeInput { 0%,100%{ transform:translateX(0); } 25%{ transform:translateX(-5px); } 75%{ transform:translateX(5px); } }
+.typing-hint { font-size:11px; color:var(--muted); text-align:center; margin-top:8px; }
+
+/* Progress */
+.prog-wrap { margin-top:12px; background:var(--dark2); height:7px; border-radius:4px; overflow:hidden; }
+.prog-fill  { height:100%; border-radius:4px; transition:width .1s linear; background:linear-gradient(90deg, var(--green) 0%, var(--gold) 100%); }
+
+/* =========================================
+   CONTROLS
+   ========================================= */
+.controls { display:flex; gap:10px; justify-content:center; margin-bottom:16px; flex-wrap:wrap; }
+.btn {
+  padding:11px 26px; border-radius:10px; font-size:14px; font-weight:700;
+  display:flex; align-items:center; gap:8px; transition:all .2s;
+  box-shadow:0 2px 10px rgba(0,0,0,.3);
+}
+.btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 5px 18px rgba(0,0,0,.4); }
+.btn:disabled { opacity:.45; cursor:not-allowed; transform:none !important; }
+.btn-green { background:linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%); color:#fff; }
+.btn-gold  { background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);  color:var(--dark2); }
+.btn-muted { background:var(--surface2); color:var(--muted); border:1px solid var(--surface3); }
+
+/* =========================================
+   LEADERBOARD
+   ========================================= */
+.leaderboard {
+  background:var(--surface); border:1px solid var(--surface2);
+  border-radius:16px; padding:16px;
+}
+.lb-title { color:var(--gold); font-size:14px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+.lb-table { width:100%; border-collapse:collapse; }
+.lb-table th { text-align:left; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; padding:6px 8px; border-bottom:1px solid var(--surface2); }
+.lb-table td { padding:7px 8px; font-size:13px; border-bottom:1px solid rgba(255,255,255,.04); }
+.lb-table tr:last-child td { border-bottom:none; }
+.lb-rank { font-weight:700; color:var(--gold); width:30px; }
+.lb-badge { display:inline-block; background:var(--surface2); color:var(--gold); font-size:10px; padding:2px 7px; border-radius:6px; }
+.lb-empty { text-align:center; color:var(--muted); padding:22px; font-size:13px; }
+
+/* =========================================
+   RESULTS MODAL
+   ========================================= */
+.modal-ov {
+  position:fixed; inset:0; z-index:500;
+  background:rgba(0,0,0,.82); backdrop-filter:blur(5px);
+  display:flex; align-items:center; justify-content:center; padding:16px;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.modal-ov.open { opacity:1; pointer-events:all; }
+.modal {
+  background:var(--surface); border:2px solid var(--gold);
+  border-radius:20px; padding:28px 24px; max-width:460px; width:100%;
+  text-align:center;
+  transform:translateY(24px); transition:transform .3s;
+}
+.modal-ov.open .modal { transform:translateY(0); }
+.modal-emoji { font-size:62px; margin-bottom:12px; display:block; }
+.modal h2  { font-family:'Cinzel',serif; color:var(--gold); font-size:22px; margin-bottom:6px; }
+.modal-pos { font-size:13px; color:var(--muted); margin-bottom:18px; }
+.modal-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px; }
+.ms { background:var(--dark2); border-radius:10px; padding:11px 6px; }
+.ms .v { font-size:26px; font-weight:700; color:var(--gold); }
+.ms .l { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+.modal-wisdom {
+  background:rgba(200,151,42,.08); border:1px solid rgba(200,151,42,.35);
+  border-radius:10px; padding:13px; margin-bottom:18px;
+  font-size:13px; color:var(--text); font-style:italic; line-height:1.6;
+}
+.modal-wisdom strong { display:block; color:var(--gold); font-size:10px; margin-top:6px; font-style:normal; }
+.modal-btns { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.btn-wa {
+  background:#25D366; color:#fff; padding:10px 18px; border-radius:10px;
+  font-size:13px; font-weight:700; display:flex; align-items:center; gap:7px;
+  transition:all .2s;
+}
+.btn-wa:hover { background:#1da851; transform:translateY(-2px); }
+
+/* =========================================
+   FLOATING WHATSAPP BUTTON
+   ========================================= */
+.float-wa {
+  position:fixed; bottom:22px; right:22px; z-index:300;
+  display:flex; flex-direction:column; align-items:flex-end; gap:8px;
+}
+.float-wa-tip {
+  background:rgba(0,0,0,.85); color:#fff; padding:6px 12px;
+  border-radius:8px; font-size:12px; white-space:nowrap;
+  opacity:0; transition:opacity .2s; pointer-events:none;
+}
+.float-wa:hover .float-wa-tip { opacity:1; }
+.float-wa-btn {
+  width:54px; height:54px; background:#25D366; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 18px rgba(37,211,102,.5);
+  animation:waPulse 2.5s ease-in-out infinite;
+  transition:transform .2s, box-shadow .2s;
+}
+.float-wa-btn:hover { transform:scale(1.1); animation:none; box-shadow:0 6px 26px rgba(37,211,102,.7); }
+@keyframes waPulse {
+  0%,100%{ box-shadow:0 4px 18px rgba(37,211,102,.5); }
+  50%     { box-shadow:0 4px 26px rgba(37,211,102,.75), 0 0 0 8px rgba(37,211,102,.12); }
+}
+
+/* =========================================
+   SPARK PARTICLE
+   ========================================= */
+.spark {
+  position:fixed; pointer-events:none; font-size:15px; z-index:999;
+  animation:sparkUp .55s ease-out forwards;
+}
+@keyframes sparkUp {
+  0%  { opacity:1; transform:translateY(0) scale(1); }
+  100%{ opacity:0; transform:translateY(-45px) scale(.4); }
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+footer {
+  background:linear-gradient(135deg, var(--dark2) 0%, #081410 100%);
+  border-top:2px solid var(--green);
+  padding:36px 24px 20px;
+  margin-top:30px;
+}
+.footer-grid {
+  max-width:1080px; margin:0 auto;
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:28px; margin-bottom:28px;
+}
+.fb p { font-size:12px; color:var(--muted); line-height:1.7; margin-top:10px; }
+.fc h4 { color:var(--gold); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+.fc ul { list-style:none; }
+.fc ul li { margin-bottom:8px; }
+.fc ul li a { color:var(--muted); font-size:12px; display:flex; align-items:center; gap:5px; transition:color .2s; }
+.fc ul li a:hover { color:var(--gold); }
+.game-highlight {
+  background:rgba(200,151,42,.07); border:1px solid rgba(200,151,42,.3);
+  border-radius:8px; padding:8px 12px; margin-bottom:8px;
+}
+.game-highlight a { color:var(--gold) !important; font-weight:600; }
+.game-highlight p { font-size:10px; color:var(--muted); margin-top:3px; }
+.footer-bottom {
+  max-width:1080px; margin:0 auto; padding-top:18px;
+  border-top:1px solid var(--surface2);
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:10px;
+}
+.footer-bottom p { font-size:11px; color:var(--muted); }
+.footer-bottom a { color:var(--gold); }
+@media(max-width:768px){ .footer-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:480px){ .footer-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="site-header">
+  <a href="index.html" class="logo-wrap">
+    <div class="logo-box">ق</div>
+    <div class="logo-text">
+      <h1>Global Islamic Care</h1>
+      <p>বিশ্বস্ত ইসলামিক শিক্ষক নেটওয়ার্ক</p>
+    </div>
+  </a>
+  <nav>
+    <ul class="site-nav">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="teachers.html">👨‍🏫 Teachers</a></li>
+      <li><a href="library.html">📚 Library</a></li>
+      <li><a href="typing-game.html" class="active">🐎 Typing Game</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="game-hero">
+  <h2>🐎 Islamic <span>Horse Racing</span> Typing Game</h2>
+  <p>Race against 4 AI opponents! Type Islamic wisdom to gallop your horse to victory. Learn English typing while enriching your soul. 🌙✨</p>
+  <div class="badge-row">
+    <span class="badge">🎯 Type to Race</span>
+    <span class="badge">📖 Islamic Wisdom</span>
+    <span class="badge">🤖 4 AI Opponents</span>
+    <span class="badge">⚡ Live WPM</span>
+    <span class="badge">🏆 Leaderboard</span>
+    <span class="badge">📤 WhatsApp Share</span>
+  </div>
+</section>
+
+<!-- ═══════════════ GAME ═══════════════ -->
+<main class="game-wrap">
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-label">Speed</div>
+      <div class="stat-val" id="wpmVal">0</div>
+      <div class="stat-unit">WPM <span class="streak-badge" id="streakBadge">🔥 <span id="streakNum">0</span></span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Accuracy</div>
+      <div class="stat-val" id="accVal">100</div>
+      <div class="stat-unit">%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Position</div>
+      <div class="stat-val" id="posVal">–</div>
+      <div class="stat-unit">of 5</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Time</div>
+      <div class="stat-val" id="timeVal">0</div>
+      <div class="stat-unit">sec</div>
+    </div>
+  </div>
+
+  <!-- Race Track -->
+  <div class="race-section">
+    <div class="track-topbar">
+      <span>🏟️ Islamic Grand Prix — Islamic Race Track</span>
+      <span class="rank-badge" id="rankBadge">📚 Talib</span>
+    </div>
+    <div class="track-panorama" id="panorama">
+      <div class="t-stars"></div>
+      <div class="t-moon">☪️</div>
+      <div class="t-dune"></div>
+
+      <!-- Mosque SVG -->
+      <svg class="t-mosque" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="8" y="85" width="84" height="45" rx="2" fill="#C8972A" opacity=".92"/>
+        <rect x="18" y="65" width="64" height="25" rx="2" fill="#C8972A" opacity=".92"/>
+        <ellipse cx="50" cy="64" rx="32" ry="18" fill="#C8972A" opacity=".92"/>
+        <rect x="44" y="22" width="12" height="48" fill="#C8972A" opacity=".92"/>
+        <rect x="12" y="35" width="9" height="34" rx="2" fill="#C8972A" opacity=".92"/>
+        <rect x="79" y="35" width="9" height="34" rx="2" fill="#C8972A" opacity=".92"/>
+        <polygon points="50,8 47,22 53,22" fill="#C8972A" opacity=".92"/>
+        <text x="44" y="19" font-size="12" fill="white" font-family="serif">☪</text>
+        <!-- door arches -->
+        <ellipse cx="50" cy="130" rx="10" ry="13" fill="#0a1a10" opacity=".5"/>
+        <ellipse cx="22" cy="105" rx="6" ry="10" fill="#0a1a10" opacity=".4"/>
+        <ellipse cx="78" cy="105" rx="6" ry="10" fill="#0a1a10" opacity=".4"/>
+        <!-- windows -->
+        <circle cx="34" cy="75" r="4" fill="#f0c040" opacity=".5"/>
+        <circle cx="66" cy="75" r="4" fill="#f0c040" opacity=".5"/>
+      </svg>
+
+      <div class="t-finish"></div>
+      <div class="t-flag">🏁</div>
+
+      <!-- Winner flash overlay -->
+      <div class="winner-flash" id="winnerFlash">🏆 WINNER!</div>
+
+      <!-- Lanes -->
+      <div class="lanes-wrap" id="lanesWrap"></div>
+
+      <!-- Countdown -->
+      <div class="countdown-ov" id="countdownOv">
+        <div class="cd-num" id="cdNum">🐎</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typing Section -->
+  <div class="typing-section">
+    <div class="typing-header">
+      <h3>📝 Type the Islamic Wisdom Below</h3>
+      <span class="src-tag" id="srcTag">— Start a race!</span>
+    </div>
+    <div class="text-display" id="textDisplay">
+      <em style="color:var(--muted); font-style:italic;">Press <strong style="color:var(--gold)">Start Race</strong> or hit <kbd style="background:var(--surface2);padding:1px 6px;border-radius:4px;font-style:normal">Enter</kbd> to begin your journey... 🌙</em>
+    </div>
+    <input
+      type="text"
+      class="typing-input"
+      id="typingInput"
+      placeholder="⌨️ Your input appears here — type the text above character by character..."
+      autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
+      disabled
+    >
+    <div class="typing-hint">⚠️ Each character must match exactly — a wrong key will flash red. No backspace needed, just type the correct key!</div>
+    <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn btn-green" id="startBtn" onclick="startRace()">🏁 Start Race</button>
+    <button class="btn btn-gold"  id="newBtn"   onclick="newRace()"  disabled>🔄 New Race</button>
+    <button class="btn btn-muted"              onclick="scrollToLB()">🏆 My Scores</button>
+  </div>
+
+  <!-- Leaderboard -->
+  <div class="leaderboard" id="lbSection">
+    <div class="lb-title">🏆 My Best Races — Local Leaderboard</div>
+    <table class="lb-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Speed</th><th>Accuracy</th><th>Islamic Rank</th><th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="lbBody"></tbody>
+    </table>
+  </div>
+
+</main>
+
+<!-- ═══════════════ RESULTS MODAL ═══════════════ -->
+<div class="modal-ov" id="modalOv">
+  <div class="modal">
+    <span class="modal-emoji" id="mEmoji">🏆</span>
+    <h2 id="mTitle">Race Complete!</h2>
+    <p class="modal-pos" id="mPos">You finished in 1st place!</p>
+    <div class="modal-stats">
+      <div class="ms"><div class="v" id="mWPM">0</div><div class="l">WPM</div></div>
+      <div class="ms"><div class="v" id="mAcc">100%</div><div class="l">Accuracy</div></div>
+      <div class="ms"><div class="v" id="mRank">Talib</div><div class="l">Rank</div></div>
+    </div>
+    <div class="modal-wisdom" id="mWisdom">"Keep practicing!" <strong>— GIC</strong></div>
+    <div class="modal-btns">
+      <button class="btn btn-green" onclick="playAgain()">🔄 Race Again</button>
+      <button class="btn-wa" onclick="shareWA()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Share on WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLOATING WHATSAPP ═══════════════ -->
+<div class="float-wa">
+  <div class="float-wa-tip">💬 Contact GIC on WhatsApp</div>
+  <a class="float-wa-btn" href="https://wa.me/8801733017521" target="_blank" rel="noopener" aria-label="WhatsApp GIC">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="fb">
+      <div class="logo-wrap">
+        <div class="logo-box" style="width:38px;height:38px;font-size:20px;">ق</div>
+        <div class="logo-text">
+          <h1 style="font-size:14px;color:var(--gold);">Global Islamic Care</h1>
+          <p style="font-size:10px;color:var(--muted);">বিশ্বস্ত ইসলামিক শিক্ষক নেটওয়ার্ক</p>
+        </div>
+      </div>
+      <p>GIC — বিশ্বের যেকোনো দেশ থেকে ১০০% যাচাইকৃত হাফেজ, মাওলানা, মুফতি ও আলেমা শিক্ষকদের কাছে অনলাইনে ইসলামিক শিক্ষা গ্রহণ করুন। ফ্রি ট্রায়াল, কোনো কমিশন নেই।</p>
+    </div>
+    <div class="fc">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="teachers.html">👨‍🏫 Teachers</a></li>
+        <li><a href="library.html">📚 Library</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h4>🎮 Games &amp; Tools</h4>
+      <ul>
+        <li>
+          <div class="game-highlight">
+            <a href="typing-game.html">🐎 Islamic Typing Race</a>
+            <p>Race horses &amp; learn English typing with Islamic wisdom — 100% FREE!</p>
+          </div>
+        </li>
+        <li><a href="#" style="opacity:.6;">📖 Quran Quiz <em>(Coming Soon)</em></a></li>
+        <li><a href="#" style="opacity:.6;">🕌 Islamic Word Search <em>(Coming Soon)</em></a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="https://wa.me/8801733017521" target="_blank" rel="noopener">💬 WhatsApp</a></li>
+        <li><a href="mailto:info@globalislamiccare.com">📧 Email Us</a></li>
+        <li><a href="https://facebook.com/globalislamiccare" target="_blank" rel="noopener">👍 Facebook</a></li>
+        <li><a href="https://www.youtube.com/@globalislamiccare" target="_blank" rel="noopener">▶️ YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Global Islamic Care. All rights reserved. Built with ❤️ for the Ummah.</p>
+    <p>
+      <a href="typing-game.html">🐎 Play Islamic Typing Game</a> &nbsp;|&nbsp;
+      <a href="index.html" style="color:var(--muted);">Home</a>
+    </p>
+  </div>
+</footer>
+
+<!-- ═══════════════ GAME SCRIPT ═══════════════ -->
+<script>
+"use strict";
+
+/* ─────────────────────────────────────
+   TYPING CONTENT — 20 Islamic Sentences
+   ───────────────────────────────────── */
+const CONTENT = [
+  { text: "The best of you are those who learn the Quran and teach it to others.", source: "Hadith — Sahih Bukhari" },
+  { text: "Seek knowledge even if you have to travel to the farthest land, for seeking knowledge is obligatory upon every Muslim.", source: "Islamic Wisdom" },
+  { text: "Islam is built upon five pillars: the testimony of faith, prayer, giving charity, fasting during Ramadan, and the pilgrimage to Makkah.", source: "Hadith — Bukhari & Muslim" },
+  { text: "The Messenger of Allah said: A kind word is a form of charity given to every person you meet.", source: "Hadith — Sahih Bukhari" },
+  { text: "Verily with every hardship comes ease. Indeed with every difficulty there is relief.", source: "Quran — Surah Ash-Sharh 5-6" },
+  { text: "Prophet Muhammad peace be upon him was sent as a mercy to all the worlds and every living being.", source: "Quran — Surah Al-Anbiya 107" },
+  { text: "The strong person is not the one who wrestles others to the ground, but the one who controls anger when provoked.", source: "Hadith — Sahih Bukhari" },
+  { text: "Read in the name of your Lord who created mankind from a clinging substance, and your Lord is the Most Generous.", source: "Quran — Surah Al-Alaq 1-3" },
+  { text: "None of you truly believes until he loves for his brother what he loves for himself.", source: "Hadith — Sahih Bukhari" },
+  { text: "Allah does not burden a soul beyond that it can bear, and He is always with the patient ones.", source: "Quran — Surah Al-Baqarah 286" },
+  { text: "The best charity is that which is given when you yourself are in need and rely on Allah for sufficiency.", source: "Hadith — Sahih Bukhari" },
+  { text: "Cleanliness is half of faith, and the praise of Allah fills the scales of good deeds in the hereafter.", source: "Hadith — Sahih Muslim" },
+  { text: "Whoever believes in Allah and the Last Day should speak good words or remain silent and refrain from harm.", source: "Hadith — Bukhari & Muslim" },
+  { text: "The world is a prison for the believer who strives for the hereafter and a paradise for those who forget Allah.", source: "Hadith — Sahih Muslim" },
+  { text: "Prayer is the pillar of religion and the foundation of every righteous and sincere deed done for Allah.", source: "Islamic Wisdom" },
+  { text: "The Quran was revealed during the blessed month of Ramadan as a complete guidance and criterion for all of mankind.", source: "Quran — Surah Al-Baqarah 185" },
+  { text: "Whoever treads a path in search of knowledge, Allah will make easy for him the path to paradise and eternal bliss.", source: "Hadith — Sahih Muslim" },
+  { text: "Be in this world as though you were a stranger or a traveler just passing through on the way to the hereafter.", source: "Hadith — Sahih Bukhari" },
+  { text: "Give charity without delay, for it stands in the way of calamity and brings abundant blessings from Allah.", source: "Islamic Wisdom" },
+  { text: "The most beloved deeds to Allah are those done consistently and with sincerity, even if they are small in number.", source: "Hadith — Sahih Bukhari" }
+];
+
+/* ─────────────────────────────────────
+   WISDOM QUOTES (for results modal)
+   ───────────────────────────────────── */
+const WISDOMS = [
+  { q: "Every expert was once a beginner. Keep typing and keep learning with patience.", s: "GIC Motivation" },
+  { q: "Seeking knowledge is an act of worship in Islam. May Allah reward your every effort.", s: "Islamic Wisdom" },
+  { q: "Practice with consistency. The companions of the Prophet were the most diligent of learners.", s: "GIC Motivation" },
+  { q: "With patience and persistence, you can achieve greatness in both worlds.", s: "Islamic Wisdom" },
+  { q: "Allah loves those who are consistent in their good deeds, even if they are small.", s: "Hadith" },
+  { q: "SubhanAllah! Your typing improves with every race. Never give up your journey of learning.", s: "GIC Motivation" }
+];
+
+/* ─────────────────────────────────────
+   ISLAMIC RANK SYSTEM
+   ───────────────────────────────────── */
+const RANKS = [
+  { min:  0, title:'Talib',   arabic:'طالب',   emoji:'📚' },
+  { min: 20, title:'Student', arabic:'ستاذ',   emoji:'✏️' },
+  { min: 30, title:'Hafiz',   arabic:'حافظ',   emoji:'📖' },
+  { min: 42, title:'Alim',    arabic:'عالم',   emoji:'🎓' },
+  { min: 55, title:'Maulana', arabic:'مولانا', emoji:'🕌' },
+  { min: 68, title:'Mufti',   arabic:'مفتي',   emoji:'⭐' },
+  { min: 82, title:'Sheikh',  arabic:'شيخ',    emoji:'👑' }
+];
+function getRank(wpm) {
+  let r = RANKS[0];
+  for (const rank of RANKS) { if (wpm >= rank.min) r = rank; else break; }
+  return r;
+}
+
+/* ─────────────────────────────────────
+   RACERS CONFIG
+   ───────────────────────────────────── */
+const RACERS = [
+  { name:'You',      color:'#2ecc71', isPlayer:true,  wMin:0,  wMax:0  },
+  { name:'Racer A',  color:'#e74c3c', isPlayer:false, wMin:24, wMax:32 },
+  { name:'Racer B',  color:'#3498db', isPlayer:false, wMin:37, wMax:50 },
+  { name:'Racer C',  color:'#9b59b6', isPlayer:false, wMin:53, wMax:66 },
+  { name:'Racer D',  color:'#f39c12', isPlayer:false, wMin:68, wMax:84 }
+];
+
+/* ─────────────────────────────────────
+   GAME STATE
+   ───────────────────────────────────── */
+let G = {
+  state:       'idle',   // idle | countdown | racing | finished
+  content:     null,
+  typedIdx:    0,
+  totalKeys:   0,
+  errorKeys:   0,
+  streak:      0,
+  startTime:   null,
+  elapsed:     0,
+  loop:        null,
+  positions:   [0,0,0,0,0],  // 0.0–1.0
+  finished:    [],            // racer indices who crossed finish
+  botSpeeds:   [0,0,0,0,0],
+  lastResult:  null
+};
+
+/* ─────────────────────────────────────
+   HELPERS
+   ───────────────────────────────────── */
+const $  = id => document.getElementById(id);
+const rnd = (a,b) => a + Math.random()*(b-a);
+
+/* ─────────────────────────────────────
+   INIT TRACK
+   ───────────────────────────────────── */
+function initTrack() {
+  const wrap = $('lanesWrap');
+  wrap.innerHTML = '';
+  G.positions = [0,0,0,0,0];
+  G.finished  = [];
+
+  RACERS.forEach((r, i) => {
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    lane.id = `lane${i}`;
+
+    const dust = document.createElement('div');
+    dust.className = 'lane-dust';
+    dust.id = `dust${i}`;
+    lane.appendChild(dust);
+
+    const pos = document.createElement('div');
+    pos.className = 'lane-pos';
+    pos.id = `lpos${i}`;
+    pos.textContent = i + 1;
+    lane.appendChild(pos);
+
+    const horse = document.createElement('div');
+    horse.className = `horse${r.isPlayer ? ' player-horse' : ''}`;
+    horse.id = `horse${i}`;
+    horse.textContent = '🐎';
+    horse.style.left = '2%';
+
+    const label = document.createElement('div');
+    label.className = 'horse-label';
+    label.style.color = r.color;
+    label.textContent = r.name;
+    horse.appendChild(label);
+    lane.appendChild(horse);
+
+    wrap.appendChild(lane);
+  });
+}
+
+/* ─────────────────────────────────────
+   UPDATE HORSE VISUAL
+   ───────────────────────────────────── */
+function moveHorse(i) {
+  const p = G.positions[i];
+  const el = $(`horse${i}`);
+  const dust = $(`dust${i}`);
+  if (!el) return;
+  const leftPct = 2 + p * 84;  // 2% → 86%
+  el.style.left = Math.min(leftPct, 86) + '%';
+  if (dust) dust.style.width = leftPct + '%';
+}
+
+/* ─────────────────────────────────────
+   UPDATE POSITION BADGES
+   ───────────────────────────────────── */
+function updatePosBadges() {
+  const sorted = RACERS.map((_,i) => ({i, p: G.positions[i]}))
+                       .sort((a,b) => b.p - a.p);
+  sorted.forEach((entry, rank) => {
+    const el = $(`lpos${entry.i}`);
+    if (!el) return;
+    el.textContent = rank + 1;
+    el.className = `lane-pos${rank === 0 ? ' p1' : rank === 1 ? ' p2' : rank === 2 ? ' p3' : ''}`;
+  });
+  const playerRank = sorted.findIndex(e => e.i === 0) + 1;
+  $('posVal').textContent = playerRank;
+}
+
+/* ─────────────────────────────────────
+   RENDER TEXT DISPLAY
+   ───────────────────────────────────── */
+function renderText() {
+  if (!G.content) return;
+  const t = G.content.text;
+  $('textDisplay').innerHTML = t.split('').map((ch, i) => {
+    let cls = 'c';
+    if (i < G.typedIdx)      cls += ' typed';
+    else if (i === G.typedIdx) cls += ' current';
+    else                       cls += ' remaining';
+    const disp = (ch === ' ' && i === G.typedIdx) ? '·'
+               : (ch === ' ') ? '&nbsp;'
+               : ch.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return `<span class="${cls}" id="ch${i}">${disp}</span>`;
+  }).join('');
+}
+
+/* ─────────────────────────────────────
+   CALCULATE WPM
+   ───────────────────────────────────── */
+function calcWPM() {
+  if (!G.startTime || G.elapsed < 0.5) return 0;
+  return Math.round((G.typedIdx / 5) / (G.elapsed / 60));
+}
+
+/* ─────────────────────────────────────
+   START RACE
+   ───────────────────────────────────── */
+function startRace() {
+  if (G.state !== 'idle') return;
+  G.state = 'countdown';
+
+  // Pick sentence
+  G.content   = CONTENT[Math.floor(Math.random() * CONTENT.length)];
+  G.typedIdx  = 0;
+  G.totalKeys = 0;
+  G.errorKeys = 0;
+  G.streak    = 0;
+  G.elapsed   = 0;
+  G.startTime = null;
+  G.positions = [0,0,0,0,0];
+  G.finished  = [];
+
+  // Assign bot speeds (varied each race)
+  G.botSpeeds = RACERS.map((r,i) => i === 0 ? 0 : rnd(r.wMin, r.wMax));
+
+  // Reset UI
+  $('wpmVal').textContent = '0';
+  $('wpmVal').className   = 'stat-val';
+  $('accVal').textContent = '100';
+  $('posVal').textContent = '–';
+  $('timeVal').textContent= '0';
+  $('progFill').style.width = '0%';
+  $('srcTag').textContent = G.content.source;
+  $('startBtn').disabled  = true;
+  $('newBtn').disabled    = true;
+  $('rankBadge').textContent = '📚 Talib';
+  $('streakBadge').classList.remove('show');
+  $('modalOv').classList.remove('open');
+  $('winnerFlash').classList.remove('show');
+
+  // Init track
+  initTrack();
+
+  // Render sentence
+  renderText();
+
+  // Disable input
+  const inp = $('typingInput');
+  inp.disabled = true;
+  inp.value = '';
+
+  // Countdown
+  const ov  = $('countdownOv');
+  const num = $('cdNum');
+  ov.style.display = 'flex';
+  let cnt = 3;
+  num.textContent = cnt;
+
+  const cdInterval = setInterval(() => {
+    cnt--;
+    if (cnt <= 0) {
+      clearInterval(cdInterval);
+      num.textContent = 'GO! 🐎';
+      // Force animation replay
+      num.style.animation = 'none';
+      void num.offsetWidth;
+      num.style.animation = '';
+      setTimeout(() => {
+        ov.style.display = 'none';
+        beginRace();
+      }, 550);
+    } else {
+      num.textContent = cnt;
+      num.style.animation = 'none';
+      void num.offsetWidth;
+      num.style.animation = 'cdPop .7s ease-out';
+    }
+  }, 850);
+}
+
+/* ─────────────────────────────────────
+   BEGIN RACE (after countdown)
+   ───────────────────────────────────── */
+function beginRace() {
+  G.state     = 'racing';
+  G.startTime = Date.now();
+
+  // Enable & focus input
+  const inp = $('typingInput');
+  inp.disabled = false;
+  inp.value    = '';
+  inp.focus();
+
+  // Start gallop
+  RACERS.forEach((_,i) => {
+    const h = $(`horse${i}`);
+    if (h) h.classList.add('galloping');
+  });
+
+  // Game loop (100ms)
+  G.loop = setInterval(gameLoop, 100);
+}
+
+/* ─────────────────────────────────────
+   GAME LOOP
+   ───────────────────────────────────── */
+function gameLoop() {
+  G.elapsed = (Date.now() - G.startTime) / 1000;
+  $('timeVal').textContent = Math.floor(G.elapsed);
+
+  // Player WPM
+  if (G.typedIdx > 0) {
+    const wpm = calcWPM();
+    const wEl = $('wpmVal');
+    wEl.textContent = wpm;
+    wEl.className   = 'stat-val' + (wpm >= 70 ? ' very-fast' : wpm >= 45 ? ' fast' : '');
+    const rank = getRank(wpm);
+    $('rankBadge').textContent = `${rank.emoji} ${rank.title}`;
+  }
+
+  // Move bots
+  RACERS.forEach((_, i) => {
+    if (i === 0 || G.finished.includes(i)) return;
+    const cps   = (G.botSpeeds[i] * 5) / 60;  // chars per second
+    const total = G.content.text.length;
+    // Slight jitter + mild slowdown near finish for drama
+    let prog = (cps * G.elapsed) / total;
+    prog += (Math.random() - 0.5) * 0.004;
+    if (prog > 0.88) prog = prog * 0.96; // slight slowdown near finish
+    prog = Math.min(prog, 1);
+    G.positions[i] = prog;
+    moveHorse(i);
+    if (prog >= 1 && !G.finished.includes(i)) {
+      G.positions[i] = 1;
+      G.finished.push(i);
+      stopGallop(i);
+    }
+  });
+
+  // Accuracy
+  if (G.totalKeys > 0) {
+    const acc = Math.max(0, Math.round(((G.totalKeys - G.errorKeys) / G.totalKeys) * 100));
+    $('accVal').textContent = acc;
+  }
+
+  // Update position badges
+  updatePosBadges();
+
+  // Check race end: all 5 finished OR player finished + some bots
+  if (G.finished.length >= RACERS.length ||
+      (G.finished.includes(0) && G.elapsed > 2)) {
+    endRace();
+  }
+}
+
+/* ─────────────────────────────────────
+   TYPING HANDLER (keydown)
+   ───────────────────────────────────── */
+$('typingInput').addEventListener('keydown', function(e) {
+  if (G.state !== 'racing') return;
+
+  // Block paste
+  if ((e.ctrlKey || e.metaKey) && e.key === 'v') { e.preventDefault(); return; }
+
+  // Only process printable single characters
+  if (e.key.length !== 1) return;
+  e.preventDefault();
+
+  const text    = G.content.text;
+  const expect  = text[G.typedIdx];
+  const typed   = e.key;
+
+  G.totalKeys++;
+
+  if (typed === expect) {
+    // ✅ CORRECT
+    G.typedIdx++;
+    G.streak++;
+
+    // Streak badge
+    if (G.streak >= 10) {
+      $('streakBadge').classList.add('show');
+      $('streakNum').textContent = G.streak;
+    }
+
+    // Update player horse position
+    G.positions[0] = G.typedIdx / text.length;
+    moveHorse(0);
+
+    // Progress bar
+    $('progFill').style.width = (G.positions[0] * 100) + '%';
+
+    // Render updated text
+    renderText();
+
+    // Spark effect (throttled)
+    spawnSpark();
+
+    // Check if player finished
+    if (G.typedIdx >= text.length) {
+      G.positions[0] = 1;
+      moveHorse(0);
+      if (!G.finished.includes(0)) {
+        G.finished.push(0);
+        stopGallop(0);
+        // Winner flash if 1st!
+        if (G.finished[0] === 0) {
+          $('winnerFlash').classList.add('show');
+          setTimeout(() => $('winnerFlash').classList.remove('show'), 1800);
+        }
+      }
+    }
+
+  } else {
+    // ❌ ERROR
+    G.errorKeys++;
+    G.streak = 0;
+    $('streakBadge').classList.remove('show');
+
+    // Flash current char red
+    const ch = $(`ch${G.typedIdx}`);
+    if (ch) {
+      ch.classList.add('err');
+      setTimeout(() => { if (ch) ch.classList.remove('err'); }, 320);
+    }
+
+    // Shake input
+    const inp = $('typingInput');
+    inp.classList.add('shake');
+    setTimeout(() => inp.classList.remove('shake'), 200);
+
+    // Error bump horse
+    const h = $(`horse0`);
+    if (h) {
+      h.classList.add('error-bump');
+      setTimeout(() => h.classList.remove('error-bump'), 180);
+    }
+  }
+
+  // Clear input value so it doesn't accumulate
+  this.value = '';
+});
+
+/* ─────────────────────────────────────
+   STOP GALLOP
+   ───────────────────────────────────── */
+function stopGallop(i) {
+  const h = $(`horse${i}`);
+  if (h) h.classList.remove('galloping');
+}
+
+/* ─────────────────────────────────────
+   SPARK PARTICLE
+   ───────────────────────────────────── */
+let _lastSpark = 0;
+function spawnSpark() {
+  const now = Date.now();
+  if (now - _lastSpark < 180) return;
+  _lastSpark = now;
+  const sparks = ['⭐','✨','💫','🌟','✦'];
+  const el = document.createElement('div');
+  el.className = 'spark';
+  el.textContent = sparks[Math.floor(Math.random() * sparks.length)];
+  el.style.left = (30 + Math.random() * 40) + 'vw';
+  el.style.top  = (55 + Math.random() * 20) + 'vh';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 600);
+}
+
+/* ─────────────────────────────────────
+   END RACE
+   ───────────────────────────────────── */
+function endRace() {
+  if (G.state !== 'racing') return;
+  G.state = 'finished';
+
+  clearInterval(G.loop);
+  $('typingInput').disabled = true;
+
+  // Stop all horses
+  RACERS.forEach((_,i) => stopGallop(i));
+
+  $('newBtn').disabled   = false;
+  $('startBtn').disabled = false;
+
+  const wpm  = calcWPM();
+  const acc  = G.totalKeys > 0 ? Math.max(0, Math.round(((G.totalKeys - G.errorKeys) / G.totalKeys) * 100)) : 100;
+  const pos  = G.finished.indexOf(0) + 1 || RACERS.length;
+  const rank = getRank(wpm);
+
+  saveScore(wpm, acc, rank.title);
+
+  setTimeout(() => showResults(wpm, acc, pos, rank), 1100);
+}
+
+/* ─────────────────────────────────────
+   RESULTS MODAL
+   ───────────────────────────────────── */
+function showResults(wpm, acc, pos, rank) {
+  const EMOJIS  = ['🏆','🥈','🥉','🐎','🐎'];
+  const TITLES  = ['Champion! MashaAllah!','Great Race! Well Done!','Good Effort! Keep Going!','You Can Do Better!','Practice Makes Perfect!'];
+  const POS_STR = ['🥇 1st','🥈 2nd','🥉 3rd','4th','5th'];
+
+  $('mEmoji').textContent = EMOJIS[pos-1] || '🐎';
+  $('mTitle').textContent = TITLES[pos-1] || 'Race Complete!';
+  $('mPos').textContent   = `You finished ${POS_STR[pos-1] || pos+'th'} place! ${rank.emoji} Rank: ${rank.title} (${rank.arabic})`;
+  $('mWPM').textContent   = wpm;
+  $('mAcc').textContent   = acc + '%';
+  $('mRank').textContent  = rank.title;
+
+  const w = WISDOMS[Math.floor(Math.random() * WISDOMS.length)];
+  $('mWisdom').innerHTML  = `"${w.q}" <strong>— ${w.s}</strong>`;
+
+  G.lastResult = { wpm, acc, pos: POS_STR[pos-1] || pos+'th', rank: rank.title };
+  $('modalOv').classList.add('open');
+}
+
+/* ─────────────────────────────────────
+   WHATSAPP SHARE
+   ───────────────────────────────────── */
+function shareWA() {
+  const r = G.lastResult;
+  if (!r) return;
+  const msg =
+`🐎 I just raced on GIC's Islamic Typing Game!
+
+⚡ Speed: ${r.wpm} WPM
+✅ Accuracy: ${r.acc}%
+🏅 Position: ${r.pos}
+🎓 Islamic Rank: ${r.rank}
+
+I learned Islamic wisdom while having fun!
+🌙 Play free now 👉 https://globalislamiccare.com/typing-game.html
+
+#GlobalIslamicCare #IslamicTypingGame #TypingRace #LearnIslam`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+}
+
+/* ─────────────────────────────────────
+   LOCAL LEADERBOARD
+   ───────────────────────────────────── */
+function saveScore(wpm, acc, rankTitle) {
+  const scores = JSON.parse(localStorage.getItem('gic_scores') || '[]');
+  scores.unshift({ wpm, acc, rank: rankTitle, date: new Date().toLocaleDateString('en-GB') });
+  if (scores.length > 10) scores.length = 10;
+  localStorage.setItem('gic_scores', JSON.stringify(scores));
+  renderLB();
+}
+
+function renderLB() {
+  const scores = JSON.parse(localStorage.getItem('gic_scores') || '[]');
+  const tbody  = $('lbBody');
+  if (!scores.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="lb-empty">No races yet. Start your first race! 🐎</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = scores.map((s, i) => `
+    <tr>
+      <td class="lb-rank">${['🥇','🥈','🥉'][i] || i+1}</td>
+      <td><strong style="color:var(--gold)">${s.wpm}</strong> WPM</td>
+      <td>${s.acc}%</td>
+      <td><span class="lb-badge">${s.rank}</span></td>
+      <td style="color:var(--muted);font-size:11px">${s.date}</td>
+    </tr>`).join('');
+}
+
+/* ─────────────────────────────────────
+   NEW RACE / PLAY AGAIN
+   ───────────────────────────────────── */
+function newRace() {
+  G.state = 'idle';
+  clearInterval(G.loop);
+  $('modalOv').classList.remove('open');
+  $('winnerFlash').classList.remove('show');
+  $('typingInput').disabled = true;
+  $('typingInput').value    = '';
+  $('startBtn').disabled    = false;
+  $('newBtn').disabled      = true;
+  $('textDisplay').innerHTML = `<em style="color:var(--muted);font-style:italic;">Press <strong style="color:var(--gold)">Start Race</strong> or hit <kbd style="background:var(--surface2);padding:1px 6px;border-radius:4px;font-style:normal">Enter</kbd> to begin your journey... 🌙</em>`;
+  $('srcTag').textContent    = '— Start a race!';
+  $('countdownOv').style.display = 'flex';
+  $('cdNum').textContent = '🐎';
+  initTrack();
+}
+
+function playAgain() { newRace(); setTimeout(startRace, 80); }
+
+/* ─────────────────────────────────────
+   SCROLL TO LEADERBOARD
+   ───────────────────────────────────── */
+function scrollToLB() {
+  renderLB();
+  $('lbSection').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* ─────────────────────────────────────
+   KEYBOARD SHORTCUT: Enter → Start
+   ───────────────────────────────────── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && G.state === 'idle') startRace();
+});
+
+/* ─────────────────────────────────────
+   INIT ON LOAD
+   ───────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  initTrack();
+  renderLB();
+  $('countdownOv').style.display = 'flex';
+  $('cdNum').textContent = '🐎';
+});
+</script>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Islamic Horse Racing Typing Game",
+  "description": "A free Islamic-themed English typing game by Global Islamic Care. Race horses against Abu Bakr, Umar, Uthman and Ali RA while learning English typing with Quran verses and Hadith wisdom.",
+  "url": "https://globalislamiccare.com/typing-game.html",
+  "applicationCategory": "Game",
+  "genre": ["Educational Game", "Typing Game", "Islamic Game"],
+  "operatingSystem": "Web Browser",
+  "inLanguage": "en",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Global Islamic Care",
+    "url": "https://globalislamiccare.com",
+    "logo": "https://globalislamiccare.com/logo.png"
+  },
+  "educationalUse": ["Self Study", "English Typing Practice"],
+  "learningResourceType": "Game",
+  "audience": { "@type": "EducationalAudience", "educationalRole": "student" },
+  "keywords": "islamic typing game, horse racing game, english typing practice, quran hadith typing, GIC game, global islamic care",
+  "featureList": ["Real-time WPM counter", "4 AI opponents", "Islamic wisdom content", "Leaderboard", "WhatsApp share", "Islamic rank system"]
+}
+</script>
+
+</body>
+</html>
