@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GIC Typing Race – Horse Racing Typing Game | Global Islamic Care</title>
-<meta name="description" content="Play GIC Typing Race! Race animated horses with jockeys while improving your English typing speed. Learn typing with inspiring wisdom quotes. Free typing game by Global Islamic Care.">
-<meta name="keywords" content="GIC typing race, horse racing typing game, english typing practice, typing game free, GIC game, global islamic care, typing speed WPM, learn typing online">
+<title>Horse Typing Game – Free Online Typing Practice | Global Islamic Care</title>
+<meta name="description" content="Play Horse Typing Game FREE! Race animated horses with jockeys. Choose Basic, Intermediate or Advanced level. Improve English typing speed with inspiring quotes. By Global Islamic Care.">
+<meta name="keywords" content="horse typing game, horse racing typing game, free online typing game, typing practice levels, basic intermediate advanced typing, GIC typing, global islamic care, learn typing online">
 <meta name="author" content="Global Islamic Care">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1a5f3a">
@@ -13,12 +13,12 @@
 <link rel="icon" href="favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://globalislamiccare.com/typing-game.html">
-<meta property="og:title" content="GIC Typing Race | Global Islamic Care">
-<meta property="og:description" content="Race horses with jockeys! Improve English typing speed with inspiring wisdom. Free game by Global Islamic Care.">
+<meta property="og:title" content="Horse Typing Game | Global Islamic Care">
+<meta property="og:description" content="Race horses with jockeys! Choose your difficulty level — Basic, Intermediate or Advanced. Free typing game by Global Islamic Care.">
 <meta property="og:image" content="https://globalislamiccare.com/og-image.jpg">
 <meta property="og:site_name" content="Global Islamic Care">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="GIC Typing Race | Global Islamic Care">
+<meta name="twitter:title" content="Horse Typing Game | Global Islamic Care">
 <meta name="twitter:description" content="Race horses & learn English typing with Islamic wisdom. Free by Global Islamic Care!">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -384,6 +384,33 @@ body.is-fullscreen .btn { padding:9px 20px; font-size:13px; }
 }
 .track-topbar .fs-track-hint:hover { color:var(--gold); }
 
+
+/* ── DIFFICULTY SELECTOR ── */
+.diff-wrap {
+  background: var(--surf); border: 1px solid var(--surf2);
+  border-radius: 14px; padding: 14px 18px; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.diff-label {
+  font-size: 13px; font-weight: 700; color: var(--gold);
+  white-space: nowrap;
+}
+.diff-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.diff-btn {
+  padding: 8px 18px; border-radius: 10px; font-size: 13px; font-weight: 700;
+  border: 2px solid transparent; cursor: pointer; transition: all .2s;
+  background: var(--surf2); color: var(--muted);
+}
+.diff-btn:hover { border-color: var(--gold); color: var(--gold); }
+.diff-btn.active-diff { color: var(--dark2); border-color: transparent; }
+.diff-btn.basic-btn.active-diff   { background: #2ecc71; }
+.diff-btn.inter-btn.active-diff   { background: var(--gold); }
+.diff-btn.adv-btn.active-diff     { background: #e74c3c; }
+.diff-info {
+  margin-left: auto; font-size: 11px; color: var(--muted);
+  background: var(--surf2); padding: 4px 12px; border-radius: 8px;
+}
+
 </style>
 </head>
 <body>
@@ -401,26 +428,37 @@ body.is-fullscreen .btn { padding:9px 20px; font-size:13px; }
     <li><a href="index.html">🏠 Home</a></li>
     <li><a href="teachers.html">👨‍🏫 Teachers</a></li>
     <li><a href="library.html">📚 Library</a></li>
-    <li><a href="typing-game.html" class="active">🐎 GIC Typing Race</a></li>
+    <li><a href="typing-game.html" class="active">🐎 Horse Typing Game</a></li>
   </ul></nav>
 </header>
 
 <!-- HERO -->
 <section class="game-hero">
-  <h2>🐎 GIC <span>Typing Race</span></h2>
-  <p>Race with a jockey on a real galloping horse! Type wisdom quotes to sprint ahead. Improve your English typing speed while having fun. 🌙</p>
+  <h2>🐎 Horse <span>Typing Game</span></h2>
+  <p>Choose your level — Basic, Intermediate or Advanced — then race horses with jockeys! Improve English typing speed while having fun. 🌙</p>
   <div class="badge-row">
     <span class="badge">🎯 Type to Race</span>
     <span class="badge">📖 Islamic Wisdom</span>
     <span class="badge">🤖 4 AI Opponents</span>
     <span class="badge">⚡ Live WPM</span>
     <span class="badge">🏆 Leaderboard</span>
-    <span class="badge">🔊 Hoofbeat Sounds</span>
+    <span class="badge">🎮 3 Difficulty Levels</span>
   </div>
 </section>
 
 <!-- GAME -->
 <main class="game-wrap">
+
+  <!-- Difficulty Selector -->
+  <div class="diff-wrap">
+    <span class="diff-label">🎯 Difficulty:</span>
+    <div class="diff-btns">
+      <button class="diff-btn basic-btn active-diff" id="diffBasic" onclick="setDifficulty('basic')">🟢 Basic</button>
+      <button class="diff-btn inter-btn" id="diffInter" onclick="setDifficulty('intermediate')">🟡 Intermediate</button>
+      <button class="diff-btn adv-btn"   id="diffAdv"   onclick="setDifficulty('advanced')">🔴 Advanced</button>
+    </div>
+    <span class="diff-info" id="diffInfo">Short &amp; simple sentences • Slow bots</span>
+  </div>
 
   <!-- Stats -->
   <div class="stats-bar">
@@ -449,7 +487,7 @@ body.is-fullscreen .btn { padding:9px 20px; font-size:13px; }
   <!-- Race Track -->
   <div class="race-section">
     <div class="track-topbar">
-      <span>🏟️ GIC Grand Prix — Desert Race Track</span>
+      <span>🏟️ Horse Typing Game — Desert Race Track</span>
       <span class="fs-track-hint" onclick="toggleFullscreen()" title="Go fullscreen">⛶ Double-click for fullscreen</span>
       <span class="rank-badge" id="rankBadge">📚 Talib</span>
     </div>
@@ -576,8 +614,8 @@ body.is-fullscreen .btn { padding:9px 20px; font-size:13px; }
       <ul>
         <li>
           <div class="game-hl">
-            <a href="typing-game.html">🐎 GIC Typing Race</a>
-            <p>Race horses &amp; improve your typing speed with wisdom quotes — FREE!</p>
+            <a href="typing-game.html">🐎 Horse Typing Game</a>
+            <p>Race horses! Basic → Intermediate → Advanced — FREE!</p>
           </div>
         </li>
         <li><a href="#" style="opacity:.6;">📖 Quran Quiz <em>(Soon)</em></a></li>
@@ -596,36 +634,141 @@ body.is-fullscreen .btn { padding:9px 20px; font-size:13px; }
   </div>
   <div class="footer-bottom">
     <p>© 2024 Global Islamic Care. All rights reserved. Built with ❤️ for the Ummah.</p>
-    <p><a href="typing-game.html">🐎 Play GIC Typing Race</a> &nbsp;|&nbsp; <a href="index.html" style="color:var(--muted);">Home</a></p>
+    <p><a href="typing-game.html">🐎 Play Horse Typing Game</a> &nbsp;|&nbsp; <a href="index.html" style="color:var(--muted);">Home</a></p>
   </div>
 </footer>
 
 <script>
 "use strict";
 
-/* ─── CONTENT ─── */
-const CONTENT = [
-  {text:"The best of you are those who learn the Quran and teach it to others.",source:"Hadith — Sahih Bukhari"},
-  {text:"Seek knowledge even if you have to travel to the farthest land, for seeking knowledge is obligatory upon every Muslim.",source:"Islamic Wisdom"},
-  {text:"Islam is built upon five pillars: the testimony of faith, prayer, giving charity, fasting during Ramadan, and the pilgrimage to Makkah.",source:"Hadith — Bukhari & Muslim"},
-  {text:"The Messenger of Allah said: A kind word is a form of charity given to every person you meet.",source:"Hadith — Sahih Bukhari"},
-  {text:"Verily with every hardship comes ease. Indeed with every difficulty there is relief.",source:"Quran — Surah Ash-Sharh 5-6"},
-  {text:"Prophet Muhammad peace be upon him was sent as a mercy to all the worlds and every living being.",source:"Quran — Surah Al-Anbiya 107"},
-  {text:"The strong person is not the one who wrestles others to the ground but the one who controls anger when provoked.",source:"Hadith — Sahih Bukhari"},
-  {text:"Read in the name of your Lord who created mankind from a clinging substance and your Lord is the Most Generous.",source:"Quran — Surah Al-Alaq 1-3"},
-  {text:"None of you truly believes until he loves for his brother what he loves for himself.",source:"Hadith — Sahih Bukhari"},
-  {text:"Allah does not burden a soul beyond that it can bear and He is always with the patient ones.",source:"Quran — Surah Al-Baqarah 286"},
-  {text:"The best charity is that which is given when you yourself are in need and you rely on Allah for sufficiency.",source:"Hadith — Sahih Bukhari"},
-  {text:"Cleanliness is half of faith and the praise of Allah fills the scales of good deeds in the hereafter.",source:"Hadith — Sahih Muslim"},
-  {text:"Whoever believes in Allah and the Last Day should speak good words or remain silent and refrain from harm.",source:"Hadith — Bukhari & Muslim"},
-  {text:"Prayer is the pillar of religion and the foundation of every righteous and sincere deed done for Allah.",source:"Islamic Wisdom"},
-  {text:"The Quran was revealed during the blessed month of Ramadan as a complete guidance and criterion for all mankind.",source:"Quran — Surah Al-Baqarah 185"},
-  {text:"Whoever treads a path in search of knowledge Allah will make easy for him the path to paradise.",source:"Hadith — Sahih Muslim"},
-  {text:"Be in this world as though you were a stranger or a traveler just passing through on the way to the hereafter.",source:"Hadith — Sahih Bukhari"},
-  {text:"Give charity without delay for it stands in the way of calamity and brings abundant blessings from Allah.",source:"Islamic Wisdom"},
-  {text:"The most beloved deeds to Allah are those done consistently with sincerity even if they are small.",source:"Hadith — Sahih Bukhari"},
-  {text:"Speak the truth even if it is bitter for truth is the foundation of every righteous character.",source:"Islamic Wisdom"}
+/* ─── CONTENT — 3 DIFFICULTY LEVELS ─── */
+
+// ── BASIC: Short sentences (20–50 characters) ──
+const CONTENT_BASIC = [
+  {text:"Pray five times every day.",source:"Islamic Wisdom"},
+  {text:"Allah is the Most Merciful.",source:"The Holy Quran"},
+  {text:"Be kind to everyone you meet.",source:"Islamic Wisdom"},
+  {text:"Smile at others it is charity.",source:"Hadith — Tirmidhi"},
+  {text:"Honesty is the best policy.",source:"Islamic Wisdom"},
+  {text:"Give charity and earn reward.",source:"Hadith — Bukhari"},
+  {text:"Read and learn every single day.",source:"Islamic Wisdom"},
+  {text:"Speak the truth at all times.",source:"Islamic Wisdom"},
+  {text:"Be patient and trust in Allah.",source:"Quran — Al-Baqarah"},
+  {text:"Islam means peace and submission.",source:"Islamic Wisdom"},
+  {text:"Help others and Allah will help you.",source:"Hadith — Muslim"},
+  {text:"Fast in Ramadan and gain reward.",source:"Hadith — Bukhari"},
+  {text:"Make dua and rely on Allah alone.",source:"Islamic Wisdom"},
+  {text:"Be grateful to Allah always.",source:"Quran — Ibrahim"},
+  {text:"Cleanliness is half of faith.",source:"Hadith — Muslim"},
+  {text:"Seek knowledge from the cradle.",source:"Islamic Wisdom"},
+  {text:"A kind word is a form of charity.",source:"Hadith — Bukhari"},
+  {text:"Prayer is the pillar of Islam.",source:"Islamic Wisdom"},
+  {text:"Allah loves those who are patient.",source:"The Holy Quran"},
+  {text:"Be honest in all your dealings.",source:"Islamic Wisdom"},
+  {text:"Love for others what you love.",source:"Hadith — Bukhari"},
+  {text:"Say bismillah before every task.",source:"Islamic Wisdom"},
+  {text:"Keep your promises always.",source:"Quran — Al-Maidah"},
+  {text:"Do not waste food or water.",source:"Islamic Wisdom"},
+  {text:"Respect your parents every day.",source:"Quran — Al-Isra"},
 ];
+
+// ── INTERMEDIATE: Medium sentences (55–110 characters) ──
+const CONTENT_INTERMEDIATE = [
+  {text:"The best of you are those who learn the Quran and teach it to others.",source:"Hadith — Sahih Bukhari"},
+  {text:"Seek knowledge even if you have to travel to the farthest land on earth.",source:"Islamic Wisdom"},
+  {text:"The Messenger of Allah said: A kind word is a form of charity given to every person.",source:"Hadith — Sahih Bukhari"},
+  {text:"Verily with every hardship comes ease. Indeed with every difficulty there is relief.",source:"Quran — Ash-Sharh 5-6"},
+  {text:"Prophet Muhammad peace be upon him was sent as a mercy to all the worlds.",source:"Quran — Al-Anbiya 107"},
+  {text:"The strong person is not the one who wrestles but the one who controls anger.",source:"Hadith — Sahih Bukhari"},
+  {text:"None of you truly believes until he loves for his brother what he loves for himself.",source:"Hadith — Sahih Bukhari"},
+  {text:"Allah does not burden a soul beyond that it can bear. He is always with the patient.",source:"Quran — Al-Baqarah 286"},
+  {text:"The best charity is that which is given when you yourself are in need of support.",source:"Hadith — Sahih Bukhari"},
+  {text:"Whoever believes in Allah should speak good words or remain silent and refrain from harm.",source:"Hadith — Bukhari & Muslim"},
+  {text:"Prayer is the pillar of religion and the foundation of every righteous deed done for Allah.",source:"Islamic Wisdom"},
+  {text:"The Quran was revealed during Ramadan as a complete guidance and criterion for all mankind.",source:"Quran — Al-Baqarah 185"},
+  {text:"Whoever treads a path in search of knowledge Allah will make easy for him the path to paradise.",source:"Hadith — Sahih Muslim"},
+  {text:"Be in this world as though you were a traveler passing through on the way to the hereafter.",source:"Hadith — Sahih Bukhari"},
+  {text:"The most beloved deeds to Allah are those done consistently with sincerity even if they are small.",source:"Hadith — Sahih Bukhari"},
+  {text:"Speak the truth even if it is bitter for truth is the foundation of every righteous character.",source:"Islamic Wisdom"},
+  {text:"Give charity without delay for it stands in the way of calamity and brings blessings from Allah.",source:"Islamic Wisdom"},
+  {text:"Cleanliness is half of faith and the praise of Allah fills the scales of good deeds in hereafter.",source:"Hadith — Sahih Muslim"},
+  {text:"Read in the name of your Lord who created mankind from a clinging substance, He is Most Generous.",source:"Quran — Al-Alaq 1-3"},
+  {text:"Islam is built upon five pillars: testimony of faith, prayer, charity, fasting and pilgrimage.",source:"Hadith — Bukhari & Muslim"},
+  {text:"The world is a prison for the believer who strives for the hereafter and seeks to please Allah.",source:"Hadith — Sahih Muslim"},
+  {text:"Whoever shows no mercy to others will not be shown mercy by Allah the Almighty on the Day of Judgment.",source:"Hadith — Bukhari & Muslim"},
+  {text:"Lower your gaze and guard your modesty for they are from the signs of the believers in Allah.",source:"Quran — An-Nur 30-31"},
+  {text:"The believer is not one who eats his fill when his neighbor beside him goes to sleep hungry.",source:"Hadith — Al-Adab Al-Mufrad"},
+  {text:"When you see a wrong being done try to stop it with your hand your tongue or your heart.",source:"Hadith — Sahih Muslim"},
+];
+
+// ── ADVANCED: Long complex sentences (110–200 characters) ──
+const CONTENT_ADVANCED = [
+  {text:"The best of people are those who bring the most benefit to the rest of mankind through their actions words and sincere intentions.",source:"Hadith — Daraqutni"},
+  {text:"Whoever Allah wishes good for He gives him understanding of religion and He inspires him with right guidance and protects him from deviation.",source:"Hadith — Bukhari & Muslim"},
+  {text:"Islam is built upon five pillars: the testimony that there is no god but Allah and that Muhammad is His messenger, establishing prayer, paying the poor due, fasting Ramadan, and making pilgrimage to the House.",source:"Hadith — Bukhari & Muslim"},
+  {text:"The believer does not insult others, does not curse others, is not immoral, and is not rude or harsh in his dealings with people around him.",source:"Hadith — Tirmidhi"},
+  {text:"Whoever travels a path seeking knowledge Allah will make easy for him a path to paradise, and the angels lower their wings in approval of the seeker.",source:"Hadith — Abu Dawud"},
+  {text:"Make things easy and do not make them difficult, give glad tidings and do not repel people, cooperate with each other and do not differ with each other.",source:"Hadith — Bukhari & Muslim"},
+  {text:"The strong person is not the one who overcomes the people by his strength but the strong person is the one who controls himself while he is angry.",source:"Hadith — Sahih Bukhari"},
+  {text:"There are two blessings in which many people suffer loss and are deceived: good health and free time. Both are gifts from Allah that should be used wisely.",source:"Hadith — Sahih Bukhari"},
+  {text:"None of you will truly believe until you love for your brother and your neighbor what you love for yourself in terms of good things blessings and happiness.",source:"Hadith — Sahih Bukhari & Muslim"},
+  {text:"The world is a prison for the believer and a paradise for the disbeliever because the believer restrains himself from desires for the sake of Allah alone.",source:"Hadith — Sahih Muslim"},
+  {text:"Allah does not look at your forms or your wealth but He looks at your hearts and your deeds. So purify your heart and perfect your character for Allah.",source:"Hadith — Sahih Muslim"},
+  {text:"Whoever wakes up and his greatest concern is something other than Allah then he is not of Allah and Allah does not take care of his worldly affairs.",source:"Hadith — Ahmad"},
+  {text:"The dua of a Muslim for his brother in his absence is answered quickly. Beside his head there is an angel appointed who every time he makes dua for good gets an amen.",source:"Hadith — Sahih Muslim"},
+  {text:"Be in the world as if you were a stranger or a traveler along a path. Count yourself among the inhabitants of the graves and know that your day of departure is near.",source:"Hadith — Sahih Bukhari"},
+  {text:"A man visited his brother in a distant village and Allah sent an angel to observe him. When the man arrived the angel asked: Where are you heading? The man replied: To my brother who lives in this village. The angel then asked: Do you have any business or financial interest in him?",source:"Hadith — Sahih Muslim"},
+  {text:"Verily Allah does not look at your faces or your bodies but He looks at your hearts and your deeds. So whoever has a pure and sincere heart will be successful in this life and the next.",source:"Hadith — Sahih Muslim"},
+  {text:"The rights of the Muslim over his fellow Muslim are six: when you meet him greet him, when he invites you accept it, when he seeks advice give sincere advice, when he sneezes praise Allah, when he is sick visit him and when he dies follow his funeral.",source:"Hadith — Sahih Muslim"},
+  {text:"Richness is not having many possessions, but true richness is the richness of the soul. Whoever has a content heart and is grateful to Allah for what he has is truly rich.",source:"Hadith — Sahih Bukhari"},
+  {text:"Guard yourself against injustice for injustice will be darkness on the Day of Resurrection. Guard yourself against miserliness for miserliness destroyed those who came before you.",source:"Hadith — Sahih Muslim"},
+  {text:"The parable of a good friend and a bad friend is like that of a seller of musk and a blacksmith. The seller of musk will either give you some perfume or you will buy some from him or at least you will smell its sweet scent.",source:"Hadith — Bukhari & Muslim"},
+];
+
+let G_DIFFICULTY = 'basic'; // current difficulty
+
+function getDiffContent() {
+  if (G_DIFFICULTY === 'basic') return CONTENT_BASIC;
+  if (G_DIFFICULTY === 'advanced') return CONTENT_ADVANCED;
+  return CONTENT_INTERMEDIATE;
+}
+
+function getDiffBotSpeeds() {
+  // Returns [wMin, wMax] for each bot at chosen difficulty
+  if (G_DIFFICULTY === 'basic') return [
+    [0,0], [8,15], [14,22], [20,28], [25,34]
+  ];
+  if (G_DIFFICULTY === 'advanced') return [
+    [0,0], [45,58], [58,70], [70,82], [80,95]
+  ];
+  // intermediate (default)
+  return [
+    [0,0], [24,32], [37,50], [53,66], [68,84]
+  ];
+}
+
+function setDifficulty(level) {
+  G_DIFFICULTY = level;
+  ['basic','intermediate','advanced'].forEach(l => {
+    const btn = document.getElementById('diff' + l.charAt(0).toUpperCase() + l.slice(1));
+    if (btn) btn.classList.remove('active-diff');
+  });
+  const activeBtn = document.getElementById('diff' + level.charAt(0).toUpperCase() + level.slice(1));
+  if (activeBtn) activeBtn.classList.add('active-diff');
+
+  const info = document.getElementById('diffInfo');
+  if (info) {
+    const infos = {
+      basic:        'Short & simple sentences • Slow bots (8–34 WPM)',
+      intermediate: 'Medium sentences • Normal bots (24–84 WPM)',
+      advanced:     'Long complex sentences • Fast bots (45–95 WPM)',
+    };
+    info.textContent = infos[level];
+  }
+}
+
+// Legacy alias so existing code still works
+const CONTENT = CONTENT_INTERMEDIATE;
 
 const WISDOMS = [
   {q:"Every expert was once a beginner. Keep typing and keep learning!",s:"GIC Motivation"},
@@ -837,10 +980,13 @@ function calcWPM(){
 function startRace(){
   if(G.state!=='idle')return;
   G.state='countdown';
-  G.content=CONTENT[Math.floor(Math.random()*CONTENT.length)];
+  const _dc = getDiffContent();
+  G.content = _dc[Math.floor(Math.random() * _dc.length)];
   G.typedIdx=0;G.totalKeys=0;G.errorKeys=0;G.streak=0;G.elapsed=0;G.startTime=null;
   G.positions=[0,0,0,0,0];G.finished=[];
-  G.botSpeeds=RACERS.map((r,i)=>i===0?0:rnd(r.wMin,r.wMax));
+  // Bot speeds from difficulty
+const _ds = getDiffBotSpeeds();
+G.botSpeeds = RACERS.map((r,i) => i===0 ? 0 : rnd(_ds[i][0], _ds[i][1]));
 
   // Reset UI
   ['wpmVal','accVal','timeVal'].forEach(id=>{$(id).textContent='0';});
@@ -883,6 +1029,10 @@ function startRace(){
 /* ─── BEGIN RACE ─── */
 function beginRace(){
   G.state='racing';G.startTime=Date.now();
+  // Lock difficulty during race
+  ['diffBasic','diffInter','diffAdv'].forEach(id => {
+    const b = document.getElementById(id); if(b) b.disabled = true;
+  });
   const inp=$('typingInput');inp.disabled=false;inp.value='';inp.focus();
   // Start gallop on all horses
   RACERS.forEach((_,i)=>{const hw=$(`horse${i}`);if(hw)hw.classList.add('galloping');});
@@ -1000,6 +1150,9 @@ function endRace(){
   $('typingInput').disabled=true;
   RACERS.forEach((_,i)=>{const hw=$(`horse${i}`);if(hw)hw.classList.remove('galloping');});
   $('newBtn').disabled=false;$('startBtn').disabled=false;
+  ['diffBasic','diffInter','diffAdv'].forEach(id => {
+    const b = document.getElementById(id); if(b) b.disabled = false;
+  });
   const wpm=calcWPM();
   const acc=G.totalKeys>0?Math.max(0,Math.round(((G.totalKeys-G.errorKeys)/G.totalKeys)*100)):100;
   const pos=G.finished.indexOf(0)+1||RACERS.length;
@@ -1026,7 +1179,7 @@ function showResults(wpm,acc,pos,rank){
 /* ─── WHATSAPP SHARE ─── */
 function shareWA(){
   const r=G.lastResult;if(!r)return;
-  const msg=`🐎 I just raced on GIC Typing Race!\n\n⚡ Speed: ${r.wpm} WPM\n✅ Accuracy: ${r.acc}%\n🏅 Position: ${r.pos}\n🎓 Rank: ${r.rank}\n\nI improved my typing speed while racing horses!\n🌙 Play FREE 👉 https://globalislamiccare.com/typing-game.html\n\n#GlobalIslamicCare #GICTypingRace #TypingGame`;
+  const msg=`🐎 I just raced on Horse Typing Game!\n\n⚡ Speed: ${r.wpm} WPM\n✅ Accuracy: ${r.acc}%\n🏅 Position: ${r.pos}\n🎓 Rank: ${r.rank}\n\nI improved my typing speed playing Horse Typing Game!\n🌙 Play FREE 👉 https://globalislamiccare.com/typing-game.html\n\n#GlobalIslamicCare #HorseTypingGame #TypingRace`;
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
@@ -1317,7 +1470,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 </script>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"GIC Typing Race - Horse Racing Typing Game","description":"GIC Typing Race - a free horse racing typing game by Global Islamic Care. Race animated horses with jockeys while improving English typing speed.","url":"https://globalislamiccare.com/typing-game.html","applicationCategory":"Game","genre":["Educational Game","Typing Game"],"operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Global Islamic Care","url":"https://globalislamiccare.com"},"educationalUse":["Self Study","English Typing Practice"],"keywords":"GIC typing race, horse racing game, english typing practice, typing speed game, global islamic care"}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Horse Typing Game","description":"Horse Typing Game - a free horse racing typing game by Global Islamic Care. Race animated horses with jockeys while improving English typing speed.","url":"https://globalislamiccare.com/typing-game.html","applicationCategory":"Game","genre":["Educational Game","Typing Game"],"operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Global Islamic Care","url":"https://globalislamiccare.com"},"educationalUse":["Self Study","English Typing Practice"],"keywords":"horse typing game, horse racing typing game, free typing practice, typing levels basic intermediate advanced, global islamic care"}
 </script>
 </body>
 </html>
