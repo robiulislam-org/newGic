@@ -5242,7 +5242,8 @@ async function loadPublicTeachers(force = false) {
   DEMO_PUBLIC_TEACHERS.forEach(t => { localMap[t.slug] = t; });
 
   if (!data || data.length === 0) {
-    data = DEMO_PUBLIC_TEACHERS.filter(t => t.is_active !== false);
+    const _deletedSlugs = JSON.parse(localStorage.getItem('gic_deleted_teacher_slugs') || '[]');
+    data = DEMO_PUBLIC_TEACHERS.filter(t => t.is_active !== false && !_deletedSlugs.includes(t.slug));
   } else {
     // Safety filter: exclude inactive teachers even if Supabase filter failed
     data = data.filter(t => t.is_active !== false);
@@ -5279,14 +5280,6 @@ async function loadPublicTeachers(force = false) {
         is_verified: processed.is_verified !== false,
         is_demo: false
       };
-    });
-
-    // Ensure all 3 real verified teachers are present if missing
-    const realSlugs = ['md-mujahidul-islam', 'hafez-robiul-islam', 'md-al-amin'];
-    realSlugs.forEach(slug => {
-      if (!data.some(t => t.slug === slug || (slug === 'md-mujahidul-islam' && t.id == 10) || (slug === 'hafez-robiul-islam' && t.id == 8) || (slug === 'md-al-amin' && t.id == 9)) && localMap[slug]) {
-        data.push(localMap[slug]);
-      }
     });
 
     // Append demo general teachers if not already present in DB

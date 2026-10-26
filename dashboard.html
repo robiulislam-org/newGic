@@ -5117,6 +5117,11 @@ async function confirmDeleteTeacherSubmit() {
       localStorage.setItem('gic_teachers_cleared', 'true');
     }
     closeTeacherDeleteModal();
+    // Track deleted slug in localStorage so public page fallback can filter it
+    try {
+      const _ds = JSON.parse(localStorage.getItem('gic_deleted_teacher_slugs') || '[]');
+      if (slug && !_ds.includes(slug)) { _ds.push(slug); localStorage.setItem('gic_deleted_teacher_slugs', JSON.stringify(_ds)); }
+    } catch(e) {}
     toast('✅ শিক্ষক সফলভাবে মুছে ফেলা হয়েছে!', 'ok');
     filterAdminTeachers();
   } catch(err) {
