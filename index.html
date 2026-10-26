@@ -5209,7 +5209,8 @@ function extractGicMeta(t) {
 
 // ── INITIAL PUBLIC TEACHERS LOADER ──
 async function loadPublicTeachers(force = false) {
-  if (publicTeachersLoaded && !force) return;
+  // Cache disabled: always fetch fresh data to respect is_active changes
+  // if (publicTeachersLoaded && !force) return;
   const grid = document.getElementById('public-teachers-grid');
   const loading = document.getElementById('public-teachers-loading');
   if (!grid) return;
@@ -5241,8 +5242,11 @@ async function loadPublicTeachers(force = false) {
   DEMO_PUBLIC_TEACHERS.forEach(t => { localMap[t.slug] = t; });
 
   if (!data || data.length === 0) {
-    data = DEMO_PUBLIC_TEACHERS.slice();
+    data = DEMO_PUBLIC_TEACHERS.filter(t => t.is_active !== false);
   } else {
+    // Safety filter: exclude inactive teachers even if Supabase filter failed
+    data = data.filter(t => t.is_active !== false);
+
     // Enhance DB records: database edits MUST override local curated fallbacks!
     data = data.map(dbT => {
       const processed = extractGicMeta(dbT);
