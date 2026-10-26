@@ -193,7 +193,7 @@ input{font-family:inherit;outline:none;}
 .typing-header{display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;}
 .typing-header h3{font-size:12px;color:var(--gold);font-weight:700;}
 .src-tag{margin-left:auto;background:var(--surf2);color:var(--muted);font-size:11px;padding:3px 10px;border-radius:10px;flex-shrink:0;}
-.text-display{background:var(--dark2);border:1px solid var(--surf2);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:16px;line-height:1.7;font-family:'Courier New',monospace;word-break:break-word;min-height:76px;user-select:none;}
+.text-display{background:#091a0f;border:2px solid rgba(200,151,42,.45);border-radius:10px;padding:12px 16px;margin-bottom:8px;font-size:17px;line-height:1.85;font-family:'Courier New',monospace;word-break:break-word;min-height:76px;user-select:none;box-shadow:0 0 14px rgba(200,151,42,.1),inset 0 0 16px rgba(0,0,0,.2);letter-spacing:0.03em;}
 .c{position:relative;}
 .c.typed{color:#66bb6a;}
 .c.current{color:var(--gold);border-bottom:2px solid var(--gold);animation:blinkC .7s ease-in-out infinite alternate;}
@@ -304,7 +304,7 @@ body.is-fullscreen {
 
 body.is-fullscreen .game-wrap {
   max-width:100%;
-  padding:8px 14px 6px;
+  padding:4px 12px 4px;
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -313,60 +313,101 @@ body.is-fullscreen .game-wrap {
   box-sizing:border-box;
 }
 
+/* ── FULLSCREEN: TOP STATS - খুব ছোট ── */
 body.is-fullscreen .stats-bar {
-  margin-bottom:4px;
+  margin-bottom:2px;
   flex-shrink:0;
+  gap:4px;
 }
+body.is-fullscreen .stat-card {
+  padding:3px 4px;
+  border-radius:6px;
+}
+body.is-fullscreen .stat-val { font-size:13px; line-height:1; }
+body.is-fullscreen .stat-label { font-size:8px; margin-bottom:0; }
+body.is-fullscreen .stat-unit { font-size:8px; margin-top:0; display:none; }
 
-body.is-fullscreen .stat-val { font-size:16px; }
+/* ── FULLSCREEN: DIFFICULTY BAR - একেবারে ছোট ── */
+body.is-fullscreen .diff-wrap {
+  padding:3px 10px;
+  margin-bottom:2px;
+  border-radius:6px;
+}
+body.is-fullscreen .diff-label { font-size:10px; }
+body.is-fullscreen .diff-btn { padding:3px 10px; font-size:11px; }
+body.is-fullscreen .diff-info { font-size:9px; padding:2px 8px; }
 
+/* ── FULLSCREEN: CONTROLS - একেবারে ছোট ── */
+body.is-fullscreen .controls {
+  margin-bottom:2px;
+  flex-shrink:0;
+  gap:5px;
+}
+body.is-fullscreen .btn { padding:4px 12px; font-size:11px; gap:4px; }
+
+/* ── FULLSCREEN: RACE SECTION - বাকি সব জায়গা পাবে ── */
 body.is-fullscreen .race-section {
   flex:1;
   min-height:0;
-  margin-bottom:7px;
+  margin-bottom:4px;
 }
+body.is-fullscreen .track-topbar {
+  padding:3px 10px;
+}
+body.is-fullscreen .track-topbar span { font-size:10px; }
+body.is-fullscreen .rank-badge { font-size:9px; padding:1px 8px; }
 
 body.is-fullscreen .track-panorama {
   height:100%!important;
-  min-height:180px;
+  min-height:200px;
 }
 
 body.is-fullscreen .lanes-wrap {
   top:34%;
 }
 
-body.is-fullscreen .horse-wrap { width:80px; }
-body.is-fullscreen .horse-svg  { width:80px; }
+body.is-fullscreen .horse-wrap { width:90px; }
+body.is-fullscreen .horse-svg  { width:90px; }
 
+/* ── FULLSCREEN: TYPING SECTION - নিচে compact ── */
 body.is-fullscreen .typing-section {
-  margin-bottom:4px;
-  padding:7px 12px;
+  margin-bottom:2px;
+  padding:8px 14px;
   flex-shrink:0;
+  border:1px solid rgba(200,151,42,.3);
 }
+body.is-fullscreen .typing-header { margin-bottom:5px; }
+body.is-fullscreen .typing-header h3 { font-size:11px; }
+body.is-fullscreen .src-tag { font-size:9px; padding:2px 7px; }
 
+/* ── FULLSCREEN: TEXT DISPLAY - উজ্জ্বল ও বড় ── */
 body.is-fullscreen .text-display {
-  font-size:15px;
-  line-height:1.6;
-  min-height:50px;
-  padding:8px 12px;
+  font-size:19px;
+  line-height:1.9;
+  min-height:56px;
+  padding:10px 16px;
   margin-bottom:6px;
+  background:#0a1f12;
+  border:2px solid rgba(200,151,42,.5);
+  box-shadow:0 0 18px rgba(200,151,42,.12), inset 0 0 20px rgba(0,0,0,.3);
+  letter-spacing:0.04em;
 }
 
+/* ── FULLSCREEN: TYPING INPUT - বড় ও স্পষ্ট ── */
 body.is-fullscreen .typing-input {
   padding:10px 14px;
-  font-size:15px;
+  font-size:17px;
+  border-color:rgba(200,151,42,.5);
+  background:#0d2218;
+  letter-spacing:0.04em;
+}
+body.is-fullscreen .typing-input:focus {
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(200,151,42,.2);
 }
 
 body.is-fullscreen .typing-hint { display:none; }
-
-body.is-fullscreen .prog-wrap { margin-top:8px; }
-
-body.is-fullscreen .controls {
-  margin-bottom:2px;
-  flex-shrink:0;
-}
-
-body.is-fullscreen .btn { padding:6px 14px; font-size:12px; }
+body.is-fullscreen .prog-wrap { margin-top:5px; height:6px; }
 
 /* Fullscreen exit hint overlay */
 .fs-hint {
