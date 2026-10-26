@@ -16,7 +16,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Islamic Care – বিশ্বস্ত ইসলামিক শিক্ষক নেটওয়ার্ক | কুরআন · হাদিস · তাফসীর · মাসলা-মাসায়েল বিশেষজ্ঞ</title>
-<meta name="description" content="Global Islamic Care — দেশ-বিদেশের ১০০% যাচাইকৃত আমলদার মুসলিম শিক্ষক ও শিক্ষিকা প্ল্যাটফর্ম। পবিত্র কোরআন ও ইসলামিক শিক্ষার পাশাপাশি স্কুল-কলেজের সকল বিষয়ে অনলাইন লাইভ ক্লাস ও সরাসরি বাসায় গিয়ে হোম টিউশনের বিশ্বস্ত সমাধান।">
+<meta name="description" content="GIC — Global Islamic Care: বিশ্বের যেকোনো দেশ থেকে ১০০% যাচাইকৃত হাফেজ, মাওলানা, মুফতি ও আলেমা শিক্ষকদের কাছে অনলাইনে কুরআন, তাজউইদ, হাদিস ও ইসলামিক শিক্ষা গ্রহণ করুন। ফ্রি ট্রায়াল, কোনো কমিশন নেই।">
 <meta name="keywords" content="অনলাইন কোরআন শিক্ষক, কোরআন টিউটর, কোরআন শিক্ষক প্ল্যাটফর্ম, তাজবীদ শিক্ষা, হেফজুল কোরআন, হাফেজ শিক্ষক, মুফতি শিক্ষক, হাদিস শিক্ষক, তাফসীর শিক্ষক, মাসলা মাসায়েল বিশেষজ্ঞ, নূরানী কায়দা শিক্ষক, সহীহ কোরআন তেলাওয়াত, হোম টিউশন কোরআন শিক্ষক, নাজেরা শিক্ষক অনলাইন, কোরআন তাফসীর ক্লাস, আরবি ভাষা শিক্ষক অনলাইন, ইসলামিক শিক্ষা অনলাইন, অনলাইন হেফজ শিক্ষক বাংলাদেশ, প্রবাসী কোরআন শিক্ষা, home tuition quran bangladesh, online quran teacher bangladesh, online quran tutor, global islamic care, quran teacher platform, online hifz teacher, hadith teacher bangladesh, tafseer tutor, islamic scholar platform, best online quran teacher bangladesh">
 <meta name="author" content="Global Islamic Care">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -2921,6 +2921,232 @@ footer {
     font-size: 12.5px;
   }
 }
+
+/* ════════════════════════════════════════════════════════
+   GIC — Full Islamic Professional Upgrade CSS
+   ════════════════════════════════════════════════════════ */
+
+/* ── EXTRA CSS VARIABLES ── */
+:root {
+  --gold-dark: #a07020;
+  --cream-dark: #f0ede6;
+  --shadow-gold: 0 4px 24px rgba(200,151,42,0.25);
+  --shadow-lg: 0 16px 48px rgba(10,22,40,0.15);
+  --radius-lg: 20px;
+  --green: #065f46;
+  --green-mid: #10b981;
+  --green-light: #d1fae5;
+  --font-arabic: 'Amiri', 'Scheherazade New', serif;
+}
+
+/* ── SMOOTH SCROLLBAR ── */
+html { scroll-behavior: smooth; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #050d1e; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#1a5f9e,#c8972a); border-radius: 8px; }
+::selection { background: rgba(200,151,42,0.3); color: #0a1628; }
+
+/* ── PAGE TRANSITIONS ── */
+.page.active { animation: pageIn 0.38s cubic-bezier(0.4,0,0.2,1) both; }
+@keyframes pageIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease,transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── KEYFRAMES ── */
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+@keyframes glowPulse  { 0%,100%{box-shadow:0 0 20px rgba(200,151,42,0.3)} 50%{box-shadow:0 0 40px rgba(200,151,42,0.6)} }
+@keyframes spin       { to{transform:rotate(360deg)} }
+@keyframes ticker     { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── BUTTONS ── */
+.btn { display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all 0.28s cubic-bezier(0.4,0,0.2,1);white-space:nowrap; }
+.btn:active { transform:scale(0.97); }
+.btn-gold {
+  background: linear-gradient(135deg,#c8972a 0%,#e5b95c 50%,#c8972a 100%);
+  color: #0a1628 !important;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-size: 14px;
+  box-shadow: 0 4px 20px rgba(200,151,42,0.4);
+  position: relative; overflow: hidden;
+}
+.btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(200,151,42,0.5); }
+.btn-gold::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent); opacity:0; transition:opacity 0.25s; }
+.btn-gold:hover::before { opacity:1; }
+.btn-primary-glow { animation: glowPulse 2.5s ease infinite; }
+.btn-wa  { background:linear-gradient(135deg,#25d366,#128c7e);color:#fff!important;border-radius:50px;padding:12px 28px;box-shadow:0 4px 18px rgba(37,211,102,0.3); }
+.btn-wa:hover { transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.4); }
+.btn-outline { background:transparent;border:2px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.88)!important;border-radius:50px;padding:10px 24px; }
+.btn-outline:hover { border-color:var(--gold);color:var(--gold)!important;background:rgba(200,151,42,0.08); }
+.btn-lg { padding:15px 36px!important;font-size:15px!important; }
+
+/* ── ISLAMIC DIVIDER ── */
+.islamic-divider { display:flex;align-items:center;gap:16px;margin:22px auto 0;max-width:320px; }
+.islamic-divider-line { flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(200,151,42,0.45),transparent); }
+.islamic-divider-star { color:var(--gold);font-size:14px;white-space:nowrap;opacity:0.7;letter-spacing:0.2em; }
+
+/* ── ISLAMIC SECTION HEAD ── */
+.islamic-section-head { text-align:center;margin-bottom:48px; }
+.arabic-subtitle { font-family:var(--font-arabic);font-size:clamp(20px,3vw,30px);color:var(--gold);direction:rtl;letter-spacing:0.05em;margin-bottom:10px;opacity:0.82;text-shadow:0 2px 16px rgba(200,151,42,0.2); }
+
+/* ── TRUST BADGES ── */
+.trust-badge-row { display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:8px; }
+.trust-badge { display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:50px;padding:6px 14px;font-size:12px;color:rgba(255,255,255,0.82);font-weight:600;backdrop-filter:blur(8px); }
+.trust-badge-green { background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3); }
+.trust-badge-gold  { background:rgba(200,151,42,0.12);border-color:rgba(200,151,42,0.35); }
+
+/* ── HERO BISMILLAH BAR ── */
+.hero-bismillah-bar { display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:22px; }
+.hero-bismillah-line { flex:1;max-width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(200,151,42,0.5)); }
+.hero-bismillah-line.right { background:linear-gradient(270deg,transparent,rgba(200,151,42,0.5)); }
+
+/* ── SECTION LABEL ── */
+.section-label { display:inline-flex;align-items:center;gap:7px;background:rgba(26,95,158,0.08);border:1px solid rgba(26,95,158,0.2);border-radius:50px;padding:6px 18px;font-size:12px;font-weight:700;color:var(--blue);letter-spacing:0.04em;margin-bottom:14px; }
+.section-title { font-size:clamp(22px,3vw,34px);font-weight:900;color:var(--dark);margin-bottom:10px; }
+.section-title span, .gold { color:var(--gold)!important; }
+.section-sub { font-size:15px;color:var(--text-muted);max-width:620px;margin:0 auto;line-height:1.7; }
+.section-header { text-align:center;margin-bottom:48px; }
+
+/* ── TICKER ── */
+.ticker {
+  background:linear-gradient(135deg,#0a1628,#0f2744);
+  overflow:hidden;padding:14px 0;
+  border-top:1px solid rgba(200,151,42,0.2);
+  border-bottom:1px solid rgba(200,151,42,0.2);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,black 7%,black 93%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,black 7%,black 93%,transparent 100%);
+}
+.ticker-track { display:flex;gap:0;animation:ticker 40s linear infinite;white-space:nowrap; }
+.ticker:hover .ticker-track { animation-play-state:paused; }
+.ticker-item { padding:0 40px;color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:10px;letter-spacing:0.02em; }
+.ticker-dot { width:6px;height:6px;background:var(--gold);border-radius:50%;display:inline-block;flex-shrink:0;opacity:0.7; }
+
+/* ── HOME STATS ── */
+.home-stats-section { background:linear-gradient(135deg,#040e1f 0%,#0a1628 60%,#0d2444 100%);padding:60px 24px;position:relative;overflow:hidden; }
+.home-stats-section::before { content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(200,151,42,0.07),transparent);pointer-events:none; }
+.home-stats-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:960px;margin:0 auto;position:relative;z-index:1; }
+.home-stat-card { text-align:center;padding:32px 20px;background:rgba(255,255,255,0.04);border:1px solid rgba(200,151,42,0.2);border-radius:20px;backdrop-filter:blur(8px);transition:all 0.3s ease; }
+.home-stat-card:hover { background:rgba(200,151,42,0.08);border-color:rgba(200,151,42,0.4);transform:translateY(-4px); }
+.home-stat-icon { font-size:32px;display:block;margin-bottom:10px; }
+.home-stat-num { font-size:clamp(28px,4vw,42px);font-weight:900;color:#e5b95c;line-height:1;margin-bottom:8px; }
+.home-stat-label { font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5; }
+@media(max-width:700px){.home-stats-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* ── TESTIMONIALS ── */
+.home-testimonials-section { background:var(--cream-dark,#f0ede6);padding:72px 24px;position:relative;overflow:hidden; }
+.home-testimonials-section::before { content:'❝';font-family:Georgia,serif;position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:200px;color:rgba(26,95,158,0.04);line-height:1;pointer-events:none; }
+.home-t-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1140px;margin:0 auto; }
+.home-t-card { background:#fff;border:1px solid var(--border,#e2e8f0);border-radius:20px;padding:30px 26px;position:relative;transition:all 0.32s cubic-bezier(0.4,0,0.2,1);overflow:hidden; }
+.home-t-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue,#1a5f9e),var(--gold,#c8972a));transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease; }
+.home-t-card:hover::before { transform:scaleX(1); }
+.home-t-card:hover { transform:translateY(-5px);box-shadow:0 16px 48px rgba(10,22,40,0.12);border-color:rgba(200,151,42,0.25); }
+.home-t-quote { position:absolute;top:14px;right:20px;font-size:64px;color:var(--blue);opacity:0.07;font-family:Georgia,serif;line-height:1; }
+.home-t-stars { color:var(--gold);font-size:15px;letter-spacing:2px;margin-bottom:12px; }
+.home-t-text { font-size:14.5px;color:var(--text,#334155);line-height:1.85;margin-bottom:20px;font-style:italic;position:relative;z-index:1; }
+.home-t-author { display:flex;align-items:center;gap:12px; }
+.home-t-avatar { width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+.home-t-name { font-size:14px;font-weight:700;color:var(--dark,#0f2744); }
+.home-t-loc { font-size:11.5px;color:var(--text-muted,#64748b);margin-top:2px; }
+.home-t-country { font-size:16px; }
+@media(max-width:900px){.home-t-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.home-t-grid{grid-template-columns:1fr;}}
+
+/* ── WHY GIC ── */
+.why-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto; }
+.why-card { background:#fff;border:1px solid var(--border,#e2e8f0);border-radius:20px;padding:28px 24px;position:relative;transition:all 0.32s cubic-bezier(0.4,0,0.2,1);overflow:hidden; }
+.why-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue,#1a5f9e),var(--gold,#c8972a));transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease; }
+.why-card:hover::before { transform:scaleX(1); }
+.why-card:hover { transform:translateY(-5px);box-shadow:0 16px 48px rgba(10,22,40,0.1);border-color:rgba(200,151,42,0.25); }
+.why-card-green .why-icon { background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(16,185,129,0.05));border-color:rgba(16,185,129,0.3); }
+.why-card-green::before { background:linear-gradient(90deg,var(--green-mid,#10b981),var(--blue,#1a5f9e)); }
+.why-icon { font-size:32px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;width:56px;height:56px;background:linear-gradient(135deg,rgba(26,95,158,0.1),rgba(26,95,158,0.05));border:1px solid rgba(26,95,158,0.2);border-radius:14px; }
+.why-title { font-size:15px;font-weight:800;color:var(--dark,#0f2744);margin-bottom:8px; }
+.why-desc { font-size:13.5px;color:var(--text-muted,#64748b);line-height:1.75;margin:0; }
+@media(max-width:900px){.why-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.why-grid{grid-template-columns:1fr;}}
+
+/* ── HOW IT WORKS ── */
+.process-grid { display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:0 12px;align-items:start;max-width:1100px;margin:0 auto; }
+.process-step { background:#fff;border:1px solid var(--border,#e2e8f0);border-radius:20px;padding:32px 24px;text-align:center;position:relative;transition:all 0.32s cubic-bezier(0.4,0,0.2,1);overflow:hidden; }
+.process-step::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue,#1a5f9e),var(--gold,#c8972a));transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease; }
+.process-step:hover::before { transform:scaleX(1); }
+.process-step:hover { transform:translateY(-6px);box-shadow:0 16px 48px rgba(10,22,40,0.12);border-color:rgba(200,151,42,0.3); }
+.process-num { font-size:11px;font-weight:800;color:var(--gold);letter-spacing:0.1em;margin-bottom:12px;opacity:0.7; }
+.process-icon { font-size:38px;margin-bottom:14px;display:block; }
+.process-title { font-size:15px;font-weight:800;color:var(--dark,#0f2744);margin-bottom:10px; }
+.process-desc { font-size:13px;color:var(--text-muted,#64748b);line-height:1.75;margin:0; }
+.process-connector { display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--gold);opacity:0.5;margin-top:60px;font-weight:300; }
+@media(max-width:900px){ .process-grid{grid-template-columns:1fr;max-width:480px;} .process-connector{transform:rotate(90deg);margin:4px auto;font-size:20px;} }
+
+/* ── FAQ ── */
+.faq-list { display:flex;flex-direction:column;gap:12px; }
+.faq-item { border:1px solid var(--border,#e2e8f0);border-radius:16px;overflow:hidden;background:#fff;transition:box-shadow 0.25s ease,border-color 0.25s ease; }
+.faq-item.open { border-color:rgba(200,151,42,0.4);box-shadow:0 4px 20px rgba(200,151,42,0.08); }
+.faq-q { width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 22px;background:none;border:none;font-family:inherit;font-size:15px;font-weight:700;color:var(--dark,#0f2744);text-align:left;cursor:pointer;transition:color 0.2s; }
+.faq-q:hover,.faq-item.open .faq-q { color:var(--blue,#1a5f9e); }
+.faq-arrow { font-size:12px;color:var(--gold);transition:transform 0.3s ease;flex-shrink:0; }
+.faq-item.open .faq-arrow { transform:rotate(180deg); }
+.faq-a { max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
+.faq-item.open .faq-a { max-height:400px; }
+.faq-a p { padding:14px 22px 18px;margin:0;font-size:14px;color:var(--text-muted,#64748b);line-height:1.8;border-top:1px solid var(--border,#e2e8f0); }
+
+/* ── TEACHER SECTION HEADER ── */
+.teacher-section-header { text-align:center;margin-bottom:32px;padding:0 8px; }
+.teacher-section-header h2 { font-size:clamp(20px,3vw,30px);font-weight:900;color:var(--dark,#0f2744);margin-bottom:8px; }
+.teacher-section-header p { font-size:14px;color:var(--text-muted,#64748b);max-width:580px;margin:0 auto;line-height:1.7; }
+
+/* ── RECRUITMENT CTA ── */
+/* (inline styled, no extra class needed) */
+
+/* ── FINAL CTA SECTION ── */
+.final-cta-section { background:linear-gradient(135deg,#040e1f 0%,#0a1628 40%,#0d2444 100%);padding:88px 24px;text-align:center;position:relative;overflow:hidden; }
+.final-cta-section::before { content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 20% 50%,rgba(200,151,42,0.06),transparent 70%),radial-gradient(ellipse 50% 60% at 80% 50%,rgba(26,95,158,0.08),transparent 70%);pointer-events:none; }
+.final-cta-arabic { font-family:var(--font-arabic);font-size:clamp(18px,3vw,28px);color:rgba(200,151,42,0.7);direction:rtl;letter-spacing:0.06em;margin-bottom:8px;position:relative;z-index:1; }
+.final-cta-trans { font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:28px;position:relative;z-index:1; }
+.final-cta-title { font-size:clamp(24px,4vw,44px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:14px;position:relative;z-index:1; }
+.final-cta-title span { background:linear-gradient(135deg,#e5b95c,#f5de8a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.final-cta-sub { font-size:16px;color:rgba(255,255,255,0.72);max-width:580px;margin:0 auto 36px;line-height:1.75;position:relative;z-index:1; }
+.final-cta-btns { display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1; }
+@media(max-width:600px){ .final-cta-btns{flex-direction:column;align-items:center;} .final-cta-btns .btn{width:100%;max-width:280px;} }
+
+/* ── GIC LOADER ── */
+.gic-loader { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:56px 20px; }
+.gic-loader-ring { width:48px;height:48px;border:3px solid rgba(200,151,42,0.15);border-top-color:var(--gold,#c8972a);border-right-color:var(--blue,#1a5f9e);border-radius:50%;animation:spin 0.9s linear infinite; }
+.gic-loader-text { font-size:13.5px;color:var(--text-muted,#64748b);font-weight:600; }
+
+/* ── SOCIAL BUTTONS ── */
+.social-btn { display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.25s ease; }
+.social-btn:hover { transform:translateY(-2px); }
+.social-btn.fb:hover { background:#1877f2;border-color:#1877f2;color:#fff; }
+.social-btn.yt:hover { background:#ff0000;border-color:#ff0000;color:#fff; }
+.social-btn.li:hover { background:#0a66c2;border-color:#0a66c2;color:#fff; }
+.social-btn.wa:hover { background:#25d366;border-color:#25d366;color:#fff; }
+.social-btn svg { width:17px;height:17px;fill:currentColor; }
+
+/* ── NAV ── */
+nav { transition:background 0.4s ease,box-shadow 0.4s ease; }
+nav.scrolled { background:rgba(5,12,25,0.98)!important;box-shadow:0 4px 32px rgba(0,0,0,0.35)!important; }
+.nav-links a { transition:color 0.2s,background 0.2s;border-radius:8px;padding:6px 10px; }
+.nav-links a:hover { color:var(--gold)!important; }
+.nav-links a.active-page { color:var(--gold)!important;font-weight:800; }
+
+/* ── WHATSAPP FLOAT ── */
+.wa-float { transition:all 0.3s cubic-bezier(0.4,0,0.2,1)!important; }
+.wa-float:hover { transform:scale(1.1) translateY(-3px)!important;box-shadow:0 8px 30px rgba(37,211,102,0.5)!important; }
+
+/* ── BACK TO TOP ── */
+#backToTop.show { opacity:1!important;pointer-events:auto!important; }
+
+/* ── FOOTER ── */
+footer { position:relative; }
+footer::before { content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,151,42,0.3),transparent); }
+
+/* ── PRINT ── */
+@media print { nav,.wa-float,#backToTop,.ticker,.modal-backdrop{display:none!important;} .page{display:block!important;opacity:1!important;} }
+
 </style>
 </head>
 <body>
@@ -2950,46 +3176,300 @@ footer {
 
   <!-- ── HERO BANNER ── -->
   <!-- ── HERO BANNER ── -->
-  <section class="hero" style="padding: 44px 20px 38px; min-height: auto;">
-    <div class="hero-bg-pattern"></div>
-    <div class="hero-grid"></div>
-    <svg class="hero-geo" viewBox="0 0 400 400" fill="none" aria-hidden="true">
-      <circle cx="200" cy="200" r="190" stroke="#d4a843" stroke-width="0.5"/>
-      <circle cx="200" cy="200" r="140" stroke="#d4a843" stroke-width="0.4"/>
-      <polygon points="200,20 370,110 370,290 200,380 30,290 30,110" fill="none" stroke="#d4a843" stroke-width="0.4"/>
+  <section class="hero" style="min-height:100vh;padding:100px 24px 72px;background:linear-gradient(160deg,#040e1f 0%,#0a1628 45%,#0d2444 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+
+    <!-- Islamic Geometric Background SVG -->
+    <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.13;pointer-events:none;" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g stroke="#c8972a" stroke-width="0.8" fill="none">
+        <polygon points="400,50 750,225 750,575 400,750 50,575 50,225" opacity="0.6"/>
+        <polygon points="400,120 680,270 680,530 400,680 120,530 120,270" opacity="0.4"/>
+        <circle cx="400" cy="400" r="260" opacity="0.3"/>
+        <circle cx="400" cy="400" r="180" opacity="0.2"/>
+        <line x1="400" y1="50" x2="400" y2="750" opacity="0.2"/>
+        <line x1="50" y1="225" x2="750" y2="575" opacity="0.2"/>
+        <line x1="750" y1="225" x2="50" y2="575" opacity="0.2"/>
+      </g>
     </svg>
 
-    <div class="container" style="max-width: 860px; text-align: center; position: relative; z-index: 2;">
+    <!-- Radial glow decorations -->
+    <div style="position:absolute;top:-100px;right:-80px;width:600px;height:600px;background:radial-gradient(circle,rgba(200,151,42,0.1) 0%,transparent 65%);border-radius:50%;pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-80px;left:-60px;width:500px;height:500px;background:radial-gradient(circle,rgba(26,95,158,0.12) 0%,transparent 65%);border-radius:50%;pointer-events:none;"></div>
+
+    <div class="container" style="max-width:900px;text-align:center;position:relative;z-index:2;">
+
+      <!-- Bismillah -->
+      <div class="hero-bismillah-bar reveal">
+        <div class="hero-bismillah-line"></div>
+        <div style="font-family:var(--font-arabic);font-size:clamp(20px,3vw,30px);color:var(--gold-light,#e5b95c);direction:rtl;letter-spacing:0.03em;text-shadow:0 0 30px rgba(200,151,42,0.4);">
+          بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+        </div>
+        <div class="hero-bismillah-line right"></div>
+      </div>
 
       <!-- Top Trust Label -->
-      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(200,151,42,0.14);border:1px solid rgba(200,151,42,0.38);border-radius:50px;padding:6px 18px;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,0.2);">
-        <span style="font-size:15px;">🕌</span>
-        <span style="color:var(--gold-light);font-size:12.5px;font-weight:700;letter-spacing:0.02em;">১০০% ভেরিফায়েড ইসলামিক শিক্ষক নেটওয়ার্ক — কুরআন · হাদিস · তাফসীর · মাসলা-মাসায়েল</span>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(200,151,42,0.14);border:1px solid rgba(200,151,42,0.38);border-radius:50px;padding:7px 20px;margin-bottom:20px;animation:fadeInDown 0.7s ease both 0.2s;" class="reveal">
+        <span style="font-size:16px;">🕌</span>
+        <span style="color:var(--gold-light,#e5b95c);font-size:12.5px;font-weight:700;letter-spacing:0.02em;">১০০% ভেরিফায়েড ইসলামিক শিক্ষক নেটওয়ার্ক — কুরআন · হাদিস · তাফসীর · মাসলা-মাসায়েল</span>
       </div>
 
       <!-- Main Headline -->
-      <h1 style="font-size:clamp(23px,4.2vw,38px);font-weight:900;color:#fff;line-height:1.25;margin-bottom:14px;letter-spacing:-0.3px;">
-        কুরআন ও ইসলামিক শিক্ষায় <span style="background:linear-gradient(135deg,#e5b95c,#f0d080);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">অভিজ্ঞ ইসলামিক শিক্ষক</span> নির্বাচন করুন
+      <h1 style="font-size:clamp(24px,4.5vw,46px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:16px;letter-spacing:-0.3px;" class="reveal">
+        কুরআন ও ইসলামিক শিক্ষায় <span style="background:linear-gradient(135deg,#e5b95c,#f5de8a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">অভিজ্ঞ ইসলামিক শিক্ষক</span> নির্বাচন করুন
       </h1>
 
-      <p style="max-width:720px;margin:0 auto 20px;font-size:clamp(13.5px,2vw,15.5px);color:rgba(255,255,255,0.85);line-height:1.68;">
-        সহীহ কোরআন তেলাওয়াত, হিফজ, হাদিস, তাফসীর ও দৈনন্দিন জীবনের জরুরি মাসলা-মাসায়েল শিক্ষাদানে শতভাগ যাচাইকৃত ও অভিজ্ঞ আলেম, মুফতি ও হাফেজ শিক্ষকবৃন্দ।
+      <p style="max-width:700px;margin:0 auto 24px;font-size:clamp(14px,2vw,16px);color:rgba(255,255,255,0.88);line-height:1.75;" class="reveal">
+        সহীহ কোরআন তেলাওয়াত, হিফজ, হাদিস, তাফসীর ও দৈনন্দিন জীবনের জরুরি মাসলা-মাসায়েল শিক্ষাদানে <strong style="color:var(--gold-light,#e5b95c);">শতভাগ যাচাইকৃত ও অভিজ্ঞ আলেম, মুফতি ও হাফেজ শিক্ষকবৃন্দ।</strong>
       </p>
 
-      <!-- Compact Trust & Guarantee Badges Row -->
-      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;">
-        <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(15,39,68,0.65);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;backdrop-filter:blur(6px);"><span style="color:#4ade80;">✓</span> NID ও সনদপত্র যাচাইকৃত</span>
-        <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(15,39,68,0.65);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;backdrop-filter:blur(6px);"><span style="color:#4ade80;">✓</span> তাজউইদ ও শিক্ষাগত যোগ্যতা যাচাই</span>
-        <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(15,39,68,0.65);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;backdrop-filter:blur(6px);"><span style="color:#4ade80;">✓</span> দ্বীনি শিষ্টাচার ও নৈতিক চরিত্র</span>
-        <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(200,151,42,0.18);border:1px solid rgba(200,151,42,0.4);color:#fde047;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;"><span style="font-size:13px;">🎁</span> ফ্রি ট্রায়াল ক্লাস</span>
+      <!-- Hero CTA Buttons -->
+      <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;" class="reveal">
+        <a href="/teachers" class="btn btn-gold btn-lg btn-primary-glow" style="font-size:15px;padding:15px 32px;">
+          🔍 শিক্ষক খুঁজুন
+        </a>
+        <a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" class="btn btn-wa btn-lg" style="font-size:15px;padding:15px 32px;">
+          💬 ফ্রি পরামর্শ নিন
+        </a>
+      </div>
+
+      <!-- Trust Badges Row -->
+      <div class="trust-badge-row reveal">
+        <span class="trust-badge trust-badge-green"><span style="color:#4ade80;font-size:13px;">✓</span> NID ও সনদপত্র যাচাইকৃত</span>
+        <span class="trust-badge trust-badge-green"><span style="color:#4ade80;font-size:13px;">✓</span> তাজউইদ ও শিক্ষাগত যোগ্যতা যাচাই</span>
+        <span class="trust-badge trust-badge-green"><span style="color:#4ade80;font-size:13px;">✓</span> দ্বীনি শিষ্টাচার ও নৈতিক চরিত্র</span>
+        <span class="trust-badge trust-badge-gold"><span style="font-size:14px;">🎁</span> ফ্রি ট্রায়াল ক্লাস</span>
+        <span class="trust-badge"><span style="color:#a78bfa;font-size:13px;">🌍</span> বিশ্বব্যাপী সেবা</span>
+      </div>
+
+      <!-- Islamic ornament bottom -->
+      <div class="islamic-divider" style="margin-top:28px;">
+        <div class="islamic-divider-line"></div>
+        <span class="islamic-divider-star">✦ الحمد لله ✦</span>
+        <div class="islamic-divider-line"></div>
       </div>
 
     </div>
   </section>
 
   <!-- ── TEACHER PROFILES ── -->
-  <section class="section" style="padding: 24px 20px 60px; background: var(--cream);" id="home-teachers-section">
+  
+  <!-- ── ISLAMIC TICKER ── -->
+  <div class="ticker" role="marquee" aria-label="Islamic Services">
+    <div class="ticker-track" id="tickerTrack">
+      <span class="ticker-item"><span class="ticker-dot"></span> সহীহ কোরআন তেলাওয়াত শিক্ষা</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> হিফজুল কোরআন — ৩০ পারা মুখস্থ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> তাজউইদ ও মাখরাজ শিক্ষা</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> নূরানী কায়দা থেকে কোরআন পাঠ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> কোরআন তাফসীর ও অর্থ বোঝা</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> হাদিস শিক্ষা — সহীহ বুখারী ও মুসলিম</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> মাসলা-মাসায়েল ও ইসলামিক ফিকহ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> আরবি ভাষা — নহব ও সরফ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> মহিলা আলেমা ও হাফেজা শিক্ষিকা উপলব্ধ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> বিশ্বের যেকোনো দেশ থেকে অনলাইনে শিখুন</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="ticker-item"><span class="ticker-dot"></span> সহীহ কোরআন তেলাওয়াত শিক্ষা</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> হিফজুল কোরআন — ৩০ পারা মুখস্থ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> তাজউইদ ও মাখরাজ শিক্ষা</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> নূরানী কায়দা থেকে কোরআন পাঠ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> কোরআন তাফসীর ও অর্থ বোঝা</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> হাদিস শিক্ষা — সহীহ বুখারী ও মুসলিম</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> মাসলা-মাসায়েল ও ইসলামিক ফিকহ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> আরবি ভাষা — নহব ও সরফ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> মহিলা আলেমা ও হাফেজা শিক্ষিকা উপলব্ধ</span>
+      <span class="ticker-item"><span class="ticker-dot"></span> বিশ্বের যেকোনো দেশ থেকে অনলাইনে শিখুন</span>
+    </div>
+  </div>
+
+  <!-- ── STATS SECTION ── -->
+  <section class="home-stats-section reveal">
+    <div class="home-stats-grid">
+      <div class="home-stat-card reveal">
+        <span class="home-stat-icon">🕌</span>
+        <div class="home-stat-num stat-num" data-target="200" data-suffix="+">২০০+</div>
+        <div class="home-stat-label">যাচাইকৃত<br>ইসলামিক শিক্ষক</div>
+      </div>
+      <div class="home-stat-card reveal">
+        <span class="home-stat-icon">👨‍🎓</span>
+        <div class="home-stat-num stat-num" data-target="5000" data-suffix="+">৫০০০+</div>
+        <div class="home-stat-label">সন্তুষ্ট<br>শিক্ষার্থী ও পরিবার</div>
+      </div>
+      <div class="home-stat-card reveal">
+        <span class="home-stat-icon">🌍</span>
+        <div class="home-stat-num stat-num" data-target="20" data-suffix="+">২০+</div>
+        <div class="home-stat-label">দেশের শিক্ষার্থী<br>আমাদের সাথে</div>
+      </div>
+      <div class="home-stat-card reveal">
+        <span class="home-stat-icon">⭐</span>
+        <div class="home-stat-num stat-num" data-target="98" data-suffix="%">৯৮%</div>
+        <div class="home-stat-label">শিক্ষার্থী<br>সন্তুষ্টির হার</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS SECTION ── -->
+  <section class="home-testimonials-section">
     <div class="container">
+      <div class="islamic-section-head reveal">
+        <div class="arabic-subtitle">قَالُوا خَيْرًا</div>
+        <div class="section-label"><span>⭐</span> শিক্ষার্থী ও অভিভাবকদের কথা</div>
+        <h2 class="section-title" style="margin-bottom:6px;">তারা কী <span class="gold">বলছেন?</span></h2>
+        <p class="section-sub">আমাদের হাজারো শিক্ষার্থী ও অভিভাবকরা তাঁদের অভিজ্ঞতা জানিয়েছেন</p>
+        <div class="islamic-divider"><div class="islamic-divider-line"></div><span class="islamic-divider-star">✦</span><div class="islamic-divider-line"></div></div>
+      </div>
+      <div class="home-t-grid">
+        <div class="home-t-card reveal">
+          <div class="home-t-quote">"</div>
+          <div class="home-t-stars">★★★★★</div>
+          <p class="home-t-text">"আলহামদুলিল্লাহ! আমার ছেলে মাত্র ২ মাসে সহীহ তাজউইদ সহ কুরআন পড়তে শিখেছে। শিক্ষক অত্যন্ত যত্নশীল ও ধৈর্যশীল। GIC-এর মাধ্যমে এত ভালো শিক্ষক পেয়ে সত্যিই কৃতজ্ঞ।"</p>
+          <div class="home-t-author">
+            <div class="home-t-avatar" style="background:linear-gradient(135deg,#0D3D6B,#1A5F9E);">র</div>
+            <div><div class="home-t-name">রাহেলা বেগম <span class="home-t-country">🇧🇩</span></div><div class="home-t-loc">ঢাকা, বাংলাদেশ</div></div>
+          </div>
+        </div>
+        <div class="home-t-card reveal">
+          <div class="home-t-quote">"</div>
+          <div class="home-t-stars">★★★★★</div>
+          <p class="home-t-text">"UK থেকে আমার সন্তানের জন্য ভালো কোরআন শিক্ষক খুঁজছিলাম। GIC-এ এসে আলহামদুলিল্লাহ পেয়ে গেলাম। অনলাইনে সময়মতো ক্লাস হয়, শিক্ষক অনেক দক্ষ। বারাকাল্লাহু ফিকুম!"</p>
+          <div class="home-t-author">
+            <div class="home-t-avatar" style="background:linear-gradient(135deg,#065f46,#10b981);">ফ</div>
+            <div><div class="home-t-name">ফাহিম আহমেদ <span class="home-t-country">🇬🇧</span></div><div class="home-t-loc">লন্ডন, যুক্তরাজ্য</div></div>
+          </div>
+        </div>
+        <div class="home-t-card reveal">
+          <div class="home-t-quote">"</div>
+          <div class="home-t-stars">★★★★★</div>
+          <p class="home-t-text">"মহিলা শিক্ষিকা পাওয়া অনেক কঠিন ছিল। GIC-তে আলেমা শিক্ষিকা পেয়েছি যিনি নামাজ, মাসলা-মাসায়েল ও কুরআন — সব শেখাচ্ছেন। পর্দাসহ পরিবেশে শেখার সুযোগ অসাধারণ।"</p>
+          <div class="home-t-author">
+            <div class="home-t-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);">স</div>
+            <div><div class="home-t-name">সাবরিনা খানম <span class="home-t-country">🇲🇾</span></div><div class="home-t-loc">কুয়ালালামপুর, মালয়েশিয়া</div></div>
+          </div>
+        </div>
+        <div class="home-t-card reveal">
+          <div class="home-t-quote">"</div>
+          <div class="home-t-stars">★★★★★</div>
+          <p class="home-t-text">"মুফতি সাহেব মাসলা-মাসায়েল এত সুন্দরভাবে বোঝান যে সহজেই মনে থাকে। দৈনন্দিন জীবনের জরুরি মাসআলা জানতে পেরে আমার পরিবার এখন অনেক উপকৃত। জাজাকাল্লাহু খায়রান।"</p>
+          <div class="home-t-author">
+            <div class="home-t-avatar" style="background:linear-gradient(135deg,#92400e,#d97706);">আ</div>
+            <div><div class="home-t-name">আব্দুল্লাহ আলমামুন <span class="home-t-country">🇸🇦</span></div><div class="home-t-loc">রিয়াদ, সৌদি আরব</div></div>
+          </div>
+        </div>
+        <div class="home-t-card reveal">
+          <div class="home-t-quote">"</div>
+          <div class="home-t-stars">★★★★★</div>
+          <p class="home-t-text">"হাফেজ শিক্ষকের তত্ত্বাবধানে আমার মেয়ে হিফজ শুরু করেছে। শিক্ষক অত্যন্ত মনোযোগী ও সুশৃঙ্খলভাবে পাঠদান করেন। GIC ছাড়া এত যোগ্য শিক্ষক পাওয়া সম্ভব হতো না।"</p>
+          <div class="home-t-author">
+            <div class="home-t-avatar" style="background:linear-gradient(135deg,#0369a1,#0ea5e9);">ন</div>
+            <div><div class="home-t-name">নাসরিন আক্তার <span class="home-t-country">🇨🇦</span></div><div class="home-t-loc">টরন্টো, কানাডা</div></div>
+          </div>
+        </div>
+        <div class="home-t-card reveal">
+          <div class="home-t-quote">"</div>
+          <div class="home-t-stars">★★★★★</div>
+          <p class="home-t-text">"GIC-এর ফ্রি কোর্স থেকে শুরু করে এখন ব্যক্তিগত শিক্ষকের কাছে পড়ছি। পুরো যাত্রাটা অনেক সুন্দর ও সহজ। ইসলামিক জ্ঞানের এই প্ল্যাটফর্ম সত্যিই অনন্য।"</p>
+          <div class="home-t-author">
+            <div class="home-t-avatar" style="background:linear-gradient(135deg,#0D3D6B,#3A8FD1);">ম</div>
+            <div><div class="home-t-name">মোহাম্মদ ইয়াসিন <span class="home-t-country">🇦🇺</span></div><div class="home-t-loc">মেলবোর্ন, অস্ট্রেলিয়া</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY GIC SECTION ── -->
+  <section class="section" style="background:#fff;padding:72px 24px;">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label"><span>🛡️</span> কেন GIC বেছে নেবেন?</div>
+        <h2 class="section-title">আমাদের <span>বিশ্বাসযোগ্যতার</span> কারণ</h2>
+        <p class="section-sub">শুধু একটি প্ল্যাটফর্ম নয় — একটি বিশ্বস্ত ইসলামিক শিক্ষা পরিবার</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal"><div class="why-icon">✅</div><div class="why-title">১০০% যাচাইকৃত শিক্ষক</div><p class="why-desc">প্রতিটি শিক্ষক NID অথবা পাসপোর্ট, ইসলামিক সনদপত্র ও শিক্ষাগত যোগ্যতা যাচাই করে অনুমোদন করা হয়।</p></div>
+        <div class="why-card reveal"><div class="why-icon">🕌</div><div class="why-title">দ্বীনি শিষ্টাচার নিশ্চিত</div><p class="why-desc">সকল শিক্ষক অনুশীলনকারী মুসলিম এবং ইসলামিক আদব-কায়দা মেনে পাঠদান করেন। মহিলা শিক্ষিকারা পর্দাসহ শেখান।</p></div>
+        <div class="why-card reveal"><div class="why-icon">💰</div><div class="why-title">কোনো লুকানো চার্জ নেই</div><p class="why-desc">GIC কোনো কমিশন বা মধ্যস্থতা ফি নেয় না। শিক্ষার্থী সরাসরি শিক্ষকের সাথে পেমেন্ট করেন — সম্পূর্ণ স্বচ্ছ।</p></div>
+        <div class="why-card reveal"><div class="why-icon">🌍</div><div class="why-title">বিশ্বব্যাপী সেবা</div><p class="why-desc">UK, USA, Canada, Saudi Arabia, Malaysia, UAE, Australia সহ বিশ্বের যেকোনো দেশ থেকে শিক্ষা নেওয়া যায়।</p></div>
+        <div class="why-card why-card-green reveal"><div class="why-icon">🎁</div><div class="why-title">ফ্রি ট্রায়াল ক্লাস</div><p class="why-desc">শিক্ষক পছন্দ না হলে নতুন শিক্ষক বেছে নিন। অধিকাংশ শিক্ষক বিনামূল্যে প্রথম ট্রায়াল ক্লাস দেন।</p></div>
+        <div class="why-card reveal"><div class="why-icon">👨‍👩‍👧</div><div class="why-title">শিশু থেকে বয়স্ক সবার জন্য</div><p class="why-desc">শিশুদের নূরানী কায়দা থেকে বয়স্কদের মাসলা-মাসায়েল — সকল বয়সের জন্য আলাদা বিশেষজ্ঞ শিক্ষক।</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="section" id="how-it-works" style="background:linear-gradient(180deg,#f8f9ff 0%,#f0ede6 100%);padding:72px 24px;">
+    <div class="container">
+      <div class="islamic-section-head reveal" style="margin-bottom:52px;">
+        <div class="arabic-subtitle">بِسْمِ اللَّهِ</div>
+        <div class="section-label"><span>🗺️</span> কীভাবে শুরু করবেন?</div>
+        <h2 class="section-title">মাত্র <span class="gold">৪টি ধাপে</span> ইসলামিক শিক্ষা শুরু করুন</h2>
+        <p class="section-sub">সহজ ও নিরাপদ প্রক্রিয়ায় আপনার পরিবারের জন্য সেরা শিক্ষক খুঁজে নিন</p>
+        <div class="islamic-divider"><div class="islamic-divider-line"></div><span class="islamic-divider-star">✦</span><div class="islamic-divider-line"></div></div>
+      </div>
+      <div class="process-grid">
+        <div class="process-step reveal"><div class="process-num">০১</div><div class="process-icon">🔍</div><h3 class="process-title">শিক্ষক খুঁজুন</h3><p class="process-desc">বিষয়, অভিজ্ঞতা, ফি ও সময়সূচি ফিল্টার করে আপনার পছন্দের হাফেজ, আলেম বা বিষয়ভিত্তিক শিক্ষক খুঁজুন।</p></div>
+        <div class="process-connector reveal">→</div>
+        <div class="process-step reveal"><div class="process-num">০২</div><div class="process-icon">📋</div><h3 class="process-title">প্রোফাইল দেখুন</h3><p class="process-desc">শিক্ষকের সনদপত্র, ছাত্র রিভিউ, বিষয় ও ফি দেখুন। পরিচিত হোন — তারপর সিদ্ধান্ত নিন।</p></div>
+        <div class="process-connector reveal">→</div>
+        <div class="process-step reveal"><div class="process-num">০৩</div><div class="process-icon">🎁</div><h3 class="process-title">ফ্রি ট্রায়াল নিন</h3><p class="process-desc">অধিকাংশ শিক্ষক প্রথম ক্লাস বিনামূল্যে দেন। পরিবারসহ ট্রায়াল করুন — পছন্দ না হলে অন্য শিক্ষক বেছে নিন।</p></div>
+        <div class="process-connector reveal">→</div>
+        <div class="process-step reveal"><div class="process-num">০৪</div><div class="process-icon">📚</div><h3 class="process-title">শিক্ষা শুরু করুন</h3><p class="process-desc">নিয়মিত অনলাইন ক্লাস শুরু করুন। অগ্রগতি অনুযায়ী সিলেবাস সাজান। আলহামদুলিল্লাহ — ইলম অর্জন করুন!</p></div>
+      </div>
+      <div style="text-align:center;margin-top:44px;" class="reveal">
+        <div style="display:inline-block;background:rgba(200,151,42,0.1);border:1px solid rgba(200,151,42,0.3);border-radius:16px;padding:14px 28px;">
+          <span style="font-family:var(--font-arabic);font-size:17px;color:var(--gold);direction:rtl;display:block;margin-bottom:4px;">طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ</span>
+          <span style="font-size:12.5px;color:var(--text-muted,#64748b);">«প্রত্যেক মুসলমানের উপর জ্ঞান অর্জন করা ফরয।» — ইবনে মাজাহ</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ SECTION ── -->
+  <section class="section" id="faq-home" style="background:#fff;padding:72px 24px;">
+    <div class="container" style="max-width:860px;">
+      <div class="islamic-section-head reveal" style="margin-bottom:48px;">
+        <div class="arabic-subtitle">سُؤَالٌ وَجَوَابٌ</div>
+        <div class="section-label"><span>❓</span> সাধারণ প্রশ্নোত্তর</div>
+        <h2 class="section-title">আপনার <span class="gold">মনের প্রশ্নের</span> উত্তর</h2>
+        <p class="section-sub">GIC সম্পর্কে সবচেয়ে বেশি জিজ্ঞাসিত প্রশ্নগুলোর সৎ উত্তর</p>
+        <div class="islamic-divider"><div class="islamic-divider-line"></div><span class="islamic-divider-star">✦</span><div class="islamic-divider-line"></div></div>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false"><span>ক্লাস কি সম্পূর্ণ অনলাইনে হয়?</span><span class="faq-arrow">▼</span></button>
+          <div class="faq-a"><p>হ্যাঁ, সকল ক্লাস সম্পূর্ণ অনলাইনে হয়। Zoom, Google Meet বা WhatsApp Video — শিক্ষক ও শিক্ষার্থী যেকোনো প্ল্যাটফর্ম বেছে নিতে পারেন। ঘরে বসেই সহীহ ইলম অর্জন করুন।</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false"><span>ফ্রি ট্রায়াল ক্লাস কীভাবে পাব?</span><span class="faq-arrow">▼</span></button>
+          <div class="faq-a"><p>শিক্ষকের প্রোফাইলে "ফ্রি ট্রায়াল" ট্যাগ দেখুন। আগ্রহী শিক্ষার্থীরা সরাসরি শিক্ষকের সাথে WhatsApp বা ফোনে যোগাযোগ করে ট্রায়াল ক্লাস নির্ধারণ করতে পারবেন। কোনো আগাম পেমেন্ট প্রয়োজন নেই।</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false"><span>শিক্ষকরা কি সত্যিই যাচাইকৃত?</span><span class="faq-arrow">▼</span></button>
+          <div class="faq-a"><p>হ্যাঁ, GIC-এ নিবন্ধিত প্রতিটি শিক্ষক NID অথবা পাসপোর্ট, ইসলামিক শিক্ষাগত সনদ (দাওরায়ে হাদিস, হিফজ সনদ, আলিম সনদ ইত্যাদি) ও তাজউইদ পরীক্ষার মাধ্যমে যাচাই করা হয়। আমাদের টিম প্রতিটি আবেদন ম্যানুয়ালি রিভিউ করে।</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false"><span>প্রবাসে থেকে কি সেবা নেওয়া যাবে?</span><span class="faq-arrow">▼</span></button>
+          <div class="faq-a"><p>অবশ্যই। UK, USA, Canada, Australia, Saudi Arabia, UAE, Malaysia সহ বিশ্বের যেকোনো দেশ থেকে আমাদের সেবা নেওয়া যাবে। শিক্ষকরা বিভিন্ন টাইমজোনে ক্লাস নেন।</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false"><span>GIC কি কোনো কমিশন বা ফি নেয়?</span><span class="faq-arrow">▼</span></button>
+          <div class="faq-a"><p>না। GIC কোনো কমিশন বা মধ্যস্থতা ফি নেয় না। শিক্ষার্থী সম্পূর্ণ ফি সরাসরি শিক্ষককে দেন। আমরা শুধু একটি বিশ্বস্ত ইসলামিক শিক্ষক-শিক্ষার্থী সংযোগ প্ল্যাটফর্ম — কোনো লুকানো চার্জ নেই।</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false"><span>মহিলা শিক্ষিকা কি পাওয়া যাবে?</span><span class="faq-arrow">▼</span></button>
+          <div class="faq-a"><p>হ্যাঁ। আমাদের প্ল্যাটফর্মে আলেমা, হাফেজা ও মহিলা বিষয়ভিত্তিক শিক্ষিকা আছেন যারা পর্দাসহ ইসলামিক পরিবেশে পাঠদান করেন। ফিল্টারে "মহিলা শিক্ষিকা" নির্বাচন করুন।</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="section" style="padding: 24px 20px 60px; background: var(--cream);" id="home-teachers-section">
+    <div class="container">
+
+      <!-- TEACHER SECTION HEADER -->
+      <div class="teacher-section-header reveal">
+        <div class="section-label">👨‍🏫 আমাদের শিক্ষকমণ্ডলী</div>
+        <h2>যাচাইকৃত <span style="color:var(--blue);">ইসলামিক শিক্ষক</span> খুঁজুন</h2>
+        <p>NID ও সনদপত্র যাচাইকৃত — হাফেজ, মাওলানা, মুফতি, আলেমা ও সাধারণ বিষয়ের অভিজ্ঞ শিক্ষক</p>
+      </div>
+
 
       <!-- COMPACT SEARCH + FILTER BAR -->
       <div style="display:flex;gap:10px;align-items:center;margin-bottom:18px;" class="reveal">
@@ -3174,7 +3654,7 @@ footer {
           <h2 style="color:#fff;font-size:clamp(22px,4vw,34px);font-weight:900;margin-bottom:14px;line-height:1.3;">ব্যক্তিগত শিক্ষক নিতে চান?<br><span style="color:var(--gold-light);">পছন্দের শিক্ষক নির্বাচন করুন!</span></h2>
           <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.9;max-width:560px;margin:0 auto 28px;">আমাদের ফ্রি কোর্সের পাশাপাশি যদি সহীহ কোরআন, তাজউইদ, আরবি বা স্কুল-কলেজের যেকোনো বিষয়ে অভিজ্ঞ গৃহশিক্ষক বা অনলাইন শিক্ষক চান — ভেরিফাইড শিক্ষকদের সাথে সরাসরি কথা বলে ফ্রি ট্রায়াল ক্লাস শুরু করুন।</p>
           <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-            <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg" style="font-weight:800;box-shadow:0 8px 24px rgba(37,211,102,0.35);">💬 সরাসরি পরামর্শ নিন</a>
+            <a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" class="btn btn-wa btn-lg" style="font-weight:800;box-shadow:0 8px 24px rgba(37,211,102,0.35);">💬 সরাসরি পরামর্শ নিন</a>
             <a href="/teachers" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.3);">👨‍🏫 পছন্দের শিক্ষক নির্বাচন করুন →</a>
           </div>
           <p style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:16px;">✓ কোনো বাধ্যবাধকতা নেই &nbsp;·&nbsp; ✓ সম্পূর্ণ বিনামূল্যে পরামর্শ</p>
@@ -3223,7 +3703,7 @@ footer {
         </div>
         
         <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; position:relative; z-index:2;">
-          <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg" style="box-shadow:0 6px 20px rgba(37,211,102,0.3); font-weight:700;">💬 ফ্রি ওস্তাদ পরামর্শ ও লাইভ ডেমো ক্লাস বুক করুন</a>
+          <a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" class="btn btn-wa btn-lg" style="box-shadow:0 6px 20px rgba(37,211,102,0.3); font-weight:700;">💬 ফ্রি ওস্তাদ পরামর্শ ও লাইভ ডেমো ক্লাস বুক করুন</a>
         </div>
       </div>
     </div>
@@ -3395,7 +3875,7 @@ footer {
       <div style="font-size:36px;margin-bottom:16px;">📞</div>
       <h2 style="justify-content:center;color:#fff;border-bottom-color:rgba(212,168,67,0.2);">যেকোনো প্রশ্ন আছে?</h2>
       <p style="max-width:480px;margin:0 auto 28px;color:rgba(255,255,255,0.72);font-size:15px;line-height:1.8;">পেমেন্ট নীতি বা অন্য যেকোনো বিষয়ে প্রশ্ন থাকলে সরাসরি WhatsApp-এ জানান। আমরা সবসময় সাহায্য করতে প্রস্তুত।</p>
-      <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg">💬 WhatsApp: +880 1733-017521</a>
+      <a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" class="btn btn-wa btn-lg">💬 WhatsApp: +880 1733-017521</a>
       <p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,0.35);">সাধারণত ১-২ ঘণ্টার মধ্যে সাড়া পাবেন</p>
     </div>
 
@@ -3617,16 +4097,16 @@ footer {
         আমাদের সোশ্যাল মিডিয়াতে ফলো করুন, নতুন শিক্ষক যোগদানের আপডেট পান এবং কোরআন শিক্ষাসংক্রান্ত আলোচনায় যুক্ত থাকুন।
       </p>
       <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;">
-        <a href="https://web.facebook.com/globalislamiccare1" target="_blank" style="display:flex;align-items:center;gap:8px;background:#1877f2;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+        <a href="https://web.facebook.com/globalislamiccare1" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;background:#1877f2;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
           📘 Facebook
         </a>
-        <a href="https://www.youtube.com/@Globalislamiccare" target="_blank" style="display:flex;align-items:center;gap:8px;background:#ff0000;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+        <a href="https://www.youtube.com/@Globalislamiccare" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;background:#ff0000;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
           ▶️ YouTube
         </a>
-        <a href="https://www.linkedin.com/company/global-islamic-care" target="_blank" style="display:flex;align-items:center;gap:8px;background:#0077b5;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+        <a href="https://www.linkedin.com/company/global-islamic-care" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;background:#0077b5;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
           💼 LinkedIn
         </a>
-        <a href="https://wa.me/8801733017521" target="_blank" style="display:flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+        <a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
           💬 WhatsApp
         </a>
       </div>
@@ -3710,7 +4190,7 @@ footer {
       <h3 style="font-size:15px;font-weight:700;color:#374151;margin-bottom:14px;text-align:center;">অথবা আমাদের সাথে এখানেও যুক্ত হোন</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
 
-        <a href="https://wa.me/8801733017521" target="_blank"
+        <a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer"
           style="display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #d1fae5;border-radius:14px;padding:14px 16px;text-decoration:none;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.04);"
           onmouseover="this.style.borderColor='#25d366';this.style.transform='translateY(-2px)'"
           onmouseout="this.style.borderColor='#d1fae5';this.style.transform='translateY(0)'">
@@ -3721,7 +4201,7 @@ footer {
           </div>
         </a>
 
-        <a href="https://web.facebook.com/globalislamiccare1" target="_blank"
+        <a href="https://web.facebook.com/globalislamiccare1" target="_blank" rel="noopener noreferrer"
           style="display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #dbeafe;border-radius:14px;padding:14px 16px;text-decoration:none;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.04);"
           onmouseover="this.style.borderColor='#3b82f6';this.style.transform='translateY(-2px)'"
           onmouseout="this.style.borderColor='#dbeafe';this.style.transform='translateY(0)'">
@@ -3732,7 +4212,7 @@ footer {
           </div>
         </a>
 
-        <a href="https://www.youtube.com/@Globalislamiccare" target="_blank"
+        <a href="https://www.youtube.com/@Globalislamiccare" target="_blank" rel="noopener noreferrer"
           style="display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #fee2e2;border-radius:14px;padding:14px 16px;text-decoration:none;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.04);"
           onmouseover="this.style.borderColor='#ef4444';this.style.transform='translateY(-2px)'"
           onmouseout="this.style.borderColor='#fee2e2';this.style.transform='translateY(0)'">
@@ -3743,7 +4223,7 @@ footer {
           </div>
         </a>
 
-        <a href="https://www.linkedin.com/company/global-islamic-care" target="_blank"
+        <a href="https://www.linkedin.com/company/global-islamic-care" target="_blank" rel="noopener noreferrer"
           style="display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #e0f2fe;border-radius:14px;padding:14px 16px;text-decoration:none;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.04);"
           onmouseover="this.style.borderColor='#0077b5';this.style.transform='translateY(-2px)'"
           onmouseout="this.style.borderColor='#e0f2fe';this.style.transform='translateY(0)'">
@@ -3900,7 +4380,7 @@ footer {
       <p style="max-width:520px;margin:0 auto 28px;font-size:15px;line-height:1.9;">
         এই নীতিমালা সম্পর্কে কোনো প্রশ্ন থাকলে বা কোনো শিক্ষকের বিরুদ্ধে অভিযোগ জানাতে চাইলে আমাদের সাথে যোগাযোগ করুন। আমরা সর্বদা সহায়তায় প্রস্তুত।
       </p>
-      <a href="https://wa.me/8801733017521" target="_blank" class="btn btn-wa btn-lg" style="display:inline-flex;align-items:center;gap:10px;padding:16px 32px;font-size:16px;">
+      <a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" class="btn btn-wa btn-lg" style="display:inline-flex;align-items:center;gap:10px;padding:16px 32px;font-size:16px;">
         💬 WhatsApp: +880 1733-017521
       </a>
       <p style="margin-top:20px;color:var(--text-muted);font-size:13px;">সকাল ৮টা – রাত ১০টা (বাংলাদেশ সময়) · দ্রুত সাড়া পাবেন</p>
@@ -4032,6 +4512,28 @@ footer {
 </div>
 
 <!-- ─────────── FOOTER ─────────── -->
+
+<!-- ── FINAL CTA SECTION ── -->
+<section class="final-cta-section reveal">
+  <div class="final-cta-arabic">وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا</div>
+  <div class="final-cta-trans">«যে আল্লাহকে ভয় করে, তিনি তার জন্য পথ বের করে দেন।» — সূরা তালাক: ২</div>
+  <h2 class="final-cta-title">আজই শুরু করুন — <span>ইলম অর্জনের পথে</span></h2>
+  <p class="final-cta-sub">হাজারো পরিবার ইতিমধ্যে GIC-এর মাধ্যমে কোরআন ও ইসলামিক শিক্ষার আলো পাচ্ছেন। আপনার পরিবারও এই কাফেলায় যোগ দিন।</p>
+  <div class="final-cta-btns">
+    <a href="/teachers" class="btn btn-gold btn-lg">🔍 শিক্ষক খুঁজুন</a>
+    <a href="javascript:void(0)" onclick="showPage('free-courses')" class="btn btn-outline btn-lg">📚 ফ্রি কোর্স দেখুন</a>
+    <a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" class="btn btn-wa btn-lg">💬 WhatsApp পরামর্শ</a>
+  </div>
+  <div style="margin-top:40px;position:relative;z-index:1;">
+    <div style="display:inline-flex;gap:28px;flex-wrap:wrap;justify-content:center;">
+      <span style="color:rgba(255,255,255,0.55);font-size:13px;">✓ বিনামূল্যে নিবন্ধন</span>
+      <span style="color:rgba(255,255,255,0.55);font-size:13px;">✓ কোনো কমিশন নেই</span>
+      <span style="color:rgba(255,255,255,0.55);font-size:13px;">✓ ফ্রি ট্রায়াল ক্লাস</span>
+      <span style="color:rgba(255,255,255,0.55);font-size:13px;">✓ বিশ্বব্যাপী সেবা</span>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-main">
     <div class="footer-brand">
@@ -4040,14 +4542,18 @@ footer {
         <div class="logo-text">
           <span class="lt-main">Global Islamic Care</span>
           <span class="lt-sub">মুসলিম শিক্ষক ও শিক্ষিকা নেটওয়ার্ক</span>
-        </div>
+        
+      <div style="margin-top:14px;padding:12px 16px;background:rgba(200,151,42,0.08);border-left:3px solid var(--gold,#c8972a);border-radius:8px;">
+        <span style="font-family:var(--font-arabic,'Amiri',serif);font-size:16px;color:var(--gold,#c8972a);direction:rtl;display:block;margin-bottom:4px;">طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ</span>
+        <span style="font-size:11.5px;color:rgba(255,255,255,0.4);">প্রত্যেক মুসলমানের উপর জ্ঞান অর্জন করা ফরয। — ইবনে মাজাহ</span>
+      </div></div>
       </a>
       <p>দেশ-বিদেশের শিক্ষার্থীদের জন্য বিশ্বস্ত মুসলিম শিক্ষক ও শিক্ষিকা প্ল্যাটফর্ম (পবিত্র কোরআন ও স্কুল-কলেজের সকল একাডেমিক বিষয় — অনলাইন ও হোম টিউশন)।</p>
       <div class="social-row">
-        <a class="social-btn" href="https://web.facebook.com/globalislamiccare1" target="_blank" title="Facebook">f</a>
-        <a class="social-btn" href="https://www.youtube.com/@Globalislamiccare" target="_blank" title="YouTube">▶</a>
-        <a class="social-btn" href="https://www.linkedin.com/company/global-islamic-care" target="_blank" title="LinkedIn">in</a>
-        <a class="social-btn wa" href="https://wa.me/8801733017521" target="_blank" title="WhatsApp">✆</a>
+        <a class="social-btn" href="https://web.facebook.com/globalislamiccare1" target="_blank" rel="noopener noreferrer" title="Facebook">f</a>
+        <a class="social-btn" href="https://www.youtube.com/@Globalislamiccare" target="_blank" rel="noopener noreferrer" title="YouTube">▶</a>
+        <a class="social-btn" href="https://www.linkedin.com/company/global-islamic-care" target="_blank" rel="noopener noreferrer" title="LinkedIn">in</a>
+        <a class="social-btn wa" href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" title="WhatsApp">✆</a>
       </div>
     </div>
     <div class="footer-col">
@@ -4096,7 +4602,7 @@ footer {
 </footer>
 
 <!-- WhatsApp Float -->
-<a href="https://wa.me/8801733017521" target="_blank" class="wa-float" title="WhatsApp করুন">💬</a>
+<a href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" class="wa-float" title="WhatsApp করুন">💬</a>
 
 <!-- Back to Top -->
 <button class="back-to-top" id="backToTop" title="উপরে যান">↑</button>
@@ -4938,7 +5444,7 @@ function renderPublicTeacherCards(data) {
           তবে চিন্তা নেই! আমাদের কাছে বহু অভিজ্ঞ ও নিষ্ঠাবান মুসলিম শিক্ষক নিবন্ধিত রয়েছেন। আপনার সন্তানের জন্য কাঙ্ক্ষিত বিষয়ের শিক্ষক প্রয়োজন হলে আমাদের হোয়াটসঅ্যাপে জানান, আমরা দ্রুত ব্যবস্থা করে দেব ইনশাআল্লাহ।
         </p>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-          <a href="https://wa.me/8801733017521?text=${encodeURIComponent('আসসালামু আলাইকুম, আমি আমার সন্তানের জন্য একজন বিশ্বস্ত মুসলিম শিক্ষক খুঁজছি।')}" target="_blank" class="btn btn-wa" style="padding:10px 20px;border-radius:12px;font-size:13.5px;text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:6px;">
+          <a href="https://wa.me/8801733017521?text=${encodeURIComponent('আসসালামু আলাইকুম, আমি আমার সন্তানের জন্য একজন বিশ্বস্ত মুসলিম শিক্ষক খুঁজছি।')}" target="_blank" rel="noopener noreferrer" class="btn btn-wa" style="padding:10px 20px;border-radius:12px;font-size:13.5px;text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:6px;">
             💬 হোয়াটসঅ্যাপে শিক্ষক রিকোয়েস্ট করুন
           </a>
           <button type="button" onclick="resetAllPublicFilters()" class="btn btn-blue" style="padding:10px 20px;border-radius:12px;font-size:13.5px;cursor:pointer;font-weight:700;">
@@ -5873,7 +6379,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <!-- Avatar Preview -->
               <div id="app-photo-preview-wrap" style="width:72px;height:72px;border-radius:50%;background:#e2e8f0;border:2px solid var(--gold, #c8972a);display:flex;align-items:center;justify-content:center;font-size:32px;overflow:hidden;flex-shrink:0;">
                 <span id="app-photo-preview-placeholder">👨‍🏫</span>
-                <img id="app-photo-preview-img" style="width:100%;height:100%;object-fit:cover;display:none;">
+                <img loading="lazy" id="app-photo-preview-img" style="width:100%;height:100%;object-fit:cover;display:none;">
               </div>
 
               <!-- Upload Input -->
@@ -6013,7 +6519,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;">NID কার্ডের সামনের পাশ *</div>
                 <div id="nid-front-preview-wrap" style="height:90px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;overflow:hidden;">
                   <span id="nid-front-placeholder" style="font-size:24px;color:#94a3b8;">🪪 সামনে</span>
-                  <img id="nid-front-img" style="width:100%;height:100%;object-fit:cover;display:none;">
+                  <img loading="lazy" id="nid-front-img" style="width:100%;height:100%;object-fit:cover;display:none;">
                 </div>
                 <input type="file" id="nid-front-file" accept="image/*" onchange="handleDocUpload(this, 'nid-front')" style="display:none;">
                 <button type="button" onclick="document.getElementById('nid-front-file').click()" class="sugg-chip-sm" style="width:100%;justify-content:center;padding:6px 10px;">
@@ -6028,7 +6534,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;">NID কার্ডের পিছনের পাশ *</div>
                 <div id="nid-back-preview-wrap" style="height:90px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;overflow:hidden;">
                   <span id="nid-back-placeholder" style="font-size:24px;color:#94a3b8;">🪪 পিছনে</span>
-                  <img id="nid-back-img" style="width:100%;height:100%;object-fit:cover;display:none;">
+                  <img loading="lazy" id="nid-back-img" style="width:100%;height:100%;object-fit:cover;display:none;">
                 </div>
                 <input type="file" id="nid-back-file" accept="image/*" onchange="handleDocUpload(this, 'nid-back')" style="display:none;">
                 <button type="button" onclick="document.getElementById('nid-back-file').click()" class="sugg-chip-sm" style="width:100%;justify-content:center;padding:6px 10px;">
@@ -6045,7 +6551,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;">পাসপোর্টের মূল পাতার ছবি *</div>
                 <div id="passport-preview-wrap" style="height:100px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;overflow:hidden;">
                   <span id="passport-placeholder" style="font-size:28px;color:#94a3b8;">🛂 পাসপোর্ট</span>
-                  <img id="passport-img" style="width:100%;height:100%;object-fit:cover;display:none;">
+                  <img loading="lazy" id="passport-img" style="width:100%;height:100%;object-fit:cover;display:none;">
                 </div>
                 <input type="file" id="passport-file" accept="image/*" onchange="handleDocUpload(this, 'passport')" style="display:none;">
                 <button type="button" onclick="document.getElementById('passport-file').click()" class="sugg-chip-sm" style="width:100%;justify-content:center;padding:6px 10px;">
@@ -6127,7 +6633,7 @@ document.addEventListener('DOMContentLoaded', () => {
           আপনার শিক্ষক আবেদনটি সিস্টেমে জমা হয়েছে। ড্যাশবোর্ডে অ্যাডমিন আপনার আবেদন যাচাই করে অনুমোদন সম্পন্ন করবেন। দ্রুত অনুমোদনের জন্য নিচের বাটনে ক্লিক করে সরাসরি অ্যাডমিনকে WhatsApp-এ জানিয়ে রাখুন।
         </p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-          <a id="apply-success-admin-wa-btn" href="https://wa.me/8801733017521" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(37,211,102,0.25);">
+          <a id="apply-success-admin-wa-btn" href="https://wa.me/8801733017521" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(37,211,102,0.25);">
             💬 অ্যাডমিনকে WhatsApp-এ জানান ও অনুমোদন নিশ্চিত করুন
           </a>
           <button type="button" onclick="resetTeacherApplyForm()" style="background:#f1f5f9;color:var(--blue-dark);border:1px solid #cbd5e1;padding:12px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;">
@@ -6441,16 +6947,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <div style="font-size:12.5px; font-weight:700; color:var(--text-muted); margin-bottom:12px; border-top: 1px dashed var(--border); padding-top:18px; text-align:left;">সামাজিক যোগাযোগ মাধ্যমে শেয়ার করুন:</div>
       <div class="share-grid" style="display:flex; flex-direction:column; gap:12px;">
-        <a id="share-wa" href="#" target="_blank" class="share-item" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; padding:14px; border-radius:12px; border:1.5px solid rgba(37,211,102,0.25); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(37,211,102,0.06); color:#1DA851; font-weight:800; font-size:14.5px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(37,211,102,0.15)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+        <a id="share-wa" href="#" target="_blank" rel="noopener noreferrer" class="share-item" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; padding:14px; border-radius:12px; border:1.5px solid rgba(37,211,102,0.25); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(37,211,102,0.06); color:#1DA851; font-weight:800; font-size:14.5px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(37,211,102,0.15)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
           <span class="share-icon" style="font-size:20px;">💬</span>
           <span>WhatsApp-এ শেয়ার করুন</span>
         </a>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-          <a id="share-fb" href="#" target="_blank" class="share-item" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; padding:12px; border-radius:12px; border:1.5px solid rgba(24,119,242,0.25); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(24,119,242,0.06); color:#1877F2; font-weight:800; font-size:13.5px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(24,119,242,0.15)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+          <a id="share-fb" href="#" target="_blank" rel="noopener noreferrer" class="share-item" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; padding:12px; border-radius:12px; border:1.5px solid rgba(24,119,242,0.25); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(24,119,242,0.06); color:#1877F2; font-weight:800; font-size:13.5px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(24,119,242,0.15)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
             <span class="share-icon" style="font-size:18px;">📘</span>
             <span>Facebook</span>
           </a>
-          <a id="share-tw" href="#" target="_blank" class="share-item" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; padding:12px; border-radius:12px; border:1.5px solid rgba(29,161,242,0.25); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(29,161,242,0.06); color:#1DA1F2; font-weight:800; font-size:13.5px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(29,161,242,0.15)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+          <a id="share-tw" href="#" target="_blank" rel="noopener noreferrer" class="share-item" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; padding:12px; border-radius:12px; border:1.5px solid rgba(29,161,242,0.25); cursor:pointer; transition:all 0.2s; text-decoration:none; background:rgba(29,161,242,0.06); color:#1DA1F2; font-weight:800; font-size:13.5px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(29,161,242,0.15)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
             <span class="share-icon" style="font-size:18px;">🐦</span>
             <span>Twitter/X</span>
           </a>
