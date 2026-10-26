@@ -275,6 +275,115 @@ footer{background:linear-gradient(135deg,var(--dark2),#081410);border-top:2px so
 .footer-bottom a{color:var(--gold);}
 @media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+
+/* ══════════════════════════════════════
+   FULLSCREEN MODE
+   ══════════════════════════════════════ */
+.fs-btn {
+  background: linear-gradient(135deg,#1a3a6e,#2d5a9e);
+  color:#fff; border:1px solid rgba(100,150,255,.4);
+}
+.fs-btn:hover:not(:disabled){
+  background:linear-gradient(135deg,#2d5a9e,#3d7abf);
+  box-shadow:0 5px 18px rgba(45,90,158,.5)!important;
+}
+
+/* Hide non-game elements in fullscreen */
+body.is-fullscreen .site-header,
+body.is-fullscreen .game-hero,
+body.is-fullscreen footer,
+body.is-fullscreen .leaderboard,
+body.is-fullscreen .float-wa {
+  display:none!important;
+}
+
+body.is-fullscreen {
+  background:#050d08;
+  overflow:hidden;
+}
+
+body.is-fullscreen .game-wrap {
+  max-width:100%;
+  padding:8px 14px 6px;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  overflow:hidden;
+  box-sizing:border-box;
+}
+
+body.is-fullscreen .stats-bar {
+  margin-bottom:7px;
+  flex-shrink:0;
+}
+
+body.is-fullscreen .stat-val { font-size:22px; }
+
+body.is-fullscreen .race-section {
+  flex:1;
+  min-height:0;
+  margin-bottom:7px;
+}
+
+body.is-fullscreen .track-panorama {
+  height:100%!important;
+  min-height:180px;
+}
+
+body.is-fullscreen .lanes-wrap {
+  top:34%;
+}
+
+body.is-fullscreen .horse-wrap { width:80px; }
+body.is-fullscreen .horse-svg  { width:80px; }
+
+body.is-fullscreen .typing-section {
+  margin-bottom:7px;
+  padding:12px 16px;
+  flex-shrink:0;
+}
+
+body.is-fullscreen .text-display {
+  font-size:16px;
+  line-height:1.7;
+  min-height:60px;
+  padding:12px 16px;
+  margin-bottom:10px;
+}
+
+body.is-fullscreen .typing-input {
+  padding:10px 14px;
+  font-size:15px;
+}
+
+body.is-fullscreen .typing-hint { display:none; }
+
+body.is-fullscreen .prog-wrap { margin-top:8px; }
+
+body.is-fullscreen .controls {
+  margin-bottom:4px;
+  flex-shrink:0;
+}
+
+body.is-fullscreen .btn { padding:9px 20px; font-size:13px; }
+
+/* Fullscreen exit hint overlay */
+.fs-hint {
+  position:fixed; top:12px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,.65); color:rgba(255,255,255,.7);
+  padding:5px 14px; border-radius:20px; font-size:11px;
+  z-index:9999; pointer-events:none;
+  animation:fsHintFade 3s ease-out 2s forwards;
+}
+@keyframes fsHintFade{ 0%{opacity:1;} 100%{opacity:0;} }
+
+/* Double-click track hint */
+.track-topbar .fs-track-hint {
+  font-size:10px; color:rgba(129,199,132,.6); cursor:pointer;
+}
+.track-topbar .fs-track-hint:hover { color:var(--gold); }
+
 </style>
 </head>
 <body>
@@ -341,9 +450,10 @@ footer{background:linear-gradient(135deg,var(--dark2),#081410);border-top:2px so
   <div class="race-section">
     <div class="track-topbar">
       <span>🏟️ GIC Grand Prix — Desert Race Track</span>
+      <span class="fs-track-hint" onclick="toggleFullscreen()" title="Go fullscreen">⛶ Double-click for fullscreen</span>
       <span class="rank-badge" id="rankBadge">📚 Talib</span>
     </div>
-    <div class="track-panorama" id="panorama">
+    <div class="track-panorama" id="panorama" ondblclick="toggleFullscreen()" title="Double-click for fullscreen">
       <div class="t-stars"></div>
       <div class="t-moon">☪️</div>
 
@@ -396,6 +506,7 @@ footer{background:linear-gradient(135deg,var(--dark2),#081410);border-top:2px so
     <button class="btn btn-gold"  id="newBtn"   onclick="newRace()"  disabled>🔄 New Race</button>
     <button class="btn btn-muted"              onclick="scrollToLB()">🏆 My Scores</button>
     <button class="btn btn-muted" id="soundToggle" onclick="toggleSound()">🔊 Sound ON</button>
+    <button class="btn fs-btn" id="fsBtn" onclick="toggleFullscreen()" title="Press F key or double-click track">⛶ Fullscreen</button>
   </div>
 
   <!-- Leaderboard -->
@@ -956,7 +1067,7 @@ function playAgain(){newRace();setTimeout(startRace,80);}
 function scrollToLB(){renderLB();$('lbSection').scrollIntoView({behavior:'smooth',block:'start'});}
 
 /* ─── KEYBOARD SHORTCUT ─── */
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&G.state==='idle')startRace();});
+// Enter-to-start is now handled in the fullscreen keyboard handler above
 
 
 /* ═══════════════════════════════════════
@@ -1135,6 +1246,68 @@ document.addEventListener('click', function unlockAudio() {
   if (ctx && ctx.state === 'suspended') ctx.resume();
   document.removeEventListener('click', unlockAudio);
 }, { once: true });
+
+
+/* ═══════════════════════════════════
+   FULLSCREEN SYSTEM
+   ═══════════════════════════════════ */
+function toggleFullscreen() {
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    // Enter fullscreen
+    const el = document.documentElement;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (req) {
+      req.call(el).catch(err => console.warn('Fullscreen error:', err));
+    }
+  } else {
+    // Exit fullscreen
+    const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+    if (exit) exit.call(document);
+  }
+}
+
+function onFullscreenChange() {
+  const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  const btn = document.getElementById('fsBtn');
+
+  if (isFS) {
+    document.body.classList.add('is-fullscreen');
+    if (btn) btn.innerHTML = '⛶ Exit Full';
+
+    // Show brief exit hint
+    const old = document.querySelector('.fs-hint');
+    if (old) old.remove();
+    const hint = document.createElement('div');
+    hint.className = 'fs-hint';
+    hint.textContent = 'Press Esc or click "Exit Full" to leave fullscreen';
+    document.body.appendChild(hint);
+    setTimeout(() => hint && hint.remove(), 5500);
+
+  } else {
+    document.body.classList.remove('is-fullscreen');
+    if (btn) btn.innerHTML = '⛶ Fullscreen';
+  }
+}
+
+// Listen for all vendor-prefixed fullscreen events
+['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange']
+  .forEach(evt => document.addEventListener(evt, onFullscreenChange));
+
+// Keyboard shortcut: F key toggles fullscreen (when not typing)
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'f' || e.key === 'F') {
+    // Only if not in typing input
+    if (document.activeElement !== document.getElementById('typingInput')) {
+      e.preventDefault();
+      toggleFullscreen();
+    }
+  }
+  // Enter to start race (existing + fullscreen aware)
+  if (e.key === 'Enter' && G.state === 'idle' &&
+      document.activeElement !== document.getElementById('typingInput')) {
+    startRace();
+  }
+});
 
 /* ─── INIT ─── */
 window.addEventListener('DOMContentLoaded',()=>{
