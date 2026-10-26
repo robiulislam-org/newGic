@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8EEYP7ER25"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8EEYP7ER25');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/">
+
+  <title>শিক্ষক টুলস — GIC Bot ডাউনলোড ও সেটআপ গাইড | Global Islamic Care</title>
+  <meta name="description" content="Global Islamic Care-এর শিক্ষকদের জন্য GIC Bot — WhatsApp-এ স্বয়ংক্রিয়ভাবে ক্লাস লিংক পাঠানো, রিপোর্ট তৈরি, ইনভয়েস জেনারেট করুন। সহজ ইন্সটলেশন গাইড সহ।">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://globalislamiccare.com/teacher-tools">
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link rel="apple-touch-icon" href="logo.jpg">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="শিক্ষক টুলস — GIC Bot | Global Islamic Care">
+  <meta property="og:description" content="WhatsApp বটের মাধ্যমে স্বয়ংক্রিয়ভাবে ক্লাস লিংক পাঠান, রিপোর্ট তৈরি করুন।">
+  <meta property="og:image" content="https://globalislamiccare.com/og-image.jpg">
+  <meta property="og:url" content="https://globalislamiccare.com/teacher-tools">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #060b13;
+      --card-bg: rgba(13,22,38,0.90);
+      --card-border: rgba(255,255,255,0.08);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --blue: #1e6091;
+      --blue-light: #3a86c8;
+      --gold: #c8972a;
+      --gold-light: #e5b95c;
+      --green: #10b981;
+      --red: #f43f5e;
+      --purple: #8b5cf6;
+      --teal: #14b8a6;
+      --font: 'Outfit','Hind Siliguri',sans-serif;
+      --nav-h: 70px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      background: rgba(6,11,19,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+    }
+    .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .nav-logo img { width:42px; height:42px; border-radius:10px; object-fit:cover; }
+    .nav-logo .lt-main { display:block; font-weight:800; font-size:15px; color:#fff; }
+    .nav-logo .lt-sub { display:block; font-size:11px; color:var(--text-muted); }
+    .nav-links { display:flex; align-items:center; gap:6px; }
+    .nav-links a {
+      color: var(--text-muted); text-decoration:none; font-size:14px; font-weight:500;
+      padding: 8px 14px; border-radius:8px; transition:.2s;
+    }
+    .nav-links a:hover { color:#fff; background:rgba(255,255,255,.05); }
+    .nav-links a.active { color:var(--gold-light); }
+    .nav-cta {
+      background: linear-gradient(135deg,var(--gold),var(--gold-light)) !important;
+      color: #0a1628 !important; font-weight:700 !important; border-radius:10px !important;
+    }
+    .nav-toggle { display:none; background:none; border:none; cursor:pointer; padding:8px; }
+    .nav-toggle span { display:block; width:22px; height:2px; background:#fff; margin:5px 0; border-radius:2px; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: calc(var(--nav-h) + 60px) 20px 80px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(30,96,145,0.25) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 100%, rgba(200,151,42,0.12) 0%, transparent 60%),
+        var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content:'';
+      position:absolute; inset:0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60L60 0M-10 10L10-10M50 70L70 50' stroke='rgba(255,255,255,0.02)' stroke-width='1'/%3E%3C/svg%3E");
+      pointer-events:none;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background: rgba(200,151,42,.12); border:1px solid rgba(200,151,42,.3);
+      color:var(--gold-light); font-size:13px; font-weight:600;
+      padding:6px 18px; border-radius:100px; margin-bottom:28px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 40%, var(--gold-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-muted); max-width: 640px; margin: 0 auto 40px; line-height:1.7;
+    }
+    .hero-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .btn {
+      display: inline-flex; align-items:center; gap:8px;
+      padding: 14px 28px; border-radius:12px; font-size:15px;
+      font-weight:700; text-decoration:none; cursor:pointer; border:none;
+      transition: all .3s;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg,var(--gold),var(--gold-light));
+      color: #0a1628;
+      box-shadow: 0 8px 30px rgba(200,151,42,0.4);
+    }
+    .btn-gold:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(200,151,42,.5); }
+    .btn-outline {
+      background: rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.15);
+      color: #fff;
+    }
+    .btn-outline:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); }
+    .hero-stats {
+      display: flex; gap:40px; justify-content:center; margin-top: 60px;
+      flex-wrap:wrap;
+    }
+    .stat { text-align:center; }
+    .stat-num { font-size:2rem; font-weight:800; color:var(--gold-light); }
+    .stat-lbl { font-size:13px; color:var(--text-muted); margin-top:2px; }
+
+    /* ── FEATURES ── */
+    .section { padding:80px 20px; }
+    .container { max-width:1100px; margin:0 auto; }
+    .section-title {
+      text-align:center; font-size:clamp(1.6rem,4vw,2.4rem);
+      font-weight:800; margin-bottom:14px;
+    }
+    .section-sub { text-align:center; color:var(--text-muted); font-size:1.05rem; max-width:600px; margin:0 auto 50px; line-height:1.7; }
+    .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
+    .feature-card {
+      background: var(--card-bg); border:1px solid var(--card-border);
+      border-radius:16px; padding:28px;
+      backdrop-filter:blur(10px);
+      transition:.3s;
+    }
+    .feature-card:hover { border-color:rgba(200,151,42,.3); transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+    .feature-icon {
+      width:52px; height:52px; border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:26px; margin-bottom:18px;
+    }
+    .feature-card h3 { font-size:18px; font-weight:700; margin-bottom:10px; }
+    .feature-card p { color:var(--text-muted); font-size:14px; line-height:1.7; }
+
+    /* ── INSTALL STEPS ── */
+    .steps-section { background: rgba(10,18,32,.6); }
+    .steps-grid { display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start; }
+    @media(max-width:768px) { .steps-grid { grid-template-columns:1fr; } }
+    .steps-list { display:flex; flex-direction:column; gap:20px; }
+    .step {
+      display:flex; gap:16px;
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:14px; padding:20px;
+    }
+    .step-num {
+      width:38px; height:38px; border-radius:50%;
+      background:linear-gradient(135deg,var(--blue),var(--blue-light));
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size:15px; flex-shrink:0;
+    }
+    .step-body h4 { font-size:15px; font-weight:700; margin-bottom:6px; }
+    .step-body p { color:var(--text-muted); font-size:13px; line-height:1.65; }
+    .step-body a { color:var(--blue-light); }
+    .step-body code {
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+      padding:2px 8px; border-radius:6px; font-family:monospace; font-size:13px;
+    }
+    .download-card {
+      background: var(--card-bg); border:1px solid rgba(200,151,42,.25);
+      border-radius:20px; padding:36px; text-align:center;
+      position:sticky; top:100px;
+    }
+    .download-card .icon { font-size:64px; margin-bottom:20px; }
+    .download-card h3 { font-size:22px; font-weight:800; margin-bottom:10px; }
+    .download-card p { color:var(--text-muted); font-size:14px; margin-bottom:24px; line-height:1.6; }
+    .version-tag {
+      display:inline-block; background:rgba(16,185,129,.12); border:1px solid rgba(16,185,129,.3);
+      color:var(--green); font-size:12px; font-weight:700; padding:4px 12px; border-radius:100px; margin-bottom:24px;
+    }
+    .file-info {
+      background: rgba(255,255,255,.04); border:1px solid var(--card-border);
+      border-radius:10px; padding:14px 18px; margin-bottom:20px; text-align:left;
+    }
+    .file-info-row { display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; }
+    .file-info-row:last-child { margin-bottom:0; }
+    .file-info-row span:first-child { color:var(--text-muted); }
+    .file-info-row span:last-child { font-weight:600; }
+    .download-warning {
+      background:rgba(200,151,42,.08); border:1px solid rgba(200,151,42,.2);
+      border-radius:10px; padding:14px; text-align:left; font-size:13px;
+      color:var(--gold-light); line-height:1.6;
+    }
+    .download-warning strong { display:block; margin-bottom:4px; }
+
+    /* ── FAQ ── */
+    .faq-list { display:flex; flex-direction:column; gap:12px; max-width:800px; margin:0 auto; }
+    .faq-item {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:12px; overflow:hidden;
+    }
+    .faq-q {
+      width:100%; background:none; border:none; color:var(--text);
+      font-family:var(--font); font-size:15px; font-weight:600;
+      padding:20px 24px; text-align:left; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center;
+      transition:.2s;
+    }
+    .faq-q:hover { color:var(--gold-light); }
+    .faq-q .arrow { font-size:12px; transition:.3s; }
+    .faq-a {
+      max-height:0; overflow:hidden; transition:.4s ease;
+      color:var(--text-muted); font-size:14px; line-height:1.75;
+    }
+    .faq-a.open { max-height:400px; }
+    .faq-a-inner { padding:0 24px 20px; }
+
+    /* ── TOOLS PREVIEW ── */
+    .tools-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+    .tool-card {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:16px; padding:28px; transition:.3s;
+    }
+    .tool-card:hover { border-color:var(--blue-light); transform:translateY(-4px); }
+    .tool-badge {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:11px; font-weight:700; padding:4px 10px; border-radius:6px;
+      margin-bottom:14px; text-transform:uppercase; letter-spacing:.05em;
+    }
+    .tool-card h3 { font-size:17px; font-weight:700; margin-bottom:8px; }
+    .tool-card p { color:var(--text-muted); font-size:13px; line-height:1.65; }
+    .tool-features { margin-top:14px; display:flex; flex-direction:column; gap:6px; }
+    .tool-feature { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      background:rgba(6,11,19,.98); border-top:1px solid var(--card-border);
+      padding:40px 20px; text-align:center; color:var(--text-muted); font-size:13px;
+    }
+    footer a { color:var(--blue-light); text-decoration:none; }
+    footer .footer-links { display:flex; gap:20px; justify-content:center; margin-bottom:16px; flex-wrap:wrap; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:600px) {
+      .nav-links { display:none; flex-direction:column; position:fixed; top:var(--nav-h); left:0; right:0; background:rgba(6,11,19,.98); padding:16px; border-bottom:1px solid var(--card-border); }
+      .nav-links.open { display:flex; }
+      .nav-toggle { display:block; }
+      .hero-stats { gap:24px; }
+      .steps-grid { gap:30px; }
+    }
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal { opacity:0; transform:translateY(24px); transition:.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="mainNav">
+  <a class="nav-logo" href="/">
+    <img src="logo.jpg" alt="Global Islamic Care">
+    <div>
+      <span class="lt-main">Global Islamic Care</span>
+      <span class="lt-sub">ইসলামিক শিক্ষার প্ল্যাটফর্ম</span>
+    </div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="javascript:void(0)" onclick="openTeacherApplyModal ? openTeacherApplyModal() : null" class="btn nav-cta" style="padding:9px 18px;font-size:13px;">✦ শিক্ষক হিসেবে যোগ দিন</a>
+    <a href="/teachers">👥 শিক্ষকগণ</a>
+    <a href="/free-courses">কোর্স</a>
+    <a href="/about">আমাদের সম্পর্কে</a>
+    <a href="/contact">যোগাযোগ</a>
+    <a href="/teacher-tools" class="active">🤖 টিচার টুলস</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div style="position:relative;z-index:1;">
+    <div class="hero-badge">🤖 GIC Bot — শিক্ষকদের জন্য স্মার্ট টুল</div>
+    <h1>আপনার পড়ানো আরও<br>সহজ করুন</h1>
+    <p>
+      Global Islamic Care-এর GIC Bot দিয়ে WhatsApp-এ স্বয়ংক্রিয়ভাবে ক্লাস লিংক পাঠান, 
+      প্রতিদিনের রিপোর্ট তৈরি করুন এবং পেমেন্ট ট্র্যাক করুন — সবকিছু একটাই সফটওয়্যারে।
+    </p>
+    <div class="hero-btns">
+      <a href="#download" class="btn btn-gold">⬇️ এখনই ডাউনলোড করুন</a>
+      <a href="#how-to-install" class="btn btn-outline">📖 ইন্সটল গাইড দেখুন</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">১</div><div class="stat-lbl">ফাইল, সব কিছু</div></div>
+      <div class="stat"><div class="stat-num">৩টি</div><div class="stat-lbl">শক্তিশালী টুল</div></div>
+      <div class="stat"><div class="stat-num">২৪/৭</div><div class="stat-lbl">স্বয়ংক্রিয় কাজ</div></div>
+      <div class="stat"><div class="stat-num">WhatsApp</div><div class="stat-lbl">সরাসরি সংযোগ</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section class="section reveal" id="features">
+  <div class="container">
+    <h2 class="section-title">GIC Bot কী কী করতে পারে?</h2>
+    <p class="section-sub">একটিই সফটওয়্যার — তিনটি শক্তিশালী টুল একসাথে চালু থাকে।</p>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon" style="background:rgba(30,96,145,.2);">📅</div>
+        <h3>স্বয়ংক্রিয় ক্লাস লিংক</h3>
+        <p>নির্দিষ্ট সময়ে (যেমন ২ মিনিট আগে) WhatsApp-এ ছাত্রছাত্রীদের কাছে Google Meet লিংক পাঠান। কোনো কাজ ছাড়াই!</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon" style="background:rgba(200,151,42,.15);">📊</div>
+        <h3>দৈনিক রিপোর্ট</h3>
+        <p>প্রতিটি ছাত্রের পড়ার অগ্রগতি, উপস্থিতি ও পারফরম্যান্স রিপোর্ট PDF হিসেবে WhatsApp-এ পাঠান অভিভাবকদের কাছে।</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon" style="background:rgba(139,92,246,.2);">🧾</div>
+        <h3>ইনভয়েস জেনারেটর</h3>
+        <p>মাসিক বেতনের পেশাদার ইনভয়েস তৈরি করুন। পেমেন্ট ট্র্যাক করুন এবং কে বেতন দেয়নি তা দেখুন।</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon" style="background:rgba(20,184,166,.15);">👨‍🏫</div>
+        <h3>মাল্টি-টিচার সিস্টেম</h3>
+        <p>একাধিক শিক্ষক আলাদা লগইনে তাদের নিজের ছাত্রদের মেইনটেইন করতে পারেন। প্রত্যেকে আলাদা পাসওয়ার্ড দিয়ে ঢোকেন।</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon" style="background:rgba(244,63,94,.12);">💬</div>
+        <h3>কাস্টম মেসেজ</h3>
+        <p>যেকোনো সময় সব ছাত্র বা নির্দিষ্ট ছাত্রদের WhatsApp-এ একসাথে মেসেজ পাঠান। নোটিশ, ছুটির ঘোষণা, যেকোনো কিছু।</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon" style="background:rgba(16,185,129,.12);">💳</div>
+        <h3>পেমেন্ট ট্র্যাকিং</h3>
+        <p>কোন মাসে কে বেতন দিয়েছে, কে বাকি আছে — সব একনজরে দেখুন। মাসিক আয়ের সারসংক্ষেপ পান।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TOOLS DETAIL ══ -->
+<section class="section" style="background:rgba(10,18,32,.5);" id="tools">
+  <div class="container">
+    <h2 class="section-title reveal">তিনটি শক্তিশালী টুল</h2>
+    <p class="section-sub reveal">GIC Bot চালু হলে তিনটি টুল একসাথে কাজ করে।</p>
+    <div class="tools-grid">
+
+      <div class="tool-card reveal">
+        <div class="tool-badge" style="background:rgba(30,96,145,.2);color:var(--blue-light);">🤖 টুল ১</div>
+        <h3>CLS Bot (ক্লাস বট)</h3>
+        <p>নির্দিষ্ট সময়সূচি অনুযায়ী ক্লাস লিংক পাঠানো এবং Google Meet-এ অটোমেটিক জয়েন করা।</p>
+        <div class="tool-features">
+          <div class="tool-feature">✅ নির্ধারিত সময়ে লিংক পাঠানো</div>
+          <div class="tool-feature">✅ Google Meet অটো-জয়েন</div>
+          <div class="tool-feature">✅ কাউন্সেলিং সেশন</div>
+          <div class="tool-feature">✅ ড্যাশবোর্ড থেকে কন্ট্রোল</div>
+        </div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-badge" style="background:rgba(200,151,42,.15);color:var(--gold-light);">📊 টুল ২</div>
+        <h3>রিপোর্ট জেনারেটর</h3>
+        <p>প্রতিটি ছাত্রের দৈনিক অগ্রগতির পেশাদার PDF রিপোর্ট তৈরি করে WhatsApp-এ পাঠান।</p>
+        <div class="tool-features">
+          <div class="tool-feature">✅ সুন্দর PDF রিপোর্ট</div>
+          <div class="tool-feature">✅ WhatsApp-এ সরাসরি পাঠান</div>
+          <div class="tool-feature">✅ ছাত্রের ইতিহাস সংরক্ষণ</div>
+          <div class="tool-feature">✅ অভিভাবকের দুটো নম্বরে পাঠানো</div>
+        </div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-badge" style="background:rgba(139,92,246,.15);color:var(--purple);">🧾 টুল ৩</div>
+        <h3>ইনভয়েস জেনারেটর</h3>
+        <p>মাসিক বেতনের পেশাদার ইনভয়েস তৈরি করুন এবং পেমেন্ট ট্র্যাক করুন।</p>
+        <div class="tool-features">
+          <div class="tool-feature">✅ ব্র্যান্ডেড ইনভয়েস</div>
+          <div class="tool-feature">✅ মাসিক পেমেন্ট ট্র্যাকিং</div>
+          <div class="tool-feature">✅ বকেয়া তালিকা</div>
+          <div class="tool-feature">✅ মোট আয়ের হিসাব</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ INSTALL + DOWNLOAD ══ -->
+<section class="section steps-section reveal" id="how-to-install">
+  <div class="container">
+    <h2 class="section-title">কীভাবে ইন্সটল করবেন?</h2>
+    <p class="section-sub">মাত্র ৪টি ধাপে সেটআপ সম্পন্ন করুন। প্রযুক্তি বিশেষজ্ঞ না হলেও পারবেন।</p>
+
+    <div class="steps-grid">
+
+      <!-- Steps -->
+      <div class="steps-list">
+
+        <div class="step reveal">
+          <div class="step-num">১</div>
+          <div class="step-body">
+            <h4>Node.js ইন্সটল করুন</h4>
+            <p>
+              <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> থেকে LTS version ডাউনলোড করে ইন্সটল করুন। 
+              ইন্সটল শেষে Command Prompt-এ টাইপ করুন: <code>node -v</code> — একটা ভার্সন নম্বর দেখালে সফল।
+            </p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">২</div>
+          <div class="step-body">
+            <h4>GIC Bot ডাউনলোড করুন</h4>
+            <p>
+              নিচের "ডাউনলোড করুন" বাটনে ক্লিক করুন। ZIP ফাইলটি ডাউনলোড হবে। 
+              ডাউনলোড শেষে <code>C:\GIC_Bot\</code> ফোল্ডারে Extract করুন।
+            </p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">৩</div>
+          <div class="step-body">
+            <h4>প্রথমবার চালু করুন</h4>
+            <p>
+              Extract করা ফোল্ডারে <code>GIC_Start.bat</code> ফাইলটিতে ডাবল-ক্লিক করুন। 
+              প্রথমবার সব প্যাকেজ ডাউনলোড হবে (একটু সময় লাগবে)। তারপর ব্রাউজার খুলুন এবং যান: <code>http://localhost:3000</code>
+            </p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">৪</div>
+          <div class="step-body">
+            <h4>WhatsApp সংযোগ করুন</h4>
+            <p>
+              ড্যাশবোর্ডে QR কোড দেখাবে। আপনার WhatsApp-এ যান → ⋮ মেনু → Linked Devices → Link a Device → QR কোড স্ক্যান করুন। 
+              একবার স্ক্যান করলে পরবর্তীতে আর করতে হবে না।
+            </p>
+          </div>
+        </div>
+
+        <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:20px;" class="reveal">
+          <p style="color:var(--green);font-weight:700;margin-bottom:8px;">✅ সেটআপ সম্পন্ন!</p>
+          <p style="color:var(--text-muted);font-size:14px;line-height:1.7;">
+            এখন <code>http://localhost:3000</code> থেকে ড্যাশবোর্ড ব্যবহার করুন। ছাত্র যোগ করুন, সময়সূচি তৈরি করুন এবং বট স্বয়ংক্রিয়ভাবে কাজ করবে।
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Download Card -->
+      <div id="download">
+        <div class="download-card reveal">
+          <div class="icon">📦</div>
+          <span class="version-tag">✓ সর্বশেষ সংস্করণ v3.0.0</span>
+          <h3>GIC Bot ডাউনলোড করুন</h3>
+          <p>Global Islamic Care-এর শিক্ষকদের জন্য তৈরি — সম্পূর্ণ বাংলায়।</p>
+
+          <div class="file-info">
+            <div class="file-info-row">
+              <span>ফাইলের নাম</span>
+              <span>GIC-Bot-v3.zip</span>
+            </div>
+            <div class="file-info-row">
+              <span>ফাইলের আকার</span>
+              <span>~62 KB</span>
+            </div>
+            <div class="file-info-row">
+              <span>প্রয়োজনীয়</span>
+              <span>Windows 10/11, Node.js LTS</span>
+            </div>
+            <div class="file-info-row">
+              <span>ভাষা</span>
+              <span>🇧🇩 সম্পূর্ণ বাংলা</span>
+            </div>
+            <div class="file-info-row">
+              <span>লাইসেন্স</span>
+              <span>GIC শিক্ষকদের জন্য বিনামূল্যে</span>
+            </div>
+          </div>
+
+          <a href="/downloads/GIC-Bot-v3.zip" class="btn btn-gold" style="width:100%;justify-content:center;margin-bottom:16px;" id="downloadBtn" onclick="trackDownload(event)">
+            ⬇️ এখনই ডাউনলোড করুন
+          </a>
+
+          <div class="download-warning">
+            <strong>⚠️ গুরুত্বপূর্ণ</strong>
+            ডাউনলোড করার আগে নিশ্চিত করুন যে আপনি GIC-র একজন অনুমোদিত শিক্ষক। 
+            কোনো সমস্যা হলে WhatsApp করুন: <strong>01814-812233</strong>
+          </div>
+
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--card-border);">
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">ইন্সটলেশনে সমস্যা?</p>
+            <a href="https://wa.me/8801814812233?text=GIC+Bot+ইন্সটল+করতে+সমস্যা+হচ্ছে" 
+               target="_blank" class="btn btn-outline" style="width:100%;justify-content:center;font-size:13px;">
+              💬 WhatsApp সাপোর্ট নিন
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="section reveal" id="faq">
+  <div class="container">
+    <h2 class="section-title">সাধারণ প্রশ্নাবলী</h2>
+    <p class="section-sub">GIC Bot সম্পর্কে সবচেয়ে বেশি জিজ্ঞেস করা প্রশ্নের উত্তর।</p>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          GIC Bot কি বিনামূল্যে? <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            হ্যাঁ, Global Islamic Care-এর অনুমোদিত শিক্ষকদের জন্য GIC Bot সম্পূর্ণ বিনামূল্যে। শুধুমাত্র GIC প্ল্যাটফর্মে নিবন্ধিত শিক্ষকরা এটি ব্যবহার করতে পারবেন।
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          WhatsApp বন্ধ থাকলেও কি বট কাজ করবে? <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            কম্পিউটারে GIC Bot চালু থাকলে এবং WhatsApp একবার QR দিয়ে লিংক করা থাকলে, ফোনে WhatsApp বন্ধ থাকলেও বট কাজ করতে পারে। তবে কম্পিউটার বন্ধ করলে বট বন্ধ হয়ে যাবে।
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          একাধিক শিক্ষক কি একই সাথে ব্যবহার করতে পারবেন? <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            হ্যাঁ। Admin প্যানেল থেকে প্রত্যেক শিক্ষকের জন্য আলাদা Username ও Password তৈরি করা যায়। প্রত্যেক শিক্ষক তাদের নিজের ছাত্রদের দেখতে পাবেন।
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Mac বা Linux-এ কি কাজ করবে? <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            বর্তমানে GIC Bot শুধুমাত্র Windows 10/11-এর জন্য অপ্টিমাইজ করা হয়েছে। Mac ও Linux সাপোর্ট ভবিষ্যতে আসতে পারে।
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ছাত্রদের তথ্য কোথায় সংরক্ষিত হয়? <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            সব তথ্য আপনার নিজের কম্পিউটারে থাকে (offline)। কোনো তথ্য বাইরের সার্ভারে যায় না। এটি সম্পূর্ণ প্রাইভেট এবং নিরাপদ।
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ইন্সটলে সমস্যা হলে কোথায় সাহায্য পাব? <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            WhatsApp-এ যোগাযোগ করুন: <strong>01814-812233</strong> অথবা আমাদের <a href="/contact">যোগাযোগ পাতায়</a> মেসেজ করুন। আমরা সাহায্য করব।
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section style="padding:80px 20px;text-align:center;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(30,96,145,.2) 0%,transparent 70%);">
+  <div class="container">
+    <div class="reveal">
+      <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:16px;">
+        আজই শুরু করুন
+      </h2>
+      <p style="color:var(--text-muted);font-size:1.05rem;max-width:520px;margin:0 auto 36px;line-height:1.7;">
+        হাজারো মুহূর্তের পরিশ্রম বাঁচান। GIC Bot দিয়ে পড়ানোয় মনোযোগ দিন — বাকি সব অটোমেটিক।
+      </p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="#download" class="btn btn-gold">⬇️ ডাউনলোড করুন</a>
+        <a href="https://wa.me/8801814812233?text=GIC+Bot+সম্পর্কে+জানতে+চাই" target="_blank" class="btn btn-outline">💬 সাহায্য নিন</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-links">
+    <a href="/">হোম</a>
+    <a href="/teachers">শিক্ষকগণ</a>
+    <a href="/about">আমাদের সম্পর্কে</a>
+    <a href="/contact">যোগাযোগ</a>
+    <a href="/policy">গোপনীয়তা নীতি</a>
+  </div>
+  <p>© 2025 Global Islamic Care — সকল অধিকার সংরক্ষিত।</p>
+</footer>
+
+<script>
+  // ── Scroll Reveal ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── FAQ Toggle ──
+  function toggleFaq(btn) {
+    const ans = btn.nextElementSibling;
+    const arrow = btn.querySelector('.arrow');
+    const isOpen = ans.classList.contains('open');
+    document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-q .arrow').forEach(a => a.style.transform = '');
+    if (!isOpen) {
+      ans.classList.add('open');
+      arrow.style.transform = 'rotate(180deg)';
+    }
+  }
+
+  // ── Smooth scroll for anchor links ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── Download Tracking ──
+  function trackDownload(e) {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'download', {
+        event_category: 'GIC Bot',
+        event_label: 'GIC-Bot-v3.zip'
+      });
+    }
+    // Show confirmation
+    const btn = document.getElementById('downloadBtn');
+    if (btn) {
+      btn.textContent = '✅ ডাউনলোড শুরু হচ্ছে...';
+      setTimeout(() => { btn.innerHTML = '⬇️ এখনই ডাউনলোড করুন'; }, 3000);
+    }
+  }
+</script>
+
+</body>
+</html>

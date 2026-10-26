@@ -94,6 +94,14 @@
     {
       "source": "/terms",
       "destination": "/policy.html"
+    },
+    {
+      "source": "/teacher-tools",
+      "destination": "/teacher-tools.html"
+    },
+    {
+      "source": "/teacher-tools/",
+      "destination": "/teacher-tools.html"
     }
   ]
 }
